@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1200">
+<title>Anyara — Personaliza tu espacio</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ---------- Onboarding first-run flow (page-scoped) ---------- */
+.ob-shell{min-height:100vh;display:flex;flex-direction:column;background:var(--bg)}
+.ob-bar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.ob-bar-inner{max-width:720px;margin:0 auto;padding:20px 28px;display:flex;align-items:center;gap:20px}
+.ob-bar .logo{font-size:22px}
+.ob-progress{flex:1;height:4px;background:var(--sand-2);border-radius:100px;overflow:hidden}
+.ob-progress > i{display:block;height:100%;width:0;background:var(--gold);transition:width .35s ease}
+.ob-skip{font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);cursor:pointer;background:none;border:none}
+.ob-skip:hover{color:var(--ink-2)}
+
+.ob-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 28px 40px}
+.ob-step{display:none;max-width:720px;width:100%}
+.ob-step.on{display:block}
+.ob-count{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:12px}
+.ob-step h1{font-size:40px;margin-bottom:12px}
+.ob-lead{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;color:var(--ink-2);line-height:1.55;max-width:520px;margin-bottom:32px}
+.ob-help{font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;color:var(--ink-3);margin-top:14px}
+
+/* selectable cards (goal, level, frequency) */
+.ob-cards{display:grid;gap:14px}
+.ob-cards.c2{grid-template-columns:repeat(2,1fr)}
+.ob-card{border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;cursor:pointer;background:#fff;display:flex;align-items:center;gap:16px;text-align:left;font-family:inherit}
+.ob-card:hover{border-color:var(--gold)}
+.ob-card.sel{border-color:var(--gold);background:var(--gold-tint)}
+.ob-card .ic{width:44px;height:44px;border-radius:10px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--sand);color:var(--gold-deep)}
+.ob-card.sel .ic{background:var(--gold);color:#fff}
+.ob-card .tt{font-family:"Georgia",serif;font-size:18px;color:var(--ink)}
+.ob-card .ss{display:block;font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-2);margin-top:2px}
+.ob-card .tick{margin-left:auto;width:22px;height:22px;border-radius:50%;border:1px solid var(--line);flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px}
+.ob-card.sel .tick{background:var(--gold);border-color:var(--gold)}
+
+/* selectable pills (disciplines, duration) */
+.ob-pills{display:flex;flex-wrap:wrap;gap:12px}
+.ob-pill{border:1px solid var(--line);border-radius:100px;padding:13px 24px;font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;letter-spacing:.06em;color:var(--ink-2);background:#fff;cursor:pointer}
+.ob-pill:hover{border-color:var(--gold);color:var(--ink)}
+.ob-pill.sel{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* footer nav */
+.ob-foot{border-top:1px solid var(--line);background:var(--bg)}
+.ob-foot-inner{max-width:720px;margin:0 auto;padding:20px 28px;display:flex;align-items:center;justify-content:space-between}
+.ob-back{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);cursor:pointer;background:none;border:none;visibility:hidden}
+.ob-back:hover{color:var(--ink)}
+.btn[disabled]{opacity:.4;pointer-events:none}
+
+/* summary / personalized preview */
+.ob-summary{border:1px solid var(--line);border-radius:var(--radius);background:var(--sand);padding:24px;margin:24px 0 8px}
+.ob-summary .sum-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-top:1px solid var(--line-2);font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px}
+.ob-summary .sum-row:first-child{border-top:none}
+.ob-summary .sk{color:var(--ink-2)}
+.ob-summary .sv{color:var(--ink);font-weight:600;text-align:right;max-width:60%}
+.ob-previewline{font-family:"Georgia",serif;font-size:18px;color:var(--ink);background:var(--gold-tint);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;margin-bottom:8px}
+.ob-previewline b{color:var(--gold-deep)}
+</style>
+</head>
+<body>
+
+<div class="ob-shell">
+
+  <!-- progress bar -->
+  <div class="ob-bar">
+    <div class="ob-bar-inner">
+      <span class="logo"><b>A</b>nyara</span>
+      <div class="ob-progress"><i id="bar"></i></div>
+      <button class="ob-skip" onclick="location.href='index.html'">Saltar</button>
+    </div>
+  </div>
+
+  <!-- steps -->
+  <div class="ob-stage">
+
+    <!-- 0 · welcome -->
+    <section class="ob-step on" data-step="0">
+      <div class="ob-count">Bienvenida a Anyara</div>
+      <h1>Vamos a armar tu espacio.</h1>
+      <p class="ob-lead">Cuatro preguntas rápidas para que tu página de inicio empiece con clases hechas para ti — no con recomendaciones genéricas. Puedes cambiar tus respuestas cuando quieras desde tu perfil.</p>
+      <button class="btn btn-gold" onclick="next()">Empezar →</button>
+    </section>
+
+    <!-- 1 · goal (single) -->
+    <section class="ob-step" data-step="1" data-key="goal" data-mode="single" data-min="1">
+      <div class="ob-count">Pregunta 1 de 4</div>
+      <h1>¿Qué buscas ahora?</h1>
+      <p class="ob-lead">Tu objetivo principal define las primeras filas que verás al entrar.</p>
+      <div class="ob-cards">
+        <button class="ob-card" data-val="tonificar"><span class="ic">◐</span><span><span class="tt">Tonificar y esculpir</span><span class="ss">Sculpt y Barre para fuerza y definición</span></span><span class="tick">✓</span></button>
+        <button class="ob-card" data-val="movilidad"><span class="ic">❋</span><span><span class="tt">Movilidad y control</span><span class="ss">Pilates y trabajo funcional</span></span><span class="tick">✓</span></button>
+        <button class="ob-card" data-val="energia"><span class="ic">✦</span><span><span class="tt">Energía y cardio</span><span class="ss">Funcional HIIT y sesiones dinámicas</span></span><span class="tick">✓</span></button>
+        <button class="ob-card" data-val="calma"><span class="ic">☾</span><span><span class="tt">Calma y recuperación</span><span class="ss">Restaurativo y meditación</span></span><span class="tick">✓</span></button>
+      </div>
+    </section>
+
+    <!-- 2 · disciplines (multi) -->
+    <section class="ob-step" data-step="2" data-key="disciplinas" data-mode="multi" data-min="1">
+      <div class="ob-count">Pregunta 2 de 4</div>
+      <h1>¿Qué disciplinas te llaman?</h1>
+      <p class="ob-lead">Elige todas las que quieras. Priorizaremos estas en tu inicio y en Explorar.</p>
+      <div class="ob-pills">
+        <button class="ob-pill" data-val="Sculpt">Sculpt</button>
+        <button class="ob-pill" data-val="Barre">Barre</button>
+        <button class="ob-pill" data-val="Pilates">Pilates</button>
+        <button class="ob-pill" data-val="Funcional">Funcional</button>
+        <button class="ob-pill" data-val="Restaurativo">Restaurativo</button>
+        <button class="ob-pill" data-val="Meditación">Meditación</button>
+      </div>
+      <p class="ob-help">Puedes seleccionar varias.</p>
+    </section>
+
+    <!-- 3 · level (single) -->
+    <section class="ob-step" data-step="3" data-key="nivel" data-mode="single" data-min="1">
+      <div class="ob-count">Pregunta 3 de 4</div>
+      <h1>¿Cuál es tu nivel?</h1>
+      <p class="ob-lead">Ajustamos la intensidad y las guías que te sugerimos primero.</p>
+      <div class="ob-cards c2">
+        <button class="ob-card" data-val="principiante"><span class="ic">›</span><span><span class="tt">Principiante</span><span class="ss">Empiezo desde cero</span></span><span class="tick">✓</span></button>
+        <button class="ob-card" data-val="intermedio"><span class="ic">››</span><span><span class="tt">Intermedio</span><span class="ss">Me muevo con regularidad</span></span><span class="tick">✓</span></button>
+        <button class="ob-card" data-val="avanzado"><span class="ic">›››</span><span><span class="tt">Avanzado</span><span class="ss">Busco reto y progresión</span></span><span class="tick">✓</span></button>
+        <button class="ob-card" data-val="retomando"><span class="ic">↺</span><span><span class="tt">Retomando</span><span class="ss">Vuelvo tras una pausa</span></span><span class="tick">✓</span></button>
+      </div>
+    </section>
+
+    <!-- 4 · duration (single) -->
+    <section class="ob-step" data-step="4" data-key="duracion" data-mode="single" data-min="1">
+      <div class="ob-count">Pregunta 4 de 4</div>
+      <h1>¿Cuánto tiempo sueles tener?</h1>
+      <p class="ob-lead">Esto define tu fila destacada — por ejemplo “Basado en tus preferencias · 10–20 min”.</p>
+      <div class="ob-pills">
+        <button class="ob-pill" data-val="10–20 min">10–20 min</button>
+        <button class="ob-pill" data-val="20–30 min">20–30 min</button>
+        <button class="ob-pill" data-val="30–45 min">30–45 min</button>
+        <button class="ob-pill" data-val="45+ min">45+ min</button>
+        <button class="ob-pill" data-val="Flexible">Depende del día</button>
+      </div>
+    </section>
+
+    <!-- 5 · summary -->
+    <section class="ob-step" data-step="5">
+      <div class="ob-count">Listo</div>
+      <h1>Tu espacio, personalizado.</h1>
+      <p class="ob-lead">Esto es lo que usaremos para armar tu página de inicio. Puedes cambiarlo cuando quieras desde Perfil → Onboarding.</p>
+      <div class="ob-previewline" id="previewLine"></div>
+      <div class="ob-summary" id="summaryBox"></div>
+      <button class="btn btn-gold" onclick="finish()">Entrar a mi espacio →</button>
+    </section>
+
+  </div>
+
+  <!-- footer nav -->
+  <div class="ob-foot">
+    <div class="ob-foot-inner">
+      <button class="ob-back" id="backBtn" onclick="prev()">← Atrás</button>
+      <button class="btn btn-dark" id="nextBtn" onclick="next()" style="display:none">Continuar →</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---- state ---- */
+var answers = { goal:null, disciplinas:[], nivel:null, duracion:null };
+var steps = Array.prototype.slice.call(document.querySelectorAll('.ob-step'));
+var total = steps.length;               // 0..5 (welcome, 4 questions, summary)
+var i = 0;
+var bar = document.getElementById('bar');
+var backBtn = document.getElementById('backBtn');
+var nextBtn = document.getElementById('nextBtn');
+
+/* labels for the summary screen */
+var GOAL_LABEL = {tonificar:'Tonificar y esculpir', movilidad:'Movilidad y control', energia:'Energía y cardio', calma:'Calma y recuperación'};
+var LEVEL_LABEL = {principiante:'Principiante', intermedio:'Intermedio', avanzado:'Avanzado', retomando:'Retomando'};
+
+function render(){
+  steps.forEach(function(s,idx){ s.classList.toggle('on', idx===i); });
+  bar.style.width = Math.round((i/(total-1))*100) + '%';
+  backBtn.style.visibility = i===0 ? 'hidden' : 'visible';
+  // welcome (0) has its own button; summary (5) has its own button; middle steps use footer Next
+  var isQuestion = i>0 && i<total-1;
+  nextBtn.style.display = isQuestion ? 'inline-flex' : 'none';
+  if(isQuestion) syncNextEnabled();
+  if(i===total-1) buildSummary();
+  window.scrollTo(0,0);
+}
+
+/* is the current question satisfied (min selections met)? */
+function syncNextEnabled(){
+  var step = steps[i];
+  var key = step.getAttribute('data-key');
+  var min = parseInt(step.getAttribute('data-min')||'1',10);
+  var count = step.getAttribute('data-mode')==='multi' ? answers[key].length : (answers[key]?1:0);
+  nextBtn.disabled = count < min;
+}
+
+function next(){ if(i<total-1){ i++; render(); } }
+function prev(){ if(i>0){ i--; render(); } }
+
+/* ---- selection wiring ---- */
+steps.forEach(function(step){
+  var key = step.getAttribute('data-key');
+  var mode = step.getAttribute('data-mode');
+  if(!key) return;
+  step.querySelectorAll('.ob-card,.ob-pill').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var val = btn.getAttribute('data-val');
+      if(mode==='single'){
+        answers[key] = val;
+        step.querySelectorAll('.ob-card,.ob-pill').forEach(function(b){ b.classList.remove('sel'); });
+        btn.classList.add('sel');
+      } else { // multi
+        var arr = answers[key];
+        var at = arr.indexOf(val);
+        if(at>-1){ arr.splice(at,1); btn.classList.remove('sel'); }
+        else { arr.push(val); btn.classList.add('sel'); }
+      }
+      syncNextEnabled();
+    });
+  });
+});
+
+/* ---- summary screen ---- */
+function buildSummary(){
+  var disc = answers.disciplinas.length ? answers.disciplinas.join(' · ') : '—';
+  var dur = answers.duracion || '—';
+  var goal = GOAL_LABEL[answers.goal] || '—';
+  var level = LEVEL_LABEL[answers.nivel] || '—';
+
+  document.getElementById('previewLine').innerHTML =
+    'Tu inicio abrirá con <b>Basado en tus preferencias · ' + (dur==='—'?'':dur) + '</b>' +
+    (answers.disciplinas.length ? ' — ' + disc : '');
+
+  document.getElementById('summaryBox').innerHTML =
+    row('Objetivo', goal) +
+    row('Disciplinas', disc) +
+    row('Nivel', level) +
+    row('Duración preferida', dur);
+}
+function row(k,v){ return '<div class="sum-row"><span class="sk">'+k+'</span><span class="sv">'+v+'</span></div>'; }
+
+/* ---- finish: persist so the home feed can honor real preferences (audit F: no more hardcoded goal:"general", duration:30) ---- */
+function finish(){
+  try {
+    localStorage.setItem('anyara_prefs', JSON.stringify(answers));
+    localStorage.setItem('anyara_onboarded', '1');
+  } catch(e){}
+  location.href = 'index.html';
+}
+
+render();
+</script>
+</body>
+</html>
