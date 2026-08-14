@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Perfil</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link">Series</a>
+      <a href="retos.html" class="nav-link">Retos</a>
+      <a href="events.html" class="nav-link">Events</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap section-sm">
+  <div style="display:flex;align-items:center;gap:18px">
+    <div class="avatar" style="width:64px;height:64px;font-size:22px">PK</div>
+    <div>
+      <div class="eyebrow" style="margin-bottom:4px">Miembro · VIP</div>
+      <h1 style="font-size:32px">Paulo Kustala</h1>
+    </div>
+  </div>
+</div>
+
+<div class="wrap section-sm">
+  <div class="settings-grid">
+    <!-- settings sidebar: the things pulled out of main nav live here -->
+    <div class="settings-nav">
+      <a href="#membresia" class="active">Membresía</a>
+      <a href="#">Mi cuenta</a>
+      <a href="#">Preferencias</a>
+      <a href="#onboarding">Onboarding</a>
+      <a href="#boletos">Mis boletos</a>
+      <a href="#">Notificaciones</a>
+      <a href="#">Cerrar sesión</a>
+    </div>
+
+    <div>
+      <!-- MEMBERSHIP (was its own tab, now here) -->
+      <div class="panel" id="membresia" style="margin-bottom:22px">
+        <h3>Membresía</h3>
+        <p class="d">Acceso ilimitado a todas las clases, programas y herramientas de bienestar.</p>
+        <div class="plans">
+          <div class="plan feat">
+            <span class="badge">Más popular</span>
+            <div class="name">Mensual</div>
+            <div class="price">$39<span> /mes</span></div>
+            <ul><li>Acceso ilimitado a todas las clases</li><li>Las 4 disciplinas</li><li>Cancela cuando quieras</li></ul>
+            <a href="#" class="btn btn-gold btn-block">Comenzar ahora</a>
+          </div>
+          <div class="plan">
+            <div class="name">Trimestral</div>
+            <div class="price">$99<span> /trimestre</span></div>
+            <ul><li>Acceso ilimitado a todas las clases</li><li>Las 4 disciplinas</li><li>Ahorra 15% vs mensual</li><li>Se renueva cada 3 meses</li></ul>
+            <a href="#" class="btn btn-ghost btn-block">Comenzar ahora</a>
+          </div>
+        </div>
+        <p style="text-align:center;color:var(--ink-3);font-family:'Helvetica Neue',Arial;font-size:13px;margin-top:18px">Sin contratos. Cancela cuando quieras. Pago seguro vía Stripe.</p>
+      </div>
+
+      <!-- ONBOARDING (was its own tab, now accessible here) -->
+      <div class="panel" id="onboarding" style="margin-bottom:22px">
+        <h3>Onboarding</h3>
+        <p class="d">Vuelve a hacer las preguntas de personalización para ajustar tus recomendaciones.</p>
+        <div class="setting-row"><div class="l"><b>Preferencias de movimiento</b><span>Responde de nuevo para actualizar tu página de inicio</span></div><a href="#" class="btn btn-ghost">Volver a hacer</a></div>
+        <div class="setting-row"><div class="l"><b>Recorrido de bienvenida</b><span>Vuelve a ver la introducción a Anyara</span></div><a href="#" class="btn btn-ghost">Ver</a></div>
+      </div>
+
+      <!-- TICKETS (also accessible from profile) -->
+      <div class="panel" id="boletos">
+        <h3>Mis boletos</h3>
+        <p class="d">Todos tus boletos para eventos de Anyara.</p>
+        <div class="ticket"><div class="date"><b>24</b><span>Ago</span></div><div class="info"><div class="t">Masterclass: Barre & Breathwork</div><div class="m">7:00 PM · Estudio Anyara, CDMX</div></div><a href="events.html" class="btn btn-ghost">Ver</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="profile.html">Planes y precios</a></div>
+    <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<div class="overlay" id="ov">
+  <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
+  <div class="overlay-top">
+    <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+    <div class="recent"><div class="lab">Popular ahora</div><div class="chips"><span class="chip">Barre</span><span class="chip">Funcional HIIT</span></div></div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Reto Volver a Ti</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link">Series</a>
+      <a href="retos.html" class="nav-link active">Retos</a>
+      <a href="events.html" class="nav-link">Events</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap section-sm">
+  <a href="retos.html" style="font-family:'Helvetica Neue',Arial;font-size:13px;color:var(--ink-2)">‹ Todos los retos</a>
+</div>
+
+<div class="wrap section-sm">
+  <div class="event-hero g4">
+    <div>
+      <div class="tags"><span class="tag" style="background:rgba(255,255,255,.25);color:#fff">21 días</span><span class="tag" style="background:rgba(255,255,255,.25);color:#fff">Nutrición incluida</span></div>
+      <h1 style="color:#fff;font-size:40px">Reto Volver a Ti</h1>
+      <p style="color:rgba(255,255,255,.85);font-family:'Helvetica Neue',Arial;margin-top:8px">6 clases · 265 min total · Barre, Sculpt, Funcional, Pilates</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap section-sm">
+  <div class="detail-grid">
+    <div>
+      <h2 class="h2-serif" style="margin-bottom:14px">Clases del reto</h2>
+      <div style="font-family:'Helvetica Neue',Arial">
+        <div class="eyebrow">Día 1</div>
+        <div class="ticket"><div class="date g3"></div><div class="info"><div class="t">Barre Esencial</div><div class="m">Barre · 45 min · Valeria Méndez</div></div><a href="clase.html" class="btn btn-ghost">Ver ▸</a></div>
+        <div class="eyebrow" style="margin-top:10px">Día 2</div>
+        <div class="ticket"><div class="date g1"></div><div class="info"><div class="t">Sculpt Total</div><div class="m">Sculpt · 60 min · Valeria Méndez</div></div><a href="clase.html" class="btn btn-ghost">Ver ▸</a></div>
+        <div class="eyebrow" style="margin-top:10px">Día 3</div>
+        <div class="ticket"><div class="date g2"></div><div class="info"><div class="t">Funcional HIIT</div><div class="m">Funcional · 30 min · Sofía Ruiz</div></div><a href="clase.html" class="btn btn-ghost">Ver ▸</a></div>
+      </div>
+    </div>
+    <div class="detail-side">
+      <button class="btn btn-gold btn-block" onclick="document.getElementById('pw').classList.add('open')">Comenzar reto</button>
+      <div style="margin-top:18px">
+        <div class="spec"><span class="k">Duración</span><span class="v">21 días</span></div>
+        <div class="spec"><span class="k">Clases</span><span class="v">6</span></div>
+        <div class="spec"><span class="k">Tiempo total</span><span class="v">265 min</span></div>
+        <div class="spec"><span class="k">Nutrición</span><span class="v">Incluida</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="profile.html">Planes y precios</a></div>
+    <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<div class="modal-scrim" id="pw">
+  <div class="modal">
+    <button class="x" onclick="document.getElementById('pw').classList.remove('open')">✕</button>
+    <div class="brandline"><span class="star">★</span><span class="logo" style="font-size:22px"><b>A</b>nyara</span></div>
+    <h3>Muévete con intención</h3>
+    <p class="sub">Únete para comenzar este reto, llevar tu progreso y acceder a todas las clases.</p>
+    <ul>
+      <li><span class="ic">▷</span> Cientos de clases en vivo y grabadas</li>
+      <li><span class="ic">📈</span> Seguimiento de progreso y rachas</li>
+      <li><span class="ic">♡</span> Favoritos y series personalizadas</li>
+    </ul>
+    <a href="profile.html" class="btn btn-gold btn-block" style="margin-bottom:10px">Únete ahora</a>
+    <a href="#" class="btn btn-ghost btn-block">Ya tengo cuenta · Iniciar sesión</a>
+  </div>
+</div>
+
+<div class="overlay" id="ov">
+  <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
+  <div class="overlay-top">
+    <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+    <div class="recent"><div class="lab">Popular ahora</div><div class="chips"><span class="chip">Barre</span><span class="chip">Reto Volver a Ti</span></div></div>
+  </div>
+</div>
+
+</body>
+</html>

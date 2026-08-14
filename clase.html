@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Funcional HIIT</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link">Series</a>
+      <a href="retos.html" class="nav-link">Retos</a>
+      <a href="events.html" class="nav-link">Events</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap section">
+  <div class="detail-grid">
+    <div>
+      <div class="player-art g2">
+        <div class="lock">🔒 Requiere membresía</div>
+        <div class="play">▶</div>
+      </div>
+      <div class="tags">
+        <span class="tag">Funcional</span><span class="tag">Intenso</span><span class="tag">30 min</span>
+      </div>
+      <h1 style="font-size:36px">Funcional HIIT</h1>
+      <p style="color:var(--ink-2);font-family:'Helvetica Neue',Arial;margin:8px 0 16px">con Sofía Ruiz &nbsp;·&nbsp; ★ 4.9 (176 valoraciones)</p>
+      <p style="max-width:560px;color:var(--ink-2)">Entrenamiento funcional de alta intensidad. Quema calorías, mejora resistencia y potencia tu cuerpo en 30 minutos.</p>
+    </div>
+    <div class="detail-side">
+      <button class="btn btn-gold btn-block" onclick="document.getElementById('pw').classList.add('open')">▶ Comenzar clase</button>
+      <button class="btn btn-ghost btn-block">♡ Agregar a favoritos</button>
+      <div style="margin-top:18px">
+        <div class="spec"><span class="k">Disciplina</span><span class="v">Funcional</span></div>
+        <div class="spec"><span class="k">Intensidad</span><span class="v">Intenso</span></div>
+        <div class="spec"><span class="k">Duración</span><span class="v">30 min</span></div>
+        <div class="spec"><span class="k">Vistas</span><span class="v">3,202</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="profile.html">Planes y precios</a></div>
+    <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<!-- ===== UNIFIED PAYWALL (single component, one CTA) ===== -->
+<div class="modal-scrim" id="pw">
+  <div class="modal">
+    <button class="x" onclick="document.getElementById('pw').classList.remove('open')">✕</button>
+    <div class="brandline"><span class="star">★</span><span class="logo" style="font-size:22px"><b>A</b>nyara</span></div>
+    <h3>Muévete con intención</h3>
+    <p class="sub">Únete a nuestra comunidad para acceder a todas las clases, llevar tu progreso y descubrir disciplinas que transforman tu cuerpo y tu mente.</p>
+    <ul>
+      <li><span class="ic">▷</span> Cientos de clases en vivo y grabadas</li>
+      <li><span class="ic">⚡</span> Barre, Sculpt, Pilates y Funcional</li>
+      <li><span class="ic">📈</span> Seguimiento de progreso y rachas</li>
+      <li><span class="ic">♡</span> Favoritos y series personalizadas</li>
+    </ul>
+    <div class="social">+2,400 mujeres ya entrenan con Anyara</div>
+    <a href="profile.html" class="btn btn-gold btn-block" style="margin-bottom:10px">Únete ahora</a>
+    <a href="#" class="btn btn-ghost btn-block">Ya tengo cuenta · Iniciar sesión</a>
+  </div>
+</div>
+
+<div class="overlay" id="ov">
+  <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
+  <div class="overlay-top">
+    <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+    <div class="recent"><div class="lab">Popular ahora</div><div class="chips"><span class="chip">Barre</span><span class="chip">Funcional HIIT</span><span class="chip">Restaurativo</span></div></div>
+  </div>
+</div>
+
+</body>
+</html>

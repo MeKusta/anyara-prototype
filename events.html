@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Events</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link">Series</a>
+      <a href="retos.html" class="nav-link">Retos</a>
+      <a href="events.html" class="nav-link active">Events</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap section-sm">
+  <div class="eyebrow">Eventos</div>
+  <h1 style="font-size:38px">Events</h1>
+</div>
+
+<!-- Featured carousel -->
+<div class="wrap section-sm">
+  <div class="event-hero g5">
+    <div>
+      <div class="eyebrow">Evento destacado · 24 Ago</div>
+      <h1 style="color:#fff;font-size:36px">Masterclass en vivo: Barre & Breathwork</h1>
+      <p style="color:rgba(255,255,255,.85);font-family:'Helvetica Neue',Arial;margin-top:8px">Con Valeria Méndez · Estudio Anyara, CDMX</p>
+      <div style="margin-top:18px"><a href="#" class="btn btn-gold">Reservar lugar</a></div>
+      <div class="carousel-dots"><i class="on"></i><i></i><i></i></div>
+    </div>
+  </div>
+</div>
+
+<!-- Tickets below, immediately visible -->
+<div class="wrap section">
+  <div class="row-head"><h2>Tus boletos</h2></div>
+  <div class="ticket">
+    <div class="date"><b>24</b><span>Ago</span></div>
+    <div class="info"><div class="t">Masterclass: Barre & Breathwork</div><div class="m">7:00 PM · Estudio Anyara, CDMX · Fila A</div></div>
+    <a href="#" class="btn btn-ghost">Ver boleto</a>
+  </div>
+  <div class="ticket">
+    <div class="date"><b>07</b><span>Sep</span></div>
+    <div class="info"><div class="t">Retiro de fin de semana: Volver a Ti</div><div class="m">Todo el día · Valle de Bravo · 2 personas</div></div>
+    <a href="#" class="btn btn-ghost">Ver boleto</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="profile.html">Planes y precios</a></div>
+    <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<div class="overlay" id="ov">
+  <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
+  <div class="overlay-top">
+    <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+    <div class="recent"><div class="lab">Popular ahora</div><div class="chips"><span class="chip">Barre</span><span class="chip">Eventos en vivo</span></div></div>
+  </div>
+</div>
+
+</body>
+</html>

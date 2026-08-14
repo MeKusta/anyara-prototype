@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Retos</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link">Series</a>
+      <a href="retos.html" class="nav-link active">Retos</a>
+      <a href="events.html" class="nav-link">Events</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap section-sm">
+  <div class="eyebrow">Programas guiados</div>
+  <h1 style="font-size:38px">Retos</h1>
+</div>
+
+<div class="wrap section-sm">
+  <div class="grid2">
+    <a href="reto.html" class="ccard"><div class="art g4" style="height:260px"><span class="len">21 DÍAS · NUTRICIÓN INCLUIDA</span></div><div class="title" style="font-size:24px">Reto Volver a Ti</div><div class="meta">Reconexión y balance integral. 21 días de transformación.</div></a>
+    <a href="reto.html" class="ccard"><div class="art g2" style="height:260px"><span class="len">7 DÍAS</span></div><div class="title" style="font-size:24px">Reto de Bienvenida</div><div class="meta">Introducción al movimiento consciente. 7 días.</div></a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="profile.html">Planes y precios</a></div>
+    <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<div class="overlay" id="ov">
+  <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
+  <div class="overlay-top">
+    <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+    <div class="recent"><div class="lab">Popular ahora</div><div class="chips"><span class="chip">Barre</span><span class="chip">Reto Volver a Ti</span></div></div>
+  </div>
+</div>
+
+</body>
+</html>
