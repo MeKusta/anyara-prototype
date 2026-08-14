@@ -12,8 +12,19 @@
   --sand:#f5f2ec;
   --sand-2:#efeae1;
   --radius:14px;
-  --maxw:1200px;
+  --maxw:1440px;
 }
+/* discipline signature colors — each sets --dc, which drives BOTH the
+   pill dot and the .gart card gradient so they always stay in sync */
+.barre{--dc:#c96f6f}       /* light red */
+.funcional{--dc:#6d8cb0}   /* blue */
+.pilatesmat{--dc:#cbab3c}  /* yellow */
+.pilates{--dc:#7a9b78}     /* green (assigned — no color was specified) */
+.sculpt{--dc:#9c4f4f}      /* dark red */
+.somara{--dc:#d1854a}      /* orange */
+.tone{--dc:#a6abb0}        /* silver */
+/* discipline gradient: dark→light of the same signature hue */
+.gart{background:linear-gradient(135deg,var(--dc,#8a7d68),color-mix(in srgb,var(--dc,#8a7d68) 48%,#fff))}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
@@ -39,34 +50,34 @@ img{display:block;max-width:100%}
 }
 .topbar-inner{
   max-width:var(--maxw);margin:0 auto;
-  display:flex;align-items:center;gap:40px;
-  padding:18px 28px;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;
+  padding:16px 32px;
 }
 .logo{
   font-size:26px;letter-spacing:.5px;font-style:italic;
-  font-family:"Georgia",serif;font-weight:400;
+  font-family:"Georgia",serif;font-weight:400;justify-self:start;
 }
 .logo b{font-style:normal}
-.nav-links{display:flex;gap:30px;align-items:center;flex:1}
+.nav-links{display:flex;gap:34px;align-items:center;justify-self:center}
 .nav-link{
   font-size:13px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink-2);padding:4px 0;position:relative;
+  color:var(--ink-2);padding:4px 0;position:relative;white-space:nowrap;
 }
 .nav-link:hover{color:var(--ink)}
 .nav-link.active{color:var(--ink)}
 .nav-link.active::after{
   content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--gold);
 }
-.nav-right{display:flex;align-items:center;gap:18px}
+.nav-right{display:flex;align-items:center;gap:16px;justify-self:end}
 .icon-btn{
-  width:38px;height:38px;border-radius:50%;
+  width:46px;height:46px;border-radius:50%;
   border:1px solid var(--line);background:#fff;
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:15px;color:var(--ink-2);
+  cursor:pointer;font-size:22px;color:var(--ink-2);
 }
 .icon-btn:hover{border-color:var(--gold);color:var(--ink)}
 .avatar{
-  width:38px;height:38px;border-radius:50%;
+  width:42px;height:42px;border-radius:50%;
   background:var(--gold);color:#fff;
   display:flex;align-items:center;justify-content:center;
   font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;font-weight:600;
@@ -95,14 +106,17 @@ h2{font-size:15px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
   border-bottom:1px solid var(--line);
 }
 .pill{
-  flex:0 0 auto;
+  flex:0 0 auto;display:inline-flex;align-items:center;
   border:1px solid var(--line);border-radius:100px;
-  padding:11px 22px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  padding:11px 20px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--ink-2);background:#fff;cursor:pointer;white-space:nowrap;
   font-family:"Helvetica Neue",Arial,sans-serif;
 }
-.pill:hover{border-color:var(--gold);color:var(--ink)}
-.pill.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pill:hover{border-color:var(--dc,var(--gold));color:var(--ink)}
+.pill.active{background:var(--dc,var(--ink));color:#fff;border-color:var(--dc,var(--ink))}
+/* color dot — matches the discipline's card gradient */
+.pill .dot{width:9px;height:9px;border-radius:50%;margin-right:9px;flex:0 0 auto;background:var(--dc,var(--ink-3))}
+.pill.active .dot{background:rgba(255,255,255,.92)}
 
 /* ---------- Hero ---------- */
 .hero{
@@ -273,3 +287,25 @@ h2{font-size:15px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
 
 /* section divider */
 .divider{height:1px;background:var(--line);margin:8px 0}
+
+/* ---------- Full-bleed hero carousel ---------- */
+.hero-carousel{position:relative;width:100%;overflow:hidden;height:clamp(460px,66vh,640px);background:var(--sand)}
+.hc-track{display:flex;height:100%;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.hc-slide{min-width:100%;height:100%;position:relative;display:flex;align-items:flex-end}
+.hc-slide::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(22,19,16,.6),rgba(22,19,16,.2) 55%,rgba(22,19,16,0))}
+.hc-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 32px 60px}
+.hc-content{max-width:580px;color:#fff}
+.hc-content .eyebrow{color:#fff;opacity:.92}
+.hc-content h1{color:#fff;font-size:48px;line-height:1.06;margin-bottom:14px}
+.hc-content p{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;color:rgba(255,255,255,.9);margin-bottom:24px;max-width:470px;line-height:1.55}
+.hc-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+  width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.5);
+  background:rgba(0,0,0,.22);color:#fff;font-size:22px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.hc-arrow:hover{background:rgba(0,0,0,.45)}
+.hc-arrow.prev{left:24px}.hc-arrow.next{right:24px}
+.hc-dots{position:absolute;bottom:26px;left:0;right:0;z-index:3;display:flex;gap:9px;justify-content:center}
+.hc-dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(255,255,255,.5);cursor:pointer;padding:0;transition:width .3s}
+.hc-dots button.on{background:#fff;width:26px;border-radius:100px}
+@media (prefers-reduced-motion:reduce){.hc-track{transition:none}}

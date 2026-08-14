@@ -26,29 +26,64 @@
   </div>
 </header>
 
-<!-- ===== DISCIPLINE PILLS ===== -->
-<div class="wrap">
+<!-- ===== HERO CAROUSEL (full-bleed, auto-advancing every 5s) ===== -->
+<section class="hero-carousel" id="hero">
+  <div class="hc-track" id="hcTrack">
+
+    <div class="hc-slide gart sculpt">
+      <div class="hc-inner">
+        <div class="hc-content">
+          <div class="eyebrow">Clase nueva · Sculpt</div>
+          <h1>20 min · Sculpt : Glúteos</h1>
+          <p>Buenas tardes, Paulo. Tu recomendación de hoy con Valeria Méndez — corta, intensa y directa al punto.</p>
+          <a href="clase.html" class="btn btn-gold">Ver clase →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hc-slide gart somara">
+      <div class="hc-inner">
+        <div class="hc-content">
+          <div class="eyebrow">Reto destacado · 21 días</div>
+          <h1>Reto Volver a Ti</h1>
+          <p>Reconexión y balance integral. 21 días de movimiento consciente, con nutrición incluida.</p>
+          <a href="reto.html" class="btn btn-gold">Ver reto →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hc-slide gart barre">
+      <div class="hc-inner">
+        <div class="hc-content">
+          <div class="eyebrow">Evento en vivo · 24 Ago</div>
+          <h1>Masterclass: Barre & Breathwork</h1>
+          <p>Una sesión en vivo con Valeria Méndez en el Estudio Anyara, CDMX. Cupos limitados.</p>
+          <a href="events.html" class="btn btn-gold">Reservar lugar →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <button class="hc-arrow prev" aria-label="Anterior">‹</button>
+  <button class="hc-arrow next" aria-label="Siguiente">›</button>
+  <div class="hc-dots">
+    <button class="on" aria-label="Ir al slide 1"></button>
+    <button aria-label="Ir al slide 2"></button>
+    <button aria-label="Ir al slide 3"></button>
+  </div>
+</section>
+
+<!-- ===== DISCIPLINE PILLS (color-coded to card gradients) ===== -->
+<div class="wrap section-sm">
   <div class="pillbar">
     <div class="pill active">Todo</div>
-    <div class="pill">Sculpt</div>
-    <div class="pill">Barre</div>
-    <div class="pill">Pilates</div>
-    <div class="pill">Funcional</div>
-    <div class="pill">Restaurativo</div>
-    <div class="pill">Meditación</div>
-  </div>
-</div>
-
-<!-- ===== HERO ===== -->
-<div class="wrap section-sm">
-  <div class="hero">
-    <div>
-      <div class="eyebrow">Buenas tardes, Paulo</div>
-      <div class="eyebrow" style="margin-top:0">Sculpt</div>
-      <h1>20 min · Sculpt : Glut</h1>
-      <div class="byline"><span class="dot">V</span> Con Valeria Méndez</div>
-      <a href="clase.html" class="btn btn-gold">Ver clase →</a>
-    </div>
+    <div class="pill barre"><span class="dot"></span>Barre</div>
+    <div class="pill funcional"><span class="dot"></span>Funcional</div>
+    <div class="pill pilatesmat"><span class="dot"></span>Pilates Mat</div>
+    <div class="pill pilates"><span class="dot"></span>Pilates</div>
+    <div class="pill sculpt"><span class="dot"></span>Sculpt</div>
+    <div class="pill somara"><span class="dot"></span>Somara</div>
+    <div class="pill tone"><span class="dot"></span>Tone</div>
   </div>
 </div>
 
@@ -56,7 +91,7 @@
 <div class="wrap section-sm">
   <div class="row-head"><h2>Continúa donde lo dejaste</h2></div>
   <a href="clase.html" class="continue">
-    <div class="thumb g3"></div>
+    <div class="thumb gart barre"></div>
     <div class="body">
       <div class="ccard tag" style="font-family:'Helvetica Neue',Arial">BARRE · 45 MIN</div>
       <div style="font-size:20px;margin:4px 0">Barre Glúteos & Piernas</div>
@@ -96,20 +131,20 @@
   <div class="eyebrow">Descubre — al bajar</div>
   <div class="row-head"><h2 class="h2-serif">Basado en tus preferencias · 10–20 min</h2><a href="explorar.html">Ver todo</a></div>
   <div class="cardrow">
-    <a href="clase.html" class="ccard small"><div class="art g1"><span class="len">20 min</span></div><div class="tag">SCULPT</div><div class="title">20 min · Sculpt : Glut</div><div class="meta">Valeria Méndez</div></a>
-    <a href="clase.html" class="ccard small"><div class="art g2"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz</div></a>
-    <a href="clase.html" class="ccard small"><div class="art g3"><span class="free">Gratis</span></div><div class="tag">BARRE</div><div class="title">Barre Esencial</div><div class="meta">Valeria Méndez</div></a>
-    <a href="clase.html" class="ccard small"><div class="art g4"><span class="len">40 min</span></div><div class="tag">PILATES</div><div class="title">Pilates Mat Fundamental</div><div class="meta">Sofía Ruiz</div></a>
+    <a href="clase.html" class="ccard small"><div class="art gart sculpt"><span class="len">20 min</span></div><div class="tag">SCULPT</div><div class="title">20 min · Sculpt : Glut</div><div class="meta">Valeria Méndez</div></a>
+    <a href="clase.html" class="ccard small"><div class="art gart funcional"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz</div></a>
+    <a href="clase.html" class="ccard small"><div class="art gart barre"><span class="free">Gratis</span></div><div class="tag">BARRE</div><div class="title">Barre Esencial</div><div class="meta">Valeria Méndez</div></a>
+    <a href="clase.html" class="ccard small"><div class="art gart pilatesmat"><span class="len">40 min</span></div><div class="tag">PILATES MAT</div><div class="title">Pilates Mat Fundamental</div><div class="meta">Sofía Ruiz</div></a>
   </div>
 </div>
 
 <div class="wrap section-sm">
   <div class="row-head"><h2 class="h2-serif">Clases nuevas</h2><a href="explorar.html">Ver todo</a></div>
   <div class="grid4">
-    <a href="clase.html" class="ccard"><div class="art g2"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz</div></a>
-    <a href="clase.html" class="ccard"><div class="art g1"><span class="len">60 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Total</div><div class="meta">Valeria Méndez</div></a>
-    <a href="clase.html" class="ccard"><div class="art g3"><span class="len">45 min</span></div><div class="tag">BARRE</div><div class="title">Barre Glúteos & Piernas</div><div class="meta">Valeria Méndez</div></a>
-    <a href="clase.html" class="ccard"><div class="art g6"><span class="len">45 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Brazos & Core</div><div class="meta">Valeria Méndez</div></a>
+    <a href="clase.html" class="ccard"><div class="art gart funcional"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz</div></a>
+    <a href="clase.html" class="ccard"><div class="art gart sculpt"><span class="len">60 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Total</div><div class="meta">Valeria Méndez</div></a>
+    <a href="clase.html" class="ccard"><div class="art gart barre"><span class="len">45 min</span></div><div class="tag">BARRE</div><div class="title">Barre Glúteos & Piernas</div><div class="meta">Valeria Méndez</div></a>
+    <a href="clase.html" class="ccard"><div class="art gart sculpt"><span class="len">45 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Brazos & Core</div><div class="meta">Valeria Méndez</div></a>
   </div>
 </div>
 
@@ -128,7 +163,7 @@
       <div class="logo"><b>A</b>nyara</div>
       <p class="about">Muévete con intención. Un espacio digital premium diseñado para tu bienestar físico y mental. Sculpt, Barre, Pilates y Funcional.</p>
     </div>
-    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="#">Coaches</a><a href="profile.html">Planes y precios</a><a href="retos.html">Retos</a><a href="series.html">Series</a></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="#">Coaches</a><a href="membresia.html">Planes y precios</a><a href="retos.html">Retos</a><a href="series.html">Series</a></div>
     <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Privacidad</a><a href="#">Términos</a><a href="#">Devoluciones</a></div>
     <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
   </div>
@@ -152,6 +187,35 @@
     </div>
   </div>
 </div>
+
+<!-- ===== HERO CAROUSEL LOGIC (auto-advance 5s, pause on hover, arrows + dots, reduced-motion aware) ===== -->
+<script>
+(function(){
+  var track = document.getElementById('hcTrack');
+  if(!track) return;
+  var count = track.children.length;
+  var dots  = Array.prototype.slice.call(document.querySelectorAll('.hc-dots button'));
+  var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var idx = 0, timer = null;
+
+  function go(n){
+    idx = (n + count) % count;
+    track.style.transform = 'translateX(-' + (idx*100) + '%)';
+    dots.forEach(function(d,i){ d.classList.toggle('on', i===idx); });
+  }
+  function start(){ if(reduce) return; stop(); timer = setInterval(function(){ go(idx+1); }, 5000); }
+  function stop(){ if(timer){ clearInterval(timer); timer = null; } }
+
+  document.querySelector('.hc-arrow.next').addEventListener('click', function(){ go(idx+1); start(); });
+  document.querySelector('.hc-arrow.prev').addEventListener('click', function(){ go(idx-1); start(); });
+  dots.forEach(function(d,i){ d.addEventListener('click', function(){ go(i); start(); }); });
+
+  var hero = document.getElementById('hero');
+  hero.addEventListener('mouseenter', stop);
+  hero.addEventListener('mouseleave', start);
+  start();
+})();
+</script>
 
 </body>
 </html>
