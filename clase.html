@@ -16,6 +16,7 @@
       <a href="series.html" class="nav-link">Series</a>
       <a href="retos.html" class="nav-link">Retos</a>
       <a href="events.html" class="nav-link">Events</a>
+      <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
     </nav>
     <div class="nav-right">
       <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
@@ -29,12 +30,10 @@
     <div>
       <div class="player-art gart funcional">
         <div class="lock">🔒 Requiere membresía</div>
-        <div class="play">▶</div>
+        <div class="play" onclick="openPlayer()" style="cursor:pointer">▶</div>
+        <div class="art-tags"><span>Funcional</span><span>Intenso</span><span>30 min</span></div>
       </div>
-      <div class="tags">
-        <span class="tag">Funcional</span><span class="tag">Intenso</span><span class="tag">30 min</span>
-      </div>
-      <h1 style="font-size:36px">Funcional HIIT</h1>
+      <h1 style="font-size:36px;margin-top:20px">Funcional HIIT</h1>
       <p style="color:var(--ink-2);font-family:'Helvetica Neue',Arial;margin:8px 0 16px">con Sofía Ruiz &nbsp;·&nbsp; ★ 4.9 (176 valoraciones)</p>
       <p style="max-width:560px;color:var(--ink-2)">Entrenamiento funcional de alta intensidad. Quema calorías, mejora resistencia y potencia tu cuerpo en 30 minutos.</p>
     </div>
@@ -86,6 +85,50 @@
     <div class="recent"><div class="lab">Popular ahora</div><div class="chips"><span class="chip">Barre</span><span class="chip">Funcional HIIT</span><span class="chip">Restaurativo</span></div></div>
   </div>
 </div>
+
+<!-- ===== VIDEO PLAYER (demo — no real video yet) ===== -->
+<div class="vp-scrim" id="vp">
+  <button class="vp-close" onclick="closePlayer()">✕</button>
+  <div class="vp">
+    <div class="vp-title"><span>Funcional · Intenso</span>Funcional HIIT — con Sofía Ruiz</div>
+    <div class="vp-screen gart funcional">
+      <button class="vp-bigplay" id="vpBig" onclick="togglePlay()">▶</button>
+    </div>
+    <div class="vp-bar">
+      <button class="vp-toggle" id="vpToggle" onclick="togglePlay()">▶</button>
+      <span id="vpTime">0:00</span>
+      <div class="vp-timeline" id="vpLine"><i id="vpProg"></i></div>
+      <span>30:00</span>
+      <button class="vp-toggle" title="Pantalla completa">⛶</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* demo player: fake 30-min timeline, play/pause, click-to-seek */
+var vpPlaying=false, vpSec=0, vpTotal=1800, vpTimer=null;
+function fmt(s){var m=Math.floor(s/60),r=Math.floor(s%60);return m+':'+(r<10?'0':'')+r}
+function paint(){
+  document.getElementById('vpProg').style.width=(vpSec/vpTotal*100)+'%';
+  document.getElementById('vpTime').textContent=fmt(vpSec);
+}
+function togglePlay(){
+  vpPlaying=!vpPlaying;
+  document.getElementById('vpBig').style.display=vpPlaying?'none':'flex';
+  document.getElementById('vpToggle').textContent=vpPlaying?'❚❚':'▶';
+  if(vpPlaying){vpTimer=setInterval(function(){vpSec=Math.min(vpSec+1,vpTotal);paint();},1000);}
+  else{clearInterval(vpTimer);}
+}
+function openPlayer(){document.getElementById('vp').classList.add('open');}
+function closePlayer(){
+  document.getElementById('vp').classList.remove('open');
+  if(vpPlaying)togglePlay();
+}
+document.getElementById('vpLine').addEventListener('click',function(e){
+  var r=this.getBoundingClientRect();
+  vpSec=Math.round((e.clientX-r.left)/r.width*vpTotal);paint();
+});
+</script>
 
 </body>
 </html>
