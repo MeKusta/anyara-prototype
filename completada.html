@@ -30,7 +30,7 @@
     <div class="done-check">✓</div>
     <div class="eyebrow">Clase completada</div>
     <h1 id="doneTitle">Bien hecho, Paulo.</h1>
-    <p class="lead">Funcional HIIT · 30 min · con Sofía Ruiz</p>
+    <p class="lead" id="doneClass">Funcional HIIT · 30 min · con Sofía Ruiz</p>
 
     <div class="done-stats">
       <div><div class="n" id="stStreak">1</div><div class="l">Días de racha</div></div>
@@ -93,6 +93,12 @@
 /* completing a class is what moves the streak */
 Anyara.bumpStreak();
 document.getElementById('doneTitle').textContent = 'Bien hecho, ' + Anyara.name() + '.';
+
+/* the welcome class arrives here from bienvenida.html */
+if (new URLSearchParams(location.search).get('c') === 'sculpt') {
+  document.getElementById('doneClass').textContent = '20 min · Sculpt : Glúteos · con Valeria Méndez';
+  document.querySelectorAll('.done-stats .n')[2].textContent = '20';
+}
 document.getElementById('stStreak').textContent = Anyara.streak();
 document.getElementById('stTotal').textContent  = Anyara.streak();
 var left = Anyara.freeLeft();

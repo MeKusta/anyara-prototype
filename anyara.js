@@ -12,7 +12,8 @@
     streak: 'anyara_streak',
     name:   'anyara_name',
     paused: 'anyara_paused',
-    warned: 'anyara_lastcall_seen'
+    warned: 'anyara_lastcall_seen',
+    reason: 'anyara_reason'
   };
   var FREE_ALLOWANCE = 3;
 
@@ -32,6 +33,10 @@
 
     name: function () { return get(K.name) || 'Paulo'; },
     setName: function (n) { if (n) set(K.name, n); },
+
+    /* why the welcome class was picked — echoed back as proof of personalisation */
+    reason: function () { return get(K.reason) || 'Por tus preferencias de movimiento'; },
+    setReason: function (r) { if (r) set(K.reason, r); },
     initials: function () {
       return A.name().trim().split(/\s+/).slice(0, 2)
               .map(function (w) { return w.charAt(0); }).join('').toUpperCase() || 'PK';

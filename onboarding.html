@@ -119,6 +119,26 @@ body{overflow-x:hidden}
 .ob-rec .rt{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep)}
 .ob-rec .rn{font-size:21px;margin:4px 0 3px}
 .ob-rec .rm{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-2)}
+
+/* resolve step — answers collapse into the recommendation */
+.rv-chips{display:flex;flex-wrap:wrap;gap:10px;max-width:540px;margin-bottom:26px;min-height:40px}
+.rv-chips span{border:1px solid var(--line);border-radius:100px;padding:9px 18px;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-2);background:#fff;
+  opacity:0;transform:translateY(6px);transition:opacity .35s ease,transform .35s ease}
+.rv-chips span.in{opacity:1;transform:none}
+.rv-chips.out span{opacity:0;transform:translateY(-8px) scale(.96)}
+.rv-card{max-width:560px;opacity:0;transform:translateY(10px);
+  transition:opacity .45s ease,transform .45s ease}
+.rv-card.in{opacity:1;transform:none}
+.rv-go{display:flex;align-items:center;gap:12px;font-family:"Helvetica Neue",Arial,sans-serif;
+  font-size:13px;color:var(--ink-3)}
+.rv-bar{display:block;width:120px;height:3px;background:var(--line-2);border-radius:2px;overflow:hidden}
+.rv-bar > i{display:block;height:100%;width:0;background:var(--gold);border-radius:2px}
+.rv-bar > i.run{width:100%;transition:width 1.9s linear}
+@media (prefers-reduced-motion:reduce){
+  .rv-chips span,.rv-card{transition:none}
+  .rv-bar > i.run{transition:none;width:100%}
+}
 </style>
 </head>
 <body>
@@ -379,24 +399,26 @@ body{overflow-x:hidden}
       </div>
     </section>
 
-    <!-- 13 · welcome recommended class -->
+    <!-- 13 · resolve: their answers collapse into the recommendation, then it
+             auto-advances straight into the class. No decision to make. -->
     <section class="ob-step" data-visual="sculpt">
       <div style="margin:auto 0">
-        <div class="eyebrow">Elegida para ti</div>
-        <h1 style="margin-bottom:10px">Empieza por aquí.</h1>
-        <p class="ob-hint">Con lo que nos contaste, esta es la clase con la que te recomendamos abrir tu práctica. Es una clase de miembros — <b>te la desbloqueamos como bienvenida.</b></p>
-        <a class="ob-rec" href="clase.html">
-          <div class="rart gart sculpt"><span class="rb">Desbloqueada para ti</span></div>
-          <div>
-            <div class="rt">Sculpt · 20 min</div>
-            <div class="rn">20 min · Sculpt : Glúteos</div>
-            <div class="rm">Con Valeria Méndez · ★ 4.9</div>
+        <div class="eyebrow" id="rvEyebrow">Buscando tu clase…</div>
+        <h1 style="margin-bottom:22px" id="rvTitle">Con lo que nos contaste…</h1>
+
+        <div class="rv-chips" id="rvChips"></div>
+
+        <div class="rv-card" id="rvCard">
+          <div class="ob-rec" style="margin-bottom:14px">
+            <div class="rart gart sculpt"><span class="rb">Desbloqueada para ti</span></div>
+            <div>
+              <div class="rt">Sculpt · 20 min</div>
+              <div class="rn">20 min · Sculpt : Glúteos</div>
+              <div class="rm">Con Valeria Méndez · ★ 4.9</div>
+            </div>
           </div>
-        </a>
-        <p class="ob-note" style="max-width:520px;margin-bottom:22px">Normalmente exclusiva para miembros. Hoy es tuya, sin costo.</p>
-        <div class="ob-cta-row">
-          <button class="ob-btn dark" onclick="location.href='clase.html'">▶ Comenzar mi primera clase</button>
-          <button class="ob-btn light" onclick="location.href='index.html'">Ir a mi espacio</button>
+          <div class="rv-go"><span class="rv-bar"><i></i></span> Abriendo tu clase…</div>
+          <button class="ob-skiplink" style="margin-top:14px" onclick="skipToHome()">Prefiero explorar primero</button>
         </div>
       </div>
     </section>
@@ -428,7 +450,73 @@ function render(){
   var input = steps[i].querySelector('input');
   if(input) setTimeout(function(){ input.focus(); }, 60);
   if(i === OFFER_STEP) startOffer();
+  if(i === total-1) runResolve();
   window.scrollTo(0,0);
+}
+
+/* ---- the resolve moment ----
+   Their own answers are echoed back and collapse into the recommendation,
+   then it advances into the class on its own. Nothing to decide. */
+var LABELS = {
+  tonificar:'Tonificar', fuerza:'Aumentar fuerza', peso:'Bajar de peso',
+  autocuidado:'Autocuidado', dormir:'Dormir mejor', pilates:'Mejorar pilates',
+  resistencia:'Resistencia', flexibilidad:'Flexibilidad', estres:'Reducir estrés',
+  prenatal:'Prenatal/postnatal',
+  barre:'Barre', funcional:'Funcional', pilatesmat:'Pilates Mat',
+  sculpt:'Sculpt', somara:'Somara', tone:'Tone', meditacion:'Meditación',
+  nueva:'Empezando', retomando:'Retomando', regular:'Constante', avanzada:'Avanzada'
+};
+var resolved = false;
+function runResolve(){
+  if(resolved) return;
+  resolved = true;
+
+  function pick(step, sel){ var el = steps[step].querySelector(sel); return el && el.getAttribute('data-val'); }
+  var goal  = pick(1, '.ob-opt.sel');
+  var mins  = pick(2, '[data-group=minutos] .ob-opt.sel');
+  var style = pick(3, '.ob-opt.sel');
+  var level = pick(4, '.ob-opt.sel');
+
+  var chips = [];
+  if(goal)  chips.push(LABELS[goal] || goal);
+  if(mins)  chips.push(mins.replace('-', '–') + ' min');
+  if(style) chips.push(LABELS[style] || style);
+  if(level) chips.push(LABELS[level] || level);
+  if(!chips.length) chips = ['Tus preferencias'];
+
+  /* the sentence the class page repeats back as proof */
+  var why = 'Porque quieres ' + ((LABELS[goal] || 'moverte').toLowerCase());
+  if(mins) why += ' en sesiones de ' + mins.replace('-', '–') + ' min';
+  Anyara.setReason(why);
+
+  var box = document.getElementById('rvChips');
+  box.innerHTML = '';
+  chips.forEach(function(c, n){
+    var s = document.createElement('span');
+    s.textContent = c;
+    box.appendChild(s);
+    setTimeout(function(){ s.classList.add('in'); }, 120 * n);
+  });
+
+  var settle = 120 * chips.length + 620;
+  setTimeout(function(){
+    document.getElementById('rvEyebrow').textContent = 'Elegida para ti';
+    document.getElementById('rvTitle').textContent = 'Encontramos tu clase.';
+    box.classList.add('out');
+  }, settle);
+
+  setTimeout(function(){
+    document.getElementById('rvCard').classList.add('in');
+    document.querySelector('.rv-bar > i').classList.add('run');
+  }, settle + 320);
+
+  window.__resolveTimer = setTimeout(function(){
+    location.href = 'bienvenida.html';
+  }, settle + 2350);
+}
+function skipToHome(){
+  clearTimeout(window.__resolveTimer);
+  location.href = 'index.html';
 }
 function goTo(n){ i = Math.max(0, Math.min(n, total-1)); render(); }
 function next(){

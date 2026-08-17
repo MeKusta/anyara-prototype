@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Tu primera clase</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* Full-screen first-class experience. The paused state is a branded title
+   card rather than a video still, so the personalisation IS the frame —
+   nothing is overlaid, and it clears the moment play starts. */
+body{background:#100e0d;min-height:100vh;display:flex;flex-direction:column}
+.bv-top{display:flex;align-items:center;justify-content:space-between;padding:20px 32px;flex:0 0 auto}
+.bv-top .logo{color:#fff;font-size:23px}
+.bv-close{background:none;border:none;color:rgba(255,255,255,.55);font-family:"Helvetica Neue",Arial,sans-serif;
+  font-size:12px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+.bv-close:hover{color:#fff}
+
+.bv-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:0 32px 34px}
+.bv-wrap{width:min(1080px,100%)}
+.bv-screen{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center}
+.bv-screen::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,14,13,.35),rgba(16,14,13,.72));pointer-events:none}
+
+/* the title card = the poster frame */
+.bv-card{position:relative;z-index:2;text-align:center;color:#fff;max-width:620px;padding:0 30px;
+  transition:opacity .5s ease,transform .5s ease}
+.bv-card.gone{opacity:0;transform:scale(.97);pointer-events:none}
+.bv-card .kicker{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.bv-card h1{font-size:44px;line-height:1.1;color:#fff;margin-bottom:14px}
+.bv-card .why{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;color:rgba(255,255,255,.85);
+  line-height:1.55;margin-bottom:8px}
+.bv-card .specs{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:rgba(255,255,255,.6);
+  letter-spacing:.06em;margin-bottom:26px}
+.bv-play{width:88px;height:88px;border-radius:50%;background:#fff;border:none;cursor:pointer;
+  font-size:32px;color:var(--ink);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;
+  transition:transform .2s ease}
+.bv-play:hover{transform:scale(1.06)}
+.bv-card .unlocked{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);
+  border-radius:100px;padding:7px 16px;font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;color:#fff}
+
+/* survives after play, so the context isn't lost if they looked away */
+.bv-chip{position:absolute;z-index:3;top:18px;left:18px;display:flex;align-items:center;gap:8px;
+  background:rgba(0,0,0,.45);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.2);
+  border-radius:100px;padding:8px 15px;color:#fff;font-family:"Helvetica Neue",Arial,sans-serif;
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  opacity:0;transition:opacity .5s ease .25s;pointer-events:none}
+.bv-chip.on{opacity:1}
+.bv-chip .st{color:var(--gold)}
+
+.bv-bar{display:flex;align-items:center;gap:16px;padding:18px 4px 0;color:#fff;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px}
+.bv-bar .tog{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;width:28px}
+.bv-line{flex:1;height:4px;background:rgba(255,255,255,.22);border-radius:2px;overflow:hidden;cursor:pointer}
+.bv-line > i{display:block;height:100%;width:0;background:var(--gold)}
+.bv-title{color:rgba(255,255,255,.75);margin-right:auto}
+.bv-title b{color:#fff;font-weight:600}
+@media (prefers-reduced-motion:reduce){.bv-card,.bv-chip{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="bv-top">
+  <span class="logo"><b>A</b>nyara</span>
+  <button class="bv-close" onclick="location.href='index.html'">Ir a mi espacio ✕</button>
+</div>
+
+<div class="bv-stage">
+  <div class="bv-wrap">
+    <div class="bv-screen gart sculpt">
+
+      <div class="bv-chip" id="chip"><span class="st">★</span> Elegida para ti</div>
+
+      <div class="bv-card" id="card">
+        <div class="kicker" id="kicker">Elegida para ti, Paulo</div>
+        <h1>20 min · Sculpt : Glúteos</h1>
+        <p class="why" id="why">Porque quieres tonificar en sesiones de 10–20 min</p>
+        <p class="specs">Con Valeria Méndez · Sculpt · 20 min · Principiante</p>
+        <button class="bv-play" onclick="togglePlay()">▶</button>
+        <span class="unlocked">Desbloqueada para ti</span>
+      </div>
+
+    </div>
+
+    <div class="bv-bar">
+      <button class="tog" id="tog" onclick="togglePlay()">▶</button>
+      <span id="t">0:00</span>
+      <div class="bv-line" id="line"><i id="prog"></i></div>
+      <span>20:00</span>
+      <span class="bv-title"><b>Sculpt : Glúteos</b> — Valeria Méndez</span>
+      <a href="completada.html?c=sculpt" class="btn btn-gold" style="padding:9px 18px;font-size:11px">Finalizar</a>
+    </div>
+  </div>
+</div>
+
+<script src="anyara.js"></script>
+<script>
+/* echo their own answers back — the proof that this was chosen, not generic */
+document.getElementById('kicker').textContent = 'Elegida para ti, ' + Anyara.name();
+document.getElementById('why').textContent = Anyara.reason();
+
+var playing = false, sec = 0, total = 1200, timer = null;
+function fmt(s){ var m = Math.floor(s/60), r = Math.floor(s%60); return m + ':' + (r<10?'0':'') + r; }
+function paint(){
+  document.getElementById('prog').style.width = (sec/total*100) + '%';
+  document.getElementById('t').textContent = fmt(sec);
+}
+function togglePlay(){
+  playing = !playing;
+  /* first play clears the title card and hands off to the persistent chip */
+  document.getElementById('card').classList.toggle('gone', playing);
+  document.getElementById('chip').classList.toggle('on', playing);
+  document.getElementById('tog').textContent = playing ? '❚❚' : '▶';
+  if (playing) { timer = setInterval(function(){ sec = Math.min(sec+1, total); paint(); }, 1000); }
+  else { clearInterval(timer); }
+}
+document.getElementById('line').addEventListener('click', function(e){
+  var r = this.getBoundingClientRect();
+  sec = Math.round((e.clientX - r.left) / r.width * total);
+  paint();
+});
+</script>
+</body>
+</html>
