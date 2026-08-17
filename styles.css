@@ -315,6 +315,23 @@ h2{font-size:15px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
 .art-tags span{background:rgba(0,0,0,.5);color:#fff;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
   padding:5px 11px;border-radius:100px;font-family:"Helvetica Neue",Arial,sans-serif;backdrop-filter:blur(4px)}
 
+/* ---------- Limited-time offer banner (site-wide, after onboarding) ---------- */
+.offerbar{position:sticky;top:0;z-index:60;background:var(--ink);color:#fff;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px}
+.offerbar-inner{max-width:var(--maxw);margin:0 auto;padding:11px 32px;
+  display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap}
+.offerbar .ob-tag{background:var(--gold);color:var(--ink);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:700;padding:4px 10px;border-radius:100px}
+.offerbar .ob-msg{opacity:.92}
+.offerbar .ob-msg b{color:var(--gold)}
+.offerbar .ob-clock{font-variant-numeric:tabular-nums;font-weight:700;letter-spacing:.06em;
+  background:rgba(255,255,255,.12);padding:5px 12px;border-radius:6px}
+.offerbar .ob-go{color:var(--gold);text-decoration:underline;text-underline-offset:3px;font-weight:600}
+.offerbar .ob-x{position:absolute;right:22px;background:none;border:none;color:rgba(255,255,255,.5);
+  font-size:15px;cursor:pointer}
+.offerbar .ob-x:hover{color:#fff}
+body.has-offerbar .topbar{top:41px}
+
 /* ---------- Video player (demo) ---------- */
 .vp-scrim{position:fixed;inset:0;z-index:140;background:rgba(12,10,9,.96);display:none;align-items:center;justify-content:center}
 .vp-scrim.open{display:flex}

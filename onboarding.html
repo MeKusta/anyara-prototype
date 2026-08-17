@@ -6,8 +6,8 @@
 <title>Anyara — Personaliza tu práctica</title>
 <link rel="stylesheet" href="styles.css">
 <style>
-/* ---------- Onboarding · split layout (image left / question right) ---------- */
-/* Demo only: answers are NOT stored anywhere. */
+/* ---------- Onboarding · split layout (visual left / content right) ---------- */
+/* Demo only: answers and account details are NOT stored or sent anywhere. */
 body{overflow-x:hidden}
 .ob-top{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
 .ob-top-inner{padding:18px 32px;display:flex;align-items:center;justify-content:space-between}
@@ -23,16 +23,16 @@ body{overflow-x:hidden}
 .ob-visual .quote .q1{font-family:"Georgia",serif;font-size:26px;line-height:1.25;font-style:italic}
 .ob-visual .quote .q2{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-top:10px;opacity:.85}
 
-.ob-main{display:flex;flex-direction:column;padding:64px 72px 40px;max-width:760px}
+.ob-main{display:flex;flex-direction:column;padding:56px 72px 40px;max-width:780px}
 .ob-qcount{display:flex;align-items:center;gap:12px;font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);margin-bottom:10px}
 .ob-back{background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-2);padding:0}
 .ob-back:hover{color:var(--ink)}
 .ob-main h1{font-size:34px;margin-bottom:8px}
-.ob-hint{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--ink-2);margin-bottom:30px}
+.ob-hint{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--ink-2);margin-bottom:30px;line-height:1.55}
 .ob-hint b{color:var(--ink)}
 .ob-sub{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);margin:22px 0 12px}
 
-/* option buttons — Alo-style rectangles */
+/* option buttons */
 .ob-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px}
 .ob-grid1{display:grid;gap:12px}
 .ob-rowflex{display:flex;gap:12px;flex-wrap:wrap}
@@ -44,33 +44,85 @@ body{overflow-x:hidden}
 .ob-opt.sel::after{content:"✓";position:absolute;top:-9px;right:-9px;width:20px;height:20px;border-radius:50%;
   background:var(--ink);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center}
 .ob-opt.sm{padding:12px 20px;flex:0 0 auto;min-width:72px}
-.ob-opt:disabled{opacity:.35;cursor:default}
-.ob-opt:disabled:hover{border-color:var(--line)}
 
-/* welcome step */
+/* account inputs — one field per screen */
+.ob-field{max-width:460px}
+.ob-field input{width:100%;border:none;border-bottom:2px solid var(--line);background:transparent;
+  font-family:"Georgia",serif;font-size:30px;padding:10px 2px;color:var(--ink);outline:none}
+.ob-field input:focus{border-bottom-color:var(--gold)}
+.ob-field input::placeholder{color:var(--ink-3)}
+.ob-note{font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;color:var(--ink-3);margin-top:12px;line-height:1.5}
+
+/* welcome + closing screens */
 .ob-welcome h1{font-size:42px;line-height:1.1;margin-bottom:14px}
-.ob-welcome .eyebrow{margin-bottom:14px}
 .ob-welcome p{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;color:var(--ink-2);max-width:440px;line-height:1.6;margin-bottom:30px}
-.ob-cta-row{display:flex;gap:14px}
+.ob-cta-row{display:flex;gap:14px;flex-wrap:wrap}
 .ob-btn{padding:15px 28px;font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;letter-spacing:.14em;
   text-transform:uppercase;font-weight:600;cursor:pointer;border:1px solid var(--ink)}
 .ob-btn.dark{background:var(--ink);color:#fff}
 .ob-btn.dark:hover{background:#000}
 .ob-btn.light{background:#fff;color:var(--ink)}
 .ob-btn.light:hover{background:var(--sand)}
+.ob-btn.gold{background:var(--gold);border-color:var(--gold);color:#fff}
+.ob-btn.gold:hover{background:var(--gold-deep);border-color:var(--gold-deep)}
+.ob-skiplink{display:block;margin-top:16px;background:none;border:none;cursor:pointer;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-3);text-decoration:underline;text-underline-offset:3px}
+.ob-skiplink:hover{color:var(--ink-2)}
 
-/* footer next */
 .ob-next{margin-top:auto;padding-top:36px}
 .ob-next .ob-btn{width:100%;text-align:center}
 .ob-next .ob-btn[disabled]{opacity:.35;cursor:default}
 
 .ob-step{display:none;flex:1;flex-direction:column}
 .ob-step.on{display:flex}
+
+/* social proof */
+.ob-proof .big{font-family:"Georgia",serif;font-size:40px;line-height:1.15;margin-bottom:16px}
+.ob-proof .big b{color:var(--gold-deep);font-weight:400}
+.ob-stats{display:flex;gap:34px;margin:26px 0 22px;flex-wrap:wrap}
+.ob-stat .n{font-family:"Georgia",serif;font-size:30px}
+.ob-stat .l{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);margin-top:2px}
+.ob-quotes{display:grid;gap:12px;max-width:520px;margin-bottom:8px}
+.ob-quotes div{border-left:2px solid var(--gold);padding:8px 0 8px 16px;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--ink-2);line-height:1.5}
+.ob-quotes span{display:block;color:var(--ink-3);font-size:12px;margin-top:5px}
+
+/* paywall plans */
+.ob-plans{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:560px;margin-bottom:22px}
+.ob-plan{position:relative;border:1px solid var(--line);border-radius:12px;padding:22px;cursor:pointer;background:#fff}
+.ob-plan:hover{border-color:var(--ink)}
+.ob-plan.sel{border-color:var(--ink);border-width:2px;padding:21px}
+.ob-plan .pn{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);margin-bottom:8px}
+.ob-plan .pp{font-family:"Georgia",serif;font-size:32px}
+.ob-plan .pp s{font-size:18px;color:var(--ink-3);margin-right:8px}
+.ob-plan .pd{font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;color:var(--ink-2);margin-top:6px;line-height:1.45}
+.ob-plan .pbadge{position:absolute;top:-10px;right:16px;background:var(--gold);color:#fff;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 11px;border-radius:100px}
+.ob-perks{list-style:none;margin-bottom:24px;max-width:520px}
+.ob-perks li{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--ink-2);padding:6px 0;display:flex;gap:10px}
+.ob-perks li::before{content:"✓";color:var(--gold-deep)}
+
+/* countdown */
+.ob-clockbox{display:flex;align-items:center;gap:16px;background:var(--ink);color:#fff;
+  border-radius:12px;padding:18px 24px;max-width:520px;margin:22px 0}
+.ob-clockbox .cl{font-family:"Georgia",serif;font-size:36px;font-variant-numeric:tabular-nums;letter-spacing:.03em}
+.ob-clockbox .cx{font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;line-height:1.5;opacity:.85}
+.ob-clockbox .cx b{color:var(--gold)}
+
+/* final recommended class */
+.ob-rec{display:flex;gap:20px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:16px;max-width:560px;margin-bottom:8px}
+.ob-rec .rart{width:170px;height:110px;border-radius:10px;flex:0 0 auto;position:relative}
+.ob-rec .rart .rb{position:absolute;top:9px;left:9px;background:var(--gold);color:#fff;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 9px;border-radius:100px}
+.ob-rec .rt{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep)}
+.ob-rec .rn{font-size:21px;margin:4px 0 3px}
+.ob-rec .rm{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-2)}
 </style>
 </head>
 <body>
 
-<!-- top bar + progress -->
 <div class="ob-top">
   <div class="ob-top-inner">
     <span class="logo"><b>A</b>nyara</span>
@@ -81,7 +133,7 @@ body{overflow-x:hidden}
 
 <div class="ob-split">
 
-  <!-- left visual (gradient stands in for photography) -->
+  <!-- left visual — gradient stands in for photography -->
   <div class="ob-visual gart sculpt" id="visual">
     <div class="quote">
       <div class="q1">“Muévete con intención.”</div>
@@ -89,7 +141,6 @@ body{overflow-x:hidden}
     </div>
   </div>
 
-  <!-- right content -->
   <div class="ob-main">
 
     <!-- 0 · welcome -->
@@ -97,15 +148,15 @@ body{overflow-x:hidden}
       <div style="margin:auto 0">
         <div class="eyebrow">¡Bienvenida!</div>
         <h1>Personalicemos tu práctica</h1>
-        <p>Ayúdanos a encontrar lo que te mueve. Con tus preferencias, tu página de inicio se llena de recomendaciones hechas para ti.</p>
+        <p>Cuéntanos qué te mueve y armamos tu espacio: clases elegidas para ti, a tu ritmo y con tu tiempo. Son dos minutos.</p>
         <div class="ob-cta-row">
-          <button class="ob-btn dark" onclick="next()">⚙ Configurar preferencias</button>
+          <button class="ob-btn dark" onclick="next()">⚙ Empecemos</button>
           <button class="ob-btn light" onclick="location.href='index.html'">Saltar por ahora</button>
         </div>
       </div>
     </section>
 
-    <!-- 1 · goals (multi, max 5) -->
+    <!-- 1 · metas -->
     <section class="ob-step" data-visual="somara" data-mode="multi" data-max="5" data-min="1">
       <div class="ob-qcount"><button class="ob-back" onclick="prev()">←</button> Pregunta 1 de 6</div>
       <h1>¿Cuáles son tus metas?</h1>
@@ -125,7 +176,7 @@ body{overflow-x:hidden}
       <div class="ob-next"><button class="ob-btn dark" onclick="next()" disabled>Siguiente</button></div>
     </section>
 
-    <!-- 2 · time (two single-choice groups) -->
+    <!-- 2 · tiempo -->
     <section class="ob-step" data-visual="funcional" data-mode="groups">
       <div class="ob-qcount"><button class="ob-back" onclick="prev()">←</button> Pregunta 2 de 6</div>
       <h1>¿Cuánto tiempo tienes?</h1>
@@ -149,7 +200,7 @@ body{overflow-x:hidden}
       <div class="ob-next"><button class="ob-btn dark" onclick="next()" disabled>Siguiente</button></div>
     </section>
 
-    <!-- 3 · styles (multi, max 5) -->
+    <!-- 3 · estilos -->
     <section class="ob-step" data-visual="barre" data-mode="multi" data-max="5" data-min="1">
       <div class="ob-qcount"><button class="ob-back" onclick="prev()">←</button> Pregunta 3 de 6</div>
       <h1>¿Qué estilos te interesan?</h1>
@@ -167,7 +218,7 @@ body{overflow-x:hidden}
       <div class="ob-next"><button class="ob-btn dark" onclick="next()" disabled>Siguiente</button></div>
     </section>
 
-    <!-- 4 · level (single) -->
+    <!-- 4 · nivel -->
     <section class="ob-step" data-visual="pilates" data-mode="single">
       <div class="ob-qcount"><button class="ob-back" onclick="prev()">←</button> Pregunta 4 de 6</div>
       <h1>Describe tu nivel</h1>
@@ -181,7 +232,7 @@ body{overflow-x:hidden}
       <div class="ob-next"><button class="ob-btn dark" onclick="next()" disabled>Siguiente</button></div>
     </section>
 
-    <!-- 5 · equipment (multi, no max) -->
+    <!-- 5 · equipo -->
     <section class="ob-step" data-visual="pilatesmat" data-mode="multi" data-max="99" data-min="1">
       <div class="ob-qcount"><button class="ob-back" onclick="prev()">←</button> Pregunta 5 de 6</div>
       <h1>¿A qué equipo tienes acceso?</h1>
@@ -201,7 +252,7 @@ body{overflow-x:hidden}
       <div class="ob-next"><button class="ob-btn dark" onclick="next()" disabled>Siguiente</button></div>
     </section>
 
-    <!-- 6 · about you (two single-choice groups) -->
+    <!-- 6 · sobre ti -->
     <section class="ob-step" data-visual="tone" data-mode="groups">
       <div class="ob-qcount"><button class="ob-back" onclick="prev()">←</button> Pregunta 6 de 6</div>
       <h1>Un poco más sobre ti</h1>
@@ -223,68 +274,230 @@ body{overflow-x:hidden}
         <button class="ob-opt sm" data-val="otro">Otro</button>
         <button class="ob-opt sm" data-val="na">Prefiero no decir</button>
       </div>
-      <div class="ob-next"><button class="ob-btn dark" onclick="finish()" disabled>Enviar</button></div>
+      <div class="ob-next"><button class="ob-btn dark" onclick="next()" disabled>Siguiente</button></div>
+    </section>
+
+    <!-- 7 · cuenta: nombre -->
+    <section class="ob-step" data-visual="sculpt" data-mode="input" data-kind="text">
+      <div class="ob-qcount"><button class="ob-back" onclick="prev()">←</button> Tu cuenta · 1 de 3</div>
+      <h1>¿Cómo te llamamos?</h1>
+      <p class="ob-hint">Tu nombre aparecerá en tu saludo cada vez que entres.</p>
+      <div class="ob-field"><input type="text" id="acName" placeholder="Tu nombre" autocomplete="off"></div>
+      <div class="ob-next"><button class="ob-btn dark" onclick="next()" disabled>Siguiente</button></div>
+    </section>
+
+    <!-- 8 · cuenta: email -->
+    <section class="ob-step" data-visual="somara" data-mode="input" data-kind="email">
+      <div class="ob-qcount"><button class="ob-back" onclick="prev()">←</button> Tu cuenta · 2 de 3</div>
+      <h1>¿A dónde te escribimos?</h1>
+      <p class="ob-hint">Usamos tu correo para guardar tu progreso y avisarte de clases nuevas. Nada de spam, prometido.</p>
+      <div class="ob-field"><input type="email" id="acMail" placeholder="tu@correo.com" autocomplete="off"></div>
+      <div class="ob-next"><button class="ob-btn dark" onclick="next()" disabled>Siguiente</button></div>
+    </section>
+
+    <!-- 9 · cuenta: contraseña -->
+    <section class="ob-step" data-visual="barre" data-mode="input" data-kind="pass">
+      <div class="ob-qcount"><button class="ob-back" onclick="prev()">←</button> Tu cuenta · 3 de 3</div>
+      <h1>Crea tu contraseña</h1>
+      <p class="ob-hint">Mínimo 8 caracteres. Con esto tu cuenta queda lista.</p>
+      <div class="ob-field">
+        <input type="password" id="acPass" placeholder="••••••••" autocomplete="off">
+        <p class="ob-note">Prototipo: nada de lo que escribes aquí se guarda ni se envía.</p>
+      </div>
+      <div class="ob-next"><button class="ob-btn dark" onclick="next()" disabled>Crear mi cuenta</button></div>
+    </section>
+
+    <!-- 10 · social proof -->
+    <section class="ob-step ob-proof" data-visual="pilates">
+      <div style="margin:auto 0">
+        <div class="eyebrow">Tu cuenta está lista</div>
+        <div class="big">Ya son <b>+2,400 mujeres</b> moviéndose con intención.</div>
+        <div class="ob-stats">
+          <div class="ob-stat"><div class="n">4.9 ★</div><div class="l">Valoración media</div></div>
+          <div class="ob-stat"><div class="n">+180</div><div class="l">Clases disponibles</div></div>
+          <div class="ob-stat"><div class="n">7</div><div class="l">Disciplinas</div></div>
+        </div>
+        <div class="ob-quotes">
+          <div>“Encontré por fin algo que puedo sostener. 20 minutos y sigo con mi día.”<span>Ana L. · miembro desde hace 8 meses</span></div>
+          <div>“El Reto Volver a Ti me devolvió la constancia que había perdido.”<span>Carolina M. · miembro desde hace 1 año</span></div>
+        </div>
+        <div class="ob-next" style="margin-top:30px;padding-top:0">
+          <button class="ob-btn dark" onclick="next()">Continuar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 · paywall -->
+    <section class="ob-step" data-visual="somara">
+      <div style="margin:auto 0">
+        <div class="eyebrow">Hecho a tu medida</div>
+        <h1 style="margin-bottom:10px">Tu espacio ya está listo,<br>¿lo abrimos completo?</h1>
+        <p class="ob-hint">Con tu membresía entra todo lo que acabas de elegir — y todo lo que viene después.</p>
+        <div class="ob-plans">
+          <div class="ob-plan sel" data-plan="mensual">
+            <div class="pn">Mensual</div>
+            <div class="pp">$39</div>
+            <div class="pd">Facturado cada mes<br>Cancela cuando quieras</div>
+          </div>
+          <div class="ob-plan" data-plan="trimestral">
+            <span class="pbadge">Ahorra 15%</span>
+            <div class="pn">Trimestral</div>
+            <div class="pp">$99</div>
+            <div class="pd">Facturado cada 3 meses<br>Prioridad en eventos en vivo</div>
+          </div>
+        </div>
+        <ul class="ob-perks">
+          <li>Acceso ilimitado a las 7 disciplinas</li>
+          <li>Retos y series guiadas paso a paso</li>
+          <li>Tu progreso, rachas y biblioteca personal</li>
+        </ul>
+        <div class="ob-cta-row"><button class="ob-btn gold" onclick="goTo(13)">Únete ahora</button></div>
+        <button class="ob-skiplink" onclick="goTo(12)">Ahora no, quiero mirar primero</button>
+      </div>
+    </section>
+
+    <!-- 12 · limited-time offer (downsell) -->
+    <section class="ob-step" data-visual="tone">
+      <div style="margin:auto 0">
+        <div class="eyebrow">Solo por hoy</div>
+        <h1 style="margin-bottom:10px">Entonces empieza por moverte.</h1>
+        <p class="ob-hint">Haz tu primera clase, sin pagar nada. Y si te enamoras — que suele pasar — te guardamos un <b>15% de descuento</b> durante las próximas dos horas.</p>
+        <div class="ob-clockbox">
+          <div class="cl" id="obClock">2:00:00</div>
+          <div class="cx"><b>15% de descuento</b> en tu primera membresía.<br>Después de esto, vuelve al precio normal.</div>
+        </div>
+        <ul class="ob-perks">
+          <li>Mensual <s style="color:var(--ink-3)">$39</s> <b>$33</b> al mes</li>
+          <li>Trimestral <s style="color:var(--ink-3)">$99</s> <b>$84</b> al trimestre</li>
+        </ul>
+        <div class="ob-cta-row"><button class="ob-btn gold" onclick="goTo(13)">Guardar mi 15%</button></div>
+        <button class="ob-skiplink" onclick="goTo(13)">Prefiero entrenar primero</button>
+      </div>
+    </section>
+
+    <!-- 13 · welcome recommended class -->
+    <section class="ob-step" data-visual="sculpt">
+      <div style="margin:auto 0">
+        <div class="eyebrow">Elegida para ti</div>
+        <h1 style="margin-bottom:10px">Empieza por aquí.</h1>
+        <p class="ob-hint">Con lo que nos contaste, esta es la clase con la que te recomendamos abrir tu práctica. Es una clase de miembros — <b>te la desbloqueamos como bienvenida.</b></p>
+        <a class="ob-rec" href="clase.html">
+          <div class="rart gart sculpt"><span class="rb">Desbloqueada para ti</span></div>
+          <div>
+            <div class="rt">Sculpt · 20 min</div>
+            <div class="rn">20 min · Sculpt : Glúteos</div>
+            <div class="rm">Con Valeria Méndez · ★ 4.9</div>
+          </div>
+        </a>
+        <p class="ob-note" style="max-width:520px;margin-bottom:22px">Normalmente exclusiva para miembros. Hoy es tuya, sin costo.</p>
+        <div class="ob-cta-row">
+          <button class="ob-btn dark" onclick="location.href='clase.html'">▶ Comenzar mi primera clase</button>
+          <button class="ob-btn light" onclick="location.href='index.html'">Ir a mi espacio</button>
+        </div>
+      </div>
     </section>
 
   </div>
 </div>
 
 <script>
-/* Demo flow — nothing is stored anywhere. */
-var steps = Array.prototype.slice.call(document.querySelectorAll('.ob-step'));
-var total = steps.length;
-var bar = document.getElementById('bar');
+/* Demo flow — nothing is stored or sent. */
+var steps  = Array.prototype.slice.call(document.querySelectorAll('.ob-step'));
+var total  = steps.length;
+var bar    = document.getElementById('bar');
 var visual = document.getElementById('visual');
 var VISUALS = ['sculpt','somara','funcional','barre','pilates','pilatesmat','tone'];
+var OFFER_STEP = 12, OFFER_MS = 2*60*60*1000;
 var i = 0;
 
 function render(){
   steps.forEach(function(s,idx){ s.classList.toggle('on', idx===i); });
   bar.style.width = Math.round((i/(total-1))*100) + '%';
-  var v = steps[i].getAttribute('data-visual');
   VISUALS.forEach(function(c){ visual.classList.remove(c); });
-  visual.classList.add(v);
+  visual.classList.add(steps[i].getAttribute('data-visual'));
+  var input = steps[i].querySelector('input');
+  if(input) setTimeout(function(){ input.focus(); }, 60);
+  if(i === OFFER_STEP) startOffer();
   window.scrollTo(0,0);
 }
-function next(){ if(i<total-1){ i++; render(); } }
-function prev(){ if(i>0){ i--; render(); } }
-function finish(){ location.href='index.html'; }
+function goTo(n){ i = Math.max(0, Math.min(n, total-1)); render(); }
+function next(){ goTo(i+1); }
+function prev(){ goTo(i-1); }
 
-/* selection wiring per step */
+/* the 15% window opens the moment the offer is shown, and rides along
+   to the rest of the site via the banner in anyara.js */
+var offerEnds = null, offerTimer = null;
+function startOffer(){
+  if(offerEnds) return;
+  offerEnds = Date.now() + OFFER_MS;
+  try { localStorage.setItem('anyara_offer_expires', String(offerEnds)); } catch(e){}
+  var el = document.getElementById('obClock');
+  offerTimer = setInterval(paintClock, 1000);
+  paintClock();
+  function paintClock(){
+    var left = Math.max(0, Math.floor((offerEnds - Date.now())/1000));
+    var h = Math.floor(left/3600), m = Math.floor((left%3600)/60), s = left%60;
+    el.textContent = h + ':' + pad(m) + ':' + pad(s);
+    if(left <= 0) clearInterval(offerTimer);
+  }
+  function pad(n){ return n<10 ? '0'+n : ''+n; }
+}
+
+/* per-step gating */
 steps.forEach(function(step){
   var mode = step.getAttribute('data-mode');
   if(!mode) return;
   var nextBtn = step.querySelector('.ob-next .ob-btn');
 
   function ready(){
-    if(mode==='multi') return step.querySelectorAll('.ob-opt.sel').length >= parseInt(step.getAttribute('data-min')||'1',10);
+    if(mode==='multi')  return step.querySelectorAll('.ob-opt.sel').length >= parseInt(step.getAttribute('data-min')||'1',10);
     if(mode==='single') return !!step.querySelector('.ob-opt.sel');
-    if(mode==='groups'){
-      var groups = step.querySelectorAll('[data-group]');
-      return Array.prototype.every.call(groups, function(g){ return g.querySelector('.ob-opt.sel'); });
+    if(mode==='groups') return Array.prototype.every.call(step.querySelectorAll('[data-group]'), function(g){ return g.querySelector('.ob-opt.sel'); });
+    if(mode==='input'){
+      var v = step.querySelector('input').value.trim();
+      var kind = step.getAttribute('data-kind');
+      if(kind==='email') return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      if(kind==='pass')  return v.length >= 8;
+      return v.length >= 2;
     }
   }
   function sync(){ nextBtn.disabled = !ready(); }
 
-  step.querySelectorAll('.ob-opt').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      if(mode==='multi'){
-        var max = parseInt(step.getAttribute('data-max')||'99',10);
-        if(!btn.classList.contains('sel') && step.querySelectorAll('.ob-opt.sel').length >= max) return;
-        btn.classList.toggle('sel');
-      } else if(mode==='single'){
-        step.querySelectorAll('.ob-opt').forEach(function(b){ b.classList.remove('sel'); });
-        btn.classList.add('sel');
-      } else if(mode==='groups'){
-        var group = btn.closest('[data-group]');
-        group.querySelectorAll('.ob-opt').forEach(function(b){ b.classList.remove('sel'); });
-        btn.classList.add('sel');
-      }
-      sync();
+  if(mode==='input'){
+    var field = step.querySelector('input');
+    field.addEventListener('input', sync);
+    field.addEventListener('keydown', function(e){ if(e.key==='Enter' && ready()) next(); });
+  } else {
+    step.querySelectorAll('.ob-opt').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if(mode==='multi'){
+          var max = parseInt(step.getAttribute('data-max')||'99',10);
+          if(!btn.classList.contains('sel') && step.querySelectorAll('.ob-opt.sel').length >= max) return;
+          btn.classList.toggle('sel');
+        } else if(mode==='single'){
+          step.querySelectorAll('.ob-opt').forEach(function(b){ b.classList.remove('sel'); });
+          btn.classList.add('sel');
+        } else if(mode==='groups'){
+          var group = btn.closest('[data-group]');
+          group.querySelectorAll('.ob-opt').forEach(function(b){ b.classList.remove('sel'); });
+          btn.classList.add('sel');
+        }
+        sync();
+      });
     });
+  }
+});
+
+/* plan picker on the paywall */
+document.querySelectorAll('.ob-plan').forEach(function(p){
+  p.addEventListener('click', function(){
+    document.querySelectorAll('.ob-plan').forEach(function(x){ x.classList.remove('sel'); });
+    p.classList.add('sel');
   });
 });
 
+/* a fresh run of the onboarding clears any previous countdown */
+try { localStorage.removeItem('anyara_offer_expires'); } catch(e){}
 render();
 </script>
 </body>
