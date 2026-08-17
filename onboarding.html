@@ -334,18 +334,21 @@ body{overflow-x:hidden}
         <h1 style="margin-bottom:10px">Tu espacio ya está listo,<br>¿lo abrimos completo?</h1>
         <p class="ob-hint">Con tu membresía entra todo lo que acabas de elegir — y todo lo que viene después.</p>
         <div class="ob-plans">
-          <div class="ob-plan sel" data-plan="mensual">
+          <div class="ob-plan" data-plan="mensual">
             <div class="pn">Mensual</div>
-            <div class="pp">$39</div>
-            <div class="pd">Facturado cada mes<br>Cancela cuando quieras</div>
+            <div class="pp">$39<s style="display:none"></s> <span style="font-size:14px;color:var(--ink-2)">/mes</span></div>
+            <div class="pd">Facturado $39 cada mes<br>$468 al año</div>
           </div>
-          <div class="ob-plan" data-plan="trimestral">
-            <span class="pbadge">Ahorra 15%</span>
-            <div class="pn">Trimestral</div>
-            <div class="pp">$99</div>
-            <div class="pd">Facturado cada 3 meses<br>Prioridad en eventos en vivo</div>
+          <div class="ob-plan sel" data-plan="anual">
+            <span class="pbadge">Ahorra 25%</span>
+            <div class="pn">Anual</div>
+            <div class="pp">$29 <span style="font-size:14px;color:var(--ink-2)">/mes</span></div>
+            <div class="pd">Facturado $349 al año<br><b style="color:var(--ink)">Ahorras $119</b> · como 3 meses gratis</div>
           </div>
         </div>
+        <p class="ob-note" style="max-width:520px;margin:-10px 0 18px">
+          Misma membresía en los dos planes — el anual sale $10 más barato al mes.
+        </p>
         <ul class="ob-perks">
           <li>Acceso ilimitado a las 7 disciplinas</li>
           <li>Retos y series guiadas paso a paso</li>

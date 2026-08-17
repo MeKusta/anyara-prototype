@@ -399,9 +399,33 @@ body.is-guest  .member-only{display:none !important}
 .trialnote{font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;color:var(--ink-3);
   text-align:center;margin-top:10px;line-height:1.5}
 
-/* three-up plans */
-.plans.plans3{grid-template-columns:repeat(3,1fr);max-width:1000px}
+/* three-up plans — per-month price leads so the plans compare at a glance */
+.plans.plans3{grid-template-columns:repeat(3,1fr);max-width:1020px}
 .plan .save{font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;color:var(--gold-deep);margin-top:4px}
+.plan .billed{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-2);margin-top:8px;line-height:1.5}
+.plan .savepill{display:inline-block;background:var(--gold-tint);color:var(--gold-deep);
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:600;padding:6px 12px;border-radius:100px;margin-top:12px}
+.plan .savepill.flat{background:var(--sand);color:var(--ink-2)}
+/* side-by-side comparison strip under the plans */
+.plancompare{max-width:1020px;margin:26px auto 0;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--sand);padding:22px 26px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;
+  font-family:"Helvetica Neue",Arial,sans-serif}
+.plancompare .pc-ic{width:44px;height:44px;border-radius:50%;background:var(--gold);color:#fff;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;font-size:19px}
+.plancompare .pc-t{font-family:"Georgia",serif;font-size:20px;color:var(--ink);margin-bottom:3px}
+.plancompare .pc-d{font-size:14px;color:var(--ink-2);line-height:1.5}
+.plancompare .pc-d b{color:var(--gold-deep)}
+
+/* last-call urgency modal */
+.lastcall .modal{max-width:420px;text-align:center}
+.lastcall .lc-clock{font-family:"Georgia",serif;font-size:52px;font-variant-numeric:tabular-nums;
+  letter-spacing:.03em;color:var(--ink);margin:6px 0 4px}
+.lastcall .lc-lab{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:18px}
+.lastcall .lc-strike{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--ink-2);margin-bottom:20px}
+.lastcall .lc-strike s{color:var(--ink-3)}
+.lastcall .lc-strike b{color:var(--ink);font-size:17px}
 
 /* ---------- Limited-time offer banner (site-wide, after onboarding) ---------- */
 .offerbar{position:sticky;top:0;z-index:60;background:var(--ink);color:#fff;

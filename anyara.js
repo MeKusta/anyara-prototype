@@ -11,7 +11,8 @@
     free:   'anyara_free_used',
     streak: 'anyara_streak',
     name:   'anyara_name',
-    paused: 'anyara_paused'
+    paused: 'anyara_paused',
+    warned: 'anyara_lastcall_seen'
   };
   var FREE_ALLOWANCE = 3;
 
@@ -79,36 +80,102 @@
     avatar.replaceWith(join);
   }
 
+  var LAST_CALL_AT = 10 * 60;   // seconds left when the urgency pop-up fires
+  var WARNED = K.warned;
+
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function hms(s) {
+    var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+    return h > 0 ? h + ':' + pad(m) + ':' + pad(s % 60) : pad(m) + ':' + pad(s % 60);
+  }
+
+  /* One countdown drives both the banner and the last-call pop-up, so they
+     can never disagree about how much time is left. */
   function renderBanner() {
     var expires = A.offerEnds();
     if (!expires || A.isMember()) return;
     if (Date.now() >= expires) { A.clearOffer(); return; }
 
-    var bar = document.createElement('div');
-    bar.className = 'offerbar';
-    bar.innerHTML =
-      '<div class="offerbar-inner">' +
-        '<span class="ob-tag">Oferta de bienvenida</span>' +
-        '<span class="ob-msg"><b>15% de descuento</b> en tu primera membresía — termina en</span>' +
-        '<span class="ob-clock" id="offerClock">2:00:00</span>' +
-        '<a class="ob-go" href="membresia.html">Aprovechar ahora</a>' +
-        '<button class="ob-x" aria-label="Cerrar">✕</button>' +
-      '</div>';
-    document.body.insertBefore(bar, document.body.firstChild);
-    document.body.classList.add('has-offerbar');
+    /* demo helper: ?lastcall=1 drops the countdown to 10 minutes so the
+       pop-up can be shown without waiting out the full two hours */
+    if (new URLSearchParams(location.search).get('lastcall') === '1') {
+      A.startOffer(LAST_CALL_AT * 1000);
+      del(WARNED);
+      expires = A.offerEnds();
+    }
 
-    var clock = bar.querySelector('#offerClock');
+    /* don't interrupt someone already on the checkout page */
+    var onCheckout = /checkout\.html/i.test(location.pathname);
+    var bar = onCheckout ? null : buildBanner();
+    var lastCall = null;
     var timer = setInterval(tick, 1000);
     tick();
 
     function tick() {
       var left = Math.floor((expires - Date.now()) / 1000);
-      if (left <= 0) { clearInterval(timer); remove(); A.clearOffer(); return; }
-      var h = Math.floor(left / 3600), m = Math.floor((left % 3600) / 60), s = left % 60;
-      clock.textContent = h + ':' + pad(m) + ':' + pad(s);
+      if (left <= 0) {
+        clearInterval(timer);
+        if (bar) removeBar();
+        if (lastCall) lastCall.remove();
+        A.clearOffer();
+        return;
+      }
+      if (bar) bar.querySelector('.ob-clock').textContent = hms(left);
+      if (lastCall) lastCall.querySelector('.lc-clock').textContent = hms(left);
+      if (!onCheckout && !lastCall && left <= LAST_CALL_AT && get(WARNED) !== '1') {
+        lastCall = buildLastCall(left);
+        set(WARNED, '1');            // fires once, not on every page
+      }
     }
-    function pad(n) { return n < 10 ? '0' + n : '' + n; }
-    function remove() { bar.remove(); document.body.classList.remove('has-offerbar'); }
-    bar.querySelector('.ob-x').addEventListener('click', function () { clearInterval(timer); remove(); });
+
+    function buildBanner() {
+      var el = document.createElement('div');
+      el.className = 'offerbar';
+      el.innerHTML =
+        '<div class="offerbar-inner">' +
+          '<span class="ob-tag">Oferta de bienvenida</span>' +
+          '<span class="ob-msg"><b>15% de descuento</b> en tu primera membresía — termina en</span>' +
+          '<span class="ob-clock">2:00:00</span>' +
+          '<a class="ob-go" href="membresia.html">Aprovechar ahora</a>' +
+          '<button class="ob-x" aria-label="Cerrar">✕</button>' +
+        '</div>';
+      document.body.insertBefore(el, document.body.firstChild);
+      document.body.classList.add('has-offerbar');
+      el.querySelector('.ob-x').addEventListener('click', removeBar);
+      return el;
+    }
+    function removeBar() {
+      if (!bar) return;
+      bar.remove(); bar = null;
+      document.body.classList.remove('has-offerbar');
+    }
+
+    function buildLastCall(left) {
+      var el = document.createElement('div');
+      el.className = 'modal-scrim lastcall open';
+      el.innerHTML =
+        '<div class="modal">' +
+          '<button class="x" aria-label="Cerrar">✕</button>' +
+          '<div class="brandline" style="justify-content:center">' +
+            '<span class="star">★</span>' +
+            '<span class="logo" style="font-size:22px"><b>A</b>nyara</span>' +
+          '</div>' +
+          '<h3>Últimos 10 minutos</h3>' +
+          '<div class="lc-clock">' + hms(left) + '</div>' +
+          '<div class="lc-lab">Tiempo restante</div>' +
+          '<p class="sub">Tu 15% de bienvenida está por vencer. Cuando el reloj llegue a cero, ' +
+            'los planes vuelven a su precio normal.</p>' +
+          '<div class="lc-strike">' +
+            'Anual <s>$349</s> <b>$297</b> al año<br>Mensual <s>$39</s> <b>$33</b> al mes' +
+          '</div>' +
+          '<a href="checkout.html?plan=anual" class="btn btn-gold btn-block" style="margin-bottom:6px">Aprovechar mi 15%</a>' +
+          '<p class="trialnote" style="margin-bottom:10px">7 días gratis primero. Cancela cuando quieras.</p>' +
+          '<button class="btn btn-ghost btn-block lc-no">Ahora no</button>' +
+        '</div>';
+      document.body.appendChild(el);
+      el.querySelector('.x').addEventListener('click', function () { el.remove(); lastCall = null; });
+      el.querySelector('.lc-no').addEventListener('click', function () { el.remove(); lastCall = null; });
+      return el;
+    }
   }
 })();

@@ -40,7 +40,8 @@
     <div class="plan">
       <div class="name">Mensual</div>
       <div class="price">$39<span> /mes</span></div>
-      <div class="save">Máxima flexibilidad</div>
+      <div class="billed">Facturado $39 cada mes<br>$468 al año</div>
+      <span class="savepill flat">Máxima flexibilidad</span>
       <ul>
         <li>Acceso ilimitado a todas las clases</li>
         <li>Las 7 disciplinas</li>
@@ -51,10 +52,11 @@
     </div>
 
     <div class="plan feat">
-      <span class="badge">Más popular</span>
+      <span class="badge">8 de cada 10 lo eligen</span>
       <div class="name">Anual</div>
-      <div class="price">$349<span> /año</span></div>
-      <div class="save">$29/mes · ahorras 25% (2 meses gratis)</div>
+      <div class="price">$29<span> /mes</span></div>
+      <div class="billed">Facturado $349 una vez al año<br><b style="color:var(--ink)">Ahorras $119</b> frente al mensual</div>
+      <span class="savepill">Ahorras 25% · como 3 meses gratis</span>
       <ul>
         <li>Todo lo del plan mensual</li>
         <li>El mejor precio por mes</li>
@@ -66,8 +68,9 @@
 
     <div class="plan">
       <div class="name">Trimestral</div>
-      <div class="price">$99<span> /trimestre</span></div>
-      <div class="save">$33/mes · ahorras 15%</div>
+      <div class="price">$33<span> /mes</span></div>
+      <div class="billed">Facturado $99 cada 3 meses<br><b style="color:var(--ink)">Ahorras $72</b> frente al mensual</div>
+      <span class="savepill">Ahorras 15%</span>
       <ul>
         <li>Todo lo del plan mensual</li>
         <li>Se renueva cada 3 meses</li>
@@ -76,6 +79,20 @@
       <a href="checkout.html?plan=trimestral" class="btn btn-ghost btn-block">Empieza 7 días gratis</a>
     </div>
   </div>
+
+  <!-- makes the annual case explicit instead of leaving it as mental math -->
+  <div class="plancompare">
+    <span class="pc-ic">✦</span>
+    <div style="flex:1;min-width:280px">
+      <div class="pc-t">¿Mensual o anual?</div>
+      <div class="pc-d">
+        Al año, el mensual cuesta <b>$468</b> y el anual <b>$349</b>. Es la misma membresía —
+        el anual sale <b>$10 más barato al mes</b> y te ahorra <b>$119</b>, como recibir 3 meses gratis.
+      </div>
+    </div>
+    <a href="checkout.html?plan=anual" class="btn btn-gold">Elegir anual</a>
+  </div>
+
   <p class="trialnote" style="margin-top:20px">
     Los primeros 7 días son gratis en cualquier plan. Te avisamos por correo antes del primer cobro.<br>
     Sin contratos. Cancela cuando quieras. Pago seguro vía Stripe.
