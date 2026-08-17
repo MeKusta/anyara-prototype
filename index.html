@@ -17,7 +17,7 @@
       <a href="explorar.html" class="nav-link">Explorar</a>
       <a href="series.html" class="nav-link">Series</a>
       <a href="retos.html" class="nav-link">Retos</a>
-      <a href="events.html" class="nav-link">Events</a>
+      <a href="events.html" class="nav-link">Eventos</a>
       <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
     </nav>
     <div class="nav-right">
@@ -77,14 +77,45 @@
 <!-- ===== DISCIPLINE PILLS (color-coded to card gradients) ===== -->
 <div class="wrap section-sm">
   <div class="pillbar">
-    <div class="pill active">Todo</div>
-    <div class="pill barre"><span class="dot"></span>Barre</div>
-    <div class="pill funcional"><span class="dot"></span>Funcional</div>
-    <div class="pill pilatesmat"><span class="dot"></span>Pilates Mat</div>
-    <div class="pill pilates"><span class="dot"></span>Pilates</div>
-    <div class="pill sculpt"><span class="dot"></span>Sculpt</div>
-    <div class="pill somara"><span class="dot"></span>Somara</div>
-    <div class="pill tone"><span class="dot"></span>Tone</div>
+    <a href="explorar.html" class="pill active">Todo</a>
+    <a href="explorar.html?d=barre" class="pill barre"><span class="dot"></span>Barre</a>
+    <a href="explorar.html?d=funcional" class="pill funcional"><span class="dot"></span>Funcional</a>
+    <a href="explorar.html?d=pilatesmat" class="pill pilatesmat"><span class="dot"></span>Pilates Mat</a>
+    <a href="explorar.html?d=pilates" class="pill pilates"><span class="dot"></span>Pilates</a>
+    <a href="explorar.html?d=sculpt" class="pill sculpt"><span class="dot"></span>Sculpt</a>
+    <a href="explorar.html?d=somara" class="pill somara"><span class="dot"></span>Somara</a>
+    <a href="explorar.html?d=tone" class="pill tone"><span class="dot"></span>Tone</a>
+  </div>
+</div>
+
+<!-- ===== STREAK / WEEKLY PROGRESS (members) ===== -->
+<div class="wrap section-sm member-only">
+  <div class="streakbar">
+    <div class="sk">
+      <span class="ic">✦</span>
+      <div><div class="n" id="skN">0</div><div class="l">Días de racha</div></div>
+    </div>
+    <div class="sk">
+      <span class="ic">▷</span>
+      <div><div class="n" id="skC">0</div><div class="l">Clases completadas</div></div>
+    </div>
+    <div class="week" id="skWeek">
+      <i>L</i><i>M</i><i>M</i><i>J</i><i>V</i><i>S</i><i>D</i>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CLASE DEL DÍA ===== -->
+<div class="wrap section-sm">
+  <div class="row-head"><h2>Clase del día</h2></div>
+  <div class="daily">
+    <div class="dart gart pilatesmat"></div>
+    <div class="dbody">
+      <div class="eyebrow">Hoy · Pilates Mat · 15 min</div>
+      <h3>Despierta el core</h3>
+      <p>Quince minutos para activar el centro y empezar el día con la postura en su sitio. Sin equipo, sin excusas.</p>
+      <a href="clase.html" class="btn btn-gold">Hacer la clase de hoy →</a>
+    </div>
   </div>
 </div>
 
@@ -104,7 +135,7 @@
 
 <!-- ===== YOUR LIBRARY (folded in) ===== -->
 <div class="wrap section">
-  <div class="row-head"><h2>Tu biblioteca</h2><a href="profile.html">Ver todo</a></div>
+  <div class="row-head"><h2>Tu biblioteca</h2><a href="biblioteca.html">Ver todo</a></div>
   <div class="libgrid">
     <a href="biblioteca.html" class="libcard">
       <div class="art g1"></div>
@@ -132,28 +163,28 @@
   <div class="eyebrow">Descubre — al bajar</div>
   <div class="row-head"><h2 class="h2-serif">Basado en tus preferencias · 10–20 min</h2><a href="explorar.html">Ver todo</a></div>
   <div class="cardrow">
-    <a href="clase.html" class="ccard small"><div class="art gart sculpt"><span class="len">20 min</span></div><div class="tag">SCULPT</div><div class="title">20 min · Sculpt : Glut</div><div class="meta">Valeria Méndez</div></a>
-    <a href="clase.html" class="ccard small"><div class="art gart funcional"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz</div></a>
-    <a href="clase.html" class="ccard small"><div class="art gart barre"><span class="free">Gratis</span></div><div class="tag">BARRE</div><div class="title">Barre Esencial</div><div class="meta">Valeria Méndez</div></a>
-    <a href="clase.html" class="ccard small"><div class="art gart pilatesmat"><span class="len">40 min</span></div><div class="tag">PILATES MAT</div><div class="title">Pilates Mat Fundamental</div><div class="meta">Sofía Ruiz</div></a>
+    <a href="clase.html" class="ccard small"><div class="art gart sculpt"><span class="len">20 min</span></div><div class="tag">SCULPT</div><div class="title">20 min · Sculpt : Glut</div><div class="meta">Valeria Méndez · Nuevo</div></a>
+    <a href="clase.html" class="ccard small"><div class="art gart funcional"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz · ★ 4.9</div></a>
+    <a href="clase.html" class="ccard small"><div class="art gart barre"><span class="free">Gratis</span></div><div class="tag">BARRE</div><div class="title">Barre Esencial</div><div class="meta">Valeria Méndez · ★ 4.8</div></a>
+    <a href="clase.html" class="ccard small"><div class="art gart pilatesmat"><span class="len">40 min</span></div><div class="tag">PILATES MAT</div><div class="title">Pilates Mat Fundamental</div><div class="meta">Sofía Ruiz · ★ 4.7</div></a>
   </div>
 </div>
 
 <div class="wrap section-sm">
   <div class="row-head"><h2 class="h2-serif">Clases nuevas</h2><a href="explorar.html">Ver todo</a></div>
   <div class="grid4">
-    <a href="clase.html" class="ccard"><div class="art gart funcional"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart sculpt"><span class="len">60 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Total</div><div class="meta">Valeria Méndez</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart barre"><span class="len">45 min</span></div><div class="tag">BARRE</div><div class="title">Barre Glúteos & Piernas</div><div class="meta">Valeria Méndez</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart sculpt"><span class="len">45 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Brazos & Core</div><div class="meta">Valeria Méndez</div></a>
+    <a href="clase.html" class="ccard"><div class="art gart funcional"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz · Nuevo</div></a>
+    <a href="clase.html" class="ccard"><div class="art gart sculpt"><span class="len">60 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Total</div><div class="meta">Valeria Méndez · Nuevo</div></a>
+    <a href="clase.html" class="ccard"><div class="art gart barre"><span class="len">45 min</span></div><div class="tag">BARRE</div><div class="title">Barre Glúteos & Piernas</div><div class="meta">Valeria Méndez · ★ 4.8</div></a>
+    <a href="clase.html" class="ccard"><div class="art gart sculpt"><span class="len">45 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Brazos & Core</div><div class="meta">Valeria Méndez · ★ 4.7</div></a>
   </div>
 </div>
 
 <div class="wrap section-sm">
   <div class="row-head"><h2 class="h2-serif">Retos</h2><a href="retos.html">Ver todos</a></div>
   <div class="grid2">
-    <a href="reto.html" class="ccard"><div class="art g4" style="height:210px"><span class="len">21 DÍAS · NUTRICIÓN</span></div><div class="title">Reto Volver a Ti</div><div class="meta">Reconexión y balance integral</div></a>
-    <a href="reto.html" class="ccard"><div class="art g2" style="height:210px"><span class="len">7 DÍAS</span></div><div class="title">Reto de Bienvenida</div><div class="meta">Introducción al movimiento consciente</div></a>
+    <a href="reto.html" class="ccard"><div class="art gart somara" style="height:210px"><span class="len">21 DÍAS · NUTRICIÓN</span></div><div class="title">Reto Volver a Ti</div><div class="meta">Reconexión y balance integral</div></a>
+    <a href="reto.html" class="ccard"><div class="art gart funcional" style="height:210px"><span class="len">7 DÍAS</span></div><div class="title">Reto de Bienvenida</div><div class="meta">Introducción al movimiento consciente</div></a>
   </div>
 </div>
 
@@ -164,7 +195,7 @@
       <div class="logo"><b>A</b>nyara</div>
       <p class="about">Muévete con intención. Un espacio digital premium diseñado para tu bienestar físico y mental. Sculpt, Barre, Pilates y Funcional.</p>
     </div>
-    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="#">Coaches</a><a href="membresia.html">Planes y precios</a><a href="retos.html">Retos</a><a href="series.html">Series</a></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="coaches.html">Coaches</a><a href="membresia.html">Planes y precios</a><a href="retos.html">Retos</a><a href="series.html">Series</a></div>
     <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Privacidad</a><a href="#">Términos</a><a href="#">Devoluciones</a></div>
     <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
   </div>
@@ -219,5 +250,21 @@
 </script>
 
 <script src="anyara.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  /* greet by the name captured during onboarding */
+  document.querySelectorAll('.hc-content p').forEach(function(p){
+    p.innerHTML = p.innerHTML.replace('Buenas tardes, Paulo', 'Buenas tardes, ' + Anyara.name());
+  });
+  if (!Anyara.isMember()) return;
+  var n = Anyara.streak();
+  document.getElementById('skN').textContent = n;
+  document.getElementById('skC').textContent = n;
+  /* light up one day per completed class, up to the week */
+  document.querySelectorAll('#skWeek i').forEach(function(d, idx){
+    if (idx < Math.min(n, 7)) d.classList.add('on');
+  });
+});
+</script>
 </body>
 </html>

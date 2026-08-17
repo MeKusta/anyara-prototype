@@ -15,7 +15,7 @@
       <a href="explorar.html" class="nav-link active">Explorar</a>
       <a href="series.html" class="nav-link">Series</a>
       <a href="retos.html" class="nav-link">Retos</a>
-      <a href="events.html" class="nav-link">Events</a>
+      <a href="events.html" class="nav-link">Eventos</a>
       <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
     </nav>
     <div class="nav-right">
@@ -31,15 +31,15 @@
 </div>
 
 <div class="wrap">
-  <div class="pillbar" style="border:none;padding-top:8px">
-    <div class="pill active">Todas</div>
-    <div class="pill barre"><span class="dot"></span>Barre</div>
-    <div class="pill funcional"><span class="dot"></span>Funcional</div>
-    <div class="pill pilatesmat"><span class="dot"></span>Pilates Mat</div>
-    <div class="pill pilates"><span class="dot"></span>Pilates</div>
-    <div class="pill sculpt"><span class="dot"></span>Sculpt</div>
-    <div class="pill somara"><span class="dot"></span>Somara</div>
-    <div class="pill tone"><span class="dot"></span>Tone</div>
+  <div class="pillbar" style="border:none;padding-top:8px" id="pills">
+    <div class="pill active" data-d="">Todas</div>
+    <div class="pill barre" data-d="barre"><span class="dot"></span>Barre</div>
+    <div class="pill funcional" data-d="funcional"><span class="dot"></span>Funcional</div>
+    <div class="pill pilatesmat" data-d="pilatesmat"><span class="dot"></span>Pilates Mat</div>
+    <div class="pill pilates" data-d="pilates"><span class="dot"></span>Pilates</div>
+    <div class="pill sculpt" data-d="sculpt"><span class="dot"></span>Sculpt</div>
+    <div class="pill somara" data-d="somara"><span class="dot"></span>Somara</div>
+    <div class="pill tone" data-d="tone"><span class="dot"></span>Tone</div>
   </div>
   <div class="filterbar">
     <div class="filter"><label>Disciplina</label><div class="sel">Todas <span>▾</span></div></div>
@@ -52,22 +52,30 @@
 </div>
 
 <div class="wrap section-sm">
-  <div class="grid4">
-    <a href="clase.html" class="ccard"><div class="art gart sculpt"><span class="len">20 min</span></div><div class="tag">SCULPT</div><div class="title">20 min · Sculpt : Glut</div><div class="meta">Valeria Méndez · Nuevo</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart funcional"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz · ★ 4.9</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart barre"><span class="len">45 min</span></div><div class="tag">BARRE</div><div class="title">Barre Glúteos & Piernas</div><div class="meta">Valeria Méndez · ★ 4.8</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart sculpt"><span class="len">60 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Total</div><div class="meta">Valeria Méndez · ★ 4.9</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart sculpt"><span class="len">45 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Brazos & Core</div><div class="meta">Valeria Méndez · ★ 4.7</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart barre"><span class="free">Gratis</span></div><div class="tag">BARRE</div><div class="title">Barre Esencial</div><div class="meta">Valeria Méndez · ★ 4.8</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart pilatesmat"><span class="free">Gratis</span></div><div class="tag">PILATES MAT</div><div class="title">Pilates Mat Fundamental</div><div class="meta">Sofía Ruiz · ★ 4.7</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart pilates"><span class="len">40 min</span></div><div class="tag">PILATES</div><div class="title">Core Profundo</div><div class="meta">Sofía Ruiz · Nuevo</div></a>
+  <p id="resultCount" style="font-family:'Helvetica Neue',Arial;font-size:13px;color:var(--ink-2);margin-bottom:16px">8 clases</p>
+  <div class="grid4" id="results">
+    <a href="clase.html" class="ccard" data-d="sculpt"><div class="art gart sculpt"><span class="len">20 min</span></div><div class="tag">SCULPT</div><div class="title">20 min · Sculpt : Glut</div><div class="meta">Valeria Méndez · Nuevo</div></a>
+    <a href="clase.html" class="ccard" data-d="funcional"><div class="art gart funcional"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz · ★ 4.9</div></a>
+    <a href="clase.html" class="ccard" data-d="barre"><div class="art gart barre"><span class="len">45 min</span></div><div class="tag">BARRE</div><div class="title">Barre Glúteos & Piernas</div><div class="meta">Valeria Méndez · ★ 4.8</div></a>
+    <a href="clase.html" class="ccard" data-d="sculpt"><div class="art gart sculpt"><span class="len">60 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Total</div><div class="meta">Valeria Méndez · ★ 4.9</div></a>
+    <a href="clase.html" class="ccard" data-d="sculpt"><div class="art gart sculpt"><span class="len">45 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Brazos & Core</div><div class="meta">Valeria Méndez · ★ 4.7</div></a>
+    <a href="clase.html" class="ccard" data-d="barre"><div class="art gart barre"><span class="free">Gratis</span></div><div class="tag">BARRE</div><div class="title">Barre Esencial</div><div class="meta">Valeria Méndez · ★ 4.8</div></a>
+    <a href="clase.html" class="ccard" data-d="pilatesmat"><div class="art gart pilatesmat"><span class="free">Gratis</span></div><div class="tag">PILATES MAT</div><div class="title">Pilates Mat Fundamental</div><div class="meta">Sofía Ruiz · ★ 4.7</div></a>
+    <a href="clase.html" class="ccard" data-d="pilates"><div class="art gart pilates"><span class="len">40 min</span></div><div class="tag">PILATES</div><div class="title">Core Profundo</div><div class="meta">Sofía Ruiz · Nuevo</div></a>
+    <a href="clase.html" class="ccard" data-d="somara"><div class="art gart somara"><span class="len">25 min</span></div><div class="tag">SOMARA</div><div class="title">Somara Flow</div><div class="meta">Renata Solís · Nuevo</div></a>
+    <a href="clase.html" class="ccard" data-d="tone"><div class="art gart tone"><span class="len">30 min</span></div><div class="tag">TONE</div><div class="title">Tone Cuerpo Completo</div><div class="meta">Daniela Ortiz · ★ 4.6</div></a>
+    <a href="clase.html" class="ccard" data-d="pilatesmat"><div class="art gart pilatesmat"><span class="len">15 min</span></div><div class="tag">PILATES MAT</div><div class="title">Despierta el core</div><div class="meta">Daniela Ortiz · ★ 4.9</div></a>
+    <a href="clase.html" class="ccard" data-d="somara"><div class="art gart somara"><span class="len">40 min</span></div><div class="tag">SOMARA</div><div class="title">Somara Restaurativo</div><div class="meta">Renata Solís · Nuevo</div></a>
   </div>
+  <p id="noResults" style="display:none;font-family:'Helvetica Neue',Arial;color:var(--ink-2);padding:30px 0">
+    Todavía no hay clases en esta disciplina. <b>Próximamente.</b>
+  </p>
 </div>
 
 <footer class="footer">
   <div class="footer-inner">
     <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención. Un espacio digital premium diseñado para tu bienestar físico y mental.</p></div>
-    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="#">Coaches</a><a href="membresia.html">Planes y precios</a></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="coaches.html">Coaches</a><a href="membresia.html">Planes y precios</a></div>
     <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Privacidad</a><a href="#">Términos</a></div>
     <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a></div>
   </div>
@@ -83,5 +91,32 @@
 </div>
 
 <script src="anyara.js"></script>
+<script>
+/* the homepage pills deep-link here with ?d=<disciplina> */
+var cards = Array.prototype.slice.call(document.querySelectorAll('#results .ccard'));
+function applyFilter(d){
+  var shown = 0;
+  cards.forEach(function(c){
+    var hit = !d || c.getAttribute('data-d') === d;
+    c.style.display = hit ? '' : 'none';
+    if (hit) shown++;
+  });
+  document.querySelectorAll('#pills .pill').forEach(function(p){
+    p.classList.toggle('active', (p.getAttribute('data-d') || '') === (d || ''));
+  });
+  document.getElementById('resultCount').textContent = shown + (shown === 1 ? ' clase' : ' clases');
+  document.getElementById('noResults').style.display = shown ? 'none' : 'block';
+  document.getElementById('resultCount').style.display = shown ? 'block' : 'none';
+}
+document.querySelectorAll('#pills .pill').forEach(function(p){
+  p.style.cursor = 'pointer';
+  p.addEventListener('click', function(){
+    var d = p.getAttribute('data-d') || '';
+    history.replaceState(null, '', d ? '?d=' + d : location.pathname);
+    applyFilter(d);
+  });
+});
+applyFilter(new URLSearchParams(location.search).get('d') || '');
+</script>
 </body>
 </html>

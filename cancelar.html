@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Cancelar membresía</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link">Series</a>
+      <a href="retos.html" class="nav-link">Retos</a>
+      <a href="events.html" class="nav-link">Eventos</a>
+      <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap section">
+  <div class="flow-wrap">
+
+    <!-- 1 · reason -->
+    <section class="flow-step on" id="s1">
+      <div class="eyebrow">Membresía</div>
+      <h1 style="font-size:34px;margin-bottom:10px">Antes de que te vayas…</h1>
+      <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);line-height:1.6">
+        Nos ayuda mucho saber por qué. Con eso mejoramos lo que ofrecemos — y quizá encontremos algo
+        que se ajuste mejor a ti.
+      </p>
+      <div class="reason-list">
+        <button class="reason" data-r="caro">Es más de lo que quiero gastar ahora</button>
+        <button class="reason" data-r="tiempo">No estoy encontrando el tiempo para entrenar</button>
+        <button class="reason" data-r="contenido">No encuentro clases que me gusten</button>
+        <button class="reason" data-r="pausa">Necesito una pausa por un tiempo</button>
+        <button class="reason" data-r="otro">Otro motivo</button>
+      </div>
+      <button class="btn btn-dark btn-block" id="s1next" disabled onclick="show('s2')">Continuar</button>
+      <a href="profile.html" class="btn btn-ghost btn-block" style="margin-top:10px">Mejor me quedo</a>
+    </section>
+
+    <!-- 2 · save offer -->
+    <section class="flow-step" id="s2">
+      <div class="eyebrow">Espera</div>
+      <h1 style="font-size:34px;margin-bottom:10px" id="saveTitle">¿Y si solo la pausas?</h1>
+      <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);line-height:1.6" id="saveLead">
+        No tienes que decidir entre quedarte o perderlo todo. Congela tu membresía un mes: no se te cobra
+        nada, y tu progreso, tus clases guardadas y tus playlists te esperan intactas.
+      </p>
+
+      <div class="save-offer">
+        <h3>Pausa 1 mes — sin costo</h3>
+        <p>Tu membresía se congela hoy y se reactiva sola el <b id="pauseDate">—</b>.
+           Puedes reactivarla antes cuando quieras, desde tu perfil.</p>
+        <button class="btn btn-gold btn-block" onclick="doPause()">Pausar un mes</button>
+      </div>
+
+      <div class="save-offer" style="border-color:var(--line);background:var(--sand)">
+        <h3>O quédate con 50% de descuento</h3>
+        <p>Si el precio es el problema, te dejamos el siguiente mes a mitad: <b>$19.50</b> en vez de $39.
+           Sin compromiso — sigues pudiendo cancelar después.</p>
+        <button class="btn btn-dark btn-block" onclick="doStay()">Quedarme con 50% off</button>
+      </div>
+
+      <button class="btn btn-ghost btn-block" onclick="show('s3')">No, quiero cancelar de todas formas</button>
+    </section>
+
+    <!-- 3 · final confirm -->
+    <section class="flow-step" id="s3">
+      <div class="eyebrow">Confirmar</div>
+      <h1 style="font-size:34px;margin-bottom:10px">Cancelar tu membresía</h1>
+      <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);line-height:1.6;margin-bottom:20px">
+        Al cancelar pierdes el acceso a las clases de miembros, a los retos y a tus series guiadas.
+        Tu biblioteca y tu progreso se guardan por si vuelves.
+      </p>
+      <div class="panel" style="margin-bottom:22px">
+        <div class="setting-row" style="border-top:none"><div class="l"><b>Acceso hasta</b><span>Sigues siendo miembro hasta el final del periodo pagado</span></div><span id="endDate" style="font-family:'Helvetica Neue',Arial;font-weight:600">—</span></div>
+        <div class="setting-row"><div class="l"><b>Tu biblioteca</b><span>Se conserva por 12 meses</span></div><span style="font-family:'Helvetica Neue',Arial;font-weight:600">Se guarda</span></div>
+      </div>
+      <button class="btn btn-dark btn-block" onclick="doCancel()">Confirmar cancelación</button>
+      <a href="profile.html" class="btn btn-ghost btn-block" style="margin-top:10px">Mejor me quedo</a>
+    </section>
+
+    <!-- 4 · cancelled -->
+    <section class="flow-step" id="s4">
+      <div style="text-align:center;padding:20px 0">
+        <div class="eyebrow">Listo</div>
+        <h1 style="font-size:34px;margin-bottom:12px">Tu membresía fue cancelada.</h1>
+        <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);line-height:1.6;margin-bottom:26px">
+          Gracias por haber entrenado con nosotras. Puedes seguir viendo tus clases gratuitas cuando
+          quieras — y si vuelves, tu biblioteca sigue aquí.
+        </p>
+        <a href="membresia.html" class="btn btn-gold">Reactivar membresía</a>
+        <a href="index.html" class="btn btn-ghost" style="margin-left:10px">Ir al inicio</a>
+      </div>
+    </section>
+
+    <!-- 5 · paused / saved -->
+    <section class="flow-step" id="s5">
+      <div style="text-align:center;padding:20px 0">
+        <div class="eyebrow">Nos alegra</div>
+        <h1 style="font-size:34px;margin-bottom:12px" id="savedTitle">Tu membresía está en pausa.</h1>
+        <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);line-height:1.6;margin-bottom:26px" id="savedLead">
+          No te cobraremos nada este mes. Todo lo tuyo te espera y puedes reactivar cuando quieras.
+        </p>
+        <a href="index.html" class="btn btn-gold">Volver a mi espacio</a>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="coaches.html">Coaches</a><a href="membresia.html">Planes y precios</a></div>
+    <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<div class="overlay" id="ov">
+  <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
+  <div class="overlay-top">
+    <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+  </div>
+</div>
+
+<script src="anyara.js"></script>
+<script>
+function fmt(d){return d.getDate()+' '+['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][d.getMonth()]}
+document.getElementById('pauseDate').textContent = fmt(new Date(Date.now()+30*864e5));
+document.getElementById('endDate').textContent   = fmt(new Date(Date.now()+18*864e5));
+
+var reason = null;
+document.querySelectorAll('.reason').forEach(function(b){
+  b.addEventListener('click', function(){
+    document.querySelectorAll('.reason').forEach(function(x){x.classList.remove('sel')});
+    b.classList.add('sel');
+    reason = b.getAttribute('data-r');
+    document.getElementById('s1next').disabled = false;
+    tailorOffer();
+  });
+});
+
+/* the save offer leads with whichever objection they picked */
+function tailorOffer(){
+  if(reason==='caro'){
+    document.getElementById('saveTitle').textContent = '¿Y si te lo dejamos a mitad?';
+    document.getElementById('saveLead').textContent =
+      'Si el precio es lo que no cuadra, no queremos que eso te saque. Elige lo que te sirva: baja el precio o congela la membresía sin costo.';
+  } else if(reason==='tiempo'){
+    document.getElementById('saveTitle').textContent = 'El tiempo va y viene. Tu progreso no tiene que irse.';
+    document.getElementById('saveLead').textContent =
+      'Pausa la membresía un mes sin costo y retómala cuando tu agenda te deje. Tus clases y tu progreso te esperan.';
+  }
+}
+
+function show(id){
+  document.querySelectorAll('.flow-step').forEach(function(s){s.classList.remove('on')});
+  document.getElementById(id).classList.add('on');
+  window.scrollTo(0,0);
+}
+function doCancel(){ Anyara.cancel(); show('s4'); }
+function doPause(){ Anyara.pause(); show('s5'); }
+function doStay(){
+  document.getElementById('savedTitle').textContent = '¡Listo, te quedas con 50% off!';
+  document.getElementById('savedLead').textContent =
+    'Tu siguiente mes se cobra a $19.50 en vez de $39. Después vuelve al precio normal, y puedes cambiarlo cuando quieras desde tu perfil.';
+  show('s5');
+}
+</script>
+</body>
+</html>

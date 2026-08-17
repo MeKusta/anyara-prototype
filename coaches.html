@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=1200">
-<title>Anyara — Tu biblioteca</title>
+<title>Anyara — Coaches</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -26,31 +26,35 @@
 </header>
 
 <div class="wrap section-sm">
-  <div class="eyebrow">Tu colección personal</div>
-  <h1 style="font-size:38px">Tu biblioteca</h1>
+  <div class="eyebrow">Quiénes te acompañan</div>
+  <h1 style="font-size:38px">Coaches</h1>
+  <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);max-width:520px;margin-top:10px;line-height:1.6">
+    Sigue a una coach y te avisamos cuando publique clase nueva.
+  </p>
 </div>
 
 <div class="wrap section-sm">
-  <div class="pillbar" style="border:none;padding-top:8px">
-    <div class="pill active">Completadas</div>
-    <div class="pill">Guardadas</div>
-    <div class="pill">Programas</div>
-    <div class="pill">Playlists</div>
-  </div>
-</div>
-
-<div class="wrap section-sm">
-  <h2 class="h2-serif" style="margin-bottom:16px">Completadas (1)</h2>
-  <div class="grid4">
-    <a href="clase.html" class="ccard"><div class="art gart barre"><span class="len">45 min</span></div><div class="tag">BARRE</div><div class="title">Barre Glúteos & Piernas</div><div class="meta">Completada · 12 Ago</div></a>
-  </div>
-</div>
-
-<div class="wrap section-sm">
-  <h2 class="h2-serif" style="margin-bottom:16px">Mis playlists (2)</h2>
-  <div class="grid3">
-    <a href="#" class="ccard"><div class="art g5" style="height:180px"></div><div class="title">Mañanas suaves</div><div class="meta">6 clases</div></a>
-    <a href="#" class="ccard"><div class="art g6" style="height:180px"></div><div class="title">Sculpt intenso</div><div class="meta">4 clases</div></a>
+  <div class="coachgrid">
+    <a href="coach.html" class="coachcard">
+      <div class="cav gart sculpt"></div>
+      <div class="cn">Valeria Méndez</div>
+      <div class="cd">Sculpt · Barre · 42 clases</div>
+    </a>
+    <a href="coach.html" class="coachcard">
+      <div class="cav gart funcional"></div>
+      <div class="cn">Sofía Ruiz</div>
+      <div class="cd">Funcional · Pilates · 38 clases</div>
+    </a>
+    <a href="coach.html" class="coachcard">
+      <div class="cav gart pilatesmat"></div>
+      <div class="cn">Daniela Ortiz</div>
+      <div class="cd">Pilates Mat · Tone · 27 clases</div>
+    </a>
+    <a href="coach.html" class="coachcard">
+      <div class="cav gart somara"></div>
+      <div class="cn">Renata Solís</div>
+      <div class="cd">Somara · Meditación · 19 clases</div>
+    </a>
   </div>
 </div>
 
@@ -67,7 +71,6 @@
   <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
   <div class="overlay-top">
     <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
-    <div class="recent"><div class="lab">Popular ahora</div><div class="chips"><span class="chip">Barre</span><span class="chip">Funcional HIIT</span></div></div>
   </div>
 </div>
 

@@ -15,7 +15,7 @@
       <a href="explorar.html" class="nav-link">Explorar</a>
       <a href="series.html" class="nav-link">Series</a>
       <a href="retos.html" class="nav-link">Retos</a>
-      <a href="events.html" class="nav-link">Events</a>
+      <a href="events.html" class="nav-link">Eventos</a>
       <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
     </nav>
     <div class="nav-right">
@@ -27,10 +27,10 @@
 
 <div class="wrap section-sm">
   <div style="display:flex;align-items:center;gap:18px">
-    <div class="avatar" style="width:64px;height:64px;font-size:22px">PK</div>
+    <div class="avatar" id="bigAv" style="width:64px;height:64px;font-size:22px">PK</div>
     <div>
-      <div class="eyebrow" style="margin-bottom:4px">Miembro · VIP</div>
-      <h1 style="font-size:32px">Paulo Kustala</h1>
+      <div class="eyebrow" style="margin-bottom:4px" id="memberTag">Miembro</div>
+      <h1 style="font-size:32px" id="userName">Paulo Kustala</h1>
     </div>
   </div>
 </div>
@@ -40,6 +40,7 @@
     <!-- settings sidebar: the things pulled out of main nav live here -->
     <div class="settings-nav">
       <a href="#membresia" class="active">Membresía</a>
+      <a href="#referidos">Invita a una amiga</a>
       <a href="#">Mi cuenta</a>
       <a href="#">Preferencias</a>
       <a href="#onboarding">Onboarding</a>
@@ -53,9 +54,27 @@
       <div class="panel" id="membresia" style="margin-bottom:22px">
         <h3>Membresía</h3>
         <p class="d">Gestiona tu plan, tu método de pago y tu facturación. Los planes se comparan y contratan en un solo lugar.</p>
-        <div class="setting-row"><div class="l"><b>Plan actual · VIP Mensual</b><span>Activa · se renueva el 24 de agosto · $39/mes</span></div><a href="membresia.html" class="btn btn-gold">Ver planes</a></div>
-        <div class="setting-row"><div class="l"><b>Método de pago</b><span>Visa ···· 4242</span></div><a href="#" class="btn btn-ghost">Actualizar</a></div>
-        <div class="setting-row"><div class="l"><b>Historial de facturación</b><span>Descarga tus recibos</span></div><a href="#" class="btn btn-ghost">Ver</a></div>
+
+        <!-- member -->
+        <div class="member-only">
+          <div class="setting-row"><div class="l"><b id="planRow">Plan actual · Mensual</b><span id="planSub">Activa · se renueva el 24 de agosto</span></div><a href="membresia.html" class="btn btn-gold">Ver planes</a></div>
+          <div class="setting-row"><div class="l"><b>Método de pago</b><span>Visa ···· 4242</span></div><a href="#" class="btn btn-ghost">Actualizar</a></div>
+          <div class="setting-row"><div class="l"><b>Historial de facturación</b><span>Descarga tus recibos</span></div><a href="#" class="btn btn-ghost">Ver</a></div>
+          <div class="setting-row"><div class="l"><b>Cancelar membresía</b><span>Puedes pausarla en vez de cancelarla</span></div><a href="cancelar.html" class="btn btn-ghost">Cancelar</a></div>
+        </div>
+
+        <!-- guest -->
+        <div class="guest-only">
+          <div class="setting-row"><div class="l"><b>No tienes membresía activa</b><span id="guestSub">Te quedan 3 clases gratis este mes</span></div><a href="membresia.html" class="btn btn-gold">Ver planes</a></div>
+          <p class="trialnote" style="text-align:left">7 días gratis en cualquier plan. Desde $39/mes, cancela cuando quieras.</p>
+        </div>
+      </div>
+
+      <!-- REFERRAL -->
+      <div class="panel" id="referidos" style="margin-bottom:22px">
+        <h3>Invita a una amiga</h3>
+        <p class="d">Regala 2 semanas gratis. Cuando ella empieza su membresía, tú te llevas otras 2.</p>
+        <div class="setting-row" style="border-top:none"><div class="l"><b>Tu código</b><span>ANYARA-PAULO24 · 1 amiga se ha unido</span></div><a href="referidos.html" class="btn btn-gold">Invitar</a></div>
       </div>
 
       <!-- ONBOARDING (was its own tab, now accessible here) -->
@@ -79,7 +98,7 @@
 <footer class="footer">
   <div class="footer-inner">
     <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
-    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="membresia.html">Planes y precios</a></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="coaches.html">Coaches</a><a href="membresia.html">Planes y precios</a></div>
     <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
     <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
   </div>
@@ -94,5 +113,26 @@
 </div>
 
 <script src="anyara.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var PLAN = {mensual:'Mensual', trimestral:'Trimestral', anual:'Anual'};
+  document.getElementById('userName').textContent = Anyara.name() + ' Kustala';
+  document.getElementById('bigAv').textContent = Anyara.initials();
+  if (Anyara.isMember()) {
+    var p = PLAN[Anyara.plan()] || 'Mensual';
+    document.getElementById('memberTag').textContent = Anyara.isPaused() ? 'Miembro · en pausa' : 'Miembro · ' + p;
+    document.getElementById('planRow').textContent = 'Plan actual · ' + p;
+    document.getElementById('planSub').textContent = Anyara.isPaused()
+      ? 'En pausa · se reactiva automáticamente en 30 días'
+      : 'Activa · prueba gratis hasta el 24 de agosto';
+  } else {
+    document.getElementById('memberTag').textContent = 'Cuenta gratuita';
+    var left = Anyara.freeLeft();
+    document.getElementById('guestSub').textContent = left > 0
+      ? 'Te ' + (left===1?'queda 1 clase gratis':'quedan ' + left + ' clases gratis') + ' este mes'
+      : 'Ya usaste tus 3 clases gratis de este mes';
+  }
+});
+</script>
 </body>
 </html>

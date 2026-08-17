@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Clase completada</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link">Series</a>
+      <a href="retos.html" class="nav-link">Retos</a>
+      <a href="events.html" class="nav-link">Eventos</a>
+      <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap section">
+  <div class="done-wrap">
+    <div class="done-check">✓</div>
+    <div class="eyebrow">Clase completada</div>
+    <h1 id="doneTitle">Bien hecho, Paulo.</h1>
+    <p class="lead">Funcional HIIT · 30 min · con Sofía Ruiz</p>
+
+    <div class="done-stats">
+      <div><div class="n" id="stStreak">1</div><div class="l">Días de racha</div></div>
+      <div><div class="n" id="stTotal">1</div><div class="l">Clases completadas</div></div>
+      <div><div class="n">30</div><div class="l">Minutos hoy</div></div>
+    </div>
+
+    <!-- guests: this is the moment to convert -->
+    <div class="guest-only" style="text-align:left;border:1px solid var(--gold);border-radius:var(--radius);
+         background:var(--gold-tint);padding:26px;margin-bottom:26px">
+      <h3 style="font-family:'Georgia',serif;font-size:24px;font-weight:400;margin-bottom:8px">¿Se sintió bien?</h3>
+      <p style="font-family:'Helvetica Neue',Arial;font-size:14px;color:var(--ink-2);line-height:1.55;margin-bottom:16px">
+        Así son las otras 180. Hazte miembro y sigue con la siguiente — más los retos, las series y
+        tu progreso guardado. <b id="freeNote">Te quedan 2 clases gratis este mes.</b>
+      </p>
+      <a href="membresia.html" class="btn btn-gold">Únete ahora</a>
+      <p class="trialnote" style="text-align:left">7 días gratis. Desde $39/mes, cancela cuando quieras.</p>
+    </div>
+
+    <div style="text-align:left">
+      <div class="row-head"><h2 class="h2-serif">Tu siguiente clase</h2></div>
+      <a href="clase.html" class="continue" style="margin-bottom:20px">
+        <div class="thumb gart barre"></div>
+        <div class="body">
+          <div class="tag" style="font-family:'Helvetica Neue',Arial">BARRE · 20 MIN</div>
+          <div style="font-size:20px;margin:4px 0">Barre Esencial</div>
+          <div style="font-family:'Helvetica Neue',Arial;font-size:13px;color:var(--ink-2)">
+            Ideal después de un funcional — estira y alarga lo que acabas de trabajar.
+          </div>
+        </div>
+        <span class="btn btn-dark">Empezar ▸</span>
+      </a>
+    </div>
+
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:8px">
+      <a href="index.html" class="btn btn-ghost">Ir a mi espacio</a>
+      <a href="explorar.html" class="btn btn-ghost">Explorar más clases</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="coaches.html">Coaches</a><a href="membresia.html">Planes y precios</a></div>
+    <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<div class="overlay" id="ov">
+  <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
+  <div class="overlay-top">
+    <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+  </div>
+</div>
+
+<script src="anyara.js"></script>
+<script>
+/* completing a class is what moves the streak */
+Anyara.bumpStreak();
+document.getElementById('doneTitle').textContent = 'Bien hecho, ' + Anyara.name() + '.';
+document.getElementById('stStreak').textContent = Anyara.streak();
+document.getElementById('stTotal').textContent  = Anyara.streak();
+var left = Anyara.freeLeft();
+document.getElementById('freeNote').textContent = left > 0
+  ? 'Te ' + (left === 1 ? 'queda 1 clase gratis' : 'quedan ' + left + ' clases gratis') + ' este mes.'
+  : 'Ya usaste tus 3 clases gratis de este mes.';
+</script>
+</body>
+</html>

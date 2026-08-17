@@ -351,7 +351,8 @@ body{overflow-x:hidden}
           <li>Retos y series guiadas paso a paso</li>
           <li>Tu progreso, rachas y biblioteca personal</li>
         </ul>
-        <div class="ob-cta-row"><button class="ob-btn gold" onclick="goTo(13)">Únete ahora</button></div>
+        <div class="ob-cta-row"><button class="ob-btn gold" onclick="goCheckout()">Empieza 7 días gratis</button></div>
+        <p class="ob-note" style="max-width:460px">Gratis los primeros 7 días. Después, el plan que elijas. Cancela cuando quieras.</p>
         <button class="ob-skiplink" onclick="goTo(12)">Ahora no, quiero mirar primero</button>
       </div>
     </section>
@@ -370,7 +371,7 @@ body{overflow-x:hidden}
           <li>Mensual <s style="color:var(--ink-3)">$39</s> <b>$33</b> al mes</li>
           <li>Trimestral <s style="color:var(--ink-3)">$99</s> <b>$84</b> al trimestre</li>
         </ul>
-        <div class="ob-cta-row"><button class="ob-btn gold" onclick="goTo(13)">Guardar mi 15%</button></div>
+        <div class="ob-cta-row"><button class="ob-btn gold" onclick="goCheckout()">Guardar mi 15%</button></div>
         <button class="ob-skiplink" onclick="goTo(13)">Prefiero entrenar primero</button>
       </div>
     </section>
@@ -400,8 +401,14 @@ body{overflow-x:hidden}
   </div>
 </div>
 
+<script src="anyara.js"></script>
 <script>
-/* Demo flow — nothing is stored or sent. */
+/* Demo flow — nothing is stored or sent.
+   Running the onboarding simulates a brand-new user, so it resets the
+   prototype back to the logged-out state. */
+Anyara.reset();
+document.body.classList.remove('is-member');
+
 var steps  = Array.prototype.slice.call(document.querySelectorAll('.ob-step'));
 var total  = steps.length;
 var bar    = document.getElementById('bar');
@@ -421,16 +428,27 @@ function render(){
   window.scrollTo(0,0);
 }
 function goTo(n){ i = Math.max(0, Math.min(n, total-1)); render(); }
-function next(){ goTo(i+1); }
+function next(){
+  /* remember the name so the rest of the site can greet them */
+  var f = steps[i].querySelector('input[type=text]');
+  if (f && f.value.trim()) Anyara.setName(f.value.trim());
+  goTo(i+1);
+}
 function prev(){ goTo(i-1); }
+
+/* hand off to the real checkout with whichever plan is selected */
+function goCheckout(){
+  var sel = document.querySelector('.ob-plan.sel');
+  location.href = 'checkout.html?plan=' + (sel ? sel.getAttribute('data-plan') : 'mensual');
+}
 
 /* the 15% window opens the moment the offer is shown, and rides along
    to the rest of the site via the banner in anyara.js */
 var offerEnds = null, offerTimer = null;
 function startOffer(){
   if(offerEnds) return;
-  offerEnds = Date.now() + OFFER_MS;
-  try { localStorage.setItem('anyara_offer_expires', String(offerEnds)); } catch(e){}
+  Anyara.startOffer(OFFER_MS);
+  offerEnds = Anyara.offerEnds();
   var el = document.getElementById('obClock');
   offerTimer = setInterval(paintClock, 1000);
   paintClock();
@@ -496,8 +514,6 @@ document.querySelectorAll('.ob-plan').forEach(function(p){
   });
 });
 
-/* a fresh run of the onboarding clears any previous countdown */
-try { localStorage.removeItem('anyara_offer_expires'); } catch(e){}
 render();
 </script>
 </body>

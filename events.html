@@ -15,7 +15,7 @@
       <a href="explorar.html" class="nav-link">Explorar</a>
       <a href="series.html" class="nav-link">Series</a>
       <a href="retos.html" class="nav-link">Retos</a>
-      <a href="events.html" class="nav-link active">Events</a>
+      <a href="events.html" class="nav-link active">Eventos</a>
       <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
     </nav>
     <div class="nav-right">
@@ -37,7 +37,10 @@
       <div class="eyebrow">Evento destacado · 24 Ago</div>
       <h1 style="color:#fff;font-size:36px">Masterclass en vivo: Barre & Breathwork</h1>
       <p style="color:rgba(255,255,255,.85);font-family:'Helvetica Neue',Arial;margin-top:8px">Con Valeria Méndez · Estudio Anyara, CDMX</p>
-      <div style="margin-top:18px"><a href="#" class="btn btn-gold">Reservar lugar</a></div>
+      <div style="margin-top:18px">
+        <a href="#" class="btn btn-gold">Reservar lugar</a>
+        <a href="#" class="btn btn-ghost" style="border-color:rgba(255,255,255,.5);color:#fff" onclick="addCal(event,this)">📅 Agregar a mi calendario</a>
+      </div>
       <div class="carousel-dots"><i class="on"></i><i></i><i></i></div>
     </div>
   </div>
@@ -49,11 +52,13 @@
   <div class="ticket">
     <div class="date"><b>24</b><span>Ago</span></div>
     <div class="info"><div class="t">Masterclass: Barre & Breathwork</div><div class="m">7:00 PM · Estudio Anyara, CDMX · Fila A</div></div>
+    <a href="#" class="btn btn-ghost" onclick="addCal(event,this)">📅 Calendario</a>
     <a href="#" class="btn btn-ghost">Ver boleto</a>
   </div>
   <div class="ticket">
     <div class="date"><b>07</b><span>Sep</span></div>
     <div class="info"><div class="t">Retiro de fin de semana: Volver a Ti</div><div class="m">Todo el día · Valle de Bravo · 2 personas</div></div>
+    <a href="#" class="btn btn-ghost" onclick="addCal(event,this)">📅 Calendario</a>
     <a href="#" class="btn btn-ghost">Ver boleto</a>
   </div>
 </div>
@@ -61,7 +66,7 @@
 <footer class="footer">
   <div class="footer-inner">
     <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
-    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="membresia.html">Planes y precios</a></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="coaches.html">Coaches</a><a href="membresia.html">Planes y precios</a></div>
     <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
     <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
   </div>
@@ -76,5 +81,14 @@
 </div>
 
 <script src="anyara.js"></script>
+<script>
+/* prototype: confirm the intent rather than actually issuing an .ics */
+function addCal(e, el){
+  e.preventDefault();
+  var original = el.textContent;
+  el.textContent = '✓ Agregado';
+  setTimeout(function(){ el.textContent = original; }, 1800);
+}
+</script>
 </body>
 </html>

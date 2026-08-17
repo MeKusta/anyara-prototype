@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Fuerza Total</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link active">Series</a>
+      <a href="retos.html" class="nav-link">Retos</a>
+      <a href="events.html" class="nav-link">Eventos</a>
+      <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap section-sm">
+  <a href="series.html" style="font-family:'Helvetica Neue',Arial;font-size:13px;color:var(--ink-2)">‹ Todas las series</a>
+</div>
+
+<div class="wrap section-sm">
+  <div class="event-hero gart sculpt">
+    <div>
+      <div class="eyebrow">Serie · 3 clases</div>
+      <h1 style="color:#fff;font-size:40px">Fuerza Total</h1>
+      <p style="color:rgba(255,255,255,.85);font-family:'Helvetica Neue',Arial;margin-top:8px">
+        135 min en total · Sculpt y Funcional · con Valeria Méndez
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap section-sm">
+  <div class="detail-grid">
+    <div>
+      <h2 class="h2-serif" style="margin-bottom:6px">Sobre esta serie</h2>
+      <p style="color:var(--ink-2);max-width:560px;margin-bottom:24px">
+        Tres clases pensadas para hacerse en orden a lo largo de una semana. Cada una construye sobre la
+        anterior: primero la base, luego la carga, y al final la integración de todo el cuerpo.
+      </p>
+
+      <h2 class="h2-serif" style="margin-bottom:14px">Clases de la serie</h2>
+      <div style="font-family:'Helvetica Neue',Arial">
+        <div class="eyebrow">Clase 1</div>
+        <div class="ticket"><div class="date gart sculpt"></div><div class="info"><div class="t">Sculpt Total</div><div class="m">Sculpt · 60 min · Valeria Méndez</div></div><a href="clase.html" class="btn btn-ghost">Ver ▸</a></div>
+        <div class="eyebrow" style="margin-top:10px">Clase 2</div>
+        <div class="ticket"><div class="date gart funcional"></div><div class="info"><div class="t">Funcional HIIT</div><div class="m">Funcional · 30 min · Sofía Ruiz</div></div><a href="clase.html" class="btn btn-ghost">Ver ▸</a></div>
+        <div class="eyebrow" style="margin-top:10px">Clase 3</div>
+        <div class="ticket"><div class="date gart sculpt"></div><div class="info"><div class="t">Sculpt Brazos & Core</div><div class="m">Sculpt · 45 min · Valeria Méndez</div></div><a href="clase.html" class="btn btn-ghost">Ver ▸</a></div>
+      </div>
+    </div>
+
+    <div class="detail-side">
+      <a href="clase.html" class="btn btn-gold btn-block member-only">Comenzar serie</a>
+      <a href="membresia.html" class="btn btn-gold btn-block guest-only">Únete ahora</a>
+      <p class="trialnote guest-only" style="margin-bottom:12px">Las series son parte de la membresía.<br>7 días gratis, cancela cuando quieras.</p>
+      <button class="btn btn-ghost btn-block">♡ Guardar serie</button>
+      <div style="margin-top:18px">
+        <div class="spec"><span class="k">Clases</span><span class="v">3</span></div>
+        <div class="spec"><span class="k">Tiempo total</span><span class="v">135 min</span></div>
+        <div class="spec"><span class="k">Nivel</span><span class="v">Intermedio</span></div>
+        <div class="spec"><span class="k">Equipo</span><span class="v">Pesas ligeras</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="coaches.html">Coaches</a><a href="membresia.html">Planes y precios</a></div>
+    <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<div class="overlay" id="ov">
+  <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
+  <div class="overlay-top">
+    <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+  </div>
+</div>
+
+<script src="anyara.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Invita a una amiga</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link">Series</a>
+      <a href="retos.html" class="nav-link">Retos</a>
+      <a href="events.html" class="nav-link">Eventos</a>
+      <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap section" style="max-width:720px">
+  <div style="text-align:center;margin-bottom:30px">
+    <div class="eyebrow">Comunidad</div>
+    <h1 style="font-size:38px;margin-bottom:12px">Regala dos semanas.<br>Llévate dos semanas.</h1>
+    <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);line-height:1.6;max-width:480px;margin:0 auto">
+      Comparte tu código con una amiga: ella entra con 2 semanas gratis, y cuando empieza su membresía,
+      tú te llevas otras 2 semanas sin costo.
+    </p>
+  </div>
+
+  <div class="refcard">
+    <div style="font-family:'Helvetica Neue',Arial;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep)">Tu código</div>
+    <div class="refcode">
+      <input id="code" value="ANYARA-PAULO24" readonly>
+      <button class="btn btn-dark" id="cp" onclick="copyCode()">Copiar</button>
+    </div>
+    <p style="font-family:'Helvetica Neue',Arial;font-size:13px;color:var(--ink-2);margin-top:14px;line-height:1.5">
+      También puedes compartirlo directo por WhatsApp o Instagram.
+    </p>
+    <div style="display:flex;gap:10px;margin-top:14px">
+      <a href="#" class="btn btn-ghost">WhatsApp</a>
+      <a href="#" class="btn btn-ghost">Instagram</a>
+      <a href="#" class="btn btn-ghost">Copiar enlace</a>
+    </div>
+  </div>
+
+  <div class="section-sm">
+    <div class="row-head"><h2 class="h2-serif">Tus invitaciones</h2></div>
+    <div class="setting-row" style="border-top:none"><div class="l"><b>Enviadas</b><span>Amigas que abrieron tu código</span></div><span style="font-family:'Helvetica Neue',Arial;font-weight:600">3</span></div>
+    <div class="setting-row"><div class="l"><b>Se hicieron miembros</b><span>Cada una te da 2 semanas</span></div><span style="font-family:'Helvetica Neue',Arial;font-weight:600">1</span></div>
+    <div class="setting-row"><div class="l"><b>Tiempo ganado</b><span>Se aplica a tu siguiente cobro</span></div><span style="font-family:'Helvetica Neue',Arial;font-weight:600;color:var(--gold-deep)">2 semanas</span></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="coaches.html">Coaches</a><a href="membresia.html">Planes y precios</a></div>
+    <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<div class="overlay" id="ov">
+  <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
+  <div class="overlay-top">
+    <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+  </div>
+</div>
+
+<script src="anyara.js"></script>
+<script>
+function copyCode(){
+  var f=document.getElementById('code'); f.select();
+  try{document.execCommand('copy')}catch(e){}
+  var b=document.getElementById('cp'); b.textContent='¡Copiado!';
+  setTimeout(function(){b.textContent='Copiar'},1600);
+}
+</script>
+</body>
+</html>

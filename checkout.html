@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Checkout</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.co-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:start;max-width:960px;margin:0 auto}
+.co-card{border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+.co-row{display:flex;justify-content:space-between;padding:13px 0;border-top:1px solid var(--line-2);
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px}
+.co-row:first-of-type{border-top:none}
+.co-row .k{color:var(--ink-2)}
+.co-row .v{font-weight:600}
+.co-row.total{border-top:2px solid var(--ink);margin-top:6px;padding-top:16px;font-size:17px}
+.co-field{margin-bottom:16px}
+.co-field label{display:block;font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold-deep);margin-bottom:7px}
+.co-field .fake{border:1px solid var(--line);border-radius:8px;padding:14px 14px;background:var(--sand);
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--ink-3)}
+.co-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.co-done{max-width:560px;margin:0 auto;text-align:center;padding:30px 0}
+.co-done .tick{width:82px;height:82px;border-radius:50%;background:var(--gold);color:#fff;font-size:36px;
+  display:flex;align-items:center;justify-content:center;margin:0 auto 24px}
+#stepPay.off,#stepDone.off{display:none}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link">Series</a>
+      <a href="retos.html" class="nav-link">Retos</a>
+      <a href="events.html" class="nav-link">Eventos</a>
+      <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== PAY ===== -->
+<div id="stepPay">
+  <div class="wrap section-sm" style="text-align:center">
+    <div class="eyebrow">Último paso</div>
+    <h1 style="font-size:34px">Empieza tus 7 días gratis</h1>
+  </div>
+
+  <div class="wrap section-sm">
+    <div class="co-grid">
+      <div class="co-card">
+        <h3 style="font-family:'Georgia',serif;font-size:22px;font-weight:400;margin-bottom:18px">Datos de pago</h3>
+        <div class="co-field"><label>Titular de la tarjeta</label><div class="fake" id="coName">Paulo Kustala</div></div>
+        <div class="co-field"><label>Número de tarjeta</label><div class="fake">•••• •••• •••• 4242</div></div>
+        <div class="co-two">
+          <div class="co-field"><label>Vencimiento</label><div class="fake">08 / 28</div></div>
+          <div class="co-field"><label>CVC</label><div class="fake">•••</div></div>
+        </div>
+        <p class="trialnote" style="text-align:left;margin-top:4px">
+          Prototipo — los datos de pago son de ejemplo y no se envían a ningún lado.
+        </p>
+      </div>
+
+      <div class="co-card">
+        <h3 style="font-family:'Georgia',serif;font-size:22px;font-weight:400;margin-bottom:18px">Tu plan</h3>
+        <div class="co-row"><span class="k">Plan</span><span class="v" id="sumPlan">Mensual</span></div>
+        <div class="co-row"><span class="k">Precio de lista</span><span class="v" id="sumList">$39</span></div>
+        <div class="co-row" id="rowDisc" style="display:none"><span class="k">Descuento bienvenida (15%)</span><span class="v" id="sumDisc" style="color:var(--gold-deep)">−$6</span></div>
+        <div class="co-row"><span class="k">Hoy pagas</span><span class="v">$0</span></div>
+        <div class="co-row total"><span class="k">Después del día 7</span><span class="v" id="sumTotal">$39</span></div>
+
+        <button class="btn btn-gold btn-block" style="margin-top:22px" onclick="confirmJoin()">Comenzar mis 7 días gratis</button>
+        <p class="trialnote">Gratis por 7 días, luego <span id="sumAfter">$39/mes</span>.<br>Cancela cuando quieras — te avisamos antes del primer cobro.</p>
+        <a href="membresia.html" class="btn btn-ghost btn-block" style="margin-top:10px">‹ Cambiar de plan</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONFIRMATION ===== -->
+<div id="stepDone" class="off">
+  <div class="wrap section">
+    <div class="co-done">
+      <div class="tick">✓</div>
+      <div class="eyebrow">Bienvenida a Anyara</div>
+      <h1 style="font-size:38px;margin-bottom:12px">Ya eres miembro.</h1>
+      <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);line-height:1.6;margin-bottom:26px">
+        Tienes acceso completo a las 7 disciplinas, los retos y las series. Tus primeros 7 días son gratis
+        — te avisamos por correo antes de cualquier cobro.
+      </p>
+      <div class="co-card" style="text-align:left;margin-bottom:24px">
+        <div class="co-row"><span class="k">Plan</span><span class="v" id="dnPlan">Mensual</span></div>
+        <div class="co-row"><span class="k">Prueba gratis</span><span class="v">7 días</span></div>
+        <div class="co-row"><span class="k">Primer cobro</span><span class="v" id="dnDate">—</span></div>
+      </div>
+      <a href="index.html" class="btn btn-gold">Entrar a mi espacio →</a>
+      <a href="clase.html" class="btn btn-ghost" style="margin-left:10px">Empezar una clase</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="coaches.html">Coaches</a><a href="membresia.html">Planes y precios</a></div>
+    <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<div class="overlay" id="ov">
+  <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
+  <div class="overlay-top">
+    <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+  </div>
+</div>
+
+<script src="anyara.js"></script>
+<script>
+var PLANS = {
+  mensual:    { name:'Mensual',    price:39,  per:'/mes',       after:'$39/mes' },
+  trimestral: { name:'Trimestral', price:99,  per:'/trimestre', after:'$99/trimestre' },
+  anual:      { name:'Anual',      price:349, per:'/año',       after:'$349/año' }
+};
+var key = (new URLSearchParams(location.search).get('plan') || 'mensual').toLowerCase();
+if (!PLANS[key]) key = 'mensual';
+var plan = PLANS[key];
+var hasOffer = !!Anyara.offerEnds();
+
+document.getElementById('sumPlan').textContent = plan.name;
+document.getElementById('sumList').textContent = '$' + plan.price;
+document.getElementById('dnPlan').textContent  = plan.name;
+document.getElementById('coName').textContent  = Anyara.name();
+
+var due = plan.price, after = plan.after;
+if (hasOffer) {
+  due = Math.round(plan.price * 0.85);
+  after = '$' + due + plan.per;
+  document.getElementById('rowDisc').style.display = 'flex';
+  document.getElementById('sumDisc').textContent = '−$' + (plan.price - due);
+}
+document.getElementById('sumTotal').textContent = '$' + due;
+document.getElementById('sumAfter').textContent = after;
+
+var first = new Date(Date.now() + 7 * 864e5);
+document.getElementById('dnDate').textContent =
+  first.getDate() + ' ' + ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][first.getMonth()] +
+  ' · $' + due;
+
+function confirmJoin() {
+  Anyara.join(key);
+  document.getElementById('stepPay').classList.add('off');
+  document.getElementById('stepDone').classList.remove('off');
+  document.body.classList.remove('is-guest');
+  document.body.classList.add('is-member');
+  var bar = document.querySelector('.offerbar');
+  if (bar) { bar.remove(); document.body.classList.remove('has-offerbar'); }
+  var join = document.querySelector('.btn-join');
+  if (join) {
+    var av = document.createElement('a');
+    av.href = 'profile.html'; av.className = 'avatar'; av.textContent = Anyara.initials();
+    join.replaceWith(av);
+  }
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>

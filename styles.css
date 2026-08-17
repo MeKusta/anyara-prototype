@@ -315,6 +315,94 @@ h2{font-size:15px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
 .art-tags span{background:rgba(0,0,0,.5);color:#fff;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
   padding:5px 11px;border-radius:100px;font-family:"Helvetica Neue",Arial,sans-serif;backdrop-filter:blur(4px)}
 
+/* ---------- Membership state ---------- */
+/* anyara.js stamps .is-member / .is-guest on <body> */
+body.is-member .guest-only{display:none !important}
+body.is-guest  .member-only{display:none !important}
+.btn-join{padding:11px 22px;font-size:12px;white-space:nowrap}
+
+/* free-class allowance strip (guests) */
+.freebar{display:flex;align-items:center;gap:14px;background:var(--gold-tint);border:1px solid var(--line);
+  border-radius:var(--radius);padding:14px 18px;font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;margin-bottom:18px}
+.freebar b{color:var(--ink)}
+.freebar .fb-x{margin-left:auto}
+.freebar.spent{background:var(--sand);}
+
+/* streak / progress widget (members) */
+.streakbar{display:flex;align-items:center;gap:28px;border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 24px;background:#fff;flex-wrap:wrap}
+.streakbar .sk{display:flex;align-items:center;gap:12px}
+.streakbar .sk .ic{width:42px;height:42px;border-radius:50%;background:var(--gold-tint);color:var(--gold-deep);
+  display:flex;align-items:center;justify-content:center;font-size:18px}
+.streakbar .sk .n{font-family:"Georgia",serif;font-size:24px;line-height:1}
+.streakbar .sk .l{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-2);margin-top:3px}
+.streakbar .week{display:flex;gap:8px;margin-left:auto}
+.streakbar .week i{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);display:flex;
+  align-items:center;justify-content:center;font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;
+  color:var(--ink-3);font-style:normal}
+.streakbar .week i.on{background:var(--gold);border-color:var(--gold);color:#fff}
+
+/* class of the day */
+.daily{display:grid;grid-template-columns:1.1fr 1fr;gap:0;border:1px solid var(--line);
+  border-radius:var(--radius);overflow:hidden}
+.daily .dart{position:relative;min-height:250px}
+.daily .dbody{padding:34px;display:flex;flex-direction:column;justify-content:center}
+.daily .dbody h3{font-family:"Georgia",serif;font-size:28px;font-weight:400;margin:6px 0 10px}
+.daily .dbody p{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--ink-2);
+  line-height:1.55;margin-bottom:20px;max-width:380px}
+.daily .dbody .btn{align-self:flex-start}
+
+/* coaches */
+.coachgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.coachcard{text-align:center;cursor:pointer}
+.coachcard .cav{width:100%;aspect-ratio:1;border-radius:50%;margin-bottom:14px}
+.coachcard .cn{font-size:19px}
+.coachcard .cd{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-2);margin-top:2px}
+.coach-hero{display:flex;gap:32px;align-items:center}
+.coach-hero .cav{width:150px;height:150px;border-radius:50%;flex:0 0 auto}
+.coach-hero .btn{margin-top:14px}
+.follow.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* post-class completion */
+.done-wrap{max-width:620px;margin:0 auto;text-align:center;padding:40px 0}
+.done-check{width:82px;height:82px;border-radius:50%;background:var(--gold);color:#fff;font-size:36px;
+  display:flex;align-items:center;justify-content:center;margin:0 auto 24px}
+.done-wrap h1{font-size:38px;margin-bottom:10px}
+.done-wrap .lead{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;color:var(--ink-2);margin-bottom:28px}
+.done-stats{display:flex;justify-content:center;gap:44px;padding:24px 0;border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);margin-bottom:28px}
+.done-stats .n{font-family:"Georgia",serif;font-size:32px}
+.done-stats .l{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-2);margin-top:4px}
+
+/* cancel flow */
+.flow-wrap{max-width:620px;margin:0 auto;padding:20px 0 60px}
+.flow-step{display:none}
+.flow-step.on{display:block}
+.save-offer{border:1px solid var(--gold);border-radius:var(--radius);background:var(--gold-tint);padding:28px;margin:22px 0}
+.save-offer h3{font-family:"Georgia",serif;font-size:24px;font-weight:400;margin-bottom:8px}
+.save-offer p{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--ink-2);line-height:1.55;margin-bottom:18px}
+.reason-list{display:grid;gap:10px;margin:22px 0}
+.reason{border:1px solid var(--line);border-radius:10px;padding:15px 18px;cursor:pointer;background:#fff;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;text-align:left;width:100%}
+.reason:hover{border-color:var(--ink)}
+.reason.sel{border-color:var(--ink);background:var(--sand);font-weight:600}
+
+/* referral */
+.refcard{border:1px solid var(--line);border-radius:var(--radius);padding:28px;background:var(--sand)}
+.refcode{display:flex;gap:12px;align-items:center;margin-top:16px}
+.refcode input{flex:1;border:1px dashed var(--gold-deep);background:#fff;border-radius:8px;padding:14px 16px;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;letter-spacing:.18em;color:var(--ink);text-align:center}
+
+/* trial microcopy under CTAs */
+.trialnote{font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;color:var(--ink-3);
+  text-align:center;margin-top:10px;line-height:1.5}
+
+/* three-up plans */
+.plans.plans3{grid-template-columns:repeat(3,1fr);max-width:1000px}
+.plan .save{font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;color:var(--gold-deep);margin-top:4px}
+
 /* ---------- Limited-time offer banner (site-wide, after onboarding) ---------- */
 .offerbar{position:sticky;top:0;z-index:60;background:var(--ink);color:#fff;
   font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px}
