@@ -458,6 +458,28 @@ body.is-anon .account-only{display:none!important}
   font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:100px;
   font-family:"Helvetica Neue",Arial,sans-serif;display:flex;align-items:center;gap:5px}
 
+/* ---------- Day picker (prototype-only time machine) ---------- */
+.day-picker{position:fixed;right:18px;bottom:18px;z-index:90;display:flex;align-items:center;gap:5px;
+  background:#fff;border:1px solid var(--line);border-radius:100px;padding:6px;
+  box-shadow:0 8px 24px rgba(20,18,16,.16)}
+.day-picker .dp-lab{font-family:"Helvetica Neue",Arial,sans-serif;font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);padding:0 4px 0 8px}
+.day-picker button{width:28px;height:28px;border-radius:50%;border:none;background:transparent;
+  color:var(--ink-2);font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.day-picker button:hover{background:var(--sand)}
+.day-picker button.on{background:var(--gold);color:#fff}
+
+/* ---------- Trial week (member-only, day-picker-aware unlock schedule) ---------- */
+.trial-week{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.trial-week .week-card{position:relative}
+.trial-week .week-card.today{outline:2px solid var(--gold);outline-offset:2px}
+.trial-week .week-card.locked-day{opacity:.6}
+.trial-week .wk-check{position:absolute;top:9px;right:9px;width:20px;height:20px;border-radius:50%;
+  background:var(--gold);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center}
+.trial-week .wk-soon{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;color:var(--ink-3);
+  padding:0 14px 12px}
+
 /* ---------- Video player (demo) ---------- */
 .vp-scrim{position:fixed;inset:0;z-index:140;background:rgba(12,10,9,.96);display:none;align-items:center;justify-content:center}
 .vp-scrim.open{display:flex}

@@ -7,7 +7,7 @@
                                  classes are unlocked, the rest is Membresía
    - member  (trial or paid)  → everything unlocked, no locks anywhere */
 (function () {
-  var VERSION = '1.01.02';
+  var VERSION = '1.01.03';
   var K = {
     member:  'anyara_member',
     plan:    'anyara_plan',
@@ -16,11 +16,17 @@
     name:    'anyara_name',
     paused:  'anyara_paused',
     reason:  'anyara_reason',
-    welcome: 'anyara_welcome'
+    welcome: 'anyara_welcome',
+    day:     'anyara_day'
   };
   /* the two catalog classes marked "Gratis" — always playable once you
      have a free account, no trial required */
   var FREE_SLUGS = ['barre-esencial', 'pilatesmat-fundamental'];
+  /* demo-only "time machine" — simulates which day of the trial week it
+     is, so the day-by-day class unlock can be shown without waiting a
+     real week. 1 = Lunes ... 7 = Domingo */
+  var DAY_LETTERS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+  var DAY_NAMES   = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
   function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
@@ -67,6 +73,12 @@
     streak: function () { return parseInt(get(K.streak) || '0', 10); },
     bumpStreak: function () { set(K.streak, String(A.streak() + 1)); },
 
+    /* demo time machine: 1=Lunes ... 7=Domingo, defaults to Lunes */
+    DAY_LETTERS: DAY_LETTERS,
+    DAY_NAMES: DAY_NAMES,
+    currentDay: function () { return parseInt(get(K.day) || '1', 10); },
+    setDay: function (n) { set(K.day, String(Math.max(1, Math.min(7, n)))); },
+
     reset: function () { Object.keys(K).forEach(function (k) { del(K[k]); }); }
   };
   window.Anyara = A;
@@ -79,7 +91,34 @@
     document.body.classList.add(state === 'member' ? 'is-member' : 'is-guest');
     renderNav();
     renderVersion();
+    renderDayPicker();
   });
+
+  /* prototype-only "time machine": floating L M M J V S D picker, bottom
+     right, on every page. Lets us demo the day-by-day trial unlock
+     without waiting a real week — click a day and the site jumps there. */
+  function renderDayPicker() {
+    if (document.getElementById('dayPicker')) return;
+    var box = document.createElement('div');
+    box.id = 'dayPicker';
+    box.className = 'day-picker';
+    box.title = 'Prototipo: simula el día para probar el desbloqueo diario';
+    box.innerHTML = '<span class="dp-lab">Día</span>';
+    var today = A.currentDay();
+    DAY_LETTERS.forEach(function (letter, idx) {
+      var n = idx + 1;
+      var btn = document.createElement('button');
+      btn.textContent = letter;
+      btn.title = DAY_NAMES[idx];
+      if (n === today) btn.classList.add('on');
+      btn.addEventListener('click', function () {
+        A.setDay(n);
+        location.reload();
+      });
+      box.appendChild(btn);
+    });
+    document.body.appendChild(box);
+  }
 
   /* small grey version tag next to the wordmark, so redeploys are visible at a glance */
   function renderVersion() {

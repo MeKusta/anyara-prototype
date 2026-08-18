@@ -118,6 +118,12 @@
   </div>
 </div>
 
+<!-- ===== TU SEMANA DE PRUEBA (members — unlocks one class per day) ===== -->
+<div class="wrap section-sm member-only">
+  <div class="row-head"><h2>Tu semana de prueba</h2></div>
+  <div class="trial-week" id="trialWeek"></div>
+</div>
+
 <!-- ===== TU CLASE DE BIENVENIDA (free account) ===== -->
 <div class="wrap section-sm free-only">
   <div class="row-head"><h2>Tu clase de bienvenida</h2></div>
@@ -301,6 +307,51 @@ document.addEventListener('DOMContentLoaded', function(){
       card.querySelector('.tag').textContent = (DISC_LABELS[wc.disc] || wc.disc).toUpperCase() + ' · ' + wc.mins + ' MIN';
       card.querySelector('.ttl').textContent = wc.title;
     }
+  }
+
+  /* trial week — one class unlocks per simulated day, driven by the
+     day-picker widget. Monday is always the personalised welcome class. */
+  if (Anyara.isMember()) {
+    var WEEK_PLAN = [
+      { disc:'sculpt',     title:null,                   instr:null,             mins:null, href:'bienvenida.html' },
+      { disc:'pilatesmat', title:'Pilates Core',          instr:'Sofía Ruiz',     mins:12,   href:'clase.html?free=1&t=Pilates%20Core&i=Sof%C3%ADa%20Ruiz&d=pilatesmat&m=12' },
+      { disc:'sculpt',     title:'Sculpt Full Body',      instr:'Valeria Méndez', mins:25,   href:'clase.html?free=1&t=Sculpt%20Full%20Body&i=Valeria%20M%C3%A9ndez&d=sculpt&m=25' },
+      { disc:'funcional',  title:'Funcional HIIT',        instr:'Sofía Ruiz',     mins:20,   href:'clase.html?free=1&t=Funcional%20HIIT&i=Sof%C3%ADa%20Ruiz&d=funcional&m=20' },
+      { disc:'barre',      title:'Barre Flow',            instr:'Valeria Méndez', mins:20,   href:'clase.html?free=1&t=Barre%20Flow&i=Valeria%20M%C3%A9ndez&d=barre&m=20' },
+      { disc:'somara',     title:'Somara Restaurativo',   instr:'Renata Solís',   mins:15,   href:'clase.html?free=1&t=Somara%20Restaurativo&i=Renata%20Sol%C3%ADs&d=somara&m=15' },
+      { disc:'tone',       title:'Meditación',            instr:'Daniela Ortiz',  mins:10,   href:'clase.html?free=1&t=Meditaci%C3%B3n&i=Daniela%20Ortiz&d=tone&m=10' }
+    ];
+    var wcMon = Anyara.welcomeClass();
+    if (wcMon) { WEEK_PLAN[0].disc = wcMon.disc; WEEK_PLAN[0].title = wcMon.title; WEEK_PLAN[0].instr = wcMon.instr; WEEK_PLAN[0].mins = wcMon.mins; }
+    else { WEEK_PLAN[0].title = 'Sculpt : Glúteos'; WEEK_PLAN[0].instr = 'Valeria Méndez'; WEEK_PLAN[0].mins = 20; }
+
+    var today = Anyara.currentDay();
+    var wrap = document.getElementById('trialWeek');
+    WEEK_PLAN.forEach(function (d, idx) {
+      var dayNum = idx + 1;
+      var unlocked = dayNum <= today;
+      var el = document.createElement(unlocked ? 'a' : 'div');
+      el.className = 'week-card' + (dayNum === today ? ' today' : '') + (unlocked ? '' : ' locked-day');
+      if (unlocked) el.href = d.href;
+      var inner =
+        '<div class="wk-day">' + Anyara.DAY_NAMES[idx] + '</div>' +
+        '<div class="wk-art gart ' + d.disc + '">' + (unlocked ? '' : '<span class="wk-lock">🔒</span>') + '</div>' +
+        '<div class="wk-t">' + d.mins + ' min · ' + d.title + '</div>';
+      el.innerHTML = inner;
+      if (unlocked) {
+        var chip = document.createElement('span');
+        chip.className = 'wk-check';
+        chip.textContent = dayNum === today ? '▶' : '✓';
+        el.appendChild(chip);
+      }
+      if (!unlocked) {
+        var soon = document.createElement('div');
+        soon.className = 'wk-soon';
+        soon.textContent = 'Se desbloquea el ' + Anyara.DAY_NAMES[idx];
+        el.appendChild(soon);
+      }
+      wrap.appendChild(el);
+    });
   }
 
   /* tasteful lock badges — members see none, everyone else sees a small
