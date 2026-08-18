@@ -453,8 +453,8 @@ body.is-anon .account-only{display:none!important}
 .welcome-replay .ttl{font-size:20px;margin:4px 0;color:#fff}
 .welcome-replay .sub{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:rgba(255,255,255,.65)}
 
-/* tasteful lock badge on catalog/recommendation cards — same slot as .free/.len */
-.ccard .art .locked{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.55);color:#fff;
+/* tasteful lock badge on catalog/recommendation cards — sits opposite .free/.len so it never overlaps */
+.ccard .art .locked{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.55);color:#fff;
   font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:100px;
   font-family:"Helvetica Neue",Arial,sans-serif;display:flex;align-items:center;gap:5px}
 
