@@ -58,6 +58,8 @@ img{display:block;max-width:100%}
   font-family:"Georgia",serif;font-weight:400;justify-self:start;
 }
 .logo b{font-style:normal}
+.version-badge{font-family:"Helvetica Neue",Arial,sans-serif;font-style:normal;font-size:10px;
+  font-weight:400;letter-spacing:.02em;color:#9a9a9a;vertical-align:super;margin-left:4px}
 .nav-links{display:flex;gap:34px;align-items:center;justify-self:center}
 .nav-link{
   font-size:13px;letter-spacing:.14em;text-transform:uppercase;
@@ -376,6 +378,26 @@ body.is-guest  .member-only{display:none !important}
 .done-stats .l{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--ink-2);margin-top:4px}
 
+/* post-class mood check */
+.mood-card{border:1px solid var(--line);border-radius:var(--radius);padding:22px;background:var(--sand)}
+.mood-card h3{font-family:"Georgia",serif;font-size:22px;font-weight:400;margin-bottom:14px}
+.mood-row{display:flex;gap:10px;flex-wrap:wrap}
+.mood-btn{border:1px solid var(--line);background:#fff;border-radius:100px;padding:11px 18px;cursor:pointer;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-2)}
+.mood-btn:hover{border-color:var(--ink);color:var(--ink)}
+.mood-btn.sel{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* "tu semana está lista" weekly plan reveal */
+.week-plan{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.week-card{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}
+.week-card .wk-day{font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--gold-deep);padding:12px 14px 0}
+.week-card .wk-art{height:90px;margin:8px 12px 0;border-radius:8px;position:relative}
+.week-card .wk-lock{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:18px;background:rgba(0,0,0,.28);border-radius:8px}
+.week-card .wk-t{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink);
+  padding:10px 14px 14px;line-height:1.4}
+
 /* cancel flow */
 .flow-wrap{max-width:620px;margin:0 auto;padding:20px 0 60px}
 .flow-step{display:none}
@@ -417,32 +439,24 @@ body.is-guest  .member-only{display:none !important}
 .plancompare .pc-d{font-size:14px;color:var(--ink-2);line-height:1.5}
 .plancompare .pc-d b{color:var(--gold-deep)}
 
-/* last-call urgency modal */
-.lastcall .modal{max-width:420px;text-align:center}
-.lastcall .lc-clock{font-family:"Georgia",serif;font-size:52px;font-variant-numeric:tabular-nums;
-  letter-spacing:.03em;color:var(--ink);margin:6px 0 4px}
-.lastcall .lc-lab{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--ink-3);margin-bottom:18px}
-.lastcall .lc-strike{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--ink-2);margin-bottom:20px}
-.lastcall .lc-strike s{color:var(--ink-3)}
-.lastcall .lc-strike b{color:var(--ink);font-size:17px}
+/* ---------- Free-account state (has account, no trial yet) ---------- */
+body:not(.is-free) .free-only{display:none!important}
+body:not(.is-anon)  .anon-only{display:none!important}
+body.is-anon .account-only{display:none!important}
 
-/* ---------- Limited-time offer banner (site-wide, after onboarding) ---------- */
-.offerbar{position:sticky;top:0;z-index:60;background:var(--ink);color:#fff;
-  font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px}
-.offerbar-inner{max-width:var(--maxw);margin:0 auto;padding:11px 32px;
-  display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap}
-.offerbar .ob-tag{background:var(--gold);color:var(--ink);font-size:10px;letter-spacing:.14em;
-  text-transform:uppercase;font-weight:700;padding:4px 10px;border-radius:100px}
-.offerbar .ob-msg{opacity:.92}
-.offerbar .ob-msg b{color:var(--gold)}
-.offerbar .ob-clock{font-variant-numeric:tabular-nums;font-weight:700;letter-spacing:.06em;
-  background:rgba(255,255,255,.12);padding:5px 12px;border-radius:6px}
-.offerbar .ob-go{color:var(--gold);text-decoration:underline;text-underline-offset:3px;font-weight:600}
-.offerbar .ob-x{position:absolute;right:22px;background:none;border:none;color:rgba(255,255,255,.5);
-  font-size:15px;cursor:pointer}
-.offerbar .ob-x:hover{color:#fff}
-body.has-offerbar .topbar{top:41px}
+/* welcome-class replay card */
+.welcome-replay{display:flex;gap:18px;align-items:center;background:var(--ink);color:#fff;
+  border-radius:var(--radius);padding:16px;margin-bottom:0}
+.welcome-replay .thumb{width:150px;height:90px;border-radius:10px;flex:0 0 auto}
+.welcome-replay .body{flex:1}
+.welcome-replay .tag{color:var(--gold)}
+.welcome-replay .ttl{font-size:20px;margin:4px 0;color:#fff}
+.welcome-replay .sub{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:rgba(255,255,255,.65)}
+
+/* tasteful lock badge on catalog/recommendation cards — same slot as .free/.len */
+.ccard .art .locked{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.55);color:#fff;
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:100px;
+  font-family:"Helvetica Neue",Arial,sans-serif;display:flex;align-items:center;gap:5px}
 
 /* ---------- Video player (demo) ---------- */
 .vp-scrim{position:fixed;inset:0;z-index:140;background:rgba(12,10,9,.96);display:none;align-items:center;justify-content:center}

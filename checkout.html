@@ -71,7 +71,6 @@
         <h3 style="font-family:'Georgia',serif;font-size:22px;font-weight:400;margin-bottom:18px">Tu plan</h3>
         <div class="co-row"><span class="k">Plan</span><span class="v" id="sumPlan">Mensual</span></div>
         <div class="co-row"><span class="k">Precio de lista</span><span class="v" id="sumList">$39</span></div>
-        <div class="co-row" id="rowDisc" style="display:none"><span class="k">Descuento bienvenida (15%)</span><span class="v" id="sumDisc" style="color:var(--gold-deep)">−$6</span></div>
         <div class="co-row"><span class="k">Hoy pagas</span><span class="v">$0</span></div>
         <div class="co-row total"><span class="k">Después del día 7</span><span class="v" id="sumTotal">$39</span></div>
 
@@ -124,45 +123,39 @@
 <script src="anyara.js"></script>
 <script>
 var PLANS = {
-  mensual:    { name:'Mensual',    price:39,  per:'/mes',       after:'$39/mes' },
-  trimestral: { name:'Trimestral', price:99,  per:'/trimestre', after:'$99/trimestre' },
-  anual:      { name:'Anual',      price:349, per:'/año',       after:'$349/año' }
+  mensual: { name:'Mensual', price:39,  per:'/mes', after:'$39/mes' },
+  anual:   { name:'Anual',   price:349, per:'/año', after:'$349/año' }
 };
 var key = (new URLSearchParams(location.search).get('plan') || 'mensual').toLowerCase();
 if (!PLANS[key]) key = 'mensual';
 var plan = PLANS[key];
-var hasOffer = !!Anyara.offerEnds();
 
 document.getElementById('sumPlan').textContent = plan.name;
 document.getElementById('sumList').textContent = '$' + plan.price;
 document.getElementById('dnPlan').textContent  = plan.name;
 document.getElementById('coName').textContent  = Anyara.name();
 
-var due = plan.price, after = plan.after;
-if (hasOffer) {
-  due = Math.round(plan.price * 0.85);
-  after = '$' + due + plan.per;
-  document.getElementById('rowDisc').style.display = 'flex';
-  document.getElementById('sumDisc').textContent = '−$' + (plan.price - due);
-}
-document.getElementById('sumTotal').textContent = '$' + due;
-document.getElementById('sumAfter').textContent = after;
+document.getElementById('sumTotal').textContent = '$' + plan.price;
+document.getElementById('sumAfter').textContent = plan.after;
 
 var first = new Date(Date.now() + 7 * 864e5);
 document.getElementById('dnDate').textContent =
   first.getDate() + ' ' + ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][first.getMonth()] +
-  ' · $' + due;
+  ' · $' + plan.price;
 
 function confirmJoin() {
   Anyara.join(key);
   document.getElementById('stepPay').classList.add('off');
   document.getElementById('stepDone').classList.remove('off');
-  document.body.classList.remove('is-guest');
+  document.body.classList.remove('is-guest', 'is-free', 'is-anon');
   document.body.classList.add('is-member');
-  var bar = document.querySelector('.offerbar');
-  if (bar) { bar.remove(); document.body.classList.remove('has-offerbar'); }
+
   var join = document.querySelector('.btn-join');
-  if (join) {
+  var avatar = document.querySelector('.nav-right .avatar');
+  if (avatar) {
+    avatar.textContent = Anyara.initials();
+    if (join) join.remove();
+  } else if (join) {
     var av = document.createElement('a');
     av.href = 'profile.html'; av.className = 'avatar'; av.textContent = Anyara.initials();
     join.replaceWith(av);

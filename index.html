@@ -88,8 +88,21 @@
   </div>
 </div>
 
-<!-- ===== STREAK / WEEKLY PROGRESS (members) ===== -->
-<div class="wrap section-sm member-only">
+<!-- ===== ANON: hasn't done onboarding yet ===== -->
+<div class="wrap section-sm anon-only">
+  <div class="daily">
+    <div class="dart gart somara"></div>
+    <div class="dbody">
+      <div class="eyebrow">Empieza aquí</div>
+      <h3>Cuéntanos qué te mueve</h3>
+      <p>Responde unas preguntas rápidas y arma tu espacio: una clase elegida para ti, gratis, en menos de dos minutos.</p>
+      <a href="onboarding.html" class="btn btn-gold">Personalizar mi práctica →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STREAK / WEEKLY PROGRESS (any account) ===== -->
+<div class="wrap section-sm account-only">
   <div class="streakbar">
     <div class="sk">
       <span class="ic">✦</span>
@@ -105,22 +118,22 @@
   </div>
 </div>
 
-<!-- ===== CLASE DEL DÍA ===== -->
-<div class="wrap section-sm">
-  <div class="row-head"><h2>Clase del día</h2></div>
-  <div class="daily">
-    <div class="dart gart pilatesmat"></div>
-    <div class="dbody">
-      <div class="eyebrow">Hoy · Pilates Mat · 15 min</div>
-      <h3>Despierta el core</h3>
-      <p>Quince minutos para activar el centro y empezar el día con la postura en su sitio. Sin equipo, sin excusas.</p>
-      <a href="clase.html" class="btn btn-gold">Hacer la clase de hoy →</a>
+<!-- ===== TU CLASE DE BIENVENIDA (free account) ===== -->
+<div class="wrap section-sm free-only">
+  <div class="row-head"><h2>Tu clase de bienvenida</h2></div>
+  <a href="bienvenida.html" class="welcome-replay" id="welcomeReplay">
+    <div class="thumb gart sculpt"></div>
+    <div class="body">
+      <div class="tag ccard" style="font-family:'Helvetica Neue',Arial">SCULPT · 20 MIN</div>
+      <div class="ttl">Sculpt : Glúteos</div>
+      <div class="sub">Tu primera clase, siempre disponible.</div>
     </div>
-  </div>
+    <span class="btn btn-gold">Volver a verla ▸</span>
+  </a>
 </div>
 
-<!-- ===== CONTINUE WHERE YOU LEFT OFF ===== -->
-<div class="wrap section-sm">
+<!-- ===== CONTINÚA (members) ===== -->
+<div class="wrap section-sm member-only">
   <div class="row-head"><h2>Continúa donde lo dejaste</h2></div>
   <a href="clase.html" class="continue">
     <div class="thumb gart barre"></div>
@@ -133,8 +146,18 @@
   </a>
 </div>
 
+<!-- ===== ESTA SEMANA EN ANYARA (free account — 2 free classes) ===== -->
+<div class="wrap section-sm free-only">
+  <div class="row-head"><h2>Esta semana en Anyara</h2></div>
+  <p style="font-family:'Helvetica Neue',Arial;font-size:14px;color:var(--ink-2);margin:-8px 0 16px">Dos clases abiertas esta semana.</p>
+  <div class="grid2">
+    <a href="clase.html?free=1&amp;t=Barre%20Esencial&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=20" class="ccard"><div class="art gart barre" style="height:170px"><span class="free">Gratis</span></div><div class="tag">BARRE</div><div class="title">Barre Esencial</div><div class="meta">Valeria Méndez · ★ 4.8</div></a>
+    <a href="clase.html?free=1&amp;t=Pilates%20Mat%20Fundamental&amp;i=Sof%C3%ADa%20Ruiz&amp;d=pilatesmat&amp;m=40" class="ccard"><div class="art gart pilatesmat" style="height:170px"><span class="free">Gratis</span></div><div class="tag">PILATES MAT</div><div class="title">Pilates Mat Fundamental</div><div class="meta">Sofía Ruiz · ★ 4.7</div></a>
+  </div>
+</div>
+
 <!-- ===== YOUR LIBRARY (folded in) ===== -->
-<div class="wrap section">
+<div class="wrap section account-only">
   <div class="row-head"><h2>Tu biblioteca</h2><a href="biblioteca.html">Ver todo</a></div>
   <div class="libgrid">
     <a href="biblioteca.html" class="libcard">
@@ -160,23 +183,23 @@
 
 <!-- ===== DISCOVERY ON SCROLL ===== -->
 <div class="wrap section">
-  <div class="eyebrow">Descubre — al bajar</div>
+  <div class="eyebrow">Recomendado para ti</div>
   <div class="row-head"><h2 class="h2-serif">Basado en tus preferencias · 10–20 min</h2><a href="explorar.html">Ver todo</a></div>
-  <div class="cardrow">
-    <a href="clase.html" class="ccard small"><div class="art gart sculpt"><span class="len">20 min</span></div><div class="tag">SCULPT</div><div class="title">20 min · Sculpt : Glut</div><div class="meta">Valeria Méndez · Nuevo</div></a>
-    <a href="clase.html" class="ccard small"><div class="art gart funcional"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz · ★ 4.9</div></a>
-    <a href="clase.html" class="ccard small"><div class="art gart barre"><span class="free">Gratis</span></div><div class="tag">BARRE</div><div class="title">Barre Esencial</div><div class="meta">Valeria Méndez · ★ 4.8</div></a>
-    <a href="clase.html" class="ccard small"><div class="art gart pilatesmat"><span class="len">40 min</span></div><div class="tag">PILATES MAT</div><div class="title">Pilates Mat Fundamental</div><div class="meta">Sofía Ruiz · ★ 4.7</div></a>
+  <div class="cardrow" id="discoverRow">
+    <a href="clase.html?t=20%20min%20%C2%B7%20Sculpt%20%3A%20Glut&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=20" class="ccard small"><div class="art gart sculpt"><span class="len">20 min</span></div><div class="tag">SCULPT</div><div class="title">20 min · Sculpt : Glut</div><div class="meta">Valeria Méndez · Nuevo</div></a>
+    <a href="clase.html?t=Funcional%20HIIT&amp;i=Sof%C3%ADa%20Ruiz&amp;d=funcional&amp;m=30" class="ccard small"><div class="art gart funcional"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz · ★ 4.9</div></a>
+    <a href="clase.html?free=1&amp;t=Barre%20Esencial&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=20" class="ccard small"><div class="art gart barre"><span class="free">Gratis</span></div><div class="tag">BARRE</div><div class="title">Barre Esencial</div><div class="meta">Valeria Méndez · ★ 4.8</div></a>
+    <a href="clase.html?free=1&amp;t=Pilates%20Mat%20Fundamental&amp;i=Sof%C3%ADa%20Ruiz&amp;d=pilatesmat&amp;m=40" class="ccard small"><div class="art gart pilatesmat"><span class="len">40 min</span></div><div class="tag">PILATES MAT</div><div class="title">Pilates Mat Fundamental</div><div class="meta">Sofía Ruiz · ★ 4.7</div></a>
   </div>
 </div>
 
 <div class="wrap section-sm">
-  <div class="row-head"><h2 class="h2-serif">Clases nuevas</h2><a href="explorar.html">Ver todo</a></div>
-  <div class="grid4">
-    <a href="clase.html" class="ccard"><div class="art gart funcional"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz · Nuevo</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart sculpt"><span class="len">60 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Total</div><div class="meta">Valeria Méndez · Nuevo</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart barre"><span class="len">45 min</span></div><div class="tag">BARRE</div><div class="title">Barre Glúteos & Piernas</div><div class="meta">Valeria Méndez · ★ 4.8</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart sculpt"><span class="len">45 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Brazos & Core</div><div class="meta">Valeria Méndez · ★ 4.7</div></a>
+  <div class="row-head"><h2 class="h2-serif">Explora Anyara</h2><a href="explorar.html">Ver todo</a></div>
+  <div class="grid4" id="newRow">
+    <a href="clase.html?t=Funcional%20HIIT&amp;i=Sof%C3%ADa%20Ruiz&amp;d=funcional&amp;m=30" class="ccard"><div class="art gart funcional"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz · Nuevo</div></a>
+    <a href="clase.html?t=Sculpt%20Total&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=60" class="ccard"><div class="art gart sculpt"><span class="len">60 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Total</div><div class="meta">Valeria Méndez · Nuevo</div></a>
+    <a href="clase.html?t=Barre%20Gl%C3%BAteos%20%26%20Piernas&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=45" class="ccard"><div class="art gart barre"><span class="len">45 min</span></div><div class="tag">BARRE</div><div class="title">Barre Glúteos & Piernas</div><div class="meta">Valeria Méndez · ★ 4.8</div></a>
+    <a href="clase.html?t=Sculpt%20Brazos%20%26%20Core&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=45" class="ccard"><div class="art gart sculpt"><span class="len">45 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Brazos & Core</div><div class="meta">Valeria Méndez · ★ 4.7</div></a>
   </div>
 </div>
 
@@ -251,19 +274,47 @@
 
 <script src="anyara.js"></script>
 <script>
+var DISC_LABELS = { sculpt:'Sculpt', barre:'Barre', pilates:'Pilates', pilatesmat:'Pilates Mat', somara:'Somara', funcional:'Funcional', tone:'Tone' };
+
 document.addEventListener('DOMContentLoaded', function(){
   /* greet by the name captured during onboarding */
   document.querySelectorAll('.hc-content p').forEach(function(p){
     p.innerHTML = p.innerHTML.replace('Buenas tardes, Paulo', 'Buenas tardes, ' + Anyara.name());
   });
-  if (!Anyara.isMember()) return;
-  var n = Anyara.streak();
-  document.getElementById('skN').textContent = n;
-  document.getElementById('skC').textContent = n;
-  /* light up one day per completed class, up to the week */
-  document.querySelectorAll('#skWeek i').forEach(function(d, idx){
-    if (idx < Math.min(n, 7)) d.classList.add('on');
-  });
+
+  if (Anyara.hasAccount()) {
+    var n = Anyara.streak();
+    document.getElementById('skN').textContent = n;
+    document.getElementById('skC').textContent = n;
+    /* light up one day per completed class, up to the week */
+    document.querySelectorAll('#skWeek i').forEach(function(d, idx){
+      if (idx < Math.min(n, 7)) d.classList.add('on');
+    });
+  }
+
+  /* free-account users get their own welcome class replayed here */
+  if (Anyara.hasAccount() && !Anyara.isMember()) {
+    var wc = Anyara.welcomeClass();
+    if (wc) {
+      var card = document.getElementById('welcomeReplay');
+      card.querySelector('.thumb').className = 'thumb gart ' + wc.disc;
+      card.querySelector('.tag').textContent = (DISC_LABELS[wc.disc] || wc.disc).toUpperCase() + ' · ' + wc.mins + ' MIN';
+      card.querySelector('.ttl').textContent = wc.title;
+    }
+  }
+
+  /* tasteful lock badges — members see none, everyone else sees a small
+     "Membresía" tag on anything that isn't already marked Gratis */
+  if (!Anyara.isMember()) {
+    document.querySelectorAll('#discoverRow .ccard, #newRow .ccard').forEach(function (c) {
+      var art = c.querySelector('.art');
+      if (art.querySelector('.free')) return;
+      var b = document.createElement('span');
+      b.className = 'locked';
+      b.innerHTML = '🔒 Membresía';
+      art.appendChild(b);
+    });
+  }
 });
 </script>
 </body>

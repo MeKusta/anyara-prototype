@@ -68,17 +68,17 @@ body{background:#100e0d;min-height:100vh;display:flex;flex-direction:column}
 
 <div class="bv-stage">
   <div class="bv-wrap">
-    <div class="bv-screen gart sculpt">
+    <div class="bv-screen gart sculpt" id="screen">
 
       <div class="bv-chip" id="chip"><span class="st">★</span> Elegida para ti</div>
 
       <div class="bv-card" id="card">
         <div class="kicker" id="kicker">Elegida para ti, Paulo</div>
-        <h1>20 min · Sculpt : Glúteos</h1>
+        <h1 id="h1">20 min · Sculpt : Glúteos</h1>
         <p class="why" id="why">Porque quieres tonificar en sesiones de 10–20 min</p>
-        <p class="specs">Con Valeria Méndez · Sculpt · 20 min · Principiante</p>
+        <p class="specs" id="specs">Con Valeria Méndez · Sculpt · 20 min · Principiante</p>
         <button class="bv-play" onclick="togglePlay()">▶</button>
-        <span class="unlocked">Desbloqueada para ti</span>
+        <span class="unlocked">Tu primera clase, gratis</span>
       </div>
 
     </div>
@@ -87,9 +87,9 @@ body{background:#100e0d;min-height:100vh;display:flex;flex-direction:column}
       <button class="tog" id="tog" onclick="togglePlay()">▶</button>
       <span id="t">0:00</span>
       <div class="bv-line" id="line"><i id="prog"></i></div>
-      <span>20:00</span>
-      <span class="bv-title"><b>Sculpt : Glúteos</b> — Valeria Méndez</span>
-      <a href="completada.html?c=sculpt" class="btn btn-gold" style="padding:9px 18px;font-size:11px">Finalizar</a>
+      <span id="totalTime">20:00</span>
+      <span class="bv-title" id="bvTitle"><b>Sculpt : Glúteos</b> — Valeria Méndez</span>
+      <a href="completada.html?c=welcome" class="btn btn-gold" style="padding:9px 18px;font-size:11px">Finalizar</a>
     </div>
   </div>
 </div>
@@ -97,10 +97,19 @@ body{background:#100e0d;min-height:100vh;display:flex;flex-direction:column}
 <script src="anyara.js"></script>
 <script>
 /* echo their own answers back — the proof that this was chosen, not generic */
-document.getElementById('kicker').textContent = 'Elegida para ti, ' + Anyara.name();
-document.getElementById('why').textContent = Anyara.reason();
+var wc = Anyara.welcomeClass() || { disc:'sculpt', title:'Sculpt : Glúteos', instr:'Valeria Méndez', mins:20, level:'Para ti' };
+var DISC_LABELS = { sculpt:'Sculpt', barre:'Barre', pilates:'Pilates', somara:'Somara', funcional:'Funcional' };
 
-var playing = false, sec = 0, total = 1200, timer = null;
+document.getElementById('screen').classList.remove('sculpt');
+document.getElementById('screen').classList.add(wc.disc);
+document.getElementById('kicker').textContent = 'Elegida para ti, ' + Anyara.name();
+document.getElementById('h1').textContent = wc.mins + ' min · ' + wc.title;
+document.getElementById('why').textContent = Anyara.reason();
+document.getElementById('specs').textContent = 'Con ' + wc.instr + ' · ' + (DISC_LABELS[wc.disc] || wc.disc) + ' · ' + wc.mins + ' min · ' + (wc.level || 'Para ti');
+document.getElementById('bvTitle').innerHTML = '<b>' + wc.title + '</b> — ' + wc.instr;
+
+var playing = false, sec = 0, total = (wc.mins || 20) * 60, timer = null;
+document.getElementById('totalTime').textContent = fmt(total);
 function fmt(s){ var m = Math.floor(s/60), r = Math.floor(s%60); return m + ':' + (r<10?'0':'') + r; }
 function paint(){
   document.getElementById('prog').style.width = (sec/total*100) + '%';

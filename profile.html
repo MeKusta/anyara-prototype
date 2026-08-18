@@ -65,7 +65,7 @@
 
         <!-- guest -->
         <div class="guest-only">
-          <div class="setting-row"><div class="l"><b>No tienes membresía activa</b><span id="guestSub">Te quedan 3 clases gratis este mes</span></div><a href="membresia.html" class="btn btn-gold">Ver planes</a></div>
+          <div class="setting-row"><div class="l"><b>No tienes membresía activa</b><span id="guestSub">Tu clase de bienvenida y 2 clases por semana están libres</span></div><a href="membresia.html" class="btn btn-gold">Ver planes</a></div>
           <p class="trialnote" style="text-align:left">7 días gratis en cualquier plan. Desde $39/mes, cancela cuando quieras.</p>
         </div>
       </div>
@@ -115,7 +115,7 @@
 <script src="anyara.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function(){
-  var PLAN = {mensual:'Mensual', trimestral:'Trimestral', anual:'Anual'};
+  var PLAN = {mensual:'Mensual', anual:'Anual'};
   document.getElementById('userName').textContent = Anyara.name() + ' Kustala';
   document.getElementById('bigAv').textContent = Anyara.initials();
   if (Anyara.isMember()) {
@@ -126,11 +126,7 @@ document.addEventListener('DOMContentLoaded', function(){
       ? 'En pausa · se reactiva automáticamente en 30 días'
       : 'Activa · prueba gratis hasta el 24 de agosto';
   } else {
-    document.getElementById('memberTag').textContent = 'Cuenta gratuita';
-    var left = Anyara.freeLeft();
-    document.getElementById('guestSub').textContent = left > 0
-      ? 'Te ' + (left===1?'queda 1 clase gratis':'quedan ' + left + ' clases gratis') + ' este mes'
-      : 'Ya usaste tus 3 clases gratis de este mes';
+    document.getElementById('memberTag').textContent = Anyara.hasAccount() ? 'Cuenta gratuita' : 'Sin cuenta';
   }
 });
 </script>

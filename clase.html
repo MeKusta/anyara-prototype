@@ -30,34 +30,29 @@
 </div>
 
 <div class="wrap section-sm">
-  <!-- guests see how much free access is left before any paywall appears -->
-  <div class="freebar guest-only" id="freebar">
-    <span id="freeMsg"><b>Te quedan 3 clases gratis</b> este mes.</span>
-    <a href="membresia.html" class="btn btn-gold fb-x">Únete ahora</a>
-  </div>
-
   <div class="detail-grid">
     <div>
-      <div class="player-art gart funcional">
+      <div class="player-art gart funcional" id="art">
         <div class="lock guest-only" id="lockBadge">🔒 Clase de miembros</div>
         <div class="play" onclick="startClass()" style="cursor:pointer">▶</div>
-        <div class="art-tags"><span>Funcional</span><span>Intenso</span><span>30 min</span></div>
+        <div class="art-tags" id="artTags"><span>Funcional</span><span>Intenso</span><span>30 min</span></div>
       </div>
-      <h1 style="font-size:36px;margin-top:20px">Funcional HIIT</h1>
+      <h1 style="font-size:36px;margin-top:20px" id="clsTitle">Funcional HIIT</h1>
       <p style="color:var(--ink-2);font-family:'Helvetica Neue',Arial;margin:8px 0 16px">
-        con <a href="coach.html" style="color:var(--gold-deep);text-decoration:underline;text-underline-offset:3px">Sofía Ruiz</a>
+        con <a href="coach.html" id="clsInstr" style="color:var(--gold-deep);text-decoration:underline;text-underline-offset:3px">Sofía Ruiz</a>
         &nbsp;·&nbsp; ★ 4.9 (176 valoraciones)
       </p>
-      <p style="max-width:560px;color:var(--ink-2)">Entrenamiento funcional de alta intensidad. Quema calorías, mejora resistencia y potencia tu cuerpo en 30 minutos.</p>
+      <p style="max-width:560px;color:var(--ink-2)" id="clsDesc">Entrenamiento funcional de alta intensidad. Quema calorías, mejora resistencia y potencia tu cuerpo en 30 minutos.</p>
     </div>
     <div class="detail-side">
       <button class="btn btn-gold btn-block" id="startBtn" onclick="startClass()">▶ Comenzar clase</button>
-      <p class="trialnote guest-only" id="startNote">Esta clase cuenta como una de tus 3 gratis del mes.</p>
+      <p class="trialnote guest-only" id="startNote">Esta clase requiere membresía.</p>
+      <p class="trialnote free-only" id="freeNote" style="display:none">Clase gratuita — incluida en tu cuenta.</p>
       <button class="btn btn-ghost btn-block">♡ Agregar a favoritos</button>
       <div style="margin-top:18px">
-        <div class="spec"><span class="k">Disciplina</span><span class="v">Funcional</span></div>
+        <div class="spec"><span class="k">Disciplina</span><span class="v" id="specDisc">Funcional</span></div>
         <div class="spec"><span class="k">Intensidad</span><span class="v">Intenso</span></div>
-        <div class="spec"><span class="k">Duración</span><span class="v">30 min</span></div>
+        <div class="spec"><span class="k">Duración</span><span class="v" id="specMins">30 min</span></div>
         <div class="spec"><span class="k">Vistas</span><span class="v">3,202</span></div>
       </div>
     </div>
@@ -73,23 +68,21 @@
   </div>
 </footer>
 
-<!-- ===== UNIFIED PAYWALL (single component, one CTA) ===== -->
+<!-- ===== CONTEXTUAL TRIAL CTA (shown when a locked class is opened) ===== -->
 <div class="modal-scrim" id="pw">
   <div class="modal">
     <button class="x" onclick="document.getElementById('pw').classList.remove('open')">✕</button>
     <div class="brandline"><span class="star">★</span><span class="logo" style="font-size:22px"><b>A</b>nyara</span></div>
-    <h3>Ya usaste tus clases gratis</h3>
-    <p class="sub">Sigue entrenando sin límite: acceso completo a todas las clases, retos y series, con tu progreso guardado.</p>
+    <h3>Esta clase es parte de Anyara</h3>
+    <p class="sub">Prueba la experiencia completa durante 7 días: acceso a todas las clases, retos y series, con tu progreso guardado.</p>
     <ul>
       <li><span class="ic">▷</span> +180 clases en vivo y grabadas</li>
       <li><span class="ic">⚡</span> Las 7 disciplinas, sin restricciones</li>
       <li><span class="ic">📈</span> Seguimiento de progreso y rachas</li>
       <li><span class="ic">♡</span> Favoritos y series personalizadas</li>
     </ul>
-    <div class="social">+2,400 mujeres ya entrenan con Anyara</div>
-    <a href="membresia.html" class="btn btn-gold btn-block" style="margin-bottom:6px">Únete ahora</a>
-    <p class="trialnote" style="margin-bottom:12px">7 días gratis, luego desde $39/mes. Cancela cuando quieras.</p>
-    <a href="#" class="btn btn-ghost btn-block">Ya tengo cuenta · Iniciar sesión</a>
+    <a href="membresia.html" class="btn btn-gold btn-block" style="margin-bottom:6px">Empezar mis 7 días gratis</a>
+    <p class="trialnote" style="margin-bottom:0">Cancela cuando quieras.</p>
   </div>
 </div>
 
@@ -105,15 +98,15 @@
 <div class="vp-scrim" id="vp">
   <button class="vp-close" onclick="closePlayer()">✕</button>
   <div class="vp">
-    <div class="vp-title"><span>Funcional · Intenso</span>Funcional HIIT — con Sofía Ruiz</div>
-    <div class="vp-screen gart funcional">
+    <div class="vp-title" id="vpTitleWrap"><span>Funcional · Intenso</span>Funcional HIIT — con Sofía Ruiz</div>
+    <div class="vp-screen gart funcional" id="vpScreen">
       <button class="vp-bigplay" id="vpBig" onclick="togglePlay()">▶</button>
     </div>
     <div class="vp-bar">
       <button class="vp-toggle" id="vpToggle" onclick="togglePlay()">▶</button>
       <span id="vpTime">0:00</span>
       <div class="vp-timeline" id="vpLine"><i id="vpProg"></i></div>
-      <span>30:00</span>
+      <span id="vpTotal">30:00</span>
       <button class="vp-toggle" title="Pantalla completa">⛶</button>
       <a href="completada.html" class="btn btn-gold" style="padding:9px 18px;font-size:11px">Finalizar</a>
     </div>
@@ -122,34 +115,46 @@
 
 <script src="anyara.js"></script>
 <script>
-/* ---- access: members watch everything; guests get 3 free classes a month ---- */
+/* ---- read the card's params so the same template can stand in for any class ---- */
+var qs = new URLSearchParams(location.search);
+var DISC_LABELS = { sculpt:'Sculpt', barre:'Barre', pilates:'Pilates', pilatesmat:'Pilates Mat', somara:'Somara', funcional:'Funcional', tone:'Tone' };
+var cls = {
+  t:    qs.get('t')    || 'Funcional HIIT',
+  i:    qs.get('i')    || 'Sofía Ruiz',
+  d:    qs.get('d')    || 'funcional',
+  m:    qs.get('m')    || '30',
+  free: qs.get('free') === '1'
+};
+document.getElementById('art').classList.remove('funcional');
+document.getElementById('art').classList.add(cls.d);
+document.getElementById('vpScreen').classList.remove('funcional');
+document.getElementById('vpScreen').classList.add(cls.d);
+document.getElementById('clsTitle').textContent = cls.t;
+document.getElementById('clsInstr').textContent = cls.i;
+document.getElementById('specDisc').textContent = DISC_LABELS[cls.d] || cls.d;
+document.getElementById('specMins').textContent = cls.m + ' min';
+document.getElementById('artTags').innerHTML = '<span>' + (DISC_LABELS[cls.d] || cls.d) + '</span><span>' + cls.m + ' min</span>';
+document.getElementById('vpTitleWrap').innerHTML = '<span>' + (DISC_LABELS[cls.d] || cls.d) + '</span>' + cls.t + ' — con ' + cls.i;
+document.getElementById('vpTotal').textContent = cls.m + ':00';
+
+/* ---- access: members watch everything; free-account users get this class only if it's flagged free ---- */
+function canPlay(){ return Anyara.isMember() || cls.free; }
 function startClass(){
-  if (Anyara.isMember() || Anyara.freeLeft() > 0) {
-    if (!Anyara.isMember()) { Anyara.useFree(); paintAccess(); }
-    openPlayer();
-  } else {
-    document.getElementById('pw').classList.add('open');
-  }
+  if (canPlay()) { openPlayer(); }
+  else { document.getElementById('pw').classList.add('open'); }
 }
 function paintAccess(){
   if (Anyara.isMember()) return;
-  var left = Anyara.freeLeft(), bar = document.getElementById('freebar');
-  var msg = document.getElementById('freeMsg'), note = document.getElementById('startNote');
-  if (left > 0) {
-    msg.innerHTML = '<b>Te ' + (left===1 ? 'queda 1 clase gratis' : 'quedan ' + left + ' clases gratis') + '</b> este mes.';
-    note.textContent = 'Esta clase cuenta como una de tus 3 gratis del mes.';
-    bar.classList.remove('spent');
-  } else {
-    msg.innerHTML = '<b>Ya usaste tus 3 clases gratis</b> de este mes.';
-    note.textContent = 'Únete para seguir viendo esta y todas las demás.';
-    bar.classList.add('spent');
-    document.getElementById('lockBadge').textContent = '🔒 Requiere membresía';
+  if (cls.free) {
+    document.getElementById('lockBadge').style.display = 'none';
+    document.getElementById('startNote').style.display = 'none';
+    document.getElementById('freeNote').style.display = 'block';
   }
 }
 document.addEventListener('DOMContentLoaded', paintAccess);
 
-/* ---- demo player: fake 30-min timeline, play/pause, click-to-seek ---- */
-var vpPlaying=false, vpSec=0, vpTotal=1800, vpTimer=null;
+/* ---- demo player: fake timeline, play/pause, click-to-seek ---- */
+var vpPlaying=false, vpSec=0, vpTotal=parseInt(cls.m,10)*60, vpTimer=null;
 function fmt(s){var m=Math.floor(s/60),r=Math.floor(s%60);return m+':'+(r<10?'0':'')+r}
 function paint(){
   document.getElementById('vpProg').style.width=(vpSec/vpTotal*100)+'%';
