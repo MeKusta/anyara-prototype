@@ -1,15 +1,18 @@
 /* Anyara prototype — shared state & chrome.
    Demo only: everything lives in localStorage, nothing is sent anywhere.
 
-   Three states drive the whole site:
-   - anon    (no account)     → hasn't done onboarding, sees the marketing shell
-   - free    (has account)    → personalised welcome class + 2 weekly free
-                                 classes are unlocked, the rest is Membresía
-   - member  (trial or paid)  → everything unlocked, no locks anywhere */
+   Three levels drive the whole site:
+   - 1 · visita  → the two always-free classes, plus the personalised class
+                    the onboarding ends in. Everything else is membresía.
+   - 2 · prueba  → "Tres días de bienvenida": Mariana's intro plus a curated
+                    día 1 / 2 / 3 plan that opens one day at a time. Still not
+                    the whole catalog — that is what skipping the trial buys.
+   - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.01.05';
+  var VERSION = '1.02.00';
   var K = {
-    member:   'anyara_member',
+    member:   'anyara_member',   // level 3 · paid
+    trial:    'anyara_trial',    // level 2 · 3-day welcome
     plan:     'anyara_plan',
     account:  'anyara_account',
     streak:   'anyara_streak',
@@ -18,16 +21,18 @@
     reason:   'anyara_reason',
     welcome:  'anyara_welcome',
     wplan:    'anyara_welcome_plan',
-    day:      'anyara_day'
+    day:      'anyara_day',
+    charged:  'anyara_charged'   // one-shot: show the "day 3 charge" notice once
   };
-  /* the two catalog classes marked "Gratis" — always playable once you
-     have a free account, no trial required */
-  var FREE_SLUGS = ['barre-esencial', 'pilatesmat-fundamental'];
-  /* demo-only "time machine" — simulates which day of the trial week it
-     is, so the day-by-day class unlock can be shown without waiting a
-     real week. 1 = Lunes ... 7 = Domingo */
-  var DAY_LETTERS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
-  var DAY_NAMES   = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+  /* the two catalog classes marked "Gratis" — playable at every level */
+  var FREE_CLASSES = [
+    { slug:'barre-esencial',         t:'Barre Esencial',           i:'Valeria Méndez', d:'barre',      m:20 },
+    { slug:'pilatesmat-fundamental', t:'Pilates Mat Fundamental',  i:'Sofía Ruiz',     d:'pilatesmat', m:40 }
+  ];
+  var FREE_SLUGS = FREE_CLASSES.map(function (c) { return c.slug; });
+  /* demo-only "time machine": which day of the 3-day trial we are on, so the
+     day-by-day unlock can be shown without waiting three real days. */
+  var TRIAL_DAYS = 3;
 
   /* used when someone lands on the site without having run the onboarding */
   var DEFAULT_WPLAN = [
@@ -41,21 +46,40 @@
   function del(k) { try { localStorage.removeItem(k); } catch (e) {} }
 
   var A = {
-    isMember: function () { return get(K.member) === '1'; },
-    hasAccount: function () { return A.isMember() || get(K.account) === '1'; },
+    TRIAL_DAYS: TRIAL_DAYS,
+
+    /* 1 = visita · 2 = prueba de 3 días · 3 = membresía pagada */
+    level: function () {
+      if (get(K.member) === '1') return 3;
+      if (get(K.trial) === '1')  return 2;
+      return 1;
+    },
+    isPaid:  function () { return A.level() === 3; },
+    isTrial: function () { return A.level() === 2; },
+    /* full catalog access — only the paid level. The trial deliberately
+       stops short of this; opening everything is what skipping it buys. */
+    isMember: function () { return A.level() === 3; },
+    /* has an active plan of some kind (trial or paid) */
+    hasPlan: function () { return A.level() >= 2; },
+    hasAccount: function () { return A.hasPlan() || get(K.account) === '1'; },
 
     /* onboarding creates the free account — no trial, no card */
     createAccount: function (name) {
       set(K.account, '1');
       if (name) set(K.name, name);
     },
-    join: function (plan) {
-      set(K.member, '1'); set(K.account, '1'); set(K.plan, plan || 'mensual'); del(K.paused);
+    startTrial: function () {
+      set(K.trial, '1'); set(K.account, '1'); set(K.day, '1'); del(K.paused);
     },
-    cancel: function () { del(K.member); del(K.paused); },
+    join: function (plan) {
+      set(K.member, '1'); set(K.account, '1'); set(K.plan, plan || 'mensual');
+      del(K.trial); del(K.paused);
+    },
+    cancel: function () { del(K.member); del(K.trial); del(K.paused); },
     pause:  function () { set(K.paused, '1'); },
     isPaused: function () { return get(K.paused) === '1'; },
     plan: function () { return get(K.plan) || 'mensual'; },
+    setPlan: function (p) { if (p) set(K.plan, p); },
 
     name: function () { return get(K.name) || 'Paulo'; },
     setName: function (n) { if (n) set(K.name, n); },
@@ -87,25 +111,43 @@
       return DEFAULT_WPLAN;
     },
 
+    FREE_CLASSES: FREE_CLASSES,
     isFreeSlug: function (slug) { return FREE_SLUGS.indexOf(slug) > -1; },
-    /* can this class be watched right now? */
-    canWatch: function (slug) { return A.isMember() || (slug && A.isFreeSlug(slug)); },
+
+    /* builds a clase.html link; pass free:1 or t3:N to carry the access flag */
+    classHref: function (c) {
+      var q = ['t=' + encodeURIComponent(c.t), 'i=' + encodeURIComponent(c.i),
+               'd=' + c.d, 'm=' + c.m];
+      if (c.free) q.push('free=1');
+      if (c.t3)   q.push('t3=' + c.t3);
+      return 'clase.html?' + q.join('&');
+    },
+
+    /* Can this class be watched right now?
+       free  → one of the two always-free classes, or the onboarding class
+       t3    → belongs to día N of the 3-day welcome (trial only, once día N
+               has arrived); paid access opens it regardless */
+    canWatch: function (opts) {
+      opts = opts || {};
+      if (A.isPaid()) return true;
+      if (opts.free) return true;
+      if (opts.t3 && A.isTrial()) return A.currentDay() >= opts.t3;
+      return false;
+    },
 
     streak: function () { return parseInt(get(K.streak) || '0', 10); },
     bumpStreak: function () { set(K.streak, String(A.streak() + 1)); },
 
-    /* demo time machine: 1=Lunes ... 7=Domingo, defaults to Lunes */
-    DAY_LETTERS: DAY_LETTERS,
-    DAY_NAMES: DAY_NAMES,
+    /* demo time machine: día 1..3 of the trial, defaults to día 1 */
     currentDay: function () { return parseInt(get(K.day) || '1', 10); },
-    setDay: function (n) { set(K.day, String(Math.max(1, Math.min(7, n)))); },
+    setDay: function (n) { set(K.day, String(Math.max(1, Math.min(TRIAL_DAYS, n)))); },
 
     /* Pre-roll: people in "visita" (no trial) see an Anyara trailer before
        the class starts. Members watch straight through. The trailer is a
        placeholder card standing in for the real video, skippable at any time.
        Calls onDone() once — when skipped or when the pre-roll runs out. */
     playTrailer: function (screenEl, onDone) {
-      if (A.isMember() || !screenEl) { onDone(); return; }
+      if (A.level() > 1 || !screenEl) { onDone(); return; }
 
       var LENGTH = 12;                    // seconds of "ad" before it self-ends
       var left = LENGTH, timer = null, finished = false;
@@ -160,39 +202,70 @@
 
   /* ---------- chrome ---------- */
   document.addEventListener('DOMContentLoaded', function () {
-    var state = A.isMember() ? 'member' : (A.hasAccount() ? 'free' : 'anon');
-    document.body.classList.add('is-' + state);
-    /* legacy pair, kept so guest-only/member-only keeps working everywhere */
-    document.body.classList.add(state === 'member' ? 'is-member' : 'is-guest');
+    var lvl = A.level();
+    document.body.classList.add('is-l' + lvl);
+    if (A.hasAccount()) document.body.classList.add('has-account');
+    /* legacy pair: member-only means full access (level 3), guest-only means
+       anything short of it, which is what the locks on premium pages want */
+    document.body.classList.add(lvl === 3 ? 'is-member' : 'is-guest');
     renderNav();
     renderVersion();
     renderDayPicker();
+    renderChargeNotice();
   });
 
-  /* prototype-only "time machine": floating L M M J V S D picker, bottom
-     right, on every page. Lets us demo the day-by-day trial unlock
-     without waiting a real week — click a day and the site jumps there. */
+  /* se muestra una sola vez, justo después de que el día 3 activa la membresía */
+  function renderChargeNotice() {
+    if (get(K.charged) !== '1') return;
+    del(K.charged);
+
+    var PLAN_NAMES = { mensual: 'Mensual', anual: 'Anual' };
+    var el = document.createElement('div');
+    el.className = 'charge-note';
+    el.innerHTML =
+      '<div class="cn-in">' +
+        '<span class="cn-tag">Día 3</span>' +
+        '<span class="cn-msg">Tu membresía <b>' + (PLAN_NAMES[A.plan()] || 'Mensual') +
+          '</b> se activó. Ya tienes todo Anyara abierto.</span>' +
+        '<button class="cn-x" aria-label="Cerrar">✕</button>' +
+      '</div>';
+    document.body.insertBefore(el, document.body.firstChild);
+    el.querySelector('.cn-x').addEventListener('click', function () { el.remove(); });
+  }
+
+  /* prototype-only "time machine": floating día 1 / 2 / 3 picker, bottom
+     right, on every page. Lets us demo the day-by-day unlock of the welcome
+     without waiting three real days — click a day and the site jumps there. */
   function renderDayPicker() {
     if (document.getElementById('dayPicker')) return;
     var box = document.createElement('div');
     box.id = 'dayPicker';
     box.className = 'day-picker';
-    box.title = 'Prototipo: simula el día para probar el desbloqueo diario';
-    box.innerHTML = '<span class="dp-lab">Día</span>';
+    box.title = 'Prototipo: simula el día de la prueba para ver el desbloqueo diario';
+    box.innerHTML = '<span class="dp-lab">Día de prueba</span>';
     var today = A.currentDay();
-    DAY_LETTERS.forEach(function (letter, idx) {
-      var n = idx + 1;
+    for (var n = 1; n <= TRIAL_DAYS; n++) {
+      box.appendChild(dayBtn(n, today));
+    }
+    document.body.appendChild(box);
+
+    function dayBtn(n, today) {
       var btn = document.createElement('button');
-      btn.textContent = letter;
-      btn.title = DAY_NAMES[idx];
+      btn.textContent = n;
+      btn.title = 'Día ' + n + ' de la prueba';
       if (n === today) btn.classList.add('on');
       btn.addEventListener('click', function () {
         A.setDay(n);
+        /* llegar al último día es el día del cobro: la prueba se convierte
+           en membresía y el aviso lo explica al recargar */
+        if (n === TRIAL_DAYS && A.isTrial()) {
+          A.join(A.plan());
+          set(K.charged, '1');
+        }
         location.reload();
       });
-      box.appendChild(btn);
-    });
-    document.body.appendChild(box);
+      return btn;
+    }
   }
 
   /* small grey version tag next to the wordmark, so redeploys are visible at a glance */
@@ -205,7 +278,8 @@
     logo.appendChild(v);
   }
 
-  /* anon visitors get a CTA into onboarding; free + member get their avatar */
+  /* visitors without an account get a CTA into onboarding; everyone else
+     gets their avatar, plus the next step for their level */
   function renderNav() {
     var right = document.querySelector('.nav-right');
     if (!right) return;
@@ -214,12 +288,18 @@
 
     if (A.hasAccount()) {
       avatar.textContent = A.initials();
-      if (!A.isMember()) {
-        var trial = document.createElement('a');
-        trial.href = 'membresia.html';
-        trial.className = 'btn btn-gold btn-join';
-        trial.textContent = 'Prueba gratis';
-        avatar.insertAdjacentElement('beforebegin', trial);
+      var lvl = A.level();
+      if (lvl < 3) {
+        var cta = document.createElement('a');
+        cta.className = 'btn btn-gold btn-join';
+        if (lvl === 2) {
+          cta.href = 'tres-dias.html';
+          cta.textContent = 'Día ' + A.currentDay() + ' de 3';
+        } else {
+          cta.href = 'membresia.html';
+          cta.textContent = 'Tres días gratis';
+        }
+        avatar.insertAdjacentElement('beforebegin', cta);
       }
       return;
     }

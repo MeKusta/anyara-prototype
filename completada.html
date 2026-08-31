@@ -50,38 +50,20 @@
         </div>
       </div>
 
-      <div class="row-head" style="margin-top:32px"><h2 class="h2-serif">Tu semana está lista</h2></div>
-      <p style="font-family:'Helvetica Neue',Arial;font-size:14px;color:var(--ink-2);margin-bottom:18px;max-width:520px">
-        Ya elegimos lo que sigue, a partir de lo que nos contaste.
+      <div class="row-head" style="margin-top:32px"><h2 class="h2-serif">Lo que sigue: tres días de bienvenida</h2></div>
+      <p style="font-family:'Helvetica Neue',Arial;font-size:14px;color:var(--ink-2);margin-bottom:18px;max-width:560px">
+        Un video de Mariana para empezar, y luego un plan de tres días con cuatro clases cada día,
+        armado a partir de lo que nos contaste.
       </p>
-      <div class="week-plan">
-        <div class="week-card">
-          <div class="wk-day">Mañana</div>
-          <div class="wk-art gart pilatesmat"><span class="wk-lock">🔒</span></div>
-          <div class="wk-t">12 min · Pilates Core</div>
-        </div>
-        <div class="week-card">
-          <div class="wk-day">Miércoles</div>
-          <div class="wk-art gart sculpt"><span class="wk-lock">🔒</span></div>
-          <div class="wk-t">25 min · Sculpt Full Body</div>
-        </div>
-        <div class="week-card">
-          <div class="wk-day">Viernes</div>
-          <div class="wk-art gart barre"><span class="wk-lock">🔒</span></div>
-          <div class="wk-t">20 min · Barre</div>
-        </div>
-        <div class="week-card">
-          <div class="wk-day">Domingo</div>
-          <div class="wk-art gart somara"><span class="wk-lock">🔒</span></div>
-          <div class="wk-t">10 min · Meditación</div>
-        </div>
-      </div>
+      <div class="week-plan" id="preview3"></div>
 
-      <div class="ob-cta-row" style="display:flex;gap:14px;flex-wrap:wrap;margin-top:26px">
-        <a href="membresia.html" class="btn btn-gold">Empezar mis 7 días gratis</a>
-        <a href="index.html" class="btn btn-ghost">Continuar gratis</a>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:26px">
+        <a href="membresia.html" class="btn btn-gold">Empezar mis tres días</a>
+        <a href="index.html" class="btn btn-ghost">Seguir con mis clases abiertas</a>
       </div>
-      <p class="trialnote" style="text-align:left">7 días gratis, luego desde $39/mes. Cancela cuando quieras.</p>
+      <p class="trialnote" style="text-align:left">
+        No pagas nada hasta el día 3. Cancela antes y no se te cobra.
+      </p>
     </div>
 
     <!-- members: simple continue -->
@@ -141,6 +123,21 @@ if (new URLSearchParams(location.search).get('c') === 'welcome' && wc) {
 }
 document.getElementById('stStreak').textContent = Anyara.streak();
 document.getElementById('stTotal').textContent  = Anyara.streak();
+
+/* preview of the three days, built from their own onboarding answers */
+var prev = document.getElementById('preview3');
+if (prev) {
+  var DISC = { sculpt:'Sculpt', barre:'Barre', pilates:'Pilates', pilatesmat:'Pilates Mat',
+               somara:'Somara', funcional:'Funcional', tone:'Tone' };
+  prev.style.gridTemplateColumns = 'repeat(3,1fr)';
+  prev.innerHTML = Anyara.welcomePlan().map(function (p, i) {
+    return '<div class="week-card">' +
+      '<div class="wk-day">Día ' + (i + 1) + ' · 4 clases</div>' +
+      '<div class="wk-art gart ' + p.disc + '"><span class="wk-lock">🔒</span></div>' +
+      '<div class="wk-t">' + (DISC[p.disc] || p.disc) + ' · ' + p.mins + ' min</div>' +
+      '</div>';
+  }).join('');
+}
 
 /* mood check — decorative for the demo, just confirms the pick */
 document.querySelectorAll('.mood-btn').forEach(function (b) {

@@ -195,6 +195,11 @@ h2{font-size:15px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
 
 /* ---------- Filter bar ---------- */
 .filterbar{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;background:var(--sand);border-radius:var(--radius);padding:20px;margin:20px 0}
+.filterbar-5{grid-template-columns:repeat(5,1fr)}
+/* the props filter is the one that actually filters, so it is a real control */
+.filter select.sel-live{width:100%;appearance:none;-webkit-appearance:none;cursor:pointer;
+  font-family:"Helvetica Neue",Arial,sans-serif;background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='7'><path d='M0 0l5 6 5-6z' fill='%236b6b6b'/></svg>") no-repeat right 12px center}
+.filter select.sel-live:focus{outline:none;border-color:var(--gold)}
 .filter label{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:7px}
 .filter .sel{border:1px solid var(--line);background:#fff;border-radius:8px;padding:11px 12px;font-size:13px;color:var(--ink);display:flex;justify-content:space-between;align-items:center;cursor:pointer}
 
@@ -439,10 +444,15 @@ body.is-guest  .member-only{display:none !important}
 .plancompare .pc-d{font-size:14px;color:var(--ink-2);line-height:1.5}
 .plancompare .pc-d b{color:var(--gold-deep)}
 
-/* ---------- Free-account state (has account, no trial yet) ---------- */
-body:not(.is-free) .free-only{display:none!important}
-body:not(.is-anon)  .anon-only{display:none!important}
-body.is-anon .account-only{display:none!important}
+/* ---------- Access levels (1 visita · 2 prueba · 3 pagada) ---------- */
+body:not(.is-l1) .l1-only{display:none!important}
+body:not(.is-l2) .l2-only{display:none!important}
+body:not(.is-l3) .l3-only{display:none!important}
+/* trial or paid */
+body.is-l1 .l23-only{display:none!important}
+/* signed in, at any level */
+body:not(.has-account) .account-only{display:none!important}
+body.has-account .anon-only{display:none!important}
 
 /* tasteful lock badge on catalog/recommendation cards — sits opposite .free/.len so it never overlaps */
 .ccard .art .locked{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.55);color:#fff;
@@ -503,6 +513,109 @@ body.is-anon .account-only{display:none!important}
 .trailer .tr-bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.18)}
 .trailer .tr-bar > i{display:block;height:100%;width:0;background:var(--gold)}
 @media (prefers-reduced-motion:reduce){.trailer .tr-bar > i{transition:none!important}}
+
+/* ---------- Section lead line ---------- */
+.sec-lead{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--ink-2);margin:-8px 0 16px}
+
+/* ---------- Trial offer box (level 1) ---------- */
+.trialbox{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:22px;
+  border:1px solid var(--gold);background:var(--gold-tint);border-radius:var(--radius);padding:24px 26px}
+.trialbox > div{flex:1;min-width:280px}
+.trialbox .tb-t{font-family:"Georgia",serif;font-size:22px;margin-bottom:6px}
+.trialbox .tb-d{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--ink-2);line-height:1.55}
+
+/* ---------- Trial progress strip (level 2 homepage) ---------- */
+.trialstrip{display:flex;align-items:center;gap:20px;border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px 22px;background:#fff}
+.trialstrip:hover{border-color:var(--gold)}
+.trialstrip .ts-num{width:64px;height:64px;border-radius:50%;background:var(--ink);color:#fff;flex:0 0 auto;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.trialstrip .ts-num b{font-family:"Georgia",serif;font-size:24px}
+.trialstrip .ts-num span{font-family:"Helvetica Neue",Arial,sans-serif;font-size:9px;
+  letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin-top:3px}
+.trialstrip .ts-b{flex:1}
+.trialstrip .ts-t{font-family:"Georgia",serif;font-size:21px;margin-bottom:3px}
+.trialstrip .ts-d{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-2)}
+
+/* ---------- Tres días page ---------- */
+.td-prog{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.td-step{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;padding:8px 16px;border-radius:100px;border:1px solid var(--line);color:var(--ink-3)}
+.td-step.done{background:var(--sand);border-color:var(--line);color:var(--ink-2)}
+.td-step.now{background:var(--ink);border-color:var(--ink);color:#fff}
+
+.intro-card{display:flex;gap:24px;align-items:center;border:1px solid var(--line);
+  border-radius:var(--radius);overflow:hidden;cursor:pointer;background:#fff}
+.intro-card:hover{border-color:var(--gold)}
+.intro-card .ic-art{width:330px;height:200px;flex:0 0 auto;position:relative;
+  display:flex;align-items:center;justify-content:center}
+.intro-card .ic-play{width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.92);
+  display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--ink)}
+.intro-card .ic-len{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.55);color:#fff;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;padding:5px 10px;border-radius:100px}
+.intro-card .ic-b{padding:22px 26px 22px 0;flex:1}
+.intro-card .ic-k{font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold-deep);margin-bottom:7px}
+.intro-card .ic-t{font-family:"Georgia",serif;font-size:26px;margin-bottom:8px}
+.intro-card .ic-d{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--ink-2);
+  line-height:1.55;max-width:520px;margin-bottom:16px}
+
+.td-day{border-top:1px solid var(--line);padding-top:24px;margin-top:30px}
+.td-day.shut{opacity:.62}
+.td-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:18px}
+.td-k{font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold-deep);margin-bottom:6px}
+.td-t{font-family:"Georgia",serif;font-size:26px;font-weight:400;margin-bottom:5px}
+.td-why{display:flex;gap:8px;font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-2)}
+.td-why::before{content:"✦";color:var(--gold)}
+.td-lock{font-size:20px;opacity:.55}
+
+.exits{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.exit{border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+.exit.feat{border-color:var(--gold);background:var(--gold-tint)}
+.exit .ex-k{font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold-deep);margin-bottom:8px}
+.exit .ex-t{font-family:"Georgia",serif;font-size:24px;margin-bottom:10px}
+.exit .ex-d{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--ink-2);
+  line-height:1.6;margin-bottom:16px}
+.exit .ex-state{display:inline-block;font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;background:var(--sand);color:var(--ink-2);
+  padding:8px 14px;border-radius:100px}
+
+/* ---------- Coach cover (full width, not a circle) ---------- */
+.coach-cover{position:relative;height:clamp(300px,42vh,420px);display:flex;align-items:flex-end;
+  border-radius:var(--radius);overflow:hidden}
+.coach-cover::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(22,19,16,0) 35%,rgba(22,19,16,.78))}
+.coach-cover .cc-in{position:relative;z-index:2;padding:34px;color:#fff;width:100%}
+.coach-cover .cc-in .eyebrow{color:var(--gold)}
+.coach-cover h1{color:#fff;font-size:44px}
+.coach-cover .cc-meta{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;
+  color:rgba(255,255,255,.75);margin-top:8px}
+.coach-bio{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;color:var(--ink-2);
+  max-width:640px;line-height:1.65}
+
+/* ---------- Ticket QR preview ---------- */
+.qr-modal{max-width:380px;text-align:center}
+.qr-modal .qr-ev{font-family:"Georgia",serif;font-size:22px;margin-bottom:4px}
+.qr-modal .qr-when{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;
+  color:var(--ink-2);margin-bottom:20px}
+.qr-box{width:220px;height:220px;margin:0 auto 16px;padding:12px;background:#fff;
+  border:1px solid var(--line);border-radius:12px}
+.qr-box svg{display:block;width:100%;height:100%}
+.qr-code{font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;letter-spacing:.22em;
+  color:var(--ink-2);margin-bottom:6px}
+.qr-note{font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;color:var(--ink-3);line-height:1.5}
+
+/* ---------- Charge notice (día 3 activates the membership) ---------- */
+.charge-note{background:var(--gold);color:#fff;font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px}
+.charge-note .cn-in{max-width:var(--maxw);margin:0 auto;padding:11px 32px;position:relative;
+  display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.charge-note .cn-tag{background:rgba(255,255,255,.22);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:700;padding:4px 10px;border-radius:100px}
+.charge-note .cn-x{position:absolute;right:22px;background:none;border:none;
+  color:rgba(255,255,255,.75);font-size:15px;cursor:pointer}
+.charge-note .cn-x:hover{color:#fff}
 
 /* ---------- Day picker (prototype-only time machine) ---------- */
 .day-picker{position:fixed;right:18px;bottom:18px;z-index:90;display:flex;align-items:center;gap:5px;

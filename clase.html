@@ -46,7 +46,7 @@
     <div class="detail-side">
       <button class="btn btn-gold btn-block" id="startBtn" onclick="startClass()">▶ Comenzar clase</button>
       <p class="trialnote guest-only" id="startNote">Esta clase requiere membresía.</p>
-      <p class="trialnote free-only" id="freeNote" style="display:none">Clase gratuita — incluida en tu cuenta.</p>
+      <p class="trialnote" id="freeNote" style="display:none">Clase gratuita — incluida en tu cuenta.</p>
       <button class="btn btn-ghost btn-block">♡ Agregar a favoritos</button>
       <div style="margin-top:18px">
         <div class="spec"><span class="k">Disciplina</span><span class="v" id="specDisc">Funcional</span></div>
@@ -72,16 +72,16 @@
   <div class="modal">
     <button class="x" onclick="document.getElementById('pw').classList.remove('open')">✕</button>
     <div class="brandline"><span class="star"><b>A</b></span><span class="logo" style="font-size:22px"><b>A</b>nyara</span></div>
-    <h3>Esta clase es parte de Anyara</h3>
-    <p class="sub">Prueba la experiencia completa durante 7 días: acceso a todas las clases, retos y series, con tu progreso guardado.</p>
+    <h3 id="pwTitle">Esta clase es parte de Anyara</h3>
+    <p class="sub" id="pwSub">Empieza con tres días de bienvenida: un video de Mariana y un plan de día 1, 2 y 3 armado para ti. No pagas nada hasta el día 3.</p>
     <ul>
-      <li><span class="ic">▷</span> +180 clases en vivo y grabadas</li>
-      <li><span class="ic">⚡</span> Las 7 disciplinas, sin restricciones</li>
+      <li><span class="ic">▷</span> Cuatro clases por día, elegidas para ti</li>
+      <li><span class="ic">✦</span> Video de bienvenida con Mariana</li>
       <li><span class="ic">📈</span> Seguimiento de progreso y rachas</li>
-      <li><span class="ic">♡</span> Favoritos y series personalizadas</li>
+      <li><span class="ic">♡</span> Favoritos y tu biblioteca personal</li>
     </ul>
-    <a href="membresia.html" class="btn btn-gold btn-block" style="margin-bottom:6px">Empezar mis 7 días gratis</a>
-    <p class="trialnote" style="margin-bottom:0">Cancela cuando quieras.</p>
+    <a href="membresia.html" class="btn btn-gold btn-block" id="pwCta" style="margin-bottom:6px">Empezar mis tres días</a>
+    <p class="trialnote" style="margin-bottom:0" id="pwNote">Gratis los primeros dos días. Cancela cuando quieras.</p>
   </div>
 </div>
 
@@ -122,7 +122,8 @@ var cls = {
   i:    qs.get('i')    || 'Sofía Ruiz',
   d:    qs.get('d')    || 'funcional',
   m:    qs.get('m')    || '30',
-  free: qs.get('free') === '1'
+  free: qs.get('free') === '1',
+  t3:   parseInt(qs.get('t3') || '0', 10)   // día 1-3 de la bienvenida
 };
 document.getElementById('art').classList.remove('funcional');
 document.getElementById('art').classList.add(cls.d);
@@ -136,18 +137,49 @@ document.getElementById('artTags').innerHTML = '<span>' + (DISC_LABELS[cls.d] ||
 document.getElementById('vpTitleWrap').innerHTML = '<span>' + (DISC_LABELS[cls.d] || cls.d) + '</span>' + cls.t + ' — con ' + cls.i;
 document.getElementById('vpTotal').textContent = cls.m + ':00';
 
-/* ---- access: members watch everything; free-account users get this class only if it's flagged free ---- */
-function canPlay(){ return Anyara.isMember() || cls.free; }
+/* ---- acceso por nivel: pagada ve todo; la prueba ve su plan de 3 días
+       conforme llegan; las gratis están abiertas siempre ---- */
+function canPlay(){ return Anyara.canWatch(cls); }
 function startClass(){
   if (canPlay()) { openPlayer(); }
-  else { document.getElementById('pw').classList.add('open'); }
+  else { paintPaywall(); document.getElementById('pw').classList.add('open'); }
 }
 function paintAccess(){
-  if (Anyara.isMember()) return;
-  if (cls.free) {
+  if (canPlay()) {
     document.getElementById('lockBadge').style.display = 'none';
     document.getElementById('startNote').style.display = 'none';
-    document.getElementById('freeNote').style.display = 'block';
+    var n = document.getElementById('freeNote');
+    n.style.display = 'block';
+    n.textContent = cls.free
+      ? 'Clase abierta — no necesitas membresía.'
+      : 'Incluida en tus tres días de bienvenida.';
+    return;
+  }
+  /* locked: say which door opens it */
+  if (cls.t3 && Anyara.isTrial()) {
+    document.getElementById('lockBadge').textContent = '🔒 Se abre el día ' + cls.t3;
+    document.getElementById('startNote').textContent = 'Esta clase es del día ' + cls.t3 + ' de tu bienvenida.';
+  }
+}
+/* the CTA depends on where they are: a trial user waiting on a later day is
+   offered the skip, everyone else is offered the three days */
+function paintPaywall(){
+  var t = document.getElementById('pwTitle'), s = document.getElementById('pwSub'),
+      c = document.getElementById('pwCta'), n = document.getElementById('pwNote');
+  if (cls.t3 && Anyara.isTrial()) {
+    t.textContent = 'Esta clase es del día ' + cls.t3;
+    s.textContent = 'Se abre sola cuando llegue el día ' + cls.t3 + '. Si no quieres esperar, ' +
+                    'puedes saltar la prueba y abrir todo Anyara ahora mismo.';
+    c.textContent = 'Saltar la prueba y abrir todo';
+    c.href = 'checkout.html?plan=anual&saltar=1';
+    n.textContent = 'Se cobra hoy en vez del día 3. Cancela cuando quieras.';
+  } else if (Anyara.isTrial()) {
+    t.textContent = 'Esta clase es del catálogo completo';
+    s.textContent = 'Tu bienvenida incluye el plan de tres días. Para abrir todo el catálogo, ' +
+                    'salta la prueba y activa tu membresía ahora.';
+    c.textContent = 'Saltar la prueba y abrir todo';
+    c.href = 'checkout.html?plan=anual&saltar=1';
+    n.textContent = 'Se cobra hoy en vez del día 3. Cancela cuando quieras.';
   }
 }
 document.addEventListener('DOMContentLoaded', paintAccess);

@@ -49,7 +49,7 @@
 <div id="stepPay">
   <div class="wrap section-sm" style="text-align:center">
     <div class="eyebrow">Último paso</div>
-    <h1 style="font-size:34px">Empieza tus 7 días gratis</h1>
+    <h1 style="font-size:34px" id="payTitle">Empieza tus tres días de bienvenida</h1>
   </div>
 
   <div class="wrap section-sm">
@@ -71,11 +71,11 @@
         <h3 style="font-family:'Georgia',serif;font-size:22px;font-weight:400;margin-bottom:18px">Tu plan</h3>
         <div class="co-row"><span class="k">Plan</span><span class="v" id="sumPlan">Mensual</span></div>
         <div class="co-row"><span class="k">Precio de lista</span><span class="v" id="sumList">$39</span></div>
-        <div class="co-row"><span class="k">Hoy pagas</span><span class="v">$0</span></div>
-        <div class="co-row total"><span class="k">Después del día 7</span><span class="v" id="sumTotal">$39</span></div>
+        <div class="co-row"><span class="k">Hoy pagas</span><span class="v" id="sumToday">$0</span></div>
+        <div class="co-row total"><span class="k" id="sumWhenK">El día 3</span><span class="v" id="sumTotal">$39</span></div>
 
-        <button class="btn btn-gold btn-block" style="margin-top:22px" onclick="confirmJoin()">Comenzar mis 7 días gratis</button>
-        <p class="trialnote">Gratis por 7 días, luego <span id="sumAfter">$39/mes</span>.<br>Cancela cuando quieras — te avisamos antes del primer cobro.</p>
+        <button class="btn btn-gold btn-block" style="margin-top:22px" id="payBtn" onclick="confirmJoin()">Comenzar mis tres días</button>
+        <p class="trialnote" id="payNote">No pagas nada hasta el día 3, luego <span id="sumAfter">$39/mes</span>.<br>Cancela antes y no se te cobra.</p>
         <a href="membresia.html" class="btn btn-ghost btn-block" style="margin-top:10px">‹ Cambiar de plan</a>
       </div>
     </div>
@@ -88,17 +88,17 @@
     <div class="co-done">
       <div class="tick">✓</div>
       <div class="eyebrow">Bienvenida a Anyara</div>
-      <h1 style="font-size:38px;margin-bottom:12px">Ya eres miembro.</h1>
-      <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);line-height:1.6;margin-bottom:26px">
-        Tienes acceso completo a las 7 disciplinas, los retos y las series. Tus primeros 7 días son gratis
-        — te avisamos por correo antes de cualquier cobro.
+      <h1 style="font-size:38px;margin-bottom:12px" id="dnTitle">Tus tres días empiezan hoy.</h1>
+      <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);line-height:1.6;margin-bottom:26px" id="dnLead">
+        Te espera el video de Mariana y tu plan de día 1, 2 y 3. No se te cobra nada hasta el día 3
+        — te avisamos por correo antes.
       </p>
       <div class="co-card" style="text-align:left;margin-bottom:24px">
         <div class="co-row"><span class="k">Plan</span><span class="v" id="dnPlan">Mensual</span></div>
-        <div class="co-row"><span class="k">Prueba gratis</span><span class="v">7 días</span></div>
+        <div class="co-row"><span class="k" id="dnTrialK">Bienvenida</span><span class="v" id="dnTrialV">3 días</span></div>
         <div class="co-row"><span class="k">Primer cobro</span><span class="v" id="dnDate">—</span></div>
       </div>
-      <a href="index.html" class="btn btn-gold">Entrar a mi espacio →</a>
+      <a href="tres-dias.html" class="btn btn-gold" id="dnCta">Ver mis tres días →</a>
       <a href="clase.html" class="btn btn-ghost" style="margin-left:10px">Empezar una clase</a>
     </div>
   </div>
@@ -126,29 +126,53 @@ var PLANS = {
   mensual: { name:'Mensual', price:39,  per:'/mes', after:'$39/mes' },
   anual:   { name:'Anual',   price:349, per:'/año', after:'$349/año' }
 };
-var key = (new URLSearchParams(location.search).get('plan') || 'mensual').toLowerCase();
+var qs  = new URLSearchParams(location.search);
+var key = (qs.get('plan') || 'mensual').toLowerCase();
 if (!PLANS[key]) key = 'mensual';
 var plan = PLANS[key];
+/* ?saltar=1 → no trial: charge today and open everything right away */
+var skip = qs.get('saltar') === '1';
 
 document.getElementById('sumPlan').textContent = plan.name;
 document.getElementById('sumList').textContent = '$' + plan.price;
 document.getElementById('dnPlan').textContent  = plan.name;
 document.getElementById('coName').textContent  = Anyara.name();
-
 document.getElementById('sumTotal').textContent = '$' + plan.price;
 document.getElementById('sumAfter').textContent = plan.after;
 
-var first = new Date(Date.now() + 7 * 864e5);
+if (skip) {
+  document.getElementById('payTitle').textContent = 'Abre todo Anyara hoy';
+  document.getElementById('sumToday').textContent = '$' + plan.price;
+  document.getElementById('sumWhenK').textContent = 'Hoy';
+  document.getElementById('payBtn').textContent = 'Saltar la prueba y abrir todo';
+  document.getElementById('payNote').innerHTML =
+    'Se cobra hoy en vez del día 3 y se abre el catálogo completo.<br>Cancela cuando quieras.';
+  document.getElementById('dnTitle').textContent = 'Todo Anyara está abierto.';
+  document.getElementById('dnLead').textContent =
+    'Saltaste la prueba: tienes acceso completo a las siete disciplinas, los retos y las series desde ahora.';
+  document.getElementById('dnTrialK').textContent = 'Prueba';
+  document.getElementById('dnTrialV').textContent = 'Saltada';
+  var cta = document.getElementById('dnCta');
+  cta.textContent = 'Entrar a mi espacio →';
+  cta.href = 'index.html';
+}
+
+/* trial charges on day 3; skipping charges today */
+var first = new Date(Date.now() + (skip ? 0 : 3) * 864e5);
 document.getElementById('dnDate').textContent =
   first.getDate() + ' ' + ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][first.getMonth()] +
   ' · $' + plan.price;
 
 function confirmJoin() {
-  Anyara.join(key);
+  /* skipping goes straight to level 3; otherwise start the 3-day trial */
+  if (skip) { Anyara.join(key); }
+  else { Anyara.setPlan(key); Anyara.startTrial(); }
   document.getElementById('stepPay').classList.add('off');
   document.getElementById('stepDone').classList.remove('off');
-  document.body.classList.remove('is-guest', 'is-free', 'is-anon');
-  document.body.classList.add('is-member');
+  document.body.classList.remove('is-l1', 'is-l2', 'is-guest');
+  document.body.classList.add(skip ? 'is-l3' : 'is-l2', 'has-account');
+  if (skip) document.body.classList.add('is-member');
+  else document.body.classList.add('is-guest');
 
   var join = document.querySelector('.btn-join');
   var avatar = document.querySelector('.nav-right .avatar');

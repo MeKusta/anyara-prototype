@@ -65,8 +65,8 @@
 
         <!-- guest -->
         <div class="guest-only">
-          <div class="setting-row"><div class="l"><b>No tienes membresía activa</b><span id="guestSub">Tu clase de bienvenida y 2 clases por semana están libres</span></div><a href="membresia.html" class="btn btn-gold">Ver planes</a></div>
-          <p class="trialnote" style="text-align:left">7 días gratis en cualquier plan. Desde $39/mes, cancela cuando quieras.</p>
+          <div class="setting-row"><div class="l"><b>No tienes membresía activa</b><span id="guestSub">Tu clase de bienvenida y las dos clases abiertas de Anyara</span></div><a href="membresia.html" class="btn btn-gold">Ver planes</a></div>
+          <p class="trialnote" style="text-align:left">Tres días de bienvenida en cualquier plan. Desde $39/mes, cancela cuando quieras.</p>
         </div>
       </div>
 
@@ -118,13 +118,18 @@ document.addEventListener('DOMContentLoaded', function(){
   var PLAN = {mensual:'Mensual', anual:'Anual'};
   document.getElementById('userName').textContent = Anyara.name() + ' Kustala';
   document.getElementById('bigAv').textContent = Anyara.initials();
-  if (Anyara.isMember()) {
-    var p = PLAN[Anyara.plan()] || 'Mensual';
+  var p = PLAN[Anyara.plan()] || 'Mensual';
+  if (Anyara.isPaid()) {
     document.getElementById('memberTag').textContent = Anyara.isPaused() ? 'Miembro · en pausa' : 'Miembro · ' + p;
     document.getElementById('planRow').textContent = 'Plan actual · ' + p;
     document.getElementById('planSub').textContent = Anyara.isPaused()
       ? 'En pausa · se reactiva automáticamente en 30 días'
-      : 'Activa · prueba gratis hasta el 24 de agosto';
+      : 'Activa · acceso completo';
+  } else if (Anyara.isTrial()) {
+    /* en prueba: el panel de miembro no aplica todavía, pero sí hay plan elegido */
+    document.getElementById('memberTag').textContent = 'Bienvenida · día ' + Anyara.currentDay() + ' de 3';
+    document.getElementById('guestSub').textContent =
+      'Plan ' + p + ' · se activa el día 3. Cancela antes y no se te cobra.';
   } else {
     document.getElementById('memberTag').textContent = Anyara.hasAccount() ? 'Cuenta gratuita' : 'Sin cuenta';
   }

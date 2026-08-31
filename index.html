@@ -118,15 +118,11 @@
   </div>
 </div>
 
-<!-- ===== TU BIENVENIDA A ANYARA (3-day personalised arc) =====
-     Visitas ven el día 1 y nada más; en prueba gratis se abren los tres,
-     uno por día (el selector de día simula el paso del tiempo). -->
-<div class="wrap section-sm account-only">
-  <div class="row-head"><h2>Tu bienvenida a Anyara</h2></div>
-  <p id="w3Lead" style="font-family:'Helvetica Neue',Arial;font-size:14px;color:var(--ink-2);margin:-8px 0 16px"></p>
-  <div class="welcome3" id="welcome3"></div>
-  <div id="w3Cta" style="margin-top:18px"></div>
-</div>
+<!-- ===== BLOQUE POR NIVEL =====
+     1 · visita → sus clases abiertas + la oferta de los tres días
+     2 · prueba → entrada a "Tres días de bienvenida", con el día en curso
+     3 · pagada → nada aquí; la home sigue con biblioteca y catálogo -->
+<div class="wrap section-sm" id="levelBlock"></div>
 
 <!-- ===== CONTINÚA (members) ===== -->
 <div class="wrap section-sm member-only">
@@ -280,55 +276,56 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 
-  /* ---- Tu bienvenida a Anyara: 3 días personalizados ----
-     Visita  → sólo el día 1 (los otros dos piden la prueba)
-     Prueba  → los tres, uno por día simulado en el selector de día */
-  if (Anyara.hasAccount()) {
-    var plan   = Anyara.welcomePlan();
-    var trial  = Anyara.isMember();
-    var today  = Anyara.currentDay();
-    var wrap   = document.getElementById('welcome3');
+  /* ---- bloque por nivel ---- */
+  var block = document.getElementById('levelBlock');
+  var lvl   = Anyara.level();
 
-    document.getElementById('w3Lead').textContent = trial
-      ? 'Tres días, tres clases elegidas a partir de tus respuestas. Se abre una cada día.'
-      : 'Tres días armados a partir de tus respuestas. El primero es tuyo; los otros dos se abren con tu prueba gratis.';
-
-    plan.forEach(function (c, idx) {
-      var dayNum = idx + 1;
-      /* day 1 is always open to anyone with an account; the rest need the trial */
-      var open = dayNum === 1 || (trial && dayNum <= today);
-      var href = dayNum === 1
-        ? 'bienvenida.html'
-        : 'clase.html?free=1&t=' + encodeURIComponent(c.title) + '&i=' + encodeURIComponent(c.instr) +
-          '&d=' + c.disc + '&m=' + c.mins;
-
-      var el = document.createElement(open ? 'a' : 'div');
-      el.className = 'w3 ' + (open ? 'open' : 'shut');
-      if (open) el.href = href;
-
-      var state = !open ? '🔒' : (trial && dayNum < today ? '✓' : '▶');
-      el.innerHTML =
-        '<div class="w3-art gart ' + c.disc + '">' +
-          '<span class="w3-day">Día ' + dayNum + '</span>' +
-          '<span class="w3-state' + (state === '✓' ? ' done' : '') + '">' + state + '</span>' +
+  if (lvl === 1 && Anyara.hasAccount()) {
+    /* visita: lo que ya puede ver, y la puerta a los tres días */
+    var wc = Anyara.welcomeClass() || Anyara.welcomePlan()[0];
+    block.innerHTML =
+      '<div class="row-head"><h2>Tus clases abiertas</h2></div>' +
+      '<p class="sec-lead">Tu clase personalizada y las dos clases abiertas de Anyara. Sin costo, sin tarjeta.</p>' +
+      '<div class="grid3">' +
+        card('bienvenida.html', wc.disc, 'Tu clase', wc.title, wc.instr, wc.mins) +
+        Anyara.FREE_CLASSES.map(function (f) {
+          return card(Anyara.classHref({ t:f.t, i:f.i, d:f.d, m:f.m, free:1 }),
+                      f.d, 'Gratis', f.t, f.i, f.m);
+        }).join('') +
+      '</div>' +
+      '<div class="trialbox">' +
+        '<div>' +
+          '<div class="tb-t">¿Lista para más? Tres días de bienvenida</div>' +
+          '<div class="tb-d">Un video de Mariana y un plan de día 1, 2 y 3 armado para ti — ' +
+            'cuatro clases por día. No pagas nada hasta el día 3.</div>' +
         '</div>' +
-        '<div class="w3-b">' +
-          '<div class="w3-tag">' + (DISC_LABELS[c.disc] || c.disc) + ' · ' + c.mins + ' min</div>' +
-          '<div class="w3-t">' + c.title + '</div>' +
-          '<div class="w3-why">' + c.why + '</div>' +
-          (open ? '' :
-            '<div class="w3-cta"><span class="btn btn-ghost" style="pointer-events:none">' +
-            (trial ? 'Se abre el día ' + dayNum : 'Con tu prueba gratis') + '</span></div>') +
-        '</div>';
-      wrap.appendChild(el);
-    });
+        '<a href="membresia.html" class="btn btn-gold">Empezar mis tres días</a>' +
+      '</div>';
+  }
 
-    /* visitas get the trial CTA right under the arc — the natural next step */
-    if (!trial) {
-      document.getElementById('w3Cta').innerHTML =
-        '<a href="membresia.html" class="btn btn-gold">Empezar mis 7 días gratis</a>' +
-        '<p class="trialnote" style="text-align:left">Abre los días 2 y 3 y todo el catálogo. Cancela cuando quieras.</p>';
-    }
+  if (lvl === 2) {
+    /* prueba: entrada al plan de tres días, con el día en curso */
+    var day = Anyara.currentDay();
+    block.innerHTML =
+      '<div class="row-head"><h2>Tres días de bienvenida</h2><a href="tres-dias.html">Ver el plan</a></div>' +
+      '<a href="tres-dias.html" class="trialstrip">' +
+        '<div class="ts-num"><b>' + day + '</b><span>de 3</span></div>' +
+        '<div class="ts-b">' +
+          '<div class="ts-t">Vas en el día ' + day + '</div>' +
+          '<div class="ts-d">' + (day < 3
+            ? 'Tus clases de hoy te esperan. El día ' + (day + 1) + ' se abre mañana.'
+            : 'Último día. Al terminar, tu membresía se activa y se abre todo el catálogo.') + '</div>' +
+        '</div>' +
+        '<span class="btn btn-dark">Continuar ▸</span>' +
+      '</a>';
+  }
+
+  function card(href, disc, tag, title, instr, mins) {
+    return '<a href="' + href + '" class="ccard">' +
+      '<div class="art gart ' + disc + '" style="height:170px"><span class="free">' + tag + '</span></div>' +
+      '<div class="tag">' + (DISC_LABELS[disc] || disc).toUpperCase() + ' · ' + mins + ' MIN</div>' +
+      '<div class="title">' + title + '</div>' +
+      '<div class="meta">' + instr + '</div></a>';
   }
 
   /* tasteful lock badges — members see none, everyone else sees a small

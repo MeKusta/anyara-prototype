@@ -51,15 +51,15 @@
   <div class="row-head"><h2>Tus boletos</h2></div>
   <div class="ticket">
     <div class="date"><b>24</b><span>Ago</span></div>
-    <div class="info"><div class="t">Masterclass: Barre & Breathwork</div><div class="m">7:00 PM · Estudio Anyara, CDMX · Fila A</div></div>
+    <div class="info"><div class="t">Masterclass: Barre &amp; Breathwork</div><div class="m">7:00 PM · Estudio Anyara, CDMX · Fila A</div></div>
     <a href="#" class="btn btn-ghost" onclick="addCal(event,this)">📅 Calendario</a>
-    <a href="#" class="btn btn-ghost">Ver boleto</a>
+    <button class="btn btn-ghost" onclick="showTicket('Masterclass: Barre &amp; Breathwork','24 Ago · 7:00 PM · Estudio Anyara, CDMX · Fila A','ANY-4KQ2-8817')">Ver boleto</button>
   </div>
   <div class="ticket">
     <div class="date"><b>07</b><span>Sep</span></div>
     <div class="info"><div class="t">Retiro de fin de semana: Volver a Ti</div><div class="m">Todo el día · Valle de Bravo · 2 personas</div></div>
     <a href="#" class="btn btn-ghost" onclick="addCal(event,this)">📅 Calendario</a>
-    <a href="#" class="btn btn-ghost">Ver boleto</a>
+    <button class="btn btn-ghost" onclick="showTicket('Retiro: Volver a Ti','07 Sep · Todo el día · Valle de Bravo · 2 personas','ANY-9RM5-2043')">Ver boleto</button>
   </div>
 </div>
 
@@ -80,6 +80,19 @@
   </div>
 </div>
 
+<!-- ===== BOLETO CON QR ===== -->
+<div class="modal-scrim" id="tk">
+  <div class="modal qr-modal">
+    <button class="x" onclick="document.getElementById('tk').classList.remove('open')">✕</button>
+    <div class="eyebrow">Tu boleto</div>
+    <div class="qr-ev" id="tkEv"></div>
+    <div class="qr-when" id="tkWhen"></div>
+    <div class="qr-box" id="tkQr"></div>
+    <div class="qr-code" id="tkCode"></div>
+    <p class="qr-note">Muestra este código en la entrada.<br>Prototipo: el QR es una vista previa, no escanea.</p>
+  </div>
+</div>
+
 <script src="anyara.js"></script>
 <script>
 /* prototype: confirm the intent rather than actually issuing an .ics */
@@ -88,6 +101,47 @@ function addCal(e, el){
   var original = el.textContent;
   el.textContent = '✓ Agregado';
   setTimeout(function(){ el.textContent = original; }, 1800);
+}
+
+/* Preview QR: a real-looking code drawn from the ticket reference. Not a
+   working QR — it just has to read as one on screen. */
+function drawQr(seedText){
+  var N = 25, cell = 100 / N, rects = '';
+  /* deterministic pseudo-random from the ticket code, so each ticket differs
+     but the same ticket always draws the same pattern */
+  var seed = 0;
+  for (var i = 0; i < seedText.length; i++) seed = (seed * 31 + seedText.charCodeAt(i)) >>> 0;
+  function rnd(){ seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
+
+  function inFinder(x, y){
+    return (x < 7 && y < 7) || (x >= N - 7 && y < 7) || (x < 7 && y >= N - 7);
+  }
+  for (var y = 0; y < N; y++) {
+    for (var x = 0; x < N; x++) {
+      if (inFinder(x, y)) continue;
+      if (rnd() > 0.55) {
+        rects += '<rect x="' + (x*cell).toFixed(2) + '" y="' + (y*cell).toFixed(2) +
+                 '" width="' + cell.toFixed(2) + '" height="' + cell.toFixed(2) + '"/>';
+      }
+    }
+  }
+  /* the three finder squares that make it read as a QR */
+  function finder(ox, oy){
+    var u = cell;
+    return '<rect x="' + (ox*u) + '" y="' + (oy*u) + '" width="' + (7*u) + '" height="' + (7*u) + '"/>' +
+           '<rect x="' + ((ox+1)*u) + '" y="' + ((oy+1)*u) + '" width="' + (5*u) + '" height="' + (5*u) + '" fill="#fff"/>' +
+           '<rect x="' + ((ox+2)*u) + '" y="' + ((oy+2)*u) + '" width="' + (3*u) + '" height="' + (3*u) + '"/>';
+  }
+  return '<svg viewBox="0 0 100 100" role="img" aria-label="Código QR del boleto">' +
+    '<g fill="#1a1a1a">' + rects + finder(0,0) + finder(N-7,0) + finder(0,N-7) + '</g></svg>';
+}
+
+function showTicket(ev, when, code){
+  document.getElementById('tkEv').innerHTML = ev;
+  document.getElementById('tkWhen').textContent = when;
+  document.getElementById('tkCode').textContent = code;
+  document.getElementById('tkQr').innerHTML = drawQr(code);
+  document.getElementById('tk').classList.add('open');
 }
 </script>
 </body>

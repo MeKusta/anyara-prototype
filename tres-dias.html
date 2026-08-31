@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Tres días de bienvenida</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link">Series</a>
+      <a href="retos.html" class="nav-link">Retos</a>
+      <a href="events.html" class="nav-link">Eventos</a>
+      <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<div class="wrap section-sm">
+  <div class="eyebrow">Tu bienvenida</div>
+  <h1 style="font-size:40px">Tres días de bienvenida</h1>
+  <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);max-width:620px;margin-top:10px;line-height:1.6">
+    Un video de Mariana para empezar, y luego un plan de tres días armado a partir de tus respuestas.
+    Cuatro clases cada día. No pagas nada hasta el día 3.
+  </p>
+  <div class="td-prog" id="tdProg"></div>
+</div>
+
+<!-- ===== INTRO DE MARIANA ===== -->
+<div class="wrap section-sm">
+  <div class="row-head"><h2>Empieza aquí</h2></div>
+  <div class="intro-card" onclick="openIntro()">
+    <div class="ic-art gart somara">
+      <span class="ic-play">▶</span>
+      <span class="ic-len">6 min</span>
+    </div>
+    <div class="ic-b">
+      <div class="ic-k">Video de bienvenida</div>
+      <div class="ic-t">Bienvenida, de Mariana</div>
+      <p class="ic-d">
+        Cómo está pensada Anyara, cómo leer tu plan y qué esperar de estos tres días.
+        Seis minutos antes de tu primera clase.
+      </p>
+      <span class="btn btn-dark">Ver el video ▸</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LOS TRES DÍAS ===== -->
+<div class="wrap section-sm" id="days"></div>
+
+<!-- ===== SIEMPRE ABIERTAS ===== -->
+<div class="wrap section-sm">
+  <div class="row-head"><h2>Siempre abiertas</h2></div>
+  <p class="sec-lead">Tu clase personalizada y las dos clases abiertas de Anyara. No dependen del día.</p>
+  <div class="grid3" id="alwaysOpen"></div>
+</div>
+
+<!-- ===== LAS DOS SALIDAS ===== -->
+<div class="wrap section">
+  <div class="row-head"><h2>Cómo sigue</h2></div>
+  <div class="exits">
+    <div class="exit">
+      <div class="ex-k">Opción 1 · dejar correr los tres días</div>
+      <div class="ex-t">Tu membresía empieza el día 3</div>
+      <p class="ex-d">
+        Terminas el plan y el día 3 se activa tu membresía con el plan que elegiste.
+        Te avisamos por correo antes del cobro, y puedes cancelar hasta ese momento.
+      </p>
+      <span class="ex-state" id="exState">Estás en el día 1 de 3</span>
+    </div>
+    <div class="exit feat">
+      <div class="ex-k">Opción 2 · no esperar</div>
+      <div class="ex-t">Saltar la prueba y abrir todo</div>
+      <p class="ex-d">
+        Abre el catálogo completo ahora mismo — las siete disciplinas, los retos y las series,
+        sin esperar a que lleguen los días 2 y 3.
+      </p>
+      <a href="checkout.html?plan=anual&saltar=1" class="btn btn-gold">Saltar la prueba</a>
+      <p class="trialnote" style="text-align:left;margin-top:10px">Se cobra hoy en vez del día 3.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="coaches.html">Coaches</a><a href="membresia.html">Planes y precios</a></div>
+    <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<div class="overlay" id="ov">
+  <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
+  <div class="overlay-top">
+    <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+  </div>
+</div>
+
+<!-- ===== PLAYER DEL VIDEO DE MARIANA ===== -->
+<div class="vp-scrim" id="vp">
+  <button class="vp-close" onclick="closeIntro()">✕</button>
+  <div class="vp">
+    <div class="vp-title"><span>Video de bienvenida</span>Bienvenida, de Mariana</div>
+    <div class="vp-screen gart somara" id="vpScreen">
+      <button class="vp-bigplay" id="vpBig" onclick="togglePlay()">▶</button>
+    </div>
+    <div class="vp-bar">
+      <button class="vp-toggle" id="vpToggle" onclick="togglePlay()">▶</button>
+      <span id="vpTime">0:00</span>
+      <div class="vp-timeline" id="vpLine"><i id="vpProg"></i></div>
+      <span>6:00</span>
+      <button class="vp-toggle" title="Pantalla completa">⛶</button>
+    </div>
+  </div>
+</div>
+
+<script src="anyara.js"></script>
+<script>
+var DISC_LABELS = { sculpt:'Sculpt', barre:'Barre', pilates:'Pilates', pilatesmat:'Pilates Mat', somara:'Somara', funcional:'Funcional', tone:'Tone' };
+
+/* Pool per discipline. The curated plan pulls from here so each day reads as
+   a real set of four classes without hand-writing twelve entries. */
+var POOL = {
+  sculpt:     ['Sculpt : Glúteos', 'Sculpt : Cuerpo Completo', 'Sculpt : Brazos', 'Sculpt : Piernas'],
+  barre:      ['Barre : Esencial', 'Barre : Postura', 'Barre : Piernas largas', 'Barre : Centro'],
+  pilates:    ['Pilates : Core Profundo', 'Pilates : Control', 'Pilates : Espalda sana', 'Pilates : Movilidad'],
+  pilatesmat: ['Pilates Mat : Fundamentos', 'Pilates Mat : Despierta el core', 'Pilates Mat : Precisión', 'Pilates Mat : Cierre'],
+  somara:     ['Somara : Flow', 'Somara : Movilidad', 'Somara : Respiración', 'Somara : Restaurativo'],
+  funcional:  ['Funcional : Fuerza Total', 'Funcional : Intervalos', 'Funcional : Potencia', 'Funcional : Resistencia'],
+  tone:       ['Tone : Cuerpo Completo', 'Tone : Ligero', 'Tone : Calma', 'Tone : Definición']
+};
+var INSTR = { sculpt:'Valeria Méndez', barre:'Valeria Méndez', pilates:'Sofía Ruiz',
+              pilatesmat:'Sofía Ruiz', somara:'Renata Solís', funcional:'Sofía Ruiz', tone:'Daniela Ortiz' };
+/* a support discipline per primary one, so day N mixes but stays coherent */
+var PAIR = { sculpt:'funcional', funcional:'sculpt', pilates:'pilatesmat', pilatesmat:'pilates',
+             somara:'tone', tone:'somara', barre:'pilatesmat' };
+
+var plan  = Anyara.welcomePlan();
+var today = Anyara.currentDay();
+var lvl   = Anyara.level();
+
+/* four classes for día N: two from the day's discipline, two from its pair */
+function dayClasses(dayIdx) {
+  var primary = plan[dayIdx].disc;
+  var support = PAIR[primary] || 'somara';
+  var mins    = plan[dayIdx].mins || 25;
+  var out = [];
+  for (var k = 0; k < 2; k++) {
+    out.push({ d: primary, t: POOL[primary][(dayIdx + k) % 4], i: INSTR[primary], m: mins });
+  }
+  for (var j = 0; j < 2; j++) {
+    out.push({ d: support, t: POOL[support][(dayIdx + j + 1) % 4], i: INSTR[support],
+               m: j === 0 ? Math.max(10, mins - 10) : mins + 5 });
+  }
+  /* día 1 opens with the class the onboarding actually chose */
+  if (dayIdx === 0) {
+    out[0] = { d: plan[0].disc, t: plan[0].title, i: plan[0].instr, m: plan[0].mins, welcome: true };
+  }
+  return out;
+}
+
+/* ---- progreso ---- */
+var prog = document.getElementById('tdProg');
+for (var n = 1; n <= 3; n++) {
+  var s = document.createElement('span');
+  s.className = 'td-step' + (n < today ? ' done' : n === today ? ' now' : '');
+  s.textContent = n < today ? '✓ Día ' + n : 'Día ' + n;
+  prog.appendChild(s);
+}
+document.getElementById('exState').textContent = lvl === 2
+  ? 'Estás en el día ' + today + ' de 3'
+  : 'Empieza cuando actives tus tres días';
+
+/* ---- los tres días ---- */
+var daysWrap = document.getElementById('days');
+plan.forEach(function (p, idx) {
+  var dayNum = idx + 1;
+  var open   = lvl === 3 || (lvl === 2 && today >= dayNum);
+
+  var block = document.createElement('div');
+  block.className = 'td-day' + (open ? '' : ' shut');
+  var state = !open ? 'Se abre el día ' + dayNum
+            : (lvl === 2 && dayNum < today ? 'Completado' : 'Disponible hoy');
+
+  block.innerHTML =
+    '<div class="td-head">' +
+      '<div>' +
+        '<div class="td-k">Día ' + dayNum + ' · ' + state + '</div>' +
+        '<h3 class="td-t">' + (DISC_LABELS[p.disc] || p.disc) + ' · ' + p.mins + ' min</h3>' +
+        '<div class="td-why">' + p.why + '</div>' +
+      '</div>' +
+      (open ? '' : '<span class="td-lock">🔒</span>') +
+    '</div>' +
+    '<div class="grid4">' +
+      dayClasses(idx).map(function (c) {
+        var href = c.welcome ? 'bienvenida.html'
+                 : Anyara.classHref({ t:c.t, i:c.i, d:c.d, m:c.m, t3:dayNum });
+        return '<a href="' + href + '" class="ccard">' +
+          '<div class="art gart ' + c.d + '">' +
+            '<span class="len">' + c.m + ' min</span>' +
+            (open ? '' : '<span class="locked">🔒 Día ' + dayNum + '</span>') +
+          '</div>' +
+          '<div class="tag">' + (DISC_LABELS[c.d] || c.d).toUpperCase() + '</div>' +
+          '<div class="title">' + c.t + '</div>' +
+          '<div class="meta">' + c.i + '</div></a>';
+      }).join('') +
+    '</div>';
+  daysWrap.appendChild(block);
+});
+
+/* ---- siempre abiertas ---- */
+var wc = Anyara.welcomeClass() || plan[0];
+var open3 = [{ href:'bienvenida.html', d:wc.disc, tag:'Tu clase', t:wc.title, i:wc.instr, m:wc.mins }];
+Anyara.FREE_CLASSES.forEach(function (f) {
+  open3.push({ href: Anyara.classHref({ t:f.t, i:f.i, d:f.d, m:f.m, free:1 }),
+               d:f.d, tag:'Gratis', t:f.t, i:f.i, m:f.m });
+});
+document.getElementById('alwaysOpen').innerHTML = open3.map(function (c) {
+  return '<a href="' + c.href + '" class="ccard">' +
+    '<div class="art gart ' + c.d + '" style="height:170px"><span class="free">' + c.tag + '</span></div>' +
+    '<div class="tag">' + (DISC_LABELS[c.d] || c.d).toUpperCase() + ' · ' + c.m + ' MIN</div>' +
+    '<div class="title">' + c.t + '</div>' +
+    '<div class="meta">' + c.i + '</div></a>';
+}).join('');
+
+/* ---- player del video de Mariana (demo) ---- */
+var vpPlaying=false, vpSec=0, vpTotal=360, vpTimer=null;
+function fmt(s){var m=Math.floor(s/60),r=Math.floor(s%60);return m+':'+(r<10?'0':'')+r}
+function paint(){
+  document.getElementById('vpProg').style.width=(vpSec/vpTotal*100)+'%';
+  document.getElementById('vpTime').textContent=fmt(vpSec);
+}
+function openIntro(){ document.getElementById('vp').classList.add('open'); }
+function closeIntro(){
+  document.getElementById('vp').classList.remove('open');
+  if(vpPlaying) togglePlay();
+}
+function togglePlay(){
+  vpPlaying=!vpPlaying;
+  document.getElementById('vpBig').style.display=vpPlaying?'none':'flex';
+  document.getElementById('vpToggle').textContent=vpPlaying?'❚❚':'▶';
+  if(vpPlaying){vpTimer=setInterval(function(){vpSec=Math.min(vpSec+1,vpTotal);paint();},1000);}
+  else{clearInterval(vpTimer);}
+}
+document.getElementById('vpLine').addEventListener('click',function(e){
+  var r=this.getBoundingClientRect();
+  vpSec=Math.round((e.clientX-r.left)/r.width*vpTotal);paint();
+});
+</script>
+</body>
+</html>

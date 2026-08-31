@@ -41,31 +41,44 @@
     <div class="pill somara" data-d="somara"><span class="dot"></span>Somara</div>
     <div class="pill tone" data-d="tone"><span class="dot"></span>Tone</div>
   </div>
-  <div class="filterbar">
+  <div class="filterbar filterbar-5">
     <div class="filter"><label>Disciplina</label><div class="sel">Todas <span>▾</span></div></div>
     <div class="filter"><label>Intensidad</label><div class="sel">Cualquiera <span>▾</span></div></div>
-    <div class="filter"><label>Dificultad</label><div class="sel">Cualquiera <span>▾</span></div></div>
+    <!-- props es el único filtro funcional del prototipo -->
+    <div class="filter">
+      <label>Props</label>
+      <select class="sel sel-live" id="fProps">
+        <option value="">Cualquiera</option>
+        <option value="ninguno">Sin equipo</option>
+        <option value="tapete">Tapete</option>
+        <option value="pesas">Pesas</option>
+        <option value="banda">Banda</option>
+        <option value="bloques">Bloques</option>
+        <option value="pelota">Pelota</option>
+        <option value="silla">Silla</option>
+      </select>
+    </div>
     <div class="filter"><label>Tiempo máx</label><div class="sel">Indiferente <span>▾</span></div></div>
     <div class="filter"><label>Enfoque</label><div class="sel">Todo el cuerpo <span>▾</span></div></div>
-    <div class="filter"><label>Acceso</label><div class="sel">Todos <span>▾</span></div></div>
   </div>
 </div>
 
 <div class="wrap section-sm">
   <p id="resultCount" style="font-family:'Helvetica Neue',Arial;font-size:13px;color:var(--ink-2);margin-bottom:16px">8 clases</p>
+  <!-- data-date ordena el catálogo (más reciente primero); data-props alimenta el filtro -->
   <div class="grid4" id="results">
-    <a href="clase.html?t=20%20min%20%C2%B7%20Sculpt%20%3A%20Glut&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=20" class="ccard" data-d="sculpt"><div class="art gart sculpt has-nuevo"><span class="nuevo">Nuevo</span><span class="len">20 min</span></div><div class="tag">SCULPT</div><div class="title">20 min · Sculpt : Glut</div><div class="meta">Valeria Méndez</div></a>
-    <a href="clase.html?t=Funcional%20HIIT&amp;i=Sof%C3%ADa%20Ruiz&amp;d=funcional&amp;m=30" class="ccard" data-d="funcional"><div class="art gart funcional"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz</div></a>
-    <a href="clase.html?t=Barre%20Gl%C3%BAteos%20%26%20Piernas&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=45" class="ccard" data-d="barre"><div class="art gart barre"><span class="len">45 min</span></div><div class="tag">BARRE</div><div class="title">Barre Glúteos & Piernas</div><div class="meta">Valeria Méndez</div></a>
-    <a href="clase.html?t=Sculpt%20Total&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=60" class="ccard" data-d="sculpt"><div class="art gart sculpt"><span class="len">60 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Total</div><div class="meta">Valeria Méndez</div></a>
-    <a href="clase.html?t=Sculpt%20Brazos%20%26%20Core&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=45" class="ccard" data-d="sculpt"><div class="art gart sculpt"><span class="len">45 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Brazos & Core</div><div class="meta">Valeria Méndez</div></a>
-    <a href="clase.html?free=1&amp;t=Barre%20Esencial&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=20" class="ccard" data-d="barre"><div class="art gart barre"><span class="free">Gratis</span></div><div class="tag">BARRE</div><div class="title">Barre Esencial</div><div class="meta">Valeria Méndez</div></a>
-    <a href="clase.html?free=1&amp;t=Pilates%20Mat%20Fundamental&amp;i=Sof%C3%ADa%20Ruiz&amp;d=pilatesmat&amp;m=40" class="ccard" data-d="pilatesmat"><div class="art gart pilatesmat"><span class="free">Gratis</span></div><div class="tag">PILATES MAT</div><div class="title">Pilates Mat Fundamental</div><div class="meta">Sofía Ruiz</div></a>
-    <a href="clase.html?t=Core%20Profundo&amp;i=Sof%C3%ADa%20Ruiz&amp;d=pilates&amp;m=40" class="ccard" data-d="pilates"><div class="art gart pilates has-nuevo"><span class="nuevo">Nuevo</span><span class="len">40 min</span></div><div class="tag">PILATES</div><div class="title">Core Profundo</div><div class="meta">Sofía Ruiz</div></a>
-    <a href="clase.html?t=Somara%20Flow&amp;i=Renata%20Sol%C3%ADs&amp;d=somara&amp;m=25" class="ccard" data-d="somara"><div class="art gart somara has-nuevo"><span class="nuevo">Nuevo</span><span class="len">25 min</span></div><div class="tag">SOMARA</div><div class="title">Somara Flow</div><div class="meta">Renata Solís</div></a>
-    <a href="clase.html?t=Tone%20Cuerpo%20Completo&amp;i=Daniela%20Ortiz&amp;d=tone&amp;m=30" class="ccard" data-d="tone"><div class="art gart tone"><span class="len">30 min</span></div><div class="tag">TONE</div><div class="title">Tone Cuerpo Completo</div><div class="meta">Daniela Ortiz</div></a>
-    <a href="clase.html?t=Despierta%20el%20core&amp;i=Daniela%20Ortiz&amp;d=pilatesmat&amp;m=15" class="ccard" data-d="pilatesmat"><div class="art gart pilatesmat"><span class="len">15 min</span></div><div class="tag">PILATES MAT</div><div class="title">Despierta el core</div><div class="meta">Daniela Ortiz</div></a>
-    <a href="clase.html?t=Somara%20Restaurativo&amp;i=Renata%20Sol%C3%ADs&amp;d=somara&amp;m=40" class="ccard" data-d="somara"><div class="art gart somara has-nuevo"><span class="nuevo">Nuevo</span><span class="len">40 min</span></div><div class="tag">SOMARA</div><div class="title">Somara Restaurativo</div><div class="meta">Renata Solís</div></a>
+    <a href="clase.html?t=20%20min%20%C2%B7%20Sculpt%20%3A%20Glut&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=20" class="ccard" data-d="sculpt" data-date="2026-08-17" data-props="pesas,tapete"><div class="art gart sculpt has-nuevo"><span class="nuevo">Nuevo</span><span class="len">20 min</span></div><div class="tag">SCULPT</div><div class="title">20 min · Sculpt : Glut</div><div class="meta">Valeria Méndez</div></a>
+    <a href="clase.html?t=Funcional%20HIIT&amp;i=Sof%C3%ADa%20Ruiz&amp;d=funcional&amp;m=30" class="ccard" data-d="funcional" data-date="2026-07-02" data-props="ninguno"><div class="art gart funcional"><span class="len">30 min</span></div><div class="tag">FUNCIONAL</div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz</div></a>
+    <a href="clase.html?t=Barre%20Gl%C3%BAteos%20%26%20Piernas&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=45" class="ccard" data-d="barre" data-date="2026-06-18" data-props="silla,tapete"><div class="art gart barre"><span class="len">45 min</span></div><div class="tag">BARRE</div><div class="title">Barre Glúteos & Piernas</div><div class="meta">Valeria Méndez</div></a>
+    <a href="clase.html?t=Sculpt%20Total&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=60" class="ccard" data-d="sculpt" data-date="2026-05-30" data-props="pesas,banda,tapete"><div class="art gart sculpt"><span class="len">60 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Total</div><div class="meta">Valeria Méndez</div></a>
+    <a href="clase.html?t=Sculpt%20Brazos%20%26%20Core&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=45" class="ccard" data-d="sculpt" data-date="2026-05-12" data-props="pesas"><div class="art gart sculpt"><span class="len">45 min</span></div><div class="tag">SCULPT</div><div class="title">Sculpt Brazos & Core</div><div class="meta">Valeria Méndez</div></a>
+    <a href="clase.html?free=1&amp;t=Barre%20Esencial&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=20" class="ccard" data-d="barre" data-date="2026-04-26" data-props="silla"><div class="art gart barre"><span class="free">Gratis</span></div><div class="tag">BARRE</div><div class="title">Barre Esencial</div><div class="meta">Valeria Méndez</div></a>
+    <a href="clase.html?free=1&amp;t=Pilates%20Mat%20Fundamental&amp;i=Sof%C3%ADa%20Ruiz&amp;d=pilatesmat&amp;m=40" class="ccard" data-d="pilatesmat" data-date="2026-04-09" data-props="tapete"><div class="art gart pilatesmat"><span class="free">Gratis</span></div><div class="tag">PILATES MAT</div><div class="title">Pilates Mat Fundamental</div><div class="meta">Sofía Ruiz</div></a>
+    <a href="clase.html?t=Core%20Profundo&amp;i=Sof%C3%ADa%20Ruiz&amp;d=pilates&amp;m=40" class="ccard" data-d="pilates" data-date="2026-08-11" data-props="tapete,pelota"><div class="art gart pilates has-nuevo"><span class="nuevo">Nuevo</span><span class="len">40 min</span></div><div class="tag">PILATES</div><div class="title">Core Profundo</div><div class="meta">Sofía Ruiz</div></a>
+    <a href="clase.html?t=Somara%20Flow&amp;i=Renata%20Sol%C3%ADs&amp;d=somara&amp;m=25" class="ccard" data-d="somara" data-date="2026-08-05" data-props="tapete,bloques"><div class="art gart somara has-nuevo"><span class="nuevo">Nuevo</span><span class="len">25 min</span></div><div class="tag">SOMARA</div><div class="title">Somara Flow</div><div class="meta">Renata Solís</div></a>
+    <a href="clase.html?t=Tone%20Cuerpo%20Completo&amp;i=Daniela%20Ortiz&amp;d=tone&amp;m=30" class="ccard" data-d="tone" data-date="2026-03-21" data-props="banda,tapete"><div class="art gart tone"><span class="len">30 min</span></div><div class="tag">TONE</div><div class="title">Tone Cuerpo Completo</div><div class="meta">Daniela Ortiz</div></a>
+    <a href="clase.html?t=Despierta%20el%20core&amp;i=Daniela%20Ortiz&amp;d=pilatesmat&amp;m=15" class="ccard" data-d="pilatesmat" data-date="2026-03-04" data-props="tapete"><div class="art gart pilatesmat"><span class="len">15 min</span></div><div class="tag">PILATES MAT</div><div class="title">Despierta el core</div><div class="meta">Daniela Ortiz</div></a>
+    <a href="clase.html?t=Somara%20Restaurativo&amp;i=Renata%20Sol%C3%ADs&amp;d=somara&amp;m=40" class="ccard" data-d="somara" data-date="2026-07-24" data-props="bloques,tapete"><div class="art gart somara has-nuevo"><span class="nuevo">Nuevo</span><span class="len">40 min</span></div><div class="tag">SOMARA</div><div class="title">Somara Restaurativo</div><div class="meta">Renata Solís</div></a>
   </div>
   <p id="noResults" style="display:none;font-family:'Helvetica Neue',Arial;color:var(--ink-2);padding:30px 0">
     Todavía no hay clases en esta disciplina. <b>Próximamente.</b>
@@ -92,17 +105,35 @@
 
 <script src="anyara.js"></script>
 <script>
+var results = document.getElementById('results');
+var cards = Array.prototype.slice.call(results.querySelectorAll('.ccard'));
+
+/* el catálogo abre ordenado por fecha de publicación, de más reciente a más antigua */
+var MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+cards.sort(function (a, b) {
+  return a.getAttribute('data-date') < b.getAttribute('data-date') ? 1 : -1;
+});
+cards.forEach(function (c) {
+  /* la fecha visible hace legible el orden */
+  var p = c.getAttribute('data-date').split('-');
+  var meta = c.querySelector('.meta');
+  meta.textContent = meta.textContent + ' · ' + parseInt(p[2], 10) + ' ' + MESES[parseInt(p[1], 10) - 1];
+  results.appendChild(c);
+});
+
 /* the homepage pills deep-link here with ?d=<disciplina> */
-var cards = Array.prototype.slice.call(document.querySelectorAll('#results .ccard'));
-function applyFilter(d){
+var fDisc = '', fProps = '';
+function applyFilter(){
   var shown = 0;
   cards.forEach(function(c){
-    var hit = !d || c.getAttribute('data-d') === d;
+    var okD = !fDisc  || c.getAttribute('data-d') === fDisc;
+    var okP = !fProps || (c.getAttribute('data-props') || '').split(',').indexOf(fProps) > -1;
+    var hit = okD && okP;
     c.style.display = hit ? '' : 'none';
     if (hit) shown++;
   });
   document.querySelectorAll('#pills .pill').forEach(function(p){
-    p.classList.toggle('active', (p.getAttribute('data-d') || '') === (d || ''));
+    p.classList.toggle('active', (p.getAttribute('data-d') || '') === fDisc);
   });
   document.getElementById('resultCount').textContent = shown + (shown === 1 ? ' clase' : ' clases');
   document.getElementById('noResults').style.display = shown ? 'none' : 'block';
@@ -111,12 +142,17 @@ function applyFilter(d){
 document.querySelectorAll('#pills .pill').forEach(function(p){
   p.style.cursor = 'pointer';
   p.addEventListener('click', function(){
-    var d = p.getAttribute('data-d') || '';
-    history.replaceState(null, '', d ? '?d=' + d : location.pathname);
-    applyFilter(d);
+    fDisc = p.getAttribute('data-d') || '';
+    history.replaceState(null, '', fDisc ? '?d=' + fDisc : location.pathname);
+    applyFilter();
   });
 });
-applyFilter(new URLSearchParams(location.search).get('d') || '');
+document.getElementById('fProps').addEventListener('change', function(){
+  fProps = this.value;
+  applyFilter();
+});
+fDisc = new URLSearchParams(location.search).get('d') || '';
+applyFilter();
 
 /* tasteful lock badges — the catalog stays browsable, just marked */
 if (!Anyara.isMember()) {
