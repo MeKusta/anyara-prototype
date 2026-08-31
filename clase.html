@@ -131,7 +131,15 @@ document.getElementById('vpScreen').classList.remove('funcional');
 document.getElementById('vpScreen').classList.add(cls.d);
 document.getElementById('clsTitle').textContent = cls.t;
 document.getElementById('clsInstr').textContent = cls.i;
-document.getElementById('specDisc').textContent = DISC_LABELS[cls.d] || cls.d;
+/* si la disciplina ya tiene página propia, el spec se vuelve puerta de entrada */
+var discHref = Anyara.discHref(cls.d);
+var specDisc = document.getElementById('specDisc');
+if (discHref) {
+  specDisc.innerHTML = '<a href="' + discHref + '" style="color:var(--gold-deep);' +
+    'text-decoration:underline;text-underline-offset:3px">' + Anyara.discLabel(cls.d) + '</a>';
+} else {
+  specDisc.textContent = DISC_LABELS[cls.d] || cls.d;
+}
 document.getElementById('specMins').textContent = cls.m + ' min';
 document.getElementById('artTags').innerHTML = '<span>' + (DISC_LABELS[cls.d] || cls.d) + '</span><span>' + cls.m + ' min</span>';
 document.getElementById('vpTitleWrap').innerHTML = '<span>' + (DISC_LABELS[cls.d] || cls.d) + '</span>' + cls.t + ' — con ' + cls.i;

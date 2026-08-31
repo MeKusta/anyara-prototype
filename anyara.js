@@ -9,7 +9,19 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.02.00';
+  var VERSION = '1.03.00';
+
+  /* Disciplinas: etiqueta y si ya tiene página propia. Sólo Somara la tiene
+     por ahora — las demás siguen cayendo en el catálogo filtrado. */
+  var DISC = {
+    barre:      { label:'Barre',       page:false },
+    funcional:  { label:'Funcional',   page:false },
+    pilatesmat: { label:'Pilates Mat', page:false },
+    pilates:    { label:'Pilates',     page:false },
+    sculpt:     { label:'Sculpt',      page:false },
+    somara:     { label:'Somara',      page:true  },
+    tone:       { label:'Tone',        page:false }
+  };
   var K = {
     member:   'anyara_member',   // level 3 · paid
     trial:    'anyara_trial',    // level 2 · 3-day welcome
@@ -113,6 +125,11 @@
 
     FREE_CLASSES: FREE_CLASSES,
     isFreeSlug: function (slug) { return FREE_SLUGS.indexOf(slug) > -1; },
+
+    DISC: DISC,
+    discLabel: function (d) { return (DISC[d] && DISC[d].label) || d; },
+    /* null si esa disciplina todavía no tiene página propia */
+    discHref: function (d) { return (DISC[d] && DISC[d].page) ? 'disciplina.html?d=' + d : null; },
 
     /* builds a clase.html link; pass free:1 or t3:N to carry the access flag */
     classHref: function (c) {

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Somara</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link">Series</a>
+      <a href="retos.html" class="nav-link">Retos</a>
+      <a href="events.html" class="nav-link">Eventos</a>
+      <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap section-sm">
+  <a href="explorar.html" id="backLink" style="font-family:'Helvetica Neue',Arial;font-size:13px;color:var(--ink-2)">‹ Volver a Explorar</a>
+</div>
+
+<!-- ===== PORTADA ===== -->
+<div class="wrap section-sm">
+  <div class="cover" id="cover">
+    <div class="cover-in">
+      <div class="eyebrow">Disciplina</div>
+      <h1 id="dName">Somara</h1>
+      <div class="cover-meta" id="dMeta"></div>
+      <div class="cover-cta">
+        <button class="btn btn-gold" onclick="openTrailer()">▶ Ver el trailer</button>
+        <a href="#clases" class="btn btn-ghost" style="background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.4);color:#fff">Ver clases</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap section-sm">
+  <p class="disc-lead" id="dLead"></p>
+</div>
+
+<!-- ===== TRAILER ===== -->
+<div class="wrap section-sm">
+  <div class="trailer-card" onclick="openTrailer()">
+    <div class="tc-art gart" id="tcArt">
+      <span class="tc-play">▶</span>
+      <span class="tc-len" id="tcLen">2 min</span>
+    </div>
+    <div class="tc-b">
+      <div class="tc-k">Trailer de la disciplina</div>
+      <div class="tc-t" id="tcTitle">Qué es Somara</div>
+      <p class="tc-d" id="tcDesc"></p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SUBCATEGORÍAS ===== -->
+<div class="wrap section-sm">
+  <div class="row-head"><h2 id="subHead">Por zona del cuerpo</h2></div>
+  <div class="subbar" id="subbar"></div>
+</div>
+
+<!-- ===== EMPIEZA POR AQUÍ ===== -->
+<div class="wrap section-sm">
+  <div class="row-head"><h2>Empieza por aquí</h2></div>
+  <p class="sec-lead" id="startLead">Si es tu primera vez, estas dos son la puerta de entrada.</p>
+  <div class="grid2" id="startHere"></div>
+</div>
+
+<!-- ===== CLASES ===== -->
+<div class="wrap section-sm" id="clases">
+  <div class="row-head">
+    <h2>Todas las clases</h2>
+    <a href="explorar.html" id="allLink">Ver en el catálogo</a>
+  </div>
+  <p class="sec-lead" id="classCount"></p>
+  <div class="grid4" id="classGrid"></div>
+</div>
+
+<!-- ===== COACHES ===== -->
+<div class="wrap section">
+  <div class="row-head"><h2 id="coachHead">Quién enseña Somara</h2></div>
+  <div class="grid4" id="coachGrid"></div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="coaches.html">Coaches</a><a href="membresia.html">Planes y precios</a></div>
+    <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<div class="overlay" id="ov">
+  <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
+  <div class="overlay-top">
+    <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+  </div>
+</div>
+
+<!-- ===== PLAYER DEL TRAILER ===== -->
+<div class="vp-scrim" id="vp">
+  <button class="vp-close" onclick="closeTrailer()">✕</button>
+  <div class="vp">
+    <div class="vp-title"><span id="vpKicker">Trailer</span><span id="vpName">Qué es Somara</span></div>
+    <div class="vp-screen gart" id="vpScreen">
+      <button class="vp-bigplay" id="vpBig" onclick="togglePlay()">▶</button>
+    </div>
+    <div class="vp-bar">
+      <button class="vp-toggle" id="vpToggle" onclick="togglePlay()">▶</button>
+      <span id="vpTime">0:00</span>
+      <div class="vp-timeline" id="vpLine"><i id="vpProg"></i></div>
+      <span id="vpTotal">2:00</span>
+      <button class="vp-toggle" title="Pantalla completa">⛶</button>
+    </div>
+  </div>
+</div>
+
+<script src="anyara.js"></script>
+<script>
+/* Contenido por disciplina. Sólo Somara está armada; las demás se van
+   agregando con la misma forma (el catálogo sigue siendo preview, no dato). */
+var DISCIPLINAS = {
+  somara: {
+    lead: 'Movimiento somático: lento, consciente y sin impacto. Trabajas movilidad y ' +
+          'respiración para soltar la tensión que se acumula, no para agotarte. ' +
+          'Sirve igual como práctica propia o como el día suave entre entrenamientos fuertes.',
+    meta: '7 clases · 15–40 min · Sin impacto',
+    trailerLen: 2,
+    trailerDesc: 'Renata explica de dónde viene Somara, cómo se siente una clase y ' +
+                 'por qué el ritmo lento es el punto, no una versión fácil.',
+    /* Mariana pidió Somara por zona del cuerpo */
+    subHead: 'Por zona del cuerpo',
+    subs: [
+      { id:'espalda',  n:'Espalda y cuello' },
+      { id:'caderas',  n:'Caderas y piernas' },
+      { id:'completo', n:'Cuerpo completo' }
+    ],
+    coaches: [
+      { n:'Renata Solís', d:'Somara · Meditación · 19 clases', art:'somara' },
+      { n:'Alina Prado',  d:'Somara · Movilidad · 11 clases',  art:'tone' }
+    ],
+    empieza: ['somara-flow', 'somara-espalda'],
+    clases: [
+      { slug:'somara-flow',        t:'Somara : Flow',              m:25, sub:'completo', date:'2026-08-05', free:false },
+      { slug:'somara-espalda',     t:'Somara : Espalda que respira', m:20, sub:'espalda',  date:'2026-08-14', free:false },
+      { slug:'somara-cuello',      t:'Somara : Cuello y hombros',  m:15, sub:'espalda',   date:'2026-07-30', free:false },
+      { slug:'somara-restaurativo',t:'Somara : Restaurativo',      m:40, sub:'completo',  date:'2026-07-24', free:false },
+      { slug:'somara-caderas',     t:'Somara : Caderas abiertas',  m:25, sub:'caderas',   date:'2026-07-11', free:false },
+      { slug:'somara-piernas',     t:'Somara : Piernas ligeras',   m:20, sub:'caderas',   date:'2026-06-28', free:false },
+      { slug:'somara-movilidad',   t:'Somara : Movilidad completa',m:30, sub:'completo',  date:'2026-06-09', free:false }
+    ],
+    coachDe: 'Renata Solís'
+  }
+};
+
+var MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+var d = new URLSearchParams(location.search).get('d') || 'somara';
+if (!DISCIPLINAS[d]) d = 'somara';
+var D = DISCIPLINAS[d];
+var label = Anyara.discLabel(d);
+
+/* ---- portada y textos ---- */
+document.title = 'Anyara — ' + label;
+document.getElementById('cover').classList.add('gart', d);
+document.getElementById('dName').textContent = label;
+document.getElementById('dMeta').textContent = D.meta;
+document.getElementById('dLead').textContent = D.lead;
+document.getElementById('tcArt').classList.add(d);
+document.getElementById('tcTitle').textContent = 'Qué es ' + label;
+document.getElementById('tcDesc').textContent = D.trailerDesc;
+document.getElementById('tcLen').textContent = D.trailerLen + ' min';
+document.getElementById('subHead').textContent = D.subHead;
+document.getElementById('coachHead').textContent = 'Quién enseña ' + label;
+document.getElementById('allLink').href = 'explorar.html?d=' + d;
+document.getElementById('backLink').href = 'explorar.html?d=' + d;
+document.getElementById('vpName').textContent = 'Qué es ' + label;
+document.getElementById('vpScreen').classList.add(d);
+document.getElementById('vpTotal').textContent = D.trailerLen + ':00';
+/* el color de firma alimenta las barras de subcategoría */
+document.body.classList.add(d);
+
+/* ---- clases, ordenadas por fecha ---- */
+var clases = D.clases.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+
+function card(c) {
+  var href = Anyara.classHref({ t:c.t, i:D.coachDe, d:d, m:c.m, free:c.free ? 1 : 0 });
+  var p = c.date.split('-');
+  var fecha = parseInt(p[2], 10) + ' ' + MESES[parseInt(p[1], 10) - 1];
+  /* mismas reglas de acceso que el resto del sitio */
+  var locked = !Anyara.canWatch({ free: c.free });
+  return '<a href="' + href + '" class="ccard" data-sub="' + c.sub + '">' +
+    '<div class="art gart ' + d + '">' +
+      (c.free ? '<span class="free">Gratis</span>' : '<span class="len">' + c.m + ' min</span>') +
+      (locked ? '<span class="locked">🔒 Membresía</span>' : '') +
+    '</div>' +
+    '<div class="tag">' + label.toUpperCase() + '</div>' +
+    '<div class="title">' + c.t + '</div>' +
+    '<div class="meta">' + D.coachDe + ' · ' + fecha + '</div></a>';
+}
+
+document.getElementById('classGrid').innerHTML = clases.map(card).join('');
+
+/* ---- subcategorías: filtran la parrilla sin salir de la página ---- */
+var activeSub = '';
+var subbar = document.getElementById('subbar');
+var subs = [{ id:'', n:'Todas' }].concat(D.subs);
+subbar.innerHTML = subs.map(function (s) {
+  var n = s.id ? D.clases.filter(function (c) { return c.sub === s.id; }).length : D.clases.length;
+  return '<button class="subchip' + (s.id === '' ? ' on' : '') + '" data-sub="' + s.id + '">' +
+    '<span class="sc-bar"></span>' +
+    '<div class="sc-n">' + s.n + '</div>' +
+    '<div class="sc-c">' + n + (n === 1 ? ' clase' : ' clases') + '</div></button>';
+}).join('');
+
+function applySub() {
+  var shown = 0;
+  document.querySelectorAll('#classGrid .ccard').forEach(function (c) {
+    var hit = !activeSub || c.getAttribute('data-sub') === activeSub;
+    c.style.display = hit ? '' : 'none';
+    if (hit) shown++;
+  });
+  document.querySelectorAll('.subchip').forEach(function (b) {
+    b.classList.toggle('on', b.getAttribute('data-sub') === activeSub);
+  });
+  document.getElementById('classCount').textContent =
+    shown + (shown === 1 ? ' clase' : ' clases');
+}
+subbar.addEventListener('click', function (e) {
+  var b = e.target.closest('.subchip');
+  if (!b) return;
+  activeSub = b.getAttribute('data-sub');
+  applySub();
+});
+applySub();
+
+/* ---- empieza por aquí ---- */
+document.getElementById('startHere').innerHTML = D.empieza.map(function (slug) {
+  var c = D.clases.filter(function (x) { return x.slug === slug; })[0];
+  return c ? card(c) : '';
+}).join('');
+
+/* ---- coaches de la disciplina ---- */
+document.getElementById('coachGrid').innerHTML = D.coaches.map(function (c) {
+  return '<a href="coach.html" class="coachcard">' +
+    '<div class="cav gart ' + c.art + '"></div>' +
+    '<div class="cn">' + c.n + '</div>' +
+    '<div class="cd">' + c.d + '</div></a>';
+}).join('');
+
+/* ---- trailer (abierto en todos los niveles: es material de venta) ---- */
+var vpPlaying=false, vpSec=0, vpTotal=D.trailerLen*60, vpTimer=null;
+function fmt(s){var m=Math.floor(s/60),r=Math.floor(s%60);return m+':'+(r<10?'0':'')+r}
+function paint(){
+  document.getElementById('vpProg').style.width=(vpSec/vpTotal*100)+'%';
+  document.getElementById('vpTime').textContent=fmt(vpSec);
+}
+function openTrailer(){ document.getElementById('vp').classList.add('open'); }
+function closeTrailer(){
+  document.getElementById('vp').classList.remove('open');
+  if(vpPlaying) togglePlay();
+}
+function togglePlay(){
+  vpPlaying=!vpPlaying;
+  document.getElementById('vpBig').style.display=vpPlaying?'none':'flex';
+  document.getElementById('vpToggle').textContent=vpPlaying?'❚❚':'▶';
+  if(vpPlaying){vpTimer=setInterval(function(){vpSec=Math.min(vpSec+1,vpTotal);paint();},1000);}
+  else{clearInterval(vpTimer);}
+}
+document.getElementById('vpLine').addEventListener('click',function(e){
+  var r=this.getBoundingClientRect();
+  vpSec=Math.round((e.clientX-r.left)/r.width*vpTotal);paint();
+});
+</script>
+</body>
+</html>
