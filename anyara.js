@@ -7,7 +7,7 @@
                                  classes are unlocked, the rest is Membresía
    - member  (trial or paid)  → everything unlocked, no locks anywhere */
 (function () {
-  var VERSION = '1.01.04';
+  var VERSION = '1.01.05';
   var K = {
     member:   'anyara_member',
     plan:     'anyara_plan',
