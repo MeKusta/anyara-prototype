@@ -444,19 +444,65 @@ body:not(.is-free) .free-only{display:none!important}
 body:not(.is-anon)  .anon-only{display:none!important}
 body.is-anon .account-only{display:none!important}
 
-/* welcome-class replay card */
-.welcome-replay{display:flex;gap:18px;align-items:center;background:var(--ink);color:#fff;
-  border-radius:var(--radius);padding:16px;margin-bottom:0}
-.welcome-replay .thumb{width:150px;height:90px;border-radius:10px;flex:0 0 auto}
-.welcome-replay .body{flex:1}
-.welcome-replay .tag{color:var(--gold)}
-.welcome-replay .ttl{font-size:20px;margin:4px 0;color:#fff}
-.welcome-replay .sub{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:rgba(255,255,255,.65)}
-
 /* tasteful lock badge on catalog/recommendation cards — sits opposite .free/.len so it never overlaps */
 .ccard .art .locked{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.55);color:#fff;
   font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:100px;
   font-family:"Helvetica Neue",Arial,sans-serif;display:flex;align-items:center;gap:5px}
+
+/* ---------- "Nuevo" banner — sits ON the artwork, not a small corner badge ---------- */
+.ccard .art .nuevo{position:absolute;top:0;left:0;right:0;z-index:2;
+  background:var(--gold);color:#fff;text-align:center;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:.28em;text-transform:uppercase;padding:9px 10px}
+/* push the duration chip clear of the banner */
+.ccard .art.has-nuevo .len,.ccard .art.has-nuevo .free{top:52px}
+.ccard .art.has-nuevo .locked{top:52px}
+
+/* ---------- "Tu bienvenida a Anyara" — 3-day personalised arc ---------- */
+.welcome3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.w3{position:relative;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  background:#fff;display:flex;flex-direction:column}
+.w3.open:hover{border-color:var(--gold)}
+.w3.shut{opacity:.72}
+.w3 .w3-art{height:170px;position:relative}
+.w3 .w3-day{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.55);color:#fff;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;padding:5px 11px;border-radius:100px}
+.w3 .w3-state{position:absolute;top:12px;right:12px;width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:12px;
+  background:rgba(0,0,0,.55);color:#fff}
+.w3 .w3-state.done{background:var(--gold)}
+.w3 .w3-b{padding:16px 18px 18px}
+.w3 .w3-tag{font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--gold-deep)}
+.w3 .w3-t{font-size:19px;margin:5px 0 8px}
+/* the personalisation receipt — why this class, in their own words */
+.w3 .w3-why{display:flex;gap:8px;align-items:flex-start;font-family:"Helvetica Neue",Arial,sans-serif;
+  font-size:12px;color:var(--ink-2);line-height:1.45;border-top:1px solid var(--line-2);padding-top:10px}
+.w3 .w3-why::before{content:"✦";color:var(--gold);flex:0 0 auto}
+.w3 .w3-cta{margin-top:14px}
+
+/* ---------- Pre-roll trailer (visitas only) ---------- */
+.trailer{position:absolute;inset:0;z-index:5;background:#100e0d;color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px}
+.trailer .tr-tag{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.16);
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;padding:5px 11px;border-radius:100px}
+.trailer .tr-body{max-width:520px}
+.trailer .tr-logo{font-family:"Georgia",serif;font-style:italic;font-size:26px;margin-bottom:14px}
+.trailer .tr-logo b{font-style:normal}
+.trailer .tr-title{font-family:"Georgia",serif;font-size:34px;line-height:1.15;margin-bottom:12px}
+.trailer .tr-sub{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;line-height:1.6;
+  color:rgba(255,255,255,.75)}
+.trailer .tr-foot{position:absolute;right:16px;bottom:22px;display:flex;align-items:center;gap:14px}
+.trailer .tr-count{font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;color:rgba(255,255,255,.6)}
+.trailer .tr-skip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:#fff;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;letter-spacing:.08em;
+  padding:9px 16px;border-radius:100px;cursor:pointer}
+.trailer .tr-skip:hover{background:rgba(255,255,255,.26)}
+.trailer .tr-bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.18)}
+.trailer .tr-bar > i{display:block;height:100%;width:0;background:var(--gold)}
+@media (prefers-reduced-motion:reduce){.trailer .tr-bar > i{transition:none!important}}
 
 /* ---------- Day picker (prototype-only time machine) ---------- */
 .day-picker{position:fixed;right:18px;bottom:18px;z-index:90;display:flex;align-items:center;gap:5px;
@@ -469,16 +515,6 @@ body.is-anon .account-only{display:none!important}
   cursor:pointer;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
 .day-picker button:hover{background:var(--sand)}
 .day-picker button.on{background:var(--gold);color:#fff}
-
-/* ---------- Trial week (member-only, day-picker-aware unlock schedule) ---------- */
-.trial-week{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
-.trial-week .week-card{position:relative}
-.trial-week .week-card.today{outline:2px solid var(--gold);outline-offset:2px}
-.trial-week .week-card.locked-day{opacity:.6}
-.trial-week .wk-check{position:absolute;top:9px;right:9px;width:20px;height:20px;border-radius:50%;
-  background:var(--gold);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center}
-.trial-week .wk-soon{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;color:var(--ink-3);
-  padding:0 14px 12px}
 
 /* ---------- Video player (demo) ---------- */
 .vp-scrim{position:fixed;inset:0;z-index:140;background:rgba(12,10,9,.96);display:none;align-items:center;justify-content:center}

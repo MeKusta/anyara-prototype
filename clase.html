@@ -40,7 +40,6 @@
       <h1 style="font-size:36px;margin-top:20px" id="clsTitle">Funcional HIIT</h1>
       <p style="color:var(--ink-2);font-family:'Helvetica Neue',Arial;margin:8px 0 16px">
         con <a href="coach.html" id="clsInstr" style="color:var(--gold-deep);text-decoration:underline;text-underline-offset:3px">Sofía Ruiz</a>
-        &nbsp;·&nbsp; ★ 4.9 (176 valoraciones)
       </p>
       <p style="max-width:560px;color:var(--ink-2)" id="clsDesc">Entrenamiento funcional de alta intensidad. Quema calorías, mejora resistencia y potencia tu cuerpo en 30 minutos.</p>
     </div>
@@ -72,7 +71,7 @@
 <div class="modal-scrim" id="pw">
   <div class="modal">
     <button class="x" onclick="document.getElementById('pw').classList.remove('open')">✕</button>
-    <div class="brandline"><span class="star">★</span><span class="logo" style="font-size:22px"><b>A</b>nyara</span></div>
+    <div class="brandline"><span class="star"><b>A</b></span><span class="logo" style="font-size:22px"><b>A</b>nyara</span></div>
     <h3>Esta clase es parte de Anyara</h3>
     <p class="sub">Prueba la experiencia completa durante 7 días: acceso a todas las clases, retos y series, con tu progreso guardado.</p>
     <ul>
@@ -160,7 +159,18 @@ function paint(){
   document.getElementById('vpProg').style.width=(vpSec/vpTotal*100)+'%';
   document.getElementById('vpTime').textContent=fmt(vpSec);
 }
+/* visitas (sin prueba) ven el trailer de Anyara antes de la clase */
+var trailerDone=false;
 function togglePlay(){
+  if(!trailerDone && !vpPlaying){
+    trailerDone=true;
+    document.getElementById('vpBig').style.display='none';
+    Anyara.playTrailer(document.getElementById('vpScreen'), startPlayback);
+    return;
+  }
+  startPlayback();
+}
+function startPlayback(){
   vpPlaying=!vpPlaying;
   document.getElementById('vpBig').style.display=vpPlaying?'none':'flex';
   document.getElementById('vpToggle').textContent=vpPlaying?'❚❚':'▶';

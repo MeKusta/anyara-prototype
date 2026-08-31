@@ -70,7 +70,7 @@ body{background:#100e0d;min-height:100vh;display:flex;flex-direction:column}
   <div class="bv-wrap">
     <div class="bv-screen gart sculpt" id="screen">
 
-      <div class="bv-chip" id="chip"><span class="st">★</span> Elegida para ti</div>
+      <div class="bv-chip" id="chip">Elegida para ti</div>
 
       <div class="bv-card" id="card">
         <div class="kicker" id="kicker">Elegida para ti, Paulo</div>
@@ -115,7 +115,18 @@ function paint(){
   document.getElementById('prog').style.width = (sec/total*100) + '%';
   document.getElementById('t').textContent = fmt(sec);
 }
+/* visitas (sin prueba) ven el trailer de Anyara antes de la clase */
+var trailerDone = false;
 function togglePlay(){
+  if (!trailerDone && !playing) {
+    trailerDone = true;
+    document.getElementById('card').classList.add('gone');
+    Anyara.playTrailer(document.getElementById('screen'), startPlayback);
+    return;
+  }
+  startPlayback();
+}
+function startPlayback(){
   playing = !playing;
   /* first play clears the title card and hands off to the persistent chip */
   document.getElementById('card').classList.toggle('gone', playing);

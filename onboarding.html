@@ -248,7 +248,7 @@ body{overflow-x:hidden}
             <div>
               <div class="rt" id="rvTag">Sculpt · 20 min</div>
               <div class="rn" id="rvName">20 min · Sculpt : Glúteos</div>
-              <div class="rm" id="rvMeta">Con Valeria Méndez · ★ 4.9</div>
+              <div class="rm" id="rvMeta">Con Valeria Méndez</div>
             </div>
           </div>
           <div class="rv-go"><span class="rv-bar"><i></i></span> Abriendo tu clase…</div>
@@ -303,6 +303,27 @@ var MOVE_CLASS = {
   mezcla:     { disc:'barre',     title:'Barre : Esencial',        instr:'Valeria Méndez' }
 };
 
+/* days 2 and 3 of "Tu bienvenida a Anyara" — the arc continues in the same
+   direction they chose, so the three days read as one personalised plan */
+var MOVE_ARC = {
+  intenso: [
+    { disc:'funcional', title:'Funcional : Fuerza Total', instr:'Sofía Ruiz' },
+    { disc:'sculpt',    title:'Sculpt : Cuerpo Completo', instr:'Valeria Méndez' }
+  ],
+  controlado: [
+    { disc:'pilatesmat', title:'Pilates Mat : Precisión', instr:'Sofía Ruiz' },
+    { disc:'barre',      title:'Barre : Control y Línea', instr:'Valeria Méndez' }
+  ],
+  suave: [
+    { disc:'somara', title:'Somara : Movilidad Suave',  instr:'Renata Solís' },
+    { disc:'tone',   title:'Tone : Respiración y Calma', instr:'Daniela Ortiz' }
+  ],
+  mezcla: [
+    { disc:'pilatesmat', title:'Pilates Mat : Fundamentos', instr:'Sofía Ruiz' },
+    { disc:'sculpt',     title:'Sculpt : Tono Ligero',      instr:'Valeria Méndez' }
+  ]
+};
+
 var resolved = false;
 function runResolve(){
   if(resolved) return;
@@ -329,6 +350,20 @@ function runResolve(){
   why += ' con algo ' + (MOVE_LABELS[move] || 'a tu medida').toLowerCase() + ' en sesiones de ' + mins + ' min';
   Anyara.setReason(why);
   Anyara.setWelcomeClass({ disc: rec.disc, title: rec.title, instr: rec.instr, mins: mins, level: LEVEL_LABELS[level] || '' });
+
+  /* the 3-day welcome arc — each day carries the reason it was picked, so the
+     personalisation is visible on the homepage and not just asserted */
+  var arc = MOVE_ARC[move] || MOVE_ARC.mezcla;
+  var goalTxt = (GOAL_LABELS[goal] || 'moverte con intención').toLowerCase();
+  var moveTxt = (MOVE_LABELS[move] || 'a tu medida').toLowerCase();
+  Anyara.setWelcomePlan([
+    { disc: rec.disc, title: rec.title, instr: rec.instr, mins: mins,
+      why: 'Elegida por tu meta: ' + goalTxt },
+    { disc: arc[0].disc, title: arc[0].title, instr: arc[0].instr, mins: mins,
+      why: 'Porque prefieres movimiento ' + moveTxt },
+    { disc: arc[1].disc, title: arc[1].title, instr: arc[1].instr, mins: mins,
+      why: 'A tu ritmo: sesiones de ' + mins + ' min' }
+  ]);
 
   var chips = [];
   if(goal)  chips.push(GOAL_LABELS[goal] || goal);
