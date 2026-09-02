@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.07.01';
+  var VERSION = '1.08.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -57,6 +57,20 @@
     day:      'anyara_day',
     charged:  'anyara_charged'   // one-shot: show the "day 3 charge" notice once
   };
+  /* Contenido de los retos. Vive aquí para que la página del reto y la de la
+     clase cuenten lo mismo: al entrar a una clase de un reto hay que poder
+     mostrar qué sigue mañana. */
+  var RETOS = {
+    volver: {
+      t: 'Reto Volver a Ti',
+      dias: [
+        { d:'barre',     t:'Barre Esencial',  i:'Valeria Méndez', m:45 },
+        { d:'sculpt',    t:'Sculpt Total',    i:'Valeria Méndez', m:60 },
+        { d:'funcional', t:'Funcional HIIT',  i:'Sofía Ruiz',     m:30 }
+      ]
+    }
+  };
+
   /* the two catalog classes marked "Gratis" — playable at every level */
   var FREE_CLASSES = [
     { slug:'barre-esencial',         t:'Barre Esencial',           i:'Valeria Méndez', d:'barre',      m:20 },
@@ -147,6 +161,7 @@
     FREE_CLASSES: FREE_CLASSES,
     isFreeSlug: function (slug) { return FREE_SLUGS.indexOf(slug) > -1; },
 
+    RETOS: RETOS,
     DISC: DISC,
     discLabel: function (d) { return (DISC[d] && DISC[d].label) || d; },
     /* null si esa disciplina todavía no tiene página propia */
@@ -248,6 +263,7 @@
     document.body.classList.add(lvl === 3 ? 'is-member' : 'is-guest');
     paintArt();
     paintFavs();
+    fitCompGrids();
     renderLogos();
     renderNav();
     renderVersion();
@@ -304,6 +320,22 @@
   }
   A.paintFavs = paintFavs;
   window.addEventListener('load', paintFavs);
+
+  /* Un listado de retos o series sólo se justifica en parrilla 4:5 cuando hay
+     suficientes. Con 4 o menos se expanden a lo ancho de la fila. */
+  function fitCompGrids() {
+    document.querySelectorAll('.comp-grid').forEach(function (g) {
+      var n = g.querySelectorAll('.compcard').length;
+      if (n > 0 && n <= 4) {
+        g.classList.add('wide');
+        g.style.setProperty('--cols', n);
+      } else {
+        g.classList.remove('wide');
+      }
+    });
+  }
+  A.fitCompGrids = fitCompGrids;
+  window.addEventListener('load', fitCompGrids);
 
   /* Los dos tags de la tarjeta navegan: la disciplina a su página, y la serie
      o reto al suyo. Van delegados en el documento porque las tarjetas se

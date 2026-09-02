@@ -58,6 +58,13 @@
   </div>
 </div>
 
+<!-- si la clase es parte de un reto, el resto del reto va aquí -->
+<div class="wrap section-sm" id="retoNext" style="display:none">
+  <div class="row-head"><h2 id="retoHead">Lo que te espera mañana</h2><a href="reto.html" id="retoLink">Ver el reto</a></div>
+  <p class="sec-lead" id="retoLead"></p>
+  <div class="grid4" id="retoGrid"></div>
+</div>
+
 <footer class="footer">
   <div class="footer-inner">
     <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
@@ -144,6 +151,34 @@ document.getElementById('specMins').textContent = cls.m + ' min';
 document.getElementById('artTags').innerHTML = '<span>' + (DISC_LABELS[cls.d] || cls.d) + '</span><span>' + cls.m + ' min</span>';
 document.getElementById('vpTitleWrap').innerHTML = '<span>' + (DISC_LABELS[cls.d] || cls.d) + '</span>' + cls.t + ' — con ' + cls.i;
 document.getElementById('vpTotal').textContent = cls.m + ':00';
+
+/* ---- si viene de un reto, mostramos que es parte de algo más grande ---- */
+(function () {
+  var slug = qs.get('reto'), dia = parseInt(qs.get('dia') || '1', 10);
+  var R = slug && Anyara.RETOS[slug];
+  if (!R) return;
+
+  var box = document.getElementById('retoNext');
+  box.style.display = '';
+  var restantes = R.dias.slice(dia);          // lo que viene después de hoy
+
+  document.getElementById('retoLead').textContent =
+    'Estás en el día ' + dia + ' de ' + R.t + '. ' +
+    (restantes.length ? 'Así sigue el reto.' : 'Es el último día del reto.');
+  if (!restantes.length) {
+    document.getElementById('retoHead').textContent = 'Ya casi terminas el reto';
+  }
+
+  document.getElementById('retoGrid').innerHTML = restantes.map(function (c, k) {
+    var href = Anyara.classHref({ t:c.t, i:c.i, d:c.d, m:c.m }) +
+               '&reto=' + slug + '&dia=' + (dia + k + 1);
+    return '<a href="' + href + '" class="ccard">' +
+      '<div class="art gart ' + c.d + '"><span class="len">' + c.m + ':00</span></div>' +
+      '<div class="title">Día ' + (dia + k + 1) + ' · ' + c.t + '</div>' +
+      '<div class="meta">' + c.i + '</div>' +
+      '<div class="tag disc-link" data-d="' + c.d + '">' + (DISC_LABELS[c.d] || c.d).toUpperCase() + '</div></a>';
+  }).join('');
+})();
 
 /* ---- acceso por nivel: pagada ve todo; la prueba ve su plan de 3 días
        conforme llegan; las gratis están abiertas siempre ---- */

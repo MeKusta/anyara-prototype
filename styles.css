@@ -225,15 +225,26 @@ h2{font-size:15px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
 .compcard{cursor:pointer;display:block}
 .compcard .art{border-radius:var(--radius);aspect-ratio:4/5;position:relative;
   overflow:hidden;margin-bottom:12px}
-.compcard .count{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,.72);color:#fff;
-  font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;letter-spacing:.12em;
-  text-transform:uppercase;padding:6px 11px;border-radius:4px}
+/* mismo tratamiento que la duración de una clase: el contraste lo da el
+   contenido (clases vs minutos), no el color */
+.compcard .count{position:absolute;bottom:12px;left:12px;background:rgba(255,255,255,.94);
+  color:var(--ink);font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;font-weight:600;
+  padding:5px 11px;border-radius:8px}
+/* en el catálogo las compilaciones se alinean con las clases; el 4:5 es
+   exclusivo de la home y de los listados con pocos elementos */
+#results .compcard .art{aspect-ratio:16/10}
 .compcard .discs{font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;letter-spacing:.1em;
   text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
 .compcard .discs .disc-link{cursor:pointer}
 .compcard .discs .disc-link:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 .compcard .ct{font-family:"Helvetica Neue",Arial,sans-serif;font-size:15px;font-weight:600;
   color:var(--ink);line-height:1.4}
+
+/* Listados de retos/series: el 4:5 sólo se justifica cuando hay parrilla.
+   Con 4 o menos se expanden a lo ancho de la fila (anyara.js pone .wide). */
+.comp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.comp-grid.wide{grid-template-columns:repeat(var(--cols,2),1fr)}
+.comp-grid.wide .compcard .art{aspect-ratio:16/10}
 
 /* color squares stand in for imagery */
 .ph{background:var(--sand)}
@@ -677,15 +688,17 @@ body.has-account .anon-only{display:none!important}
 .disc-lead{font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;color:var(--ink-2);
   max-width:640px;line-height:1.65}
 /* subcategorías: filtran la parrilla de abajo sin salir de la página */
-.subbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.subbar{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:22px}
 .subchip{border:1px solid var(--line);border-radius:var(--radius);background:#fff;cursor:pointer;
-  padding:16px 20px;text-align:left;min-width:190px;font-family:"Helvetica Neue",Arial,sans-serif}
+  padding:0;overflow:hidden;text-align:left;font-family:"Helvetica Neue",Arial,sans-serif}
 .subchip:hover{border-color:var(--dc,var(--gold))}
-.subchip.on{border-color:var(--ink);background:var(--sand)}
-.subchip .sc-n{font-family:"Georgia",serif;font-size:19px;color:var(--ink);margin-bottom:4px}
-.subchip .sc-c{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
-.subchip .sc-bar{display:block;height:3px;border-radius:2px;background:var(--dc,var(--gold));
-  width:34px;margin-bottom:11px;opacity:.85}
+.subchip.on{border-color:var(--ink);border-width:2px}
+.subchip .sc-art{display:block;aspect-ratio:16/10;position:relative}
+.subchip.on .sc-art::after{content:"";position:absolute;inset:0;
+  border-bottom:3px solid var(--ink)}
+.subchip .sc-b{display:block;padding:14px 16px 16px}
+.subchip .sc-n{display:block;font-family:"Georgia",serif;font-size:18px;color:var(--ink);margin-bottom:3px}
+.subchip .sc-c{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
 
 /* trailer de disciplina — mismo lenguaje que la intro de los tres días */
 .trailer-card{display:flex;gap:24px;align-items:center;border:1px solid var(--line);

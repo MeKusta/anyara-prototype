@@ -221,10 +221,14 @@ var subs = [{ id:'', n:'Todas' }].concat(D.subs);
 subbar.innerHTML = subs.map(function (s) {
   var n = s.id ? D.clases.filter(function (c) { return c.sub === s.id; }).length : D.clases.length;
   return '<button class="subchip' + (s.id === '' ? ' on' : '') + '" data-sub="' + s.id + '">' +
-    '<span class="sc-bar"></span>' +
-    '<div class="sc-n">' + s.n + '</div>' +
-    '<div class="sc-c">' + n + (n === 1 ? ' clase' : ' clases') + '</div></button>';
+    '<span class="sc-art gart ' + d + '"></span>' +
+    '<span class="sc-b">' +
+      '<span class="sc-n">' + s.n + '</span>' +
+      '<span class="sc-c">' + n + (n === 1 ? ' clase' : ' clases') + '</span>' +
+    '</span></button>';
 }).join('');
+/* las subcategorías se generan aquí, después del primer paintArt */
+Anyara.paintArt();
 
 function applySub() {
   var shown = 0;

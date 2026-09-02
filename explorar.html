@@ -88,6 +88,12 @@
     <a href="clase.html?t=Tone%20Cuerpo%20Completo&amp;i=Daniela%20Ortiz&amp;d=tone&amp;m=30" class="ccard" data-d="tone" data-date="2026-03-21" data-props="banda,tapete"><div class="art gart tone"><span class="len">30:00</span></div><div class="title">Tone Cuerpo Completo</div><div class="meta">Daniela Ortiz</div><div class="lvl">Intermedio</div><div class="tag disc-link" data-d="tone">TONE</div></a>
     <a href="clase.html?t=Despierta%20el%20core&amp;i=Daniela%20Ortiz&amp;d=pilatesmat&amp;m=15" class="ccard" data-d="pilatesmat" data-date="2026-03-04" data-props="tapete"><div class="art gart pilatesmat"><span class="len">15:00</span></div><div class="title">Despierta el core</div><div class="meta">Daniela Ortiz</div><div class="lvl">Principiante</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Core & Flexibilidad</span></div><div class="tag disc-link" data-d="pilatesmat">PILATES MAT</div></a>
     <a href="clase.html?t=Somara%20Restaurativo&amp;i=Renata%20Sol%C3%ADs&amp;d=somara&amp;m=40" class="ccard" data-d="somara" data-date="2026-07-24" data-props="bloques,tapete"><div class="art gart somara"><span class="nuevo">Nuevo</span><span class="len">40:00</span></div><div class="title">Somara Restaurativo</div><div class="meta">Renata Solís</div><div class="lvl">Principiante</div><div class="tag disc-link" data-d="somara">SOMARA</div></a>
+    <!-- compilaciones: aquí se alinean con las clases; la cantidad de clases
+         en vez de minutos es lo que las distingue -->
+    <a href="reto.html" class="compcard" data-d="sculpt" data-date="2026-08-20"><div class="art gart somara"><span class="count">6 clases</span></div><div class="discs"><span class="disc-link" data-d="barre">Barre</span>/<span class="disc-link" data-d="sculpt">Sculpt</span>/<span class="disc-link" data-d="funcional">Funcional</span></div><div class="ct">Reto Volver a Ti · 21 días</div></a>
+    <a href="reto.html" class="compcard" data-d="somara" data-date="2026-06-05"><div class="art gart funcional"><span class="count">7 clases</span></div><div class="discs"><span class="disc-link" data-d="somara">Somara</span>/<span class="disc-link" data-d="pilatesmat">Pilates Mat</span></div><div class="ct">Reto de Bienvenida · 7 días</div></a>
+    <a href="serie.html" class="compcard" data-d="sculpt" data-date="2026-07-15"><div class="art gart sculpt"><span class="count">3 clases</span></div><div class="discs"><span class="disc-link" data-d="sculpt">Sculpt</span>/<span class="disc-link" data-d="funcional">Funcional</span></div><div class="ct">Serie · Fuerza Total</div></a>
+    <a href="serie.html" class="compcard" data-d="pilatesmat" data-date="2026-05-02"><div class="art gart pilatesmat"><span class="count">3 clases</span></div><div class="discs"><span class="disc-link" data-d="pilatesmat">Pilates Mat</span>/<span class="disc-link" data-d="somara">Somara</span></div><div class="ct">Serie · Core &amp; Flexibilidad</div></a>
   </div>
   <p id="noResults" style="display:none;font-family:'Helvetica Neue',Arial;color:var(--ink-2);padding:30px 0">
     Todavía no hay clases en esta disciplina. <b>Próximamente.</b>
@@ -115,7 +121,8 @@
 <script src="anyara.js"></script>
 <script>
 var results = document.getElementById('results');
-var cards = Array.prototype.slice.call(results.querySelectorAll('.ccard'));
+/* clases y compilaciones conviven en la misma parrilla */
+var cards = Array.prototype.slice.call(results.querySelectorAll('.ccard, .compcard'));
 
 /* el catálogo abre ordenado por fecha de publicación, de más reciente a más antigua */
 var MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
@@ -123,10 +130,13 @@ cards.sort(function (a, b) {
   return a.getAttribute('data-date') < b.getAttribute('data-date') ? 1 : -1;
 });
 cards.forEach(function (c) {
-  /* la fecha visible hace legible el orden */
-  var p = c.getAttribute('data-date').split('-');
+  /* la fecha visible hace legible el orden; las compilaciones no llevan
+     instructora, así que no tienen dónde colgarla */
   var meta = c.querySelector('.meta');
-  meta.textContent = meta.textContent + ' · ' + parseInt(p[2], 10) + ' ' + MESES[parseInt(p[1], 10) - 1];
+  if (meta) {
+    var p = c.getAttribute('data-date').split('-');
+    meta.textContent = meta.textContent + ' · ' + parseInt(p[2], 10) + ' ' + MESES[parseInt(p[1], 10) - 1];
+  }
   results.appendChild(c);
 });
 
@@ -144,7 +154,7 @@ function applyFilter(){
   document.querySelectorAll('#pills .pill').forEach(function(p){
     p.classList.toggle('active', (p.getAttribute('data-d') || '') === fDisc);
   });
-  document.getElementById('resultCount').textContent = shown + (shown === 1 ? ' clase' : ' clases');
+  document.getElementById('resultCount').textContent = shown + (shown === 1 ? ' resultado' : ' resultados');
   document.getElementById('noResults').style.display = shown ? 'none' : 'block';
   document.getElementById('resultCount').style.display = shown ? 'block' : 'none';
   paintDiscStrip(shown);
@@ -161,7 +171,7 @@ function paintDiscStrip(shown){
   document.getElementById('dsArt').className = 'ds-art gart ' + fDisc;
   document.getElementById('dsT').textContent = label;
   document.getElementById('dsD').textContent =
-    shown + (shown === 1 ? ' clase' : ' clases') + ' · trailer, subcategorías y coaches';
+    shown + (shown === 1 ? ' resultado' : ' resultados') + ' · trailer, subcategorías y coaches';
   strip.style.display = 'flex';
 }
 document.querySelectorAll('#pills .pill').forEach(function(p){
