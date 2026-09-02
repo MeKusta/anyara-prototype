@@ -722,6 +722,89 @@ body.has-account .anon-only{display:none!important}
 .flow-intro .fi-t{display:block;font-family:var(--serif);font-size:var(--fs-card);color:var(--ink);margin-bottom:3px}
 .flow-intro .fi-m{display:block;font-size:var(--fs-meta);color:var(--ink-2);line-height:1.45}
 
+/* ---------- Página de clase (plantilla compartida de video) ----------
+   La jerarquía la hacen tipografía y espacio: video, título, instructora,
+   metadatos, acciones. Sin tarjetas envolviendo secciones, sin tabla de
+   especificaciones y sin repetir un dato en dos lugares. */
+.vd-back{display:inline-block;font-family:var(--sans);font-size:var(--fs-meta);
+  color:var(--ink-2);margin-bottom:var(--sp-4)}
+.vd-back:hover{color:var(--ink)}
+
+/* el video es el héroe: sin contenedor, sin borde */
+.vd-player{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center}
+.vd-player .vd-play{width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.92);
+  border:none;cursor:pointer;font-size:28px;color:var(--ink);
+  display:flex;align-items:center;justify-content:center}
+.vd-player .vd-play:hover{background:#fff}
+.vd-lock{position:absolute;top:16px;left:16px;background:rgba(0,0,0,.55);color:#fff;
+  font-family:var(--sans);font-size:var(--fs-tiny);padding:7px 13px;border-radius:100px}
+/* barra de controles: bajo el video, sin caja */
+.vd-bar{display:flex;align-items:center;gap:16px;padding:14px 2px 0;
+  font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2)}
+.vd-bar button{background:none;border:none;cursor:pointer;color:var(--ink);padding:0}
+.vd-bar .vd-toggle{font-size:var(--fs-card);width:26px;text-align:left}
+.vd-line{flex:1;height:3px;background:var(--line);border-radius:2px;overflow:hidden;cursor:pointer}
+.vd-line > i{display:block;height:100%;width:0;background:var(--ink)}
+
+/* encabezado: información a la izquierda, acciones discretas a la derecha */
+.vd-head{display:flex;gap:var(--sp-6);align-items:flex-start;
+  justify-content:flex-start;margin-top:var(--sp-5)}
+.vd-info{flex:1;min-width:0;max-width:760px}
+.vd-cat{font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.2em;
+  text-transform:uppercase;color:var(--wine);margin-bottom:var(--sp-2)}
+.vd-cat a{color:var(--wine)}
+.vd-cat a:hover{text-decoration:underline;text-underline-offset:3px}
+.vd-title{font-family:var(--serif);font-size:var(--fs-page);font-weight:400;
+  line-height:1.12;letter-spacing:-.01em}
+.vd-instr{font-family:var(--sans);font-size:var(--fs-body);color:var(--ink-2);margin-top:var(--sp-2)}
+.vd-instr a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.vd-meta{font-family:var(--sans);font-size:var(--fs-meta);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:var(--sp-3)}
+
+/* acciones: icono + etiqueta, no botones */
+.vd-actions{display:flex;gap:var(--sp-5);flex:0 0 auto;padding-top:6px}
+.vd-act{background:none;border:none;cursor:pointer;padding:0;
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  font-family:var(--sans);font-size:var(--fs-tiny);color:var(--ink-2)}
+.vd-act:hover{color:var(--ink)}
+.vd-act svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round}
+.vd-act.on{color:var(--ink)}
+.vd-act.on svg{fill:currentColor}
+
+/* divisor fino: la única línea que se permite entre secciones */
+.vd-rule{height:1px;background:var(--line);margin:var(--sp-6) 0}
+
+/* sobre la clase · instructora */
+.vd-about{display:grid;grid-template-columns:1.55fr 1fr;gap:var(--sp-6)}
+.vd-about > div:last-child{border-left:1px solid var(--line);padding-left:var(--sp-6)}
+/* el h2 global va en versalitas sans; aquí el encabezado es editorial */
+.vd-h{font-family:var(--serif);font-size:var(--fs-sub);font-weight:400;
+  text-transform:none;letter-spacing:normal;margin-bottom:var(--sp-3)}
+.vd-body{font-family:var(--sans);font-size:var(--fs-body);color:var(--ink-2);
+  line-height:1.7;max-width:56ch}
+.vd-field{margin-top:var(--sp-4)}
+.vd-field .k{font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+.vd-field .v{font-family:var(--sans);font-size:var(--fs-body);color:var(--ink)}
+.vd-teacher{display:flex;gap:var(--sp-3);align-items:flex-start;margin-bottom:var(--sp-3)}
+.vd-teacher .av{width:60px;height:60px;border-radius:50%;flex:0 0 auto}
+/* spans dentro de un flex: hay que forzarlos a bloque para que apilen */
+.vd-teacher .n{display:block;font-family:var(--serif);font-size:var(--fs-card)}
+.vd-teacher .r{display:block;font-family:var(--sans);font-size:var(--fs-meta);
+  color:var(--ink-3);margin-top:3px}
+.vd-profile{display:inline-block;font-family:var(--sans);font-size:var(--fs-meta);
+  color:var(--ink);text-decoration:underline;text-underline-offset:4px;margin-top:var(--sp-2)}
+
+@media (max-width:900px){
+  .vd-head{flex-direction:column;gap:var(--sp-3)}
+  .vd-actions{gap:var(--sp-4);padding-top:0}
+  .vd-act{flex-direction:row}
+  .vd-about{grid-template-columns:1fr}
+  .vd-about > div:last-child{border-left:none;padding-left:0}
+}
+
 /* ---------- Discipline page ---------- */
 .disc-lead{font-family:var(--sans);font-size:var(--fs-body);color:var(--ink-2);
   max-width:640px;line-height:1.65}

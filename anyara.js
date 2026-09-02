@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.10.00';
+  var VERSION = '1.11.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -65,6 +65,52 @@
     day:      'anyara_day',
     charged:  'anyara_charged'   // one-shot: show the "day 3 charge" notice once
   };
+  /* Instructoras: rol y bio para el bloque de la página de clase. Mismos
+     nombres y cifras que coaches.html, para que no se contradigan. */
+  var INSTRUCTORS = {
+    'Valeria Méndez': { rol:'Sculpt · Barre', art:'sculpt',
+      bio:'Doce años enseñando barre y sculpt. Sus clases son cortas, precisas y sin relleno.' },
+    'Sofía Ruiz':     { rol:'Funcional · Pilates', art:'funcional',
+      bio:'Viene del entrenamiento funcional. Le importa que entiendas por qué haces cada movimiento.' },
+    'Daniela Ortiz':  { rol:'Pilates Mat · Tone', art:'pilatesmat',
+      bio:'Especialista en trabajo de centro. Sus clases cortas están pensadas para días sin tiempo.' },
+    'Renata Solís':   { rol:'Somara · Meditación', art:'somara',
+      bio:'Trabaja movimiento somático y respiración. El ritmo lento es el punto, no una versión fácil.' },
+    'Alina Prado':    { rol:'Somara · Movilidad', art:'tone',
+      bio:'Enfocada en movilidad y recuperación, para sostener la práctica sin lesionarse.' }
+  };
+
+  /* Descripción por disciplina. Antes la página mostraba el mismo texto de
+     "Funcional HIIT" en cualquier clase; esto al menos describe lo correcto. */
+  var DISC_ABOUT = {
+    sculpt:'Trabajo de tonificación con peso ligero y muchas repeticiones. Buscas fatiga muscular controlada, no impacto.',
+    barre:'Movimientos pequeños y precisos con apoyo en la barra. Fortalece piernas, glúteos y centro sin cargar las articulaciones.',
+    funcional:'Patrones de movimiento de la vida diaria, a intensidad alta. Mejora fuerza, resistencia y capacidad cardiovascular.',
+    pilates:'Control, respiración y trabajo profundo de centro. Precisión antes que velocidad.',
+    pilatesmat:'Pilates en colchoneta, con tu propio peso. La base sobre la que se construye todo lo demás.',
+    somara:'Movimiento somático: lento, consciente y sin impacto. Movilidad y respiración para soltar tensión acumulada.',
+    tone:'Sesiones de tono general, de ritmo sostenido y baja carga. Buenas para mantener constancia.'
+  };
+
+  /* Pool del que salen las recomendaciones. No es el catálogo completo: son
+     los títulos que ya existen en el sitio, para no inventar clases nuevas. */
+  var POOL = [
+    { t:'20 min · Sculpt : Glut',      d:'sculpt',     i:'Valeria Méndez', m:20, x:'Intermedio' },
+    { t:'Sculpt Total',                d:'sculpt',     i:'Valeria Méndez', m:60, x:'Avanzado' },
+    { t:'Sculpt Brazos & Core',        d:'sculpt',     i:'Valeria Méndez', m:45, x:'Intermedio' },
+    { t:'Barre Esencial',              d:'barre',      i:'Valeria Méndez', m:20, x:'Principiante', free:1 },
+    { t:'Barre Glúteos & Piernas',     d:'barre',      i:'Valeria Méndez', m:45, x:'Intermedio' },
+    { t:'Barre : Postura Perfecta',    d:'barre',      i:'Valeria Méndez', m:35, x:'Intermedio' },
+    { t:'Funcional HIIT',              d:'funcional',  i:'Sofía Ruiz',     m:30, x:'Intermedio' },
+    { t:'Core Profundo',               d:'pilates',    i:'Sofía Ruiz',     m:40, x:'Avanzado' },
+    { t:'Pilates : Core Avanzado',     d:'pilates',    i:'Sofía Ruiz',     m:40, x:'Avanzado' },
+    { t:'Pilates Mat Fundamental',     d:'pilatesmat', i:'Sofía Ruiz',     m:40, x:'Principiante', free:1 },
+    { t:'Despierta el core',           d:'pilatesmat', i:'Daniela Ortiz',  m:15, x:'Principiante' },
+    { t:'Somara Flow',                 d:'somara',     i:'Renata Solís',   m:25, x:'Principiante' },
+    { t:'Somara Restaurativo',         d:'somara',     i:'Renata Solís',   m:40, x:'Intermedio' },
+    { t:'Tone Cuerpo Completo',        d:'tone',       i:'Daniela Ortiz',  m:30, x:'Intermedio' }
+  ];
+
   /* Contenido de los retos. Vive aquí para que la página del reto y la de la
      clase cuenten lo mismo: al entrar a una clase de un reto hay que poder
      mostrar qué sigue mañana. */
@@ -170,15 +216,28 @@
     isFreeSlug: function (slug) { return FREE_SLUGS.indexOf(slug) > -1; },
 
     RETOS: RETOS,
+    INSTRUCTORS: INSTRUCTORS,
+    discAbout: function (d) { return DISC_ABOUT[d] || ''; },
+    /* recomendaciones: primero de la misma disciplina, luego el resto */
+    suggest: function (disc, excludeTitle, n) {
+      var same = POOL.filter(function (c) { return c.d === disc && c.t !== excludeTitle; });
+      var rest = POOL.filter(function (c) { return c.d !== disc && c.t !== excludeTitle; });
+      return same.concat(rest).slice(0, n || 4);
+    },
+
     DISC: DISC,
     discLabel: function (d) { return (DISC[d] && DISC[d].label) || d; },
     /* null si esa disciplina todavía no tiene página propia */
     discHref: function (d) { return (DISC[d] && DISC[d].page) ? 'disciplina.html?d=' + d : null; },
 
-    /* builds a clase.html link; pass free:1 or t3:N to carry the access flag */
+    /* builds a clase.html link; pass free:1 o t3:N para el acceso, y x/p/v
+       para que la página de clase muestre nivel, equipo y vistas propios */
     classHref: function (c) {
       var q = ['t=' + encodeURIComponent(c.t), 'i=' + encodeURIComponent(c.i),
                'd=' + c.d, 'm=' + c.m];
+      if (c.x)    q.push('x=' + encodeURIComponent(c.x));
+      if (c.p)    q.push('p=' + encodeURIComponent(c.p));
+      if (c.v)    q.push('v=' + encodeURIComponent(c.v));
       if (c.free) q.push('free=1');
       if (c.t3)   q.push('t3=' + c.t3);
       return 'clase.html?' + q.join('&');

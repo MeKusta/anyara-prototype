@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=1200">
-<title>Anyara — Funcional HIIT</title>
+<title>Anyara — Clase</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -27,34 +27,69 @@
 </header>
 
 <div class="wrap section-sm">
-  <a href="explorar.html" style="font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2)">Volver a Explorar</a>
-</div>
+  <a href="explorar.html" class="vd-back">← Volver a explorar</a>
 
-<div class="wrap section-sm">
-  <div class="detail-grid">
-    <div>
-      <div class="player-art gart funcional" id="art">
-        <div class="lock guest-only" id="lockBadge">🔒 Clase de miembros</div>
-        <div class="play" onclick="startClass()" style="cursor:pointer">▶</div>
-        <div class="art-tags" id="artTags"><span>Funcional</span><span>Intenso</span><span>30 min</span></div>
-      </div>
-      <h1 style="font-size:var(--fs-page);margin-top:20px" id="clsTitle">Funcional HIIT</h1>
-      <p style="color:var(--ink-2);font-family:var(--sans);margin:8px 0 16px">
-        con <a href="coach.html" id="clsInstr" style="color:var(--gold-deep);text-decoration:underline;text-underline-offset:3px">Sofía Ruiz</a>
-      </p>
-      <p style="max-width:560px;color:var(--ink-2)" id="clsDesc">Entrenamiento funcional de alta intensidad. Quema calorías, mejora resistencia y potencia tu cuerpo en 30 minutos.</p>
+  <!-- 1 · el video, sin contenedor ni borde -->
+  <div class="vd-player gart" id="vpScreen">
+    <div class="vd-lock" id="lockBadge" style="display:none"></div>
+    <button class="vd-play" id="vpBig" onclick="startClass()" aria-label="Reproducir">▶</button>
+  </div>
+  <div class="vd-bar">
+    <button class="vd-toggle" id="vpToggle" onclick="startClass()" aria-label="Reproducir">▶</button>
+    <span id="vpTime">0:00</span>
+    <div class="vd-line" id="vpLine"><i id="vpProg"></i></div>
+    <span id="vpTotal">30:00</span>
+    <button title="Pantalla completa" aria-label="Pantalla completa">⛶</button>
+    <a href="completada.html" class="btn btn-dark" style="padding:9px 18px;font-size:var(--fs-label)">Finalizar</a>
+  </div>
+
+  <!-- 2·3·4 · título, instructora, metadatos — 5 · acciones -->
+  <div class="vd-head">
+    <div class="vd-info">
+      <div class="vd-cat" id="vdCat"></div>
+      <h1 class="vd-title" id="vdTitle"></h1>
+      <div class="vd-instr">con <a href="coach.html" id="vdInstr"></a></div>
+      <div class="vd-meta" id="vdMeta"></div>
     </div>
-    <div class="detail-side">
-      <button class="btn btn-gold btn-block" id="startBtn" onclick="startClass()">▶ Comenzar clase</button>
-      <p class="trialnote guest-only" id="startNote">Esta clase requiere membresía.</p>
-      <p class="trialnote" id="freeNote" style="display:none">Clase gratuita — incluida en tu cuenta.</p>
-      <button class="btn btn-ghost btn-block">♡ Agregar a favoritos</button>
-      <div style="margin-top:18px">
-        <div class="spec"><span class="k">Disciplina</span><span class="v" id="specDisc">Funcional</span></div>
-        <div class="spec"><span class="k">Intensidad</span><span class="v">Intenso</span></div>
-        <div class="spec"><span class="k">Duración</span><span class="v" id="specMins">30 min</span></div>
-        <div class="spec"><span class="k">Vistas</span><span class="v">3,202</span></div>
+    <div class="vd-actions">
+      <button class="vd-act" id="actFav" aria-label="Favorito">
+        <svg viewBox="0 0 24 24"><path d="M12 20.4s-7.6-4.6-7.6-10.1a4.6 4.6 0 0 1 7.6-2.6 4.6 4.6 0 0 1 7.6 2.6c0 5.5-7.6 10.1-7.6 10.1z"/></svg>
+        Favorito
+      </button>
+      <button class="vd-act" aria-label="Agregar a playlist">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        Playlist
+      </button>
+      <button class="vd-act" aria-label="Compartir">
+        <svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 15V3M8 7l4-4 4 4"/></svg>
+        Compartir
+      </button>
+    </div>
+  </div>
+
+  <div class="vd-rule"></div>
+
+  <!-- 6·7 · descripción e instructora -->
+  <div class="vd-about">
+    <div>
+      <h2 class="vd-h">Sobre esta clase</h2>
+      <p class="vd-body" id="vdDesc"></p>
+      <div class="vd-field" id="vdEquipWrap" style="display:none">
+        <div class="k">Equipo</div>
+        <div class="v" id="vdEquip"></div>
       </div>
+    </div>
+    <div>
+      <h2 class="vd-h">Tu instructora</h2>
+      <div class="vd-teacher">
+        <span class="av gart" id="vdAv"></span>
+        <span>
+          <span class="n" id="vdTName"></span>
+          <span class="r" id="vdTRole"></span>
+        </span>
+      </div>
+      <p class="vd-body" id="vdTBio"></p>
+      <a href="coach.html" class="vd-profile">Ver perfil</a>
     </div>
   </div>
 </div>
@@ -64,6 +99,13 @@
   <div class="row-head"><h2 id="retoHead">Lo que te espera mañana</h2><a href="reto.html" id="retoLink">Ver el reto</a></div>
   <p class="sec-lead" id="retoLead"></p>
   <div class="grid4" id="retoGrid"></div>
+</div>
+
+<!-- 8 · recomendaciones, con la tarjeta estándar del sitio -->
+<div class="wrap section-sm">
+  <div class="vd-rule" style="margin-top:0"></div>
+  <div class="row-head"><h2 class="h2-serif">También te puede gustar</h2><a href="explorar.html">Ver todo</a></div>
+  <div class="grid4" id="vdSuggest"></div>
 </div>
 
 <footer class="footer">
@@ -101,57 +143,76 @@
   </div>
 </div>
 
-<!-- ===== VIDEO PLAYER (demo — no real video yet) ===== -->
-<div class="vp-scrim" id="vp">
-  <button class="vp-close" onclick="closePlayer()">✕</button>
-  <div class="vp">
-    <div class="vp-title" id="vpTitleWrap"><span>Funcional · Intenso</span>Funcional HIIT — con Sofía Ruiz</div>
-    <div class="vp-screen gart funcional" id="vpScreen">
-      <button class="vp-bigplay" id="vpBig" onclick="togglePlay()">▶</button>
-    </div>
-    <div class="vp-bar">
-      <button class="vp-toggle" id="vpToggle" onclick="togglePlay()">▶</button>
-      <span id="vpTime">0:00</span>
-      <div class="vp-timeline" id="vpLine"><i id="vpProg"></i></div>
-      <span id="vpTotal">30:00</span>
-      <button class="vp-toggle" title="Pantalla completa">⛶</button>
-      <a href="completada.html" class="btn btn-gold" style="padding:9px 18px;font-size:var(--fs-label)">Finalizar</a>
-    </div>
-  </div>
-</div>
-
 <script src="anyara.js"></script>
 <script>
-/* ---- read the card's params so the same template can stand in for any class ---- */
+/* Plantilla única de detalle de video: todas las clases del sitio entran aquí
+   por query string, así que cualquier clase nueva hereda este diseño. */
 var qs = new URLSearchParams(location.search);
-var DISC_LABELS = { sculpt:'Sculpt', barre:'Barre', pilates:'Pilates', pilatesmat:'Pilates Mat', somara:'Somara', funcional:'Funcional', tone:'Tone' };
 var cls = {
   t:    qs.get('t')    || 'Funcional HIIT',
   i:    qs.get('i')    || 'Sofía Ruiz',
   d:    qs.get('d')    || 'funcional',
   m:    qs.get('m')    || '30',
+  x:    qs.get('x')    || 'Intermedio',        // intensidad / nivel
+  v:    qs.get('v')    || '3,202',             // vistas
+  p:    qs.get('p')    || '',                  // equipo; si no hay, se omite
   free: qs.get('free') === '1',
-  t3:   parseInt(qs.get('t3') || '0', 10)   // día 1-3 de la bienvenida
+  t3:   parseInt(qs.get('t3') || '0', 10)      // día 1-3 de la bienvenida
 };
-document.getElementById('art').classList.remove('funcional');
-document.getElementById('art').classList.add(cls.d);
-document.getElementById('vpScreen').classList.remove('funcional');
+var discLabel = Anyara.discLabel(cls.d);
+document.title = 'Anyara — ' + cls.t;
+
+/* ---- 1 · video ---- */
 document.getElementById('vpScreen').classList.add(cls.d);
-document.getElementById('clsTitle').textContent = cls.t;
-document.getElementById('clsInstr').textContent = cls.i;
-/* si la disciplina ya tiene página propia, el spec se vuelve puerta de entrada */
-var discHref = Anyara.discHref(cls.d);
-var specDisc = document.getElementById('specDisc');
-if (discHref) {
-  specDisc.innerHTML = '<a href="' + discHref + '" style="color:var(--gold-deep);' +
-    'text-decoration:underline;text-underline-offset:3px">' + Anyara.discLabel(cls.d) + '</a>';
-} else {
-  specDisc.textContent = DISC_LABELS[cls.d] || cls.d;
-}
-document.getElementById('specMins').textContent = cls.m + ' min';
-document.getElementById('artTags').innerHTML = '<span>' + (DISC_LABELS[cls.d] || cls.d) + '</span><span>' + cls.m + ' min</span>';
-document.getElementById('vpTitleWrap').innerHTML = '<span>' + (DISC_LABELS[cls.d] || cls.d) + '</span>' + cls.t + ' — con ' + cls.i;
 document.getElementById('vpTotal').textContent = cls.m + ':00';
+
+/* ---- 2·3·4 · información ---- */
+var discHref = Anyara.discHref(cls.d) || ('explorar.html?d=' + cls.d);
+document.getElementById('vdCat').innerHTML =
+  '<a href="' + discHref + '">' + discLabel.toUpperCase() + '</a>';
+document.getElementById('vdTitle').textContent = cls.t;
+document.getElementById('vdInstr').textContent = cls.i;
+/* único lugar donde viven nivel, duración y vistas */
+document.getElementById('vdMeta').textContent =
+  [cls.x, cls.m + ' min', cls.v + ' vistas'].join(' · ');
+
+/* ---- 6 · sobre la clase ---- */
+document.getElementById('vdDesc').textContent = Anyara.discAbout(cls.d);
+if (cls.p) {
+  /* el campo sólo existe si hay algo que poner */
+  var props = cls.p.split(',').map(function (s) {
+    return s.trim().charAt(0).toUpperCase() + s.trim().slice(1);
+  }).join(' · ');
+  document.getElementById('vdEquip').textContent = props;
+  document.getElementById('vdEquipWrap').style.display = '';
+}
+
+/* ---- 7 · instructora ---- */
+var prof = Anyara.INSTRUCTORS[cls.i];
+document.getElementById('vdTName').textContent = cls.i;
+document.getElementById('vdAv').classList.add(prof ? prof.art : cls.d);
+if (prof) {
+  document.getElementById('vdTRole').textContent = prof.rol;
+  document.getElementById('vdTBio').textContent = prof.bio;
+}
+
+/* ---- 8 · recomendaciones, con la tarjeta estándar ---- */
+document.getElementById('vdSuggest').innerHTML =
+  Anyara.suggest(cls.d, cls.t, 4).map(function (c) {
+    var href = Anyara.classHref({ t:c.t, i:c.i, d:c.d, m:c.m, free:c.free ? 1 : 0 }) +
+               '&x=' + encodeURIComponent(c.x);
+    var locked = !Anyara.canWatch({ free: c.free });
+    return '<a href="' + href + '" class="ccard">' +
+      '<div class="art gart ' + c.d + '">' +
+        (c.free ? '<span class="free">Gratis</span>' : '') +
+        '<span class="len">' + c.m + ':00</span>' +
+        (locked ? '<span class="locked">🔒 Membresía</span>' : '') +
+      '</div>' +
+      '<div class="title">' + c.t + '</div>' +
+      '<div class="meta">' + c.i + '</div>' +
+      '<div class="lvl">' + c.x + '</div>' +
+      '<div class="tag disc-link" data-d="' + c.d + '">' + Anyara.discLabel(c.d).toUpperCase() + '</div></a>';
+  }).join('');
 
 /* ---- si viene de un reto, mostramos que es parte de algo más grande ---- */
 (function () {
@@ -159,9 +220,8 @@ document.getElementById('vpTotal').textContent = cls.m + ':00';
   var R = slug && Anyara.RETOS[slug];
   if (!R) return;
 
-  var box = document.getElementById('retoNext');
-  box.style.display = '';
-  var restantes = R.dias.slice(dia);          // lo que viene después de hoy
+  document.getElementById('retoNext').style.display = '';
+  var restantes = R.dias.slice(dia);
 
   document.getElementById('retoLead').textContent =
     'Estás en el día ' + dia + ' de ' + R.t + '. ' +
@@ -177,33 +237,20 @@ document.getElementById('vpTotal').textContent = cls.m + ':00';
       '<div class="art gart ' + c.d + '"><span class="len">' + c.m + ':00</span></div>' +
       '<div class="title">Día ' + (dia + k + 1) + ' · ' + c.t + '</div>' +
       '<div class="meta">' + c.i + '</div>' +
-      '<div class="tag disc-link" data-d="' + c.d + '">' + (DISC_LABELS[c.d] || c.d).toUpperCase() + '</div></a>';
+      '<div class="tag disc-link" data-d="' + c.d + '">' + Anyara.discLabel(c.d).toUpperCase() + '</div></a>';
   }).join('');
 })();
 
 /* ---- acceso por nivel: pagada ve todo; la prueba ve su plan de 3 días
        conforme llegan; las gratis están abiertas siempre ---- */
 function canPlay(){ return Anyara.canWatch(cls); }
-function startClass(){
-  if (canPlay()) { openPlayer(); }
-  else { paintPaywall(); document.getElementById('pw').classList.add('open'); }
-}
 function paintAccess(){
-  if (canPlay()) {
-    document.getElementById('lockBadge').style.display = 'none';
-    document.getElementById('startNote').style.display = 'none';
-    var n = document.getElementById('freeNote');
-    n.style.display = 'block';
-    n.textContent = cls.free
-      ? 'Clase abierta — no necesitas membresía.'
-      : 'Incluida en tus tres días de bienvenida.';
-    return;
-  }
-  /* locked: say which door opens it */
-  if (cls.t3 && Anyara.isTrial()) {
-    document.getElementById('lockBadge').textContent = '🔒 Se abre el día ' + cls.t3;
-    document.getElementById('startNote').textContent = 'Esta clase es del día ' + cls.t3 + ' de tu bienvenida.';
-  }
+  if (canPlay()) return;
+  var b = document.getElementById('lockBadge');
+  b.style.display = '';
+  b.textContent = (cls.t3 && Anyara.isTrial())
+    ? '🔒 Se abre el día ' + cls.t3
+    : '🔒 Clase de miembros';
 }
 /* the CTA depends on where they are: a trial user waiting on a later day is
    offered the skip, everyone else is offered the three days */
@@ -228,12 +275,17 @@ function paintPaywall(){
 }
 document.addEventListener('DOMContentLoaded', paintAccess);
 
-/* ---- demo player: fake timeline, play/pause, click-to-seek ---- */
+/* ---- player: mismo comportamiento de siempre, ahora en la página ---- */
 var vpPlaying=false, vpSec=0, vpTotal=parseInt(cls.m,10)*60, vpTimer=null;
 function fmt(s){var m=Math.floor(s/60),r=Math.floor(s%60);return m+':'+(r<10?'0':'')+r}
 function paint(){
   document.getElementById('vpProg').style.width=(vpSec/vpTotal*100)+'%';
   document.getElementById('vpTime').textContent=fmt(vpSec);
+}
+/* bloqueada: el play lleva al paywall en vez de reproducir */
+function startClass(){
+  if (!canPlay()) { paintPaywall(); document.getElementById('pw').classList.add('open'); return; }
+  togglePlay();
 }
 /* visitas (sin prueba) ven el trailer de Anyara antes de la clase */
 var trailerDone=false;
@@ -253,14 +305,15 @@ function startPlayback(){
   if(vpPlaying){vpTimer=setInterval(function(){vpSec=Math.min(vpSec+1,vpTotal);paint();},1000);}
   else{clearInterval(vpTimer);}
 }
-function openPlayer(){document.getElementById('vp').classList.add('open');}
-function closePlayer(){
-  document.getElementById('vp').classList.remove('open');
-  if(vpPlaying)togglePlay();
-}
 document.getElementById('vpLine').addEventListener('click',function(e){
+  if(!canPlay()) return;
   var r=this.getBoundingClientRect();
   vpSec=Math.round((e.clientX-r.left)/r.width*vpTotal);paint();
+});
+
+/* favorito: mismo comportamiento que el corazón de las tarjetas */
+document.getElementById('actFav').addEventListener('click', function () {
+  this.classList.toggle('on');
 });
 </script>
 </body>
