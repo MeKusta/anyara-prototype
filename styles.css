@@ -58,8 +58,12 @@ img{display:block;max-width:100%}
   font-family:"Georgia",serif;font-weight:400;justify-self:start;
 }
 .logo b{font-style:normal}
+/* el wordmark se inyecta desde anyara.js; se dimensiona en em para respetar
+   el font-size que ya está afinado en cada contexto (nav, footer, modal…) */
+.logo{display:inline-flex;align-items:flex-start;gap:4px}
+.logo-mark{height:1.35em;width:auto;display:block}
 .version-badge{font-family:"Helvetica Neue",Arial,sans-serif;font-style:normal;font-size:10px;
-  font-weight:400;letter-spacing:.02em;color:#9a9a9a;vertical-align:super;margin-left:4px}
+  font-weight:400;letter-spacing:.02em;color:#9a9a9a;margin-top:.15em;flex:0 0 auto}
 .nav-links{display:flex;gap:34px;align-items:center;justify-self:center}
 .nav-link{
   font-size:13px;letter-spacing:.14em;text-transform:uppercase;
@@ -499,8 +503,10 @@ body.has-account .anon-only{display:none!important}
   font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;letter-spacing:.16em;
   text-transform:uppercase;padding:5px 11px;border-radius:100px}
 .trailer .tr-body{max-width:520px}
-.trailer .tr-logo{font-family:"Georgia",serif;font-style:italic;font-size:26px;margin-bottom:14px}
+.trailer .tr-logo{font-family:"Georgia",serif;font-style:italic;font-size:26px;margin-bottom:14px;
+  display:flex;justify-content:center}
 .trailer .tr-logo b{font-style:normal}
+.trailer .tr-logo .logo-mark{height:1.3em}
 .trailer .tr-title{font-family:"Georgia",serif;font-size:34px;line-height:1.15;margin-bottom:12px}
 .trailer .tr-sub{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;line-height:1.6;
   color:rgba(255,255,255,.75)}
