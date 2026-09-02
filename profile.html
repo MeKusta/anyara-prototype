@@ -38,59 +38,138 @@
 
 <div class="wrap section-sm">
   <div class="settings-grid">
-    <!-- settings sidebar: the things pulled out of main nav live here -->
+    <!-- La navegación de ajustes: una lista, no un marco con filas -->
     <div class="settings-nav">
       <a href="#membresia" class="active">Membresía</a>
-      <a href="#referidos">Invita a una amiga</a>
-      <a href="#">Mi cuenta</a>
-      <a href="#">Preferencias</a>
+      <a href="#cuenta">Mi cuenta</a>
+      <a href="#preferencias">Preferencias</a>
+      <a href="#notificaciones">Notificaciones</a>
       <a href="#onboarding">Onboarding</a>
       <a href="#boletos">Mis boletos</a>
-      <a href="#">Notificaciones</a>
-      <a href="#">Cerrar sesión</a>
+      <a href="#referidos">Invita a una amiga</a>
+      <a href="#" class="out">Cerrar sesión</a>
     </div>
 
     <div>
-      <!-- MEMBERSHIP (was its own tab, now here) -->
-      <div class="panel" id="membresia" style="margin-bottom:22px">
-        <h3>Membresía</h3>
-        <p class="d">Gestiona tu plan, tu método de pago y tu facturación. Los planes se comparan y contratan en un solo lugar.</p>
+      <div class="set-sec" id="membresia">
+        <h2>Membresía</h2>
+        <p class="d">Tu plan, tu método de pago y tu facturación, en un solo lugar.</p>
 
-        <!-- member -->
         <div class="member-only">
-          <div class="setting-row"><div class="l"><b id="planRow">Plan actual · Mensual</b><span id="planSub">Activa · se renueva el 24 de agosto</span></div><a href="membresia.html" class="btn btn-gold">Ver planes</a></div>
-          <div class="setting-row"><div class="l"><b>Método de pago</b><span>Visa ···· 4242</span></div><a href="#" class="link-a">Actualizar</a></div>
-          <div class="setting-row"><div class="l"><b>Historial de facturación</b><span>Descarga tus recibos</span></div><a href="#" class="link-a">Ver</a></div>
-          <div class="setting-row"><div class="l"><b>Cancelar membresía</b><span>Puedes pausarla en vez de cancelarla</span></div><a href="cancelar.html" class="link-a">Cancelar</a></div>
+          <div class="set-list">
+            <div class="set-item">
+              <div class="l"><b id="planRow">Plan actual · Mensual</b><span id="planSub">Activa · se renueva el 24 de agosto</span></div>
+              <a href="membresia.html" class="btn btn-dark">Ver planes</a>
+            </div>
+            <div class="set-item">
+              <div class="l"><b>Método de pago</b><span>Visa ···· 4242</span></div>
+              <a href="#" class="link-a">Actualizar</a>
+            </div>
+            <div class="set-item">
+              <div class="l"><b>Historial de facturación</b><span>Descarga tus recibos</span></div>
+              <a href="#" class="link-a">Ver</a>
+            </div>
+            <div class="set-item quiet">
+              <div class="l"><b>Cancelar membresía</b><span>Puedes pausarla en vez de cancelarla</span></div>
+              <a href="cancelar.html" class="link-a quiet">Cancelar</a>
+            </div>
+          </div>
         </div>
 
-        <!-- guest -->
         <div class="guest-only">
-          <div class="setting-row"><div class="l"><b>No tienes membresía activa</b><span id="guestSub">Tu clase de bienvenida y las dos clases abiertas de Anyara</span></div><a href="membresia.html" class="btn btn-gold">Ver planes</a></div>
-          <p class="trialnote" style="text-align:left">Tres días de bienvenida en cualquier plan. Desde $39/mes, cancela cuando quieras.</p>
+          <div class="set-list">
+            <div class="set-item">
+              <div class="l"><b>No tienes membresía activa</b><span id="guestSub">Tu clase de bienvenida y las dos clases abiertas de Anyara</span></div>
+              <a href="membresia.html" class="btn btn-dark">Ver planes</a>
+            </div>
+          </div>
+          <p class="trialnote" style="text-align:left;margin-top:var(--sp-3)">Tres días de bienvenida en cualquier plan. Desde $39/mes, cancela cuando quieras.</p>
         </div>
       </div>
 
-      <!-- REFERRAL -->
-      <div class="panel" id="referidos" style="margin-bottom:22px">
-        <h3>Invita a una amiga</h3>
-        <p class="d">Regala 2 semanas gratis. Cuando ella empieza su membresía, tú te llevas otras 2.</p>
-        <div class="setting-row" style="border-top:none"><div class="l"><b>Tu código</b><span>ANYARA-PAULO24 · 1 amiga se ha unido</span></div><a href="referidos.html" class="btn btn-gold">Invitar</a></div>
+      <div class="set-sec" id="cuenta">
+        <h2>Mi cuenta</h2>
+        <p class="d">Tus datos de acceso.</p>
+        <div class="set-list">
+          <div class="set-item">
+            <div class="l"><b>Nombre</b><span id="acctName">Paulo Kustala</span></div>
+            <a href="#" class="link-a">Editar</a>
+          </div>
+          <div class="set-item">
+            <div class="l"><b>Correo</b><span>hola@anyara.mx</span></div>
+            <a href="#" class="link-a">Editar</a>
+          </div>
+          <div class="set-item">
+            <div class="l"><b>Contraseña</b><span>Actualizada hace tres meses</span></div>
+            <a href="#" class="link-a">Cambiar</a>
+          </div>
+        </div>
       </div>
 
-      <!-- ONBOARDING (was its own tab, now accessible here) -->
-      <div class="panel" id="onboarding" style="margin-bottom:22px">
-        <h3>Onboarding</h3>
+      <div class="set-sec" id="preferencias">
+        <h2>Preferencias</h2>
+        <p class="d">Cómo se ve y se mide tu práctica.</p>
+        <div class="set-list">
+          <div class="set-item">
+            <div class="l"><b>Idioma</b><span>Español</span></div>
+            <a href="#" class="link-a">Cambiar</a>
+          </div>
+          <div class="set-item">
+            <div class="l"><b>Objetivo semanal</b><span id="prefGoal">5 días por semana</span></div>
+            <a href="index.html" class="link-a">Editar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="set-sec" id="notificaciones">
+        <h2>Notificaciones</h2>
+        <p class="d">Qué te avisamos y por dónde.</p>
+        <div class="set-list">
+          <div class="set-item">
+            <div class="l"><b>Recordatorio de práctica</b><span>Los días que tienes clase en tu plan</span></div>
+            <a href="#" class="link-a">Activado</a>
+          </div>
+          <div class="set-item">
+            <div class="l"><b>Novedades y eventos</b><span>Clases nuevas y eventos presenciales</span></div>
+            <a href="#" class="link-a">Activado</a>
+          </div>
+          <div class="set-item">
+            <div class="l"><b>Avisos de cobro</b><span>Antes de cada renovación</span></div>
+            <a href="#" class="link-a quiet">Siempre activo</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="set-sec" id="onboarding">
+        <h2>Onboarding</h2>
         <p class="d">Vuelve a hacer las preguntas de personalización para ajustar tus recomendaciones.</p>
-        <div class="setting-row"><div class="l"><b>Preferencias de movimiento</b><span>Responde de nuevo para actualizar tu página de inicio</span></div><a href="onboarding.html" class="link-a">Volver a hacer</a></div>
-        <div class="setting-row"><div class="l"><b>Recorrido de bienvenida</b><span>Vuelve a ver la introducción a Anyara</span></div><a href="onboarding.html" class="link-a">Ver</a></div>
+        <div class="set-list">
+          <div class="set-item">
+            <div class="l"><b>Preferencias de movimiento</b><span>Responde de nuevo para actualizar tu página de inicio</span></div>
+            <a href="onboarding.html" class="link-a">Volver a hacer</a>
+          </div>
+          <div class="set-item">
+            <div class="l"><b>Recorrido de bienvenida</b><span>Vuelve a ver la introducción a Anyara</span></div>
+            <a href="onboarding.html" class="link-a">Ver</a>
+          </div>
+        </div>
       </div>
 
-      <!-- TICKETS (also accessible from profile) -->
-      <div class="panel" id="boletos">
-        <h3>Mis boletos</h3>
-        <p class="d">Todos tus boletos para eventos de Anyara.</p>
-        <div class="ticket"><div class="date"><b>24</b><span>Ago</span></div><div class="info"><div class="t">Masterclass: Barre & Breathwork</div><div class="m">19:00 · Estudio Anyara, CDMX · Fila A</div></div><div class="acts"><a href="evento.html?e=masterclass-barre" class="link-a">Ver boleto</a><a href="events.html" class="link-a quiet">Todos los eventos</a></div></div>
+      <div class="set-sec" id="boletos">
+        <h2>Mis boletos</h2>
+        <p class="d">Los eventos de Anyara en los que ya tienes lugar.</p>
+        <div class="dp-ticketlist" id="myTickets" style="margin-top:var(--sp-4)"></div>
+      </div>
+
+      <div class="set-sec" id="referidos">
+        <h2>Invita a una amiga</h2>
+        <p class="d">Regala dos semanas gratis. Cuando ella empieza su membresía, tú te llevas otras dos.</p>
+        <div class="set-list">
+          <div class="set-item">
+            <div class="l"><b>ANYARA-PAULO24</b><span>1 amiga se ha unido</span></div>
+            <a href="referidos.html" class="btn btn-dark">Invitar</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -105,6 +184,19 @@
   </div>
 </footer>
 
+<!-- mismo boleto que en la página de eventos, dibujado por eventos.js -->
+<div class="modal-scrim" id="tk">
+  <div class="modal qr-modal">
+    <button class="x" onclick="document.getElementById('tk').classList.remove('open')">✕</button>
+    <div class="eyebrow">Tu boleto</div>
+    <div class="qr-ev" id="tkEv"></div>
+    <div class="qr-when" id="tkWhen"></div>
+    <div class="qr-box" id="tkQr"></div>
+    <div class="qr-code" id="tkCode"></div>
+    <p class="qr-note">Muestra este código en la entrada.<br>Prototipo: el QR es una vista previa, no escanea.</p>
+  </div>
+</div>
+
 <div class="overlay" id="ov">
   <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
   <div class="overlay-top">
@@ -114,6 +206,7 @@
 </div>
 
 <script src="anyara.js"></script>
+<script src="eventos.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function(){
   var PLAN = {mensual:'Mensual', anual:'Anual'};
@@ -134,6 +227,31 @@ document.addEventListener('DOMContentLoaded', function(){
   } else {
     document.getElementById('memberTag').textContent = Anyara.hasAccount() ? 'Cuenta gratuita' : 'Sin cuenta';
   }
+
+  document.getElementById('acctName').textContent = Anyara.name() + ' Kustala';
+  document.getElementById('prefGoal').textContent = Anyara.weekGoal() + ' días por semana';
+
+  /* Los boletos salen del mismo Anyara.myTickets() que la página de eventos,
+     así que perfil y eventos no pueden mostrar cosas distintas. */
+  var mine = Anyara.myTickets();
+  document.getElementById('myTickets').innerHTML = mine.length
+    ? mine.map(function (e) {
+        var when = e.dia + ' ' + e.mes + ' · ' + e.hora + ' · ' + e.lugar + ' · ' + e.boleto.detalle;
+        return '<div class="dp-ticketrow">' +
+          '<div class="dp-datebox"><b>' + e.dia + '</b><span>' + e.mes + '</span></div>' +
+          '<div>' +
+            '<div class="dp-t">' + e.t + '</div>' +
+            '<div class="dp-d">' + e.hora + ' · ' + e.lugar + ' · ' + e.boleto.detalle + '</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:22px;flex-wrap:wrap;align-items:center">' +
+            '<button class="dp-save" onclick="showTicket(' + q(e.t) + ',' + q(when) + ',' + q(e.boleto.code) + ')">Ver boleto</button>' +
+            '<a href="' + Anyara.eventHref(e.id) + '" class="link-a quiet">Ver evento</a>' +
+          '</div>' +
+        '</div>';
+      }).join('')
+    : '<p class="d">Todavía no tienes boletos. <a href="events.html" class="link-a">Ver próximos eventos</a></p>';
+
+  function q(v){ return "'" + String(v).replace(/'/g, "\\'") + "'"; }
 });
 </script>
 </body>
