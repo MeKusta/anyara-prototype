@@ -23,8 +23,13 @@
 .sculpt{--dc:#9c4f4f}      /* dark red */
 .somara{--dc:#d1854a}      /* orange */
 .tone{--dc:#a6abb0}        /* silver */
-/* discipline gradient: dark→light of the same signature hue */
-.gart{background:linear-gradient(135deg,var(--dc,#8a7d68),color-mix(in srgb,var(--dc,#8a7d68) 48%,#fff))}
+/* discipline art: la foto va encima y el degradado queda debajo, así que si
+   una imagen falta o falla el bloque nunca se ve vacío. anyara.js pone --art */
+.gart{
+  background-image:var(--art,none),
+    linear-gradient(135deg,var(--dc,#8a7d68),color-mix(in srgb,var(--dc,#8a7d68) 48%,#fff));
+  background-size:cover;background-position:center;background-repeat:no-repeat;
+}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{

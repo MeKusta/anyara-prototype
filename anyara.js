@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.04.00';
+  var VERSION = '1.05.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -23,6 +23,14 @@
     '<path d="M127.49,28.71c-22.54.77-18.35,33.74-16.37,48.8.35,2.68,1.67,4.34,3.53,5.87-5.65.46-10.35.4-16.57.13,5.2-8.48,5.29-47.39.08-55.98,3.68-.69,7.32-.44,11.24-.23l.79,12.1c4.12-10.2,12.71-15.62,23.29-14.25,26.09,3.38,7.93,38.7,18.78,58.28-5.47.42-10.14.4-15.61,0,5.05-7.23,4.08-33.88,3.68-43.15-.31-7.01-5.94-11.81-12.86-11.58Z"/>' +
     '<path d="M305.08,82.12c-6.35-3.56-8.33-10.02-6.65-16.38,4.12-15.67,24.98-21.52,38.2-26.32,1.91-4.15-1.21-11.13-5.65-12.52-7.47-2.34-14.44,1.01-19.43,7-1.04-2.84-3.22-4.36-6.02-7.51,11.48.99,16.76-3.93,29.23-.87,6.53,1.6,10.31,6.65,10.38,13.36.08,6.94-1.58,42.57,4.43,44.19-4.4.14-8.63-.96-11.89-6.02-8.86,8.56-21.61,11.23-32.6,5.07ZM317.69,83.52c8,.77,15.59-2.93,19.74-9.67l-.24-32.47c-13.35,4.76-29.72,13.96-29.7,29.29,0,6.39,4.01,11.6,10.2,12.85Z"/>' +
     '</svg>';
+
+  /* Fotos por disciplina en img/. El nombre del archivo trae la disciplina,
+     así que se asignan por nombre: nunca hace falta mirar el contenido.
+     Se reparten rotando, para que dos tarjetas de la misma disciplina en la
+     misma pantalla no salgan con la misma foto. */
+  var ART = { barre:6, funcional:6, somara:6, sculpt:4, tone:3, pilates:2, anyara:4 };
+  /* no hay fotos de Pilates a secas — las de Mat cubren ambas */
+  var ART_ALIAS = { pilatesmat:'pilates' };
 
   /* Disciplinas: etiqueta y si ya tiene página propia. Sólo Somara la tiene
      por ahora — las demás siguen cayendo en el catálogo filtrado. */
@@ -238,12 +246,39 @@
     /* legacy pair: member-only means full access (level 3), guest-only means
        anything short of it, which is what the locks on premium pages want */
     document.body.classList.add(lvl === 3 ? 'is-member' : 'is-guest');
+    paintArt();
     renderLogos();
     renderNav();
     renderVersion();
     renderDayPicker();
     renderChargeNotice();
   });
+
+  /* Pone la foto de la disciplina en cada bloque .gart. Corre dos veces: al
+     cargar el DOM para lo estático, y en load para las tarjetas que las
+     páginas arman con su propio script. data-img fuerza otro grupo. */
+  var artSeen = {};
+  function paintArt() {
+    document.querySelectorAll('.gart').forEach(function (el) {
+      if (el.getAttribute('data-art')) return;
+      var pool = el.getAttribute('data-img');
+      if (!pool) {
+        Object.keys(ART).forEach(function (k) {
+          if (!pool && el.classList.contains(k)) pool = k;
+        });
+        Object.keys(ART_ALIAS).forEach(function (k) {
+          if (!pool && el.classList.contains(k)) pool = ART_ALIAS[k];
+        });
+      }
+      if (!pool || !ART[pool]) return;
+      var i = artSeen[pool] || 0;
+      artSeen[pool] = i + 1;
+      el.style.setProperty('--art', 'url("img/' + pool + '-' + ((i % ART[pool]) + 1) + '.jpg")');
+      el.setAttribute('data-art', '1');
+    });
+  }
+  A.paintArt = paintArt;
+  window.addEventListener('load', paintArt);
 
   /* Cambia el wordmark de texto por el SVG en todas las marcas del sitio.
      Si el JS no corre, queda el texto "Anyara" — el logo nunca desaparece. */
