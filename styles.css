@@ -763,7 +763,8 @@ body.has-account .anon-only{display:none!important}
   text-transform:uppercase;color:var(--ink-3);margin-top:var(--sp-3)}
 
 /* acciones: icono + etiqueta, no botones */
-.vd-actions{display:flex;gap:var(--sp-5);flex:0 0 auto;padding-top:6px}
+/* margin-left:auto las empuja al extremo derecho, sin estirar la info */
+.vd-actions{display:flex;gap:var(--sp-5);flex:0 0 auto;margin-left:auto;padding-top:6px}
 .vd-act{background:none;border:none;cursor:pointer;padding:0;
   display:flex;flex-direction:column;align-items:center;gap:7px;
   font-family:var(--sans);font-size:var(--fs-tiny);color:var(--ink-2)}
