@@ -954,6 +954,60 @@ body.has-account .anon-only{display:none!important}
   .vd-about > div:last-child{border-left:none;padding-left:0}
 }
 
+/* ---------- Eventos ----------
+   El listado y el detalle comparten estos bloques. Un evento se presenta
+   entero — foto, texto, dónde y en qué formato — en vez de partirse en una
+   portada arriba y una ficha suelta más abajo. */
+
+/* Título de sección mayor: cuando lo que sigue es otro tema de la página,
+   no otra fila. El aire y el filete hacen el corte, no una caja. */
+.sec-major{margin-top:var(--sp-6);padding-top:var(--sp-6);border-top:1px solid var(--line)}
+.sec-major h2{font-size:var(--fs-page);line-height:1.1}
+.sec-major .sec-lead{margin-top:var(--sp-2);max-width:62ch}
+.sec-major .row-head{margin-bottom:var(--sp-4)}
+
+/* Evento destacado: todo su contenido en la misma composición. */
+.evfeat{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+  gap:var(--sp-6);align-items:center}
+.evfeat .ev-art{border-radius:var(--radius);overflow:hidden;position:relative;
+  height:clamp(380px,54vh,520px)}
+.evfeat .ev-b{min-width:0;max-width:56ch}
+.ev-k{font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold-deep);margin-bottom:10px}
+.evfeat h1{font-size:var(--fs-page);line-height:1.12;margin-bottom:10px}
+.ev-who{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2)}
+.ev-when{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink);
+  margin-top:var(--sp-3);line-height:1.6}
+.ev-when b{font-weight:500}
+.ev-lead{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);
+  line-height:1.65;margin-top:var(--sp-3)}
+/* dónde y en qué formato, juntos con el resto y no en una columna aparte */
+.ev-facts{display:flex;gap:var(--sp-5);flex-wrap:wrap;margin-top:var(--sp-4)}
+.ev-facts .k{font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold-deep);margin-bottom:4px}
+.ev-facts .v{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink)}
+
+/* Parrilla de próximos eventos */
+.evgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--sp-5)}
+.evcard{display:block}
+.evcard .ev-art{aspect-ratio:16/10;border-radius:var(--radius);overflow:hidden;
+  margin-bottom:14px}
+.evcard .ev-k{margin-bottom:7px}
+.evcard .ev-t{font-family:var(--serif);font-size:var(--fs-sub);line-height:1.2;
+  color:var(--ink);margin-bottom:8px}
+.evcard .ev-m{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);
+  line-height:1.55;margin-bottom:12px}
+.evcard:hover .ev-t{color:var(--gold-deep)}
+
+@media (max-width:1100px){
+  .evgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:900px){
+  .evfeat{grid-template-columns:1fr}
+  .evfeat .ev-art{height:clamp(280px,42vh,380px)}
+  .evgrid{grid-template-columns:1fr}
+}
+
 /* ---------- Editorial detail pages (series, retos, events) ----------
    Same family as the redesigned class page: image first, then serif title,
    compact metadata, quiet actions, and sections separated by space/dividers

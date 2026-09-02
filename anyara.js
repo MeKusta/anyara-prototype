@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.13.00';
+  var VERSION = '1.14.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -126,6 +126,78 @@
     }
   };
 
+  /* Eventos. Viven aquí y no en la página para que el listado y el detalle
+     nunca se contradigan: events.html arma las tarjetas y evento.html abre
+     el mismo objeto por id. "boleto" existe sólo si ya tienes lugar. */
+  var EVENTS = [
+    {
+      id:'masterclass-barre', d:'barre',
+      t:'Masterclass en vivo: Barre & Breathwork',
+      i:'Valeria Méndez',
+      dia:'24', mes:'ago', fechaLarga:'24 de agosto', hora:'19:00',
+      lugar:'Estudio Anyara, CDMX', ciudad:'CDMX',
+      formato:'Presencial · cupo limitado', cupo:'24 lugares',
+      lead:'Una práctica en vivo que abre con trabajo de barra y cierra con una secuencia de respiración guiada.',
+      desc:'Empezamos con barra clásica: piernas, glúteos y centro, con series cortas y mucha precisión. ' +
+           'A la mitad bajamos el ritmo y entramos en trabajo de respiración guiada para soltar lo que se ' +
+           'acumuló. La idea es salir fuerte, más suelta y con una cadencia que puedas llevarte al resto ' +
+           'de la semana.',
+      lleva:'Ropa cómoda y calcetines antiderrapantes. La barra y los props los pone el estudio.',
+      boleto:{ code:'ANY-4KQ2-8817', detalle:'Fila A' }
+    },
+    {
+      id:'retiro-volver', d:'funcional',
+      t:'Retiro de fin de semana: Volver a Ti',
+      i:'Mariana y Sofía Ruiz',
+      dia:'07', mes:'sep', fechaLarga:'7 al 9 de septiembre', hora:'Todo el día',
+      lugar:'Valle de Bravo', ciudad:'Valle de Bravo',
+      formato:'Residencial · dos noches', cupo:'16 lugares',
+      lead:'Tres días fuera de la ciudad para reiniciar la práctica sin prisa y sin pantallas.',
+      desc:'Dos sesiones de movimiento al día, comida de estación y tiempo libre de verdad. ' +
+           'Las mañanas son de trabajo funcional al aire libre y las tardes de somático y respiración. ' +
+           'No hay nivel mínimo: el retiro se adapta a quien llega.',
+      lleva:'Todo el equipo está incluido. Sólo traes ropa de movimiento y ganas de desconectarte.',
+      boleto:{ code:'ANY-9RM5-2043', detalle:'2 personas' }
+    },
+    {
+      id:'sculpt-sunset', d:'sculpt',
+      t:'Sculpt Sunset: Flow & Strength',
+      i:'Sofía Ruiz',
+      dia:'18', mes:'sep', fechaLarga:'18 de septiembre', hora:'18:30',
+      lugar:'Estudio Anyara, CDMX', ciudad:'CDMX',
+      formato:'Presencial · cupo limitado', cupo:'20 lugares',
+      lead:'Sculpt al atardecer: peso ligero, muchas repeticiones y un cierre largo de movilidad.',
+      desc:'Una hora de tonificación con mancuernas ligeras y bandas, construida en bloques de tren ' +
+           'inferior, tren superior y centro. Cerramos con quince minutos de movilidad para que al día ' +
+           'siguiente puedas volver a entrenar.',
+      lleva:'Tapete propio si lo prefieres. Las pesas y las bandas las pone el estudio.'
+    },
+    {
+      id:'somara-luna', d:'somara',
+      t:'Somara: sesión de luna llena',
+      i:'Renata Solís',
+      dia:'02', mes:'oct', fechaLarga:'2 de octubre', hora:'20:00',
+      lugar:'Jardín Anyara, CDMX', ciudad:'CDMX',
+      formato:'Presencial · al aire libre', cupo:'30 lugares',
+      lead:'Movimiento somático lento, afuera y de noche. Sin impacto y sin prisa.',
+      desc:'Una sesión pensada para cerrar el día: movilidad suave, respiración y quietud, con el ritmo ' +
+           'lento como el punto y no como una versión fácil. Termina con diez minutos de descanso guiado.',
+      lleva:'Una capa extra de ropa. El tapete y la cobija los pone el estudio.'
+    },
+    {
+      id:'pilates-taller', d:'pilatesmat',
+      t:'Taller de Pilates Mat: centro y control',
+      i:'Daniela Ortiz',
+      dia:'15', mes:'oct', fechaLarga:'15 de octubre', hora:'11:00',
+      lugar:'Estudio Anyara, CDMX', ciudad:'CDMX',
+      formato:'Presencial · taller de dos horas', cupo:'18 lugares',
+      lead:'Dos horas para entender el trabajo de centro desde la base, sin correr.',
+      desc:'Un taller, no una clase: paramos, corregimos y explicamos por qué cada movimiento hace lo que ' +
+           'hace. Salimos con una secuencia corta que puedes repetir en casa cualquier día de la semana.',
+      lleva:'Ropa ajustada para que se vea la postura. El tapete y los bloques los pone el estudio.'
+    }
+  ];
+
   /* the two catalog classes marked "Gratis" — playable at every level */
   var FREE_CLASSES = [
     { slug:'barre-esencial',         t:'Barre Esencial',           i:'Valeria Méndez', d:'barre',      m:20 },
@@ -219,6 +291,16 @@
     RETOS: RETOS,
     INSTRUCTORS: INSTRUCTORS,
     discAbout: function (d) { return DISC_ABOUT[d] || ''; },
+
+    /* Eventos: listado, uno por id, y el enlace al detalle. Las tarjetas y la
+       página de detalle salen de aquí, así que no se pueden desincronizar. */
+    events:     function () { return EVENTS.slice(); },
+    event:      function (id) {
+      for (var i = 0; i < EVENTS.length; i++) if (EVENTS[i].id === id) return EVENTS[i];
+      return null;
+    },
+    eventHref:  function (id) { return 'evento.html?e=' + id; },
+    myTickets:  function () { return EVENTS.filter(function (e) { return !!e.boleto; }); },
     /* recomendaciones: primero de la misma disciplina, luego el resto */
     suggest: function (disc, excludeTitle, n) {
       var same = POOL.filter(function (c) { return c.d === disc && c.t !== excludeTitle; });

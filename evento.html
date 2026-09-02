@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Evento</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link">Series</a>
+      <a href="retos.html" class="nav-link">Retos</a>
+      <a href="events.html" class="nav-link active">Eventos</a>
+      <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
+      <a href="estilo.html" class="nav-link" style="color:var(--ink-3)">(Estilo)</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap section-sm">
+  <a href="events.html" style="font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2)">Todos los eventos</a>
+</div>
+
+<!-- portada del evento, a la misma altura que las de reto y serie -->
+<div class="wrap section-sm">
+  <div class="dp-top">
+    <div class="dp-art gart" id="evArt"></div>
+    <div class="dp-info">
+      <div class="ev-k" id="evK"></div>
+      <h1 class="vd-title" id="evT"></h1>
+      <div class="vd-instr">Con <a href="coach.html" id="evI"></a></div>
+      <div class="ev-when" id="evWhen"></div>
+      <div class="dp-cta-row">
+        <a href="#" class="btn btn-dark" id="evCta">Reservar lugar</a>
+        <button class="dp-save" onclick="addCal(event,this)">Añadir al calendario</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap section-sm">
+  <div class="dp-sections">
+    <div>
+      <h2 class="vd-h">Sobre este evento</h2>
+      <p class="vd-body" id="evDesc"></p>
+      <div class="vd-field" style="margin-top:var(--sp-4)">
+        <div class="k">Qué llevar</div>
+        <div class="v" id="evLleva"></div>
+      </div>
+    </div>
+    <div class="dp-aside">
+      <div class="vd-field"><div class="k">Lugar</div><div class="v" id="evLugar"></div></div>
+      <div class="vd-field"><div class="k">Formato</div><div class="v" id="evFormato"></div></div>
+      <div class="vd-field"><div class="k">Cupo</div><div class="v" id="evCupo"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- otros eventos -->
+<div class="wrap section">
+  <div class="sec-major">
+    <div class="row-head"><h2 class="h2-serif">Otros eventos</h2><a href="events.html">Ver todos</a></div>
+    <div class="evgrid" id="otros"></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="coaches.html">Coaches</a><a href="membresia.html">Planes y precios</a></div>
+    <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<div class="overlay" id="ov">
+  <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
+  <div class="overlay-top">
+    <div class="search-field"><span style="font-size:var(--fs-title);color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+    <div class="recent"><div class="lab">Popular ahora</div><div class="chips"><span class="chip">Barre</span><span class="chip">Eventos en vivo</span></div></div>
+  </div>
+</div>
+
+<div class="modal-scrim" id="tk">
+  <div class="modal qr-modal">
+    <button class="x" onclick="document.getElementById('tk').classList.remove('open')">✕</button>
+    <div class="eyebrow">Tu boleto</div>
+    <div class="qr-ev" id="tkEv"></div>
+    <div class="qr-when" id="tkWhen"></div>
+    <div class="qr-box" id="tkQr"></div>
+    <div class="qr-code" id="tkCode"></div>
+    <p class="qr-note">Muestra este código en la entrada.<br>Prototipo: el QR es una vista previa, no escanea.</p>
+  </div>
+</div>
+
+<script src="anyara.js"></script>
+<script src="eventos.js"></script>
+<script>
+/* Detalle de evento. Igual que clase.html, es una sola plantilla: el evento
+   entra por query string y sale del mismo Anyara.events() que el listado. */
+var id = new URLSearchParams(location.search).get('e') || 'masterclass-barre';
+var ev = Anyara.event(id) || Anyara.events()[0];
+
+document.title = 'Anyara — ' + ev.t;
+document.getElementById('evArt').classList.add(ev.d);
+document.getElementById('evK').textContent = 'Evento · ' + ev.dia + ' ' + ev.mes;
+document.getElementById('evT').textContent = ev.t;
+document.getElementById('evI').textContent = ev.i;
+document.getElementById('evWhen').innerHTML =
+  '<b>' + ev.fechaLarga + ' · ' + ev.hora + '</b><br>' + ev.lugar;
+document.getElementById('evDesc').textContent = ev.desc;
+document.getElementById('evLleva').textContent = ev.lleva;
+document.getElementById('evLugar').textContent = ev.lugar;
+document.getElementById('evFormato').textContent = ev.formato;
+document.getElementById('evCupo').textContent = ev.cupo;
+
+/* Si ya tienes lugar, la acción principal deja de ser reservar y pasa a ser
+   ver el boleto: no tiene sentido ofrecerte comprar algo que ya tienes. */
+var cta = document.getElementById('evCta');
+if (ev.boleto) {
+  cta.textContent = 'Ver boleto';
+  cta.onclick = function (e) {
+    e.preventDefault();
+    showTicket(ev.t, ev.dia + ' ' + ev.mes + ' · ' + ev.hora + ' · ' + ev.lugar + ' · ' + ev.boleto.detalle, ev.boleto.code);
+  };
+}
+
+/* otros eventos */
+document.getElementById('otros').innerHTML = Anyara.events()
+  .filter(function (e) { return e.id !== ev.id; })
+  .slice(0, 4)
+  .map(function (e) {
+    return '<a href="' + Anyara.eventHref(e.id) + '" class="evcard">' +
+      '<div class="ev-art gart ' + e.d + '"></div>' +
+      '<div class="ev-k">' + e.dia + ' ' + e.mes + ' · ' + e.ciudad + '</div>' +
+      '<div class="ev-t">' + e.t + '</div>' +
+      '<div class="ev-m">' + e.i + '<br>' + e.hora + ' · ' + e.lugar + '</div>' +
+      '<span class="link-a">Ver evento</span>' +
+    '</a>';
+  }).join('');
+
+Anyara.paintArt();
+</script>
+</body>
+</html>

@@ -27,70 +27,30 @@
 </header>
 
 <div class="wrap section-sm">
-  <div class="dp-grid">
-    <div class="dp-info">
-      <div class="vd-cat">EVENTO · 24 AGO</div>
-      <h1 class="vd-title">Masterclass en vivo:<br>Barre & Breathwork</h1>
-      <div class="vd-instr"><a href="coach.html">Valeria Méndez</a></div>
-      <div class="dp-meta">24 agosto · 19:00</div>
-      <div class="vd-body" style="margin-top:var(--sp-2)">Estudio Anyara, CDMX</div>
-      <div class="dp-cta-row">
-        <a href="#" class="btn btn-dark">Reservar lugar</a>
-        <button class="dp-save" onclick="addCal(event,this)">Agregar a mi calendario</button>
-      </div>
-    </div>
-    <div class="dp-art gart barre"></div>
+  <div class="eyebrow">Eventos</div>
+  <h1 style="font-size:var(--fs-page)">Encuentros en <em>persona</em></h1>
+  <p class="lede" style="margin-top:10px">Clases especiales, talleres y retiros. Presenciales, con cupo limitado.</p>
+</div>
+
+<!-- ===== EVENTO DESTACADO: todo su contenido en una sola composición ===== -->
+<div class="wrap section-sm">
+  <div class="evfeat" id="feat"></div>
+</div>
+
+<!-- ===== PRÓXIMOS ===== -->
+<div class="wrap section">
+  <div class="sec-major">
+    <div class="row-head"><h2 class="h2-serif">Próximos eventos</h2></div>
+    <div class="evgrid" id="grid"></div>
   </div>
+</div>
 
-  <div class="vd-rule"></div>
-
-  <div class="dp-sections">
-    <div>
-      <h2 class="vd-h">Sobre este evento</h2>
-      <p class="vd-body">
-        Una práctica en vivo que abre con trabajo de barra y cierra con una secuencia de respiración guiada.
-        La idea es salir fuerte, más suelta y con una cadencia que puedas llevarte al resto de la semana.
-      </p>
-
-      <div class="vd-rule"></div>
-
-      <h2 class="vd-h">Tus boletos</h2>
-      <div class="dp-ticketlist">
-        <div class="dp-ticketrow">
-          <div class="dp-datebox"><b>24</b><span>Ago</span></div>
-          <div>
-            <div class="dp-t">Masterclass: Barre & Breathwork</div>
-            <div class="dp-d">19:00 · Estudio Anyara, CDMX · Fila A</div>
-          </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap">
-            <button class="dp-save" onclick="addCal(event,this)">Calendario</button>
-            <button class="dp-save" onclick="showTicket('Masterclass: Barre &amp; Breathwork','24 Ago · 19:00 · Estudio Anyara, CDMX · Fila A','ANY-4KQ2-8817')">Ver boleto</button>
-          </div>
-        </div>
-        <div class="dp-ticketrow">
-          <div class="dp-datebox"><b>07</b><span>Sep</span></div>
-          <div>
-            <div class="dp-t">Retiro de fin de semana: Volver a Ti</div>
-            <div class="dp-d">Todo el día · Valle de Bravo · 2 personas</div>
-          </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap">
-            <button class="dp-save" onclick="addCal(event,this)">Calendario</button>
-            <button class="dp-save" onclick="showTicket('Retiro: Volver a Ti','07 Sep · Todo el día · Valle de Bravo · 2 personas','ANY-9RM5-2043')">Ver boleto</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="dp-aside">
-      <div class="vd-field">
-        <div class="k">Lugar</div>
-        <div class="v">Estudio Anyara, CDMX</div>
-      </div>
-      <div class="vd-field">
-        <div class="k">Formato</div>
-        <div class="v">Presencial · cupo limitado</div>
-      </div>
-    </div>
+<!-- ===== TUS BOLETOS: otra sección de la página, no otra fila ===== -->
+<div class="wrap section">
+  <div class="sec-major">
+    <div class="row-head"><h2 class="h2-serif">Tus boletos</h2></div>
+    <p class="sec-lead">Los eventos en los que ya tienes lugar. Muestra el código en la entrada.</p>
+    <div class="dp-ticketlist" id="tickets" style="margin-top:var(--sp-4)"></div>
   </div>
 </div>
 
@@ -124,48 +84,65 @@
 </div>
 
 <script src="anyara.js"></script>
+<script src="eventos.js"></script>
 <script>
-function addCal(e, el){
-  e.preventDefault();
-  var original = el.textContent;
-  el.textContent = 'Agregado';
-  setTimeout(function(){ el.textContent = original; }, 1800);
-}
+/* Listado de eventos. Todo sale de Anyara.events(), así que las tarjetas y la
+   página de detalle no se pueden contradecir. */
+var EV = Anyara.events();
+var dest = EV[0], resto = EV.slice(1);
 
-function drawQr(seedText){
-  var N = 25, cell = 100 / N, rects = '';
-  var seed = 0;
-  for (var i = 0; i < seedText.length; i++) seed = (seed * 31 + seedText.charCodeAt(i)) >>> 0;
-  function rnd(){ seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
-  function inFinder(x, y){
-    return (x < 7 && y < 7) || (x >= N - 7 && y < 7) || (x < 7 && y >= N - 7);
-  }
-  for (var y = 0; y < N; y++) {
-    for (var x = 0; x < N; x++) {
-      if (inFinder(x, y)) continue;
-      if (rnd() > 0.55) {
-        rects += '<rect x="' + (x*cell).toFixed(2) + '" y="' + (y*cell).toFixed(2) +
-                 '" width="' + cell.toFixed(2) + '" height="' + cell.toFixed(2) + '"/>';
-      }
-    }
-  }
-  function finder(ox, oy){
-    var u = cell;
-    return '<rect x="' + (ox*u) + '" y="' + (oy*u) + '" width="' + (7*u) + '" height="' + (7*u) + '"/>' +
-           '<rect x="' + ((ox+1)*u) + '" y="' + ((oy+1)*u) + '" width="' + (5*u) + '" height="' + (5*u) + '" fill="#fff"/>' +
-           '<rect x="' + ((ox+2)*u) + '" y="' + ((oy+2)*u) + '" width="' + (3*u) + '" height="' + (3*u) + '"/>';
-  }
-  return '<svg viewBox="0 0 100 100" role="img" aria-label="Código QR del boleto">' +
-    '<g fill="#1a1a1a">' + rects + finder(0,0) + finder(N-7,0) + finder(0,N-7) + '</g></svg>';
-}
+/* ---- destacado: foto, texto, cuándo, dónde y formato, todo junto ---- */
+document.getElementById('feat').innerHTML =
+  '<div class="ev-b">' +
+    '<div class="ev-k">Evento destacado · ' + dest.dia + ' ' + dest.mes + '</div>' +
+    '<h1>' + dest.t + '</h1>' +
+    '<div class="ev-who">Con ' + dest.i + '</div>' +
+    '<div class="ev-when"><b>' + dest.fechaLarga + ' · ' + dest.hora + '</b><br>' + dest.lugar + '</div>' +
+    '<p class="ev-lead">' + dest.lead + '</p>' +
+    '<div class="ev-facts">' +
+      '<div><div class="k">Formato</div><div class="v">' + dest.formato + '</div></div>' +
+      '<div><div class="k">Cupo</div><div class="v">' + dest.cupo + '</div></div>' +
+    '</div>' +
+    '<div class="dp-cta-row">' +
+      '<a href="' + Anyara.eventHref(dest.id) + '" class="btn btn-dark">Ver evento</a>' +
+      '<button class="dp-save" onclick="addCal(event,this)">Añadir al calendario</button>' +
+    '</div>' +
+  '</div>' +
+  '<div class="ev-art gart ' + dest.d + '"></div>';
 
-function showTicket(ev, when, code){
-  document.getElementById('tkEv').innerHTML = ev;
-  document.getElementById('tkWhen').textContent = when;
-  document.getElementById('tkCode').textContent = code;
-  document.getElementById('tkQr').innerHTML = drawQr(code);
-  document.getElementById('tk').classList.add('open');
-}
+/* ---- próximos ---- */
+document.getElementById('grid').innerHTML = resto.map(function (e) {
+  return '<a href="' + Anyara.eventHref(e.id) + '" class="evcard">' +
+    '<div class="ev-art gart ' + e.d + '"></div>' +
+    '<div class="ev-k">' + e.dia + ' ' + e.mes + ' · ' + e.ciudad + '</div>' +
+    '<div class="ev-t">' + e.t + '</div>' +
+    '<div class="ev-m">' + e.i + '<br>' + e.hora + ' · ' + e.lugar + '</div>' +
+    '<span class="link-a">Ver evento</span>' +
+  '</a>';
+}).join('');
+
+/* ---- boletos ---- */
+var mine = Anyara.myTickets();
+document.getElementById('tickets').innerHTML = mine.length
+  ? mine.map(function (e) {
+      var when = e.dia + ' ' + e.mes + ' · ' + e.hora + ' · ' + e.lugar + ' · ' + e.boleto.detalle;
+      return '<div class="dp-ticketrow">' +
+        '<div class="dp-datebox"><b>' + e.dia + '</b><span>' + e.mes + '</span></div>' +
+        '<div>' +
+          '<div class="dp-t">' + e.t + '</div>' +
+          '<div class="dp-d">' + e.hora + ' · ' + e.lugar + ' · ' + e.boleto.detalle + '</div>' +
+        '</div>' +
+        '<div style="display:flex;gap:22px;flex-wrap:wrap;align-items:center">' +
+          '<button class="dp-save" onclick="showTicket(' + q(e.t) + ',' + q(when) + ',' + q(e.boleto.code) + ')">Ver boleto</button>' +
+          '<button class="dp-save" onclick="addCal(event,this)">Añadir al calendario</button>' +
+        '</div>' +
+      '</div>';
+    }).join('')
+  : '<p class="sec-lead">Todavía no tienes boletos. Reserva tu lugar en cualquiera de los próximos eventos.</p>';
+
+function q(v){ return "'" + String(v).replace(/'/g, "\\'") + "'"; }
+
+Anyara.paintArt();
 </script>
 </body>
 </html>
