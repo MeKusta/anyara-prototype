@@ -19,16 +19,33 @@
   font-weight:400;color:var(--ink);padding:9px 11px 2px}
 .sw span{display:block;font-family:ui-monospace,Menlo,monospace;font-size:11px;
   color:var(--ink-3);padding:0 11px 10px}
-.sg-type{display:grid;gap:4px}
-.sg-row{display:grid;grid-template-columns:130px 62px 1fr;gap:18px;align-items:baseline;
-  padding:11px 0;border-bottom:1px solid var(--line-2)}
-.sg-row code{font-family:ui-monospace,Menlo,monospace;font-size:var(--fs-tiny);color:var(--ink-2)}
-.sg-row .px{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--ink-3)}
+.sg-type{display:grid;gap:12px}
+.sg-type-card{display:grid;grid-template-columns:210px minmax(280px,1fr) 330px;gap:22px;
+  align-items:center;border-top:1px solid var(--line-2);padding:18px 0}
+.sg-role{font-family:var(--sans)}
+.sg-role b{display:block;font-size:var(--fs-meta);font-weight:600;color:var(--ink);margin-bottom:4px}
+.sg-role span{display:block;font-size:var(--fs-tiny);line-height:1.45;color:var(--ink-3)}
+.sg-sample{min-width:0}
+.sg-specs{display:grid;grid-template-columns:1fr 1fr;gap:7px 12px;font-family:ui-monospace,Menlo,monospace;
+  font-size:var(--fs-tiny);color:var(--ink-2)}
+.sg-specs span{color:var(--ink-3)}
+.sg-token-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:var(--sp-3)}
+.sg-token{border:1px solid var(--line);border-radius:8px;padding:11px 12px;font-family:ui-monospace,Menlo,monospace}
+.sg-token b{display:block;font-size:var(--fs-tiny);font-weight:400;color:var(--ink)}
+.sg-token span{display:block;font-size:11px;color:var(--ink-3);margin-top:3px}
 .sg-space{display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap}
 .sg-space div{text-align:center;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--ink-3)}
 .sg-space i{display:block;background:var(--gold);border-radius:3px;margin-bottom:7px}
 .sg-demo{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:var(--sp-4)}
 .sg-note{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-3);margin-bottom:var(--sp-3)}
+.sg-code{font-family:ui-monospace,Menlo,monospace;font-size:inherit}
+.sg-probe-body{font-size:var(--fs-body);line-height:1.5}
+.sg-probe-sans{font-family:var(--sans);font-size:var(--fs-body);line-height:1.6;color:var(--ink-2)}
+.sg-probe-page{font-size:var(--fs-page)}
+.sg-probe-hero{font-size:var(--fs-hero);line-height:1.08;letter-spacing:-.01em}
+.sg-probe-hero-slide{font-size:var(--fs-hero);line-height:1.06;letter-spacing:-.01em;color:var(--ink)}
+.sg-probe-small{font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep)}
+.sg-probe-search{font-family:var(--serif);font-size:var(--fs-head);line-height:normal;color:var(--ink)}
 </style>
 </head>
 <body>
@@ -76,22 +93,24 @@
 <!-- ===== COLOR ===== -->
 <div class="wrap sg-sec">
   <div class="row-head"><h2>Color</h2></div>
-  <p class="sg-note">La paleta base. <code style="font-family:ui-monospace,Menlo,monospace">--ink</code> es el texto, <code style="font-family:ui-monospace,Menlo,monospace">--gold</code> la marca, <code style="font-family:ui-monospace,Menlo,monospace">--line</code> los bordes.</p>
+  <p class="sg-note">La paleta base. <code class="sg-code">--ink</code> es el texto, <code class="sg-code">--gold</code> la marca, <code class="sg-code">--line</code> los bordes.</p>
   <div class="sg-swatches" id="colors"></div>
 </div>
 
 <!-- ===== DISCIPLINAS ===== -->
 <div class="wrap sg-sec">
   <div class="row-head"><h2>Colores de disciplina</h2></div>
-  <p class="sg-note">Cada disciplina define <code style="font-family:ui-monospace,Menlo,monospace">--dc</code>, que alimenta el punto del chip y el degradado que queda bajo la foto.</p>
+  <p class="sg-note">Cada disciplina define <code class="sg-code">--dc</code>, que alimenta el punto del chip y el degradado que queda bajo la foto.</p>
   <div class="sg-swatches" id="discs"></div>
 </div>
 
 <!-- ===== TIPOGRAFÍA ===== -->
 <div class="wrap sg-sec">
   <div class="row-head"><h2>Tipografía</h2></div>
-  <p class="sg-note">La escala está nombrada por rol, no por tamaño: mueve <code style="font-family:ui-monospace,Menlo,monospace">--fs-head</code> y se mueven todos los encabezados de sección a la vez.</p>
-  <div class="sg-type" id="type"></div>
+  <p class="sg-note">Muestras reales del sitio. Cada fila lee los estilos computados: familia, tamaño, peso, alto de línea, tracking y mayúsculas.</p>
+  <div class="sg-type" id="typeRoles"></div>
+  <p class="sg-note" style="margin-top:var(--sp-4)">Tokens disponibles para ajustar la escala tipográfica completa.</p>
+  <div class="sg-token-list" id="typeTokens"></div>
 </div>
 
 <!-- ===== ESPACIADO ===== -->
@@ -224,20 +243,135 @@ document.getElementById('discs').innerHTML = DISCS.map(function (d) {
 }).join('');
 
 /* ---- tipografía ---- */
-var ROL = {
-  '--fs-micro':'Insignias diminutas', '--fs-tiny':'Botones, chips',
-  '--fs-label':'Eyebrows, etiquetas', '--fs-meta':'Instructora, fechas',
-  '--fs-note':'Descripciones', '--fs-body':'Párrafos', '--fs-card':'Título de tarjeta',
-  '--fs-sub':'Subtítulos', '--fs-title':'Títulos de bloque', '--fs-head':'Encabezado de sección',
-  '--fs-page':'Título de página', '--fs-hero':'H1 de portada'
-};
-document.getElementById('type').innerHTML = pick(function (t) {
+var TYPE_ROLES = [
+  {
+    role:'Hero principal',
+    source:'h1, .ob-welcome h1, .cover h1',
+    use:'Portadas y momentos de entrada',
+    html:'<h1 class="sg-probe-hero">Tres días de bienvenida</h1>'
+  },
+  {
+    role:'Hero carrusel',
+    source:'.hc-content h1',
+    use:'Slide destacado de la home',
+    html:'<div class="hc-content"><h1 class="sg-probe-hero-slide">Muévete con intención</h1></div>',
+    target:'h1'
+  },
+  {
+    role:'Título de página',
+    source:'h1 + --fs-page',
+    use:'Explorar, Retos, Series, Biblioteca',
+    html:'<h1 class="sg-probe-page">Encuentra tu balance</h1>'
+  },
+  {
+    role:'Título editorial',
+    source:'.h2-serif, .resume .rs-t, .ms-hi h2',
+    use:'Bloques importantes dentro de una página',
+    html:'<h2 class="h2-serif">Lo que sigue</h2>'
+  },
+  {
+    role:'Sección compacta',
+    source:'h2',
+    use:'Encabezados de filas y módulos',
+    html:'<h2>Empieza por aquí</h2>'
+  },
+  {
+    role:'Eyebrow',
+    source:'.eyebrow',
+    use:'Categoría, estado, contexto breve',
+    html:'<div class="eyebrow">Sistema de diseño</div>'
+  },
+  {
+    role:'Navegación',
+    source:'.nav-link',
+    use:'Topbar principal',
+    html:'<span class="nav-link">Explorar</span>'
+  },
+  {
+    role:'Botón',
+    source:'.btn',
+    use:'Acciones primarias y secundarias',
+    html:'<span class="btn btn-gold">Comenzar</span>'
+  },
+  {
+    role:'Título de tarjeta',
+    source:'.ccard .title, .compcard .ct',
+    use:'Clases, series, retos y recomendaciones',
+    html:'<div class="ccard"><div class="title">Barre Esencial</div></div>',
+    target:'.title'
+  },
+  {
+    role:'Metadata',
+    source:'.ccard .meta, .vd-meta, .ticket .info .m',
+    use:'Coach, fechas, duración, nivel',
+    html:'<div class="ccard"><div class="meta">Valeria Méndez · Intermedio</div></div>',
+    target:'.meta'
+  },
+  {
+    role:'Body serif',
+    source:'body',
+    use:'Texto heredado cuando no se fuerza sans',
+    html:'<p class="sg-probe-body">Respira amplio y vuelve a tu centro.</p>'
+  },
+  {
+    role:'Body sans',
+    source:'.sec-lead, .vd-body, párrafos de apoyo',
+    use:'Descripciones, ayuda y copy explicativo',
+    html:'<p class="sg-probe-sans">Clases grabadas y en vivo para moverte a tu ritmo.</p>'
+  },
+  {
+    role:'Micro etiqueta',
+    source:'.ms-k, .td-k, .w3-tag, .locked',
+    use:'Badges y datos auxiliares diminutos',
+    html:'<span class="sg-probe-small">Día 1</span>'
+  },
+  {
+    role:'Búsqueda',
+    source:'.search-field input',
+    use:'Campo principal del overlay',
+    html:'<span class="sg-probe-search">Busca clases...</span>'
+  }
+];
+
+function cleanFamily(value) {
+  return value.split(',').map(function (part) {
+    return part.trim().replace(/^["']|["']$/g, '');
+  }).slice(0, 2).join(', ');
+}
+function fmtPx(value) {
+  if (value === 'normal') return 'normal';
+  var n = parseFloat(value);
+  return isNaN(n) ? value : (Math.round(n * 100) / 100) + 'px';
+}
+function specMarkup(cs) {
+  return [
+    ['familia', cleanFamily(cs.fontFamily)],
+    ['tamaño', fmtPx(cs.fontSize)],
+    ['peso', cs.fontWeight],
+    ['alto', fmtPx(cs.lineHeight)],
+    ['tracking', fmtPx(cs.letterSpacing)],
+    ['caja', cs.textTransform]
+  ].map(function (s) {
+    return '<div><span>' + s[0] + '</span><br>' + s[1] + '</div>';
+  }).join('');
+}
+document.getElementById('typeRoles').innerHTML = TYPE_ROLES.map(function (r, i) {
+  return '<div class="sg-type-card" id="typeRole' + i + '">' +
+    '<div class="sg-role"><b>' + r.role + '</b><span>' + r.source + '<br>' + r.use + '</span></div>' +
+    '<div class="sg-sample">' + r.html + '</div>' +
+    '<div class="sg-specs"></div>' +
+  '</div>';
+}).join('');
+TYPE_ROLES.forEach(function (r, i) {
+  var row = document.getElementById('typeRole' + i);
+  var sample = r.target ? row.querySelector(r.target) : row.querySelector('.sg-sample > *');
+  row.querySelector('.sg-specs').innerHTML = specMarkup(getComputedStyle(sample));
+});
+
+document.getElementById('typeTokens').innerHTML = pick(function (t) {
   return /^--fs-/.test(t.name);
 }).map(function (t) {
-  return '<div class="sg-row"><code>' + t.name + '</code>' +
-    '<span class="px">' + t.value + '</span>' +
-    '<span style="font-size:' + t.value + ';font-family:var(--serif)">' +
-      (ROL[t.name] || 'Muestra') + '</span></div>';
+  return '<div class="sg-token"><b>' + t.name + '</b><span>' + t.value + '</span></div>';
 }).join('');
 
 /* ---- espaciado ---- */

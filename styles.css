@@ -25,10 +25,10 @@
   --serif:"Georgia",serif;
   --sans:"Helvetica Neue",Arial,sans-serif;
 
-  --fs-micro:10px;  /* insignias diminutas */
+  --fs-micro:10px;  /* texto auxiliar diminuto */
   --fs-tiny:12px;   /* botones, chips, notas */
   --fs-label:11px;  /* eyebrows, etiquetas */
-  --fs-meta:13px;   /* instructora, fechas, notas al pie */
+  --fs-meta:13px;   /* instructora, fechas, datos */
   --fs-note:14px;   /* descripciones secundarias */
   --fs-body:15px;   /* párrafos */
   --fs-card:20px;   /* título de tarjeta */
@@ -400,7 +400,7 @@ h2{font-size:var(--fs-body);font-weight:600;letter-spacing:.16em;text-transform:
 .hc-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter) 60px}
 .hc-content{max-width:580px;color:#fff}
 .hc-content .eyebrow{color:#fff;opacity:.92}
-.hc-content h1{color:#fff;font-size:48px;line-height:1.06;margin-bottom:14px}
+.hc-content h1{color:#fff;font-size:var(--fs-hero);line-height:1.06;margin-bottom:14px}
 .hc-content p{font-family:var(--sans);font-size:var(--fs-body);color:rgba(255,255,255,.9);margin-bottom:24px;max-width:470px;line-height:1.55}
 .hc-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;
   width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.5);
@@ -451,7 +451,7 @@ body.is-guest  .member-only{display:none !important}
   border-radius:var(--radius);overflow:hidden}
 .daily .dart{position:relative;min-height:250px}
 .daily .dbody{padding:34px;display:flex;flex-direction:column;justify-content:center}
-.daily .dbody h3{font-family:var(--serif);font-size:28px;font-weight:400;margin:6px 0 10px}
+.daily .dbody h3{font-family:var(--serif);font-size:var(--fs-title);font-weight:400;margin:6px 0 10px}
 .daily .dbody p{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);
   line-height:1.55;margin-bottom:20px;max-width:380px}
 .daily .dbody .btn{align-self:flex-start}
@@ -632,10 +632,10 @@ body.has-account .anon-only{display:none!important}
 .trialstrip .ts-num{width:64px;height:64px;border-radius:50%;background:var(--ink);color:#fff;flex:0 0 auto;
   display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
 .trialstrip .ts-num b{font-family:var(--serif);font-size:var(--fs-sub)}
-.trialstrip .ts-num span{font-family:var(--sans);font-size:9px;
+.trialstrip .ts-num span{font-family:var(--sans);font-size:var(--fs-micro);
   letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin-top:3px}
 .trialstrip .ts-b{flex:1}
-.trialstrip .ts-t{font-family:var(--serif);font-size:21px;margin-bottom:3px}
+.trialstrip .ts-t{font-family:var(--serif);font-size:var(--fs-card);margin-bottom:3px}
 .trialstrip .ts-d{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2)}
 
 /* ---------- Tres días page ---------- */
@@ -807,7 +807,7 @@ body.has-account .anon-only{display:none!important}
 .vd-player{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;
   display:flex;align-items:center;justify-content:center}
 .vd-player .vd-play{width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.92);
-  border:none;cursor:pointer;font-size:28px;color:var(--ink);
+  border:none;cursor:pointer;font-size:var(--fs-title);color:var(--ink);
   display:flex;align-items:center;justify-content:center}
 .vd-player .vd-play:hover{background:#fff}
 .vd-lock{position:absolute;top:16px;left:16px;background:rgba(0,0,0,.55);color:#fff;
@@ -902,7 +902,7 @@ body.has-account .anon-only{display:none!important}
 .trailer-card .tc-art{width:300px;height:180px;flex:0 0 auto;position:relative;
   display:flex;align-items:center;justify-content:center}
 .trailer-card .tc-play{width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.92);
-  display:flex;align-items:center;justify-content:center;font-size:21px;color:var(--ink)}
+  display:flex;align-items:center;justify-content:center;font-size:var(--fs-card);color:var(--ink)}
 .trailer-card .tc-len{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.55);color:#fff;
   font-family:var(--sans);font-size:var(--fs-label);padding:5px 10px;border-radius:100px}
 .trailer-card .tc-b{padding:20px 26px 20px 0;flex:1}
@@ -947,7 +947,7 @@ body.has-account .anon-only{display:none!important}
 .day-picker{position:fixed;right:18px;bottom:18px;z-index:90;display:flex;align-items:center;gap:5px;
   background:#fff;border:1px solid var(--line);border-radius:100px;padding:6px;
   box-shadow:0 8px 24px rgba(20,18,16,.16)}
-.day-picker .dp-lab{font-family:var(--sans);font-size:9px;letter-spacing:.12em;
+.day-picker .dp-lab{font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.12em;
   text-transform:uppercase;color:var(--ink-3);padding:0 4px 0 8px}
 .day-picker button{width:28px;height:28px;border-radius:50%;border:none;background:transparent;
   color:var(--ink-2);font-family:var(--sans);font-size:var(--fs-label);font-weight:600;
