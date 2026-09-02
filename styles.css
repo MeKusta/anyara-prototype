@@ -226,9 +226,12 @@ h2{font-size:var(--fs-body);font-weight:600;letter-spacing:.16em;text-transform:
    abajo-izq: duración      · abajo-der: candado */
 .ccard .art .fav{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;
   background:rgba(255,255,255,.92);border:none;cursor:pointer;padding:0;
-  display:flex;align-items:center;justify-content:center;font-size:var(--fs-body);color:var(--ink);z-index:3}
+  display:flex;align-items:center;justify-content:center;color:var(--ink);z-index:3}
 .ccard .art .fav:hover{background:#fff}
 .ccard .art .fav.on{background:var(--gold);color:#fff}
+/* un solo trazo: vacío por defecto, relleno al marcarlo */
+.fav svg{width:17px;height:17px;display:block;fill:none;stroke:currentColor;stroke-width:1.8}
+.fav.on svg{fill:currentColor}
 .ccard .art .len{position:absolute;bottom:12px;left:12px;top:auto;background:rgba(255,255,255,.94);
   color:var(--ink);font-size:var(--fs-tiny);font-weight:600;padding:5px 11px;border-radius:8px;
   font-family:var(--sans);font-variant-numeric:tabular-nums}
@@ -547,10 +550,14 @@ body.is-l1 .l23-only{display:none!important}
 body:not(.has-account) .account-only{display:none!important}
 body.has-account .anon-only{display:none!important}
 
-/* candado: abajo-derecha, la única esquina libre ahora que el corazón ocupa arriba-derecha */
-.ccard .art .locked{position:absolute;bottom:12px;right:12px;top:auto;background:rgba(0,0,0,.55);color:#fff;
+/* candado: abajo-derecha, la única esquina libre ahora que el corazón ocupa
+   arriba-derecha. También en compilaciones, que en el catálogo se bloquean igual. */
+.ccard .art .locked,.compcard .art .locked{position:absolute;bottom:12px;right:12px;top:auto;background:rgba(0,0,0,.55);color:#fff;
   font-size:var(--fs-micro);letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:100px;
   font-family:var(--sans);display:flex;align-items:center;gap:5px}
+/* la compilación no lleva corazón, así que su candado sube a la derecha:
+   abajo no cabe junto al conteo cuando la tarjeta es angosta */
+.compcard .art .locked{top:12px;bottom:auto}
 
 /* ---------- "Nuevo": pill compacto arriba-izquierda ---------- */
 .ccard .art .nuevo{position:absolute;top:12px;left:12px;z-index:2;
