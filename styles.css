@@ -374,14 +374,26 @@ h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em, .serif-i{
 
 /* ---------- Pricing ---------- */
 .plans{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;max-width:760px;margin:0 auto}
-.plan{border:1px solid var(--line);border-radius:18px;padding:30px;position:relative}
-.plan.feat{border-color:var(--gold);box-shadow:0 8px 30px rgba(201,168,106,.15)}
-.plan .badge{position:absolute;top:-12px;left:30px;background:var(--gold);color:#fff;font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:100px;font-family:var(--sans)}
-.plan .name{font-size:var(--fs-body);letter-spacing:.14em;text-transform:uppercase;font-family:var(--sans);color:var(--ink-2);margin-bottom:10px}
-.plan .price{font-size:var(--fs-hero)}.plan .price span{font-size:var(--fs-body);color:var(--ink-2)}
-.plan ul{list-style:none;margin:20px 0}
-.plan li{padding:9px 0;font-family:var(--sans);font-size:var(--fs-note);color:var(--ink);display:flex;gap:10px}
-.plan li::before{content:"✓";color:var(--gold-deep)}
+/* Dos planes que sí se comparan, así que van lado a lado — pero la jerarquía
+   la da el precio, no una caja redondeada con sombra. Un filete arriba de cada
+   uno marca dónde empieza; el recomendado lo lleva en tinta. */
+.plan{border:none;border-top:1px solid var(--line);border-radius:0;
+  padding:var(--sp-4) 0 0;position:relative}
+.plan.feat{border-top:1px solid var(--ink);box-shadow:none}
+/* el distintivo es una etiqueta de texto, no una cápsula flotando fuera */
+.plan .badge{position:static;display:block;background:none;color:var(--gold-deep);
+  font-size:var(--fs-label);letter-spacing:.22em;text-transform:uppercase;
+  padding:0;border-radius:0;font-family:var(--sans);margin-bottom:8px}
+.plan .name{font-family:var(--sans);font-size:var(--fs-note);font-weight:500;
+  letter-spacing:0;text-transform:none;color:var(--ink-2);margin-bottom:4px}
+.plan .price{font-size:var(--fs-hero);line-height:1}
+.plan .price span{font-size:var(--fs-body);color:var(--ink-2)}
+.plan ul{list-style:none;margin:var(--sp-4) 0}
+.plan li{padding:7px 0;font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2)}
+/* la etiqueta de ahorro se lee, no se encapsula */
+.plan .savepill{display:block;background:none;color:var(--gold-deep);padding:0;
+  border-radius:0;font-family:var(--sans);font-size:var(--fs-meta);margin-top:8px}
+.plan .savepill.flat{background:none;color:var(--ink-3)}
 
 /* ---------- Events ---------- */
 .event-hero{border-radius:var(--radius);height:340px;position:relative;display:flex;align-items:flex-end;padding:34px;color:#fff}
@@ -596,19 +608,20 @@ body.is-guest  .member-only{display:none !important}
 .plans.plans3{grid-template-columns:repeat(3,1fr);max-width:1020px}
 .plan .save{font-family:var(--sans);font-size:var(--fs-tiny);color:var(--gold-deep);margin-top:4px}
 .plan .billed{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);margin-top:8px;line-height:1.5}
-.plan .savepill{display:inline-block;background:var(--gold-tint);color:var(--gold-deep);
-  font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
-  font-weight:600;padding:6px 12px;border-radius:100px;margin-top:12px}
-.plan .savepill.flat{background:var(--sand);color:var(--ink-2)}
-/* side-by-side comparison strip under the plans */
-.plancompare{max-width:1020px;margin:26px auto 0;border:1px solid var(--line);border-radius:var(--radius);
-  background:var(--sand);padding:22px 26px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;
-  font-family:var(--sans)}
-.plancompare .pc-ic{width:44px;height:44px;border-radius:50%;background:var(--gold);color:#fff;flex:0 0 auto;
-  display:flex;align-items:center;justify-content:center;font-size:var(--fs-card)}
-.plancompare .pc-t{font-family:var(--serif);font-size:var(--fs-card);color:var(--ink);margin-bottom:3px}
-.plancompare .pc-d{font-size:var(--fs-note);color:var(--ink-2);line-height:1.5}
-.plancompare .pc-d b{color:var(--gold-deep)}
+/* La comparación mensual/anual es un párrafo editorial, no una caja con un
+   ícono dorado y un botón empujado al borde. */
+.plancompare{max-width:760px;margin:var(--sp-5) auto 0;border:none;border-radius:0;
+  background:none;padding:0;display:block}
+.plancompare .pc-ic{display:none}
+.plancompare .pc-t{font-family:var(--serif);font-size:var(--fs-card);color:var(--ink);margin-bottom:6px}
+.plancompare .pc-d{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);line-height:1.65}
+.plancompare .pc-d b{color:var(--ink);font-weight:500}
+.plancompare .btn{margin-top:var(--sp-3)}
+
+/* Preguntas frecuentes: pregunta y respuesta, separadas por aire. */
+.faq{display:grid;gap:var(--sp-4);margin-top:var(--sp-4)}
+.faq .q{font-family:var(--sans);font-weight:500;font-size:var(--fs-body);color:var(--ink);margin-bottom:4px}
+.faq .a{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);line-height:1.6;max-width:62ch}
 
 /* ---------- Access levels (1 visita · 2 prueba · 3 pagada) ---------- */
 body:not(.is-l1) .l1-only{display:none!important}

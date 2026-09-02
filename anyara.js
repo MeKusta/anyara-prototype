@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.15.00';
+  var VERSION = '1.15.01';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
