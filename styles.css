@@ -966,11 +966,12 @@ body.has-account .anon-only{display:none!important}
 /* los metadatos se leen como una frase, no como una etiqueta */
 .dp-meta{font-family:var(--sans);font-size:var(--fs-note);letter-spacing:0;
   text-transform:none;color:var(--ink-2);margin-top:var(--sp-3)}
-.dp-actions{display:flex;gap:var(--sp-5);flex-wrap:wrap;align-items:flex-start;margin-top:var(--sp-5)}
-.dp-save{background:none;border:none;cursor:pointer;padding:0;font-family:var(--sans);
-  font-size:var(--fs-meta);font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink-2)}
-.dp-save:hover{color:var(--ink)}
-.dp-save.on{color:var(--ink)}
+.dp-actions{display:flex;gap:var(--sp-4);flex-wrap:wrap;align-items:center;margin-top:var(--sp-5)}
+.dp-save{background:none;border:none;border-bottom:1px solid var(--line);cursor:pointer;
+  padding:0;font-family:var(--sans);font-size:var(--fs-meta);font-weight:500;
+  letter-spacing:0;text-transform:none;color:var(--ink);white-space:nowrap}
+.dp-save:hover{border-bottom-color:var(--gold)}
+.dp-save.on{border-bottom-color:var(--gold)}
 /* Descripción y datos, en la misma proporción que la página de clase. El
    lado derecho es una nota al margen, no media pantalla vacía. */
 .dp-sections{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);
@@ -1013,7 +1014,7 @@ body.has-account .anon-only{display:none!important}
 .dp-datebox b{font-family:var(--serif);font-size:var(--fs-sub);font-weight:400;line-height:1}
 .dp-datebox span{font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:4px}
 .dp-place{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);line-height:1.55}
-.dp-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:var(--sp-5)}
+.dp-cta-row{display:flex;gap:var(--sp-4);flex-wrap:wrap;align-items:center;margin-top:var(--sp-5)}
 
 @media (max-width:900px){
   .dp-top,.dp-sections,.dp-grid{grid-template-columns:1fr}
