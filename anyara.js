@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.06.00';
+  var VERSION = '1.07.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -305,14 +305,26 @@
   A.paintFavs = paintFavs;
   window.addEventListener('load', paintFavs);
 
-  /* El nombre de la serie navega a su página. Va delegado en el documento
-     porque las tarjetas se generan en distintos momentos. */
+  /* Los dos tags de la tarjeta navegan: la disciplina a su página, y la serie
+     o reto al suyo. Van delegados en el documento porque las tarjetas se
+     generan en distintos momentos, y con stopPropagation para que el clic no
+     se lo lleve la tarjeta entera. */
   document.addEventListener('click', function (e) {
-    var s = e.target.closest && e.target.closest('.serie-link');
-    if (!s) return;
-    e.preventDefault();
-    e.stopPropagation();
-    location.href = s.getAttribute('data-href') || 'series.html';
+    if (!e.target.closest) return;
+
+    var s = e.target.closest('.serie-link');
+    if (s) {
+      e.preventDefault(); e.stopPropagation();
+      location.href = s.getAttribute('data-href') || 'series.html';
+      return;
+    }
+    var d = e.target.closest('.disc-link');
+    if (d) {
+      e.preventDefault(); e.stopPropagation();
+      var slug = d.getAttribute('data-d');
+      /* si esa disciplina aún no tiene página, cae al catálogo filtrado */
+      location.href = A.discHref(slug) || ('explorar.html?d=' + slug);
+    }
   });
 
   /* Cambia el wordmark de texto por el SVG en todas las marcas del sitio.

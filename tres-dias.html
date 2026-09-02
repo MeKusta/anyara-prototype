@@ -217,7 +217,7 @@ plan.forEach(function (p, idx) {
           '<div class="title">' + c.t + '</div>' +
           '<div class="meta">' + c.i + '</div>' +
           '<div class="lvl">' + (LEVEL_BY_DAY[idx] || 'Principiante') + '</div>' +
-          '<div class="tag">' + (DISC_LABELS[c.d] || c.d).toUpperCase() + '</div></a>';
+          '<div class="tag disc-link" data-d="' + c.d + '">' + (DISC_LABELS[c.d] || c.d).toUpperCase() + '</div></a>';
       }).join('') +
     '</div>';
   daysWrap.appendChild(block);
@@ -239,7 +239,7 @@ document.getElementById('alwaysOpen').innerHTML = open3.map(function (c) {
     '<div class="title">' + c.t + '</div>' +
     '<div class="meta">' + c.i + '</div>' +
     '<div class="lvl">Principiante</div>' +
-    '<div class="tag">' + (DISC_LABELS[c.d] || c.d).toUpperCase() + '</div></a>';
+    '<div class="tag disc-link" data-d="' + c.d + '">' + (DISC_LABELS[c.d] || c.d).toUpperCase() + '</div></a>';
 }).join('');
 
 /* ---- player del video de Mariana (demo) ---- */

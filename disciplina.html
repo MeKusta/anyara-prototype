@@ -209,7 +209,7 @@ function card(c) {
     '<div class="meta">' + D.coachDe + ' · ' + fecha + '</div>' +
     '<div class="lvl">' + (c.lvl || 'Principiante') + '</div>' +
     (c.serie ? '<div class="serie">Serie: <span class="serie-link" data-href="serie.html">' + c.serie + '</span></div>' : '') +
-    '<div class="tag">' + label.toUpperCase() + '</div></a>';
+    '<div class="tag disc-link" data-d="' + d + '">' + label.toUpperCase() + '</div></a>';
 }
 
 document.getElementById('classGrid').innerHTML = clases.map(card).join('');
