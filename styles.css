@@ -13,7 +13,10 @@
   --sand-2:#efeae1;
   --wine:#7c2d38;   /* insignia "Nuevo" */
   --radius:14px;
-  --maxw:1440px;
+  /* Ancho del contenido. El tope en px evita líneas kilométricas en monitores
+     grandes; el 94vw garantiza que nunca toque el borde en pantallas chicas. */
+  --maxw:min(1760px, 94vw);
+  --gutter:40px;   /* margen interno de secciones, nav y footer: los alinea */
 
   /* ---- tipografía ----
      Las dos familias y una escala por rol, no por tamaño: si quieres que
@@ -85,7 +88,7 @@ img{display:block;max-width:100%}
 .topbar-inner{
   max-width:var(--maxw);margin:0 auto;
   display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;
-  padding:16px 32px;
+  padding:16px var(--gutter);
 }
 .logo{
   font-size:var(--fs-title);letter-spacing:.5px;font-style:italic;
@@ -125,7 +128,7 @@ img{display:block;max-width:100%}
 }
 
 /* ---------- Layout ---------- */
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
 .section{padding:44px 0}
 .section-sm{padding:28px 0}
 .eyebrow{
@@ -375,7 +378,7 @@ h2{font-size:var(--fs-body);font-weight:600;letter-spacing:.16em;text-transform:
 
 /* ---------- Footer ---------- */
 .footer{border-top:1px solid var(--line);margin-top:50px;padding:44px 0;font-family:var(--sans)}
-.footer-inner{max-width:var(--maxw);margin:0 auto;padding:0 28px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
+.footer-inner{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
 .footer h5{font-size:var(--fs-tiny);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:16px}
 .footer a{display:block;color:var(--ink-2);font-size:var(--fs-note);padding:5px 0}
 .footer a:hover{color:var(--ink)}
@@ -391,7 +394,7 @@ h2{font-size:var(--fs-body);font-weight:600;letter-spacing:.16em;text-transform:
 .hc-slide{min-width:100%;height:100%;position:relative;display:flex;align-items:flex-end}
 .hc-slide::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(90deg,rgba(22,19,16,.6),rgba(22,19,16,.2) 55%,rgba(22,19,16,0))}
-.hc-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 32px 60px}
+.hc-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter) 60px}
 .hc-content{max-width:580px;color:#fff}
 .hc-content .eyebrow{color:#fff;opacity:.92}
 .hc-content h1{color:#fff;font-size:48px;line-height:1.06;margin-bottom:14px}
@@ -768,7 +771,7 @@ body.has-account .anon-only{display:none!important}
 
 /* ---------- Charge notice (día 3 activates the membership) ---------- */
 .charge-note{background:var(--gold);color:#fff;font-family:var(--sans);font-size:var(--fs-meta)}
-.charge-note .cn-in{max-width:var(--maxw);margin:0 auto;padding:11px 32px;position:relative;
+.charge-note .cn-in{max-width:var(--maxw);margin:0 auto;padding:11px var(--gutter);position:relative;
   display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
 .charge-note .cn-tag{background:rgba(255,255,255,.22);font-size:var(--fs-micro);letter-spacing:.14em;
   text-transform:uppercase;font-weight:700;padding:4px 10px;border-radius:100px}
