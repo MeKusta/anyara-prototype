@@ -402,12 +402,7 @@ h2{font-size:var(--fs-body);font-weight:600;letter-spacing:.16em;text-transform:
 .hc-content .eyebrow{color:#fff;opacity:.92}
 .hc-content h1{color:#fff;font-size:var(--fs-hero);line-height:1.06;margin-bottom:14px}
 .hc-content p{font-family:var(--sans);font-size:var(--fs-body);color:rgba(255,255,255,.9);margin-bottom:24px;max-width:470px;line-height:1.55}
-.hc-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;
-  width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.5);
-  background:rgba(0,0,0,.22);color:#fff;font-size:var(--fs-sub);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.hc-arrow:hover{background:rgba(0,0,0,.45)}
-.hc-arrow.prev{left:24px}.hc-arrow.next{right:24px}
+.hc-arrow{display:none}
 .hc-dots{position:absolute;bottom:26px;left:0;right:0;z-index:3;display:flex;gap:9px;justify-content:center}
 .hc-dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(255,255,255,.5);cursor:pointer;padding:0;transition:width .3s}
 .hc-dots button.on{background:#fff;width:26px;border-radius:100px}
@@ -906,9 +901,10 @@ body.has-account .anon-only{display:none!important}
    Same family as the redesigned class page: image first, then serif title,
    compact metadata, quiet actions, and sections separated by space/dividers
    instead of boxed sidebars. */
-.dp-top{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:var(--sp-6);align-items:end}
-.dp-art{position:relative;aspect-ratio:16/11;border-radius:10px;overflow:hidden}
-.dp-art.dp-tall{aspect-ratio:4/5}
+.dp-top{display:grid;gap:var(--sp-5)}
+.dp-art{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden}
+.dp-art.dp-tall{aspect-ratio:16/10}
+.dp-top .dp-art{min-height:260px}
 .dp-info{min-width:0;max-width:640px}
 .dp-meta{font-family:var(--sans);font-size:var(--fs-meta);letter-spacing:.1em;
   text-transform:uppercase;color:var(--ink-3);margin-top:var(--sp-3)}
@@ -917,10 +913,15 @@ body.has-account .anon-only{display:none!important}
   font-size:var(--fs-tiny);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
 .dp-save:hover{color:var(--ink)}
 .dp-save.on{color:var(--ink)}
-.dp-sections{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:var(--sp-6)}
+.dp-sections{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:var(--sp-6);margin-top:var(--sp-5)}
 .dp-aside{padding-top:6px}
 .dp-aside .vd-field:first-child{margin-top:0}
 .dp-list{margin-top:var(--sp-2)}
+.dp-gridlist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-4);margin-top:var(--sp-3)}
+.dp-card{display:block}
+.dp-card .dp-thumb{width:100%;margin-bottom:10px}
+.dp-card .dp-t{margin-top:0}
+.dp-card .dp-d{margin-bottom:0}
 .dp-item{display:grid;grid-template-columns:140px minmax(0,1fr) auto;gap:var(--sp-4);align-items:center;
   padding:var(--sp-4) 0;border-top:1px solid var(--line)}
 .dp-item:first-child{padding-top:0;border-top:none}
@@ -951,6 +952,7 @@ body.has-account .anon-only{display:none!important}
 
 @media (max-width:900px){
   .dp-top,.dp-sections,.dp-grid{grid-template-columns:1fr}
+  .dp-gridlist{grid-template-columns:1fr}
   .dp-item,.dp-ticketrow{grid-template-columns:1fr;gap:var(--sp-3)}
   .dp-go{white-space:normal}
 }
