@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.05.00';
+  var VERSION = '1.06.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -247,6 +247,7 @@
        anything short of it, which is what the locks on premium pages want */
     document.body.classList.add(lvl === 3 ? 'is-member' : 'is-guest');
     paintArt();
+    paintFavs();
     renderLogos();
     renderNav();
     renderVersion();
@@ -279,6 +280,40 @@
   }
   A.paintArt = paintArt;
   window.addEventListener('load', paintArt);
+
+  /* Corazón en cada tarjeta. Se inyecta aquí para no repetirlo en ocho páginas.
+     Por ahora sólo alterna visualmente: no persiste, así que el contador de
+     Favoritos de la home sigue siendo de utilería. */
+  function paintFavs() {
+    document.querySelectorAll('.ccard .art').forEach(function (art) {
+      if (art.querySelector('.fav')) return;
+      var b = document.createElement('button');
+      b.className = 'fav';
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Guardar en favoritos');
+      b.textContent = '♡';
+      b.addEventListener('click', function (e) {
+        /* la tarjeta entera es un <a>: sin esto, guardar te saca a la clase */
+        e.preventDefault();
+        e.stopPropagation();
+        var on = b.classList.toggle('on');
+        b.textContent = on ? '♥' : '♡';
+      });
+      art.appendChild(b);
+    });
+  }
+  A.paintFavs = paintFavs;
+  window.addEventListener('load', paintFavs);
+
+  /* El nombre de la serie navega a su página. Va delegado en el documento
+     porque las tarjetas se generan en distintos momentos. */
+  document.addEventListener('click', function (e) {
+    var s = e.target.closest && e.target.closest('.serie-link');
+    if (!s) return;
+    e.preventDefault();
+    e.stopPropagation();
+    location.href = s.getAttribute('data-href') || 'series.html';
+  });
 
   /* Cambia el wordmark de texto por el SVG en todas las marcas del sitio.
      Si el JS no corre, queda el texto "Anyara" — el logo nunca desaparece. */

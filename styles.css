@@ -11,6 +11,7 @@
   --gold-tint:#f7f1e5;
   --sand:#f5f2ec;
   --sand-2:#efeae1;
+  --wine:#7c2d38;   /* insignia "Nuevo" */
   --radius:14px;
   --maxw:1440px;
 }
@@ -183,15 +184,37 @@ h2{font-size:15px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+/* ---- tarjeta de clase ----
+   Imagen horizontal: las fotos del catálogo son tomas de cámara apaisadas,
+   así se aprovecha el encuadre en vez de recortarlo. Cada insignia tiene su
+   propia esquina para que nunca se encimen. */
 .ccard{cursor:pointer}
-.ccard .art{border-radius:var(--radius);height:280px;position:relative;overflow:hidden;margin-bottom:12px}
-.ccard.small .art{height:150px}
-.ccard .art .fav{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:14px}
-.ccard .art .len{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;padding:5px 10px;border-radius:100px;font-family:"Helvetica Neue",Arial,sans-serif}
+.ccard .art{border-radius:var(--radius);aspect-ratio:16/10;position:relative;overflow:hidden;margin-bottom:12px}
+.ccard.small .art{aspect-ratio:16/10}
+/* arriba-izq: nueva o gratis · arriba-der: favorito
+   abajo-izq: duración      · abajo-der: candado */
+.ccard .art .fav{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;
+  background:rgba(255,255,255,.92);border:none;cursor:pointer;padding:0;
+  display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--ink);z-index:3}
+.ccard .art .fav:hover{background:#fff}
+.ccard .art .fav.on{background:var(--gold);color:#fff}
+.ccard .art .len{position:absolute;bottom:12px;left:12px;top:auto;background:rgba(255,255,255,.94);
+  color:var(--ink);font-size:12px;font-weight:600;padding:5px 11px;border-radius:8px;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-variant-numeric:tabular-nums}
 .ccard .art .free{position:absolute;top:12px;left:12px;background:var(--gold);color:#fff;font-size:10px;letter-spacing:.1em;padding:5px 10px;border-radius:100px;font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase}
-.ccard .tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);font-family:"Helvetica Neue",Arial,sans-serif}
 .ccard .title{font-size:19px;margin:5px 0 3px}
 .ccard .meta{font-size:13px;color:var(--ink-2);font-family:"Helvetica Neue",Arial,sans-serif}
+/* nivel y serie, bajo la instructora */
+.ccard .lvl{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-2);margin-top:2px}
+.ccard .serie{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-3);margin-top:2px}
+/* no puede ser <a>: la tarjeta entera ya es un <a> y anidarlos rompe el HTML.
+   Es un span que navega por JS. */
+.ccard .serie-link{color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.ccard .serie-link:hover{color:var(--ink)}
+/* la disciplina baja a chip con borde */
+.ccard .tag{display:inline-block;margin-top:10px;border:1px solid var(--line);border-radius:100px;
+  padding:5px 12px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-2);font-family:"Helvetica Neue",Arial,sans-serif}
 
 /* color squares stand in for imagery */
 .ph{background:var(--sand)}
@@ -463,19 +486,18 @@ body.is-l1 .l23-only{display:none!important}
 body:not(.has-account) .account-only{display:none!important}
 body.has-account .anon-only{display:none!important}
 
-/* tasteful lock badge on catalog/recommendation cards — sits opposite .free/.len so it never overlaps */
-.ccard .art .locked{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.55);color:#fff;
+/* candado: abajo-derecha, la única esquina libre ahora que el corazón ocupa arriba-derecha */
+.ccard .art .locked{position:absolute;bottom:12px;right:12px;top:auto;background:rgba(0,0,0,.55);color:#fff;
   font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:100px;
   font-family:"Helvetica Neue",Arial,sans-serif;display:flex;align-items:center;gap:5px}
 
-/* ---------- "Nuevo" banner — sits ON the artwork, not a small corner badge ---------- */
-.ccard .art .nuevo{position:absolute;top:0;left:0;right:0;z-index:2;
-  background:var(--gold);color:#fff;text-align:center;
-  font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;font-weight:700;
-  letter-spacing:.28em;text-transform:uppercase;padding:9px 10px}
-/* push the duration chip clear of the banner */
-.ccard .art.has-nuevo .len,.ccard .art.has-nuevo .free{top:52px}
-.ccard .art.has-nuevo .locked{top:52px}
+/* ---------- "Nuevo": pill compacto arriba-izquierda ---------- */
+.ccard .art .nuevo{position:absolute;top:12px;left:12px;z-index:2;
+  background:var(--wine);color:#fff;border-radius:8px;
+  font-family:"Helvetica Neue",Arial,sans-serif;font-size:12px;font-weight:600;
+  padding:5px 11px}
+/* si la clase es nueva Y gratis, "Gratis" baja para no encimarse */
+.ccard .art .nuevo ~ .free{top:46px}
 
 /* ---------- "Tu bienvenida a Anyara" — 3-day personalised arc ---------- */
 .welcome3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}

@@ -152,13 +152,13 @@ var DISCIPLINAS = {
     ],
     empieza: ['somara-flow', 'somara-espalda'],
     clases: [
-      { slug:'somara-flow',        t:'Somara : Flow',              m:25, sub:'completo', date:'2026-08-05', free:false },
-      { slug:'somara-espalda',     t:'Somara : Espalda que respira', m:20, sub:'espalda',  date:'2026-08-14', free:false },
-      { slug:'somara-cuello',      t:'Somara : Cuello y hombros',  m:15, sub:'espalda',   date:'2026-07-30', free:false },
-      { slug:'somara-restaurativo',t:'Somara : Restaurativo',      m:40, sub:'completo',  date:'2026-07-24', free:false },
-      { slug:'somara-caderas',     t:'Somara : Caderas abiertas',  m:25, sub:'caderas',   date:'2026-07-11', free:false },
-      { slug:'somara-piernas',     t:'Somara : Piernas ligeras',   m:20, sub:'caderas',   date:'2026-06-28', free:false },
-      { slug:'somara-movilidad',   t:'Somara : Movilidad completa',m:30, sub:'completo',  date:'2026-06-09', free:false }
+      { slug:'somara-flow',        t:'Somara : Flow',              m:25, sub:'completo', date:'2026-08-05', free:false, lvl:'Principiante' },
+      { slug:'somara-espalda',     t:'Somara : Espalda que respira', m:20, sub:'espalda',  date:'2026-08-14', free:false, lvl:'Principiante', serie:'Core & Flexibilidad' },
+      { slug:'somara-cuello',      t:'Somara : Cuello y hombros',  m:15, sub:'espalda',   date:'2026-07-30', free:false, lvl:'Principiante' },
+      { slug:'somara-restaurativo',t:'Somara : Restaurativo',      m:40, sub:'completo',  date:'2026-07-24', free:false, lvl:'Intermedio' },
+      { slug:'somara-caderas',     t:'Somara : Caderas abiertas',  m:25, sub:'caderas',   date:'2026-07-11', free:false, lvl:'Intermedio', serie:'Core & Flexibilidad' },
+      { slug:'somara-piernas',     t:'Somara : Piernas ligeras',   m:20, sub:'caderas',   date:'2026-06-28', free:false, lvl:'Principiante' },
+      { slug:'somara-movilidad',   t:'Somara : Movilidad completa',m:30, sub:'completo',  date:'2026-06-09', free:false, lvl:'Intermedio' }
     ],
     coachDe: 'Renata Solís'
   }
@@ -201,12 +201,15 @@ function card(c) {
   var locked = !Anyara.canWatch({ free: c.free });
   return '<a href="' + href + '" class="ccard" data-sub="' + c.sub + '">' +
     '<div class="art gart ' + d + '">' +
-      (c.free ? '<span class="free">Gratis</span>' : '<span class="len">' + c.m + ' min</span>') +
+      (c.free ? '<span class="free">Gratis</span>' : '') +
+      '<span class="len">' + c.m + ':00</span>' +
       (locked ? '<span class="locked">🔒 Membresía</span>' : '') +
     '</div>' +
-    '<div class="tag">' + label.toUpperCase() + '</div>' +
     '<div class="title">' + c.t + '</div>' +
-    '<div class="meta">' + D.coachDe + ' · ' + fecha + '</div></a>';
+    '<div class="meta">' + D.coachDe + ' · ' + fecha + '</div>' +
+    '<div class="lvl">' + (c.lvl || 'Principiante') + '</div>' +
+    (c.serie ? '<div class="serie">Serie: <span class="serie-link" data-href="serie.html">' + c.serie + '</span></div>' : '') +
+    '<div class="tag">' + label.toUpperCase() + '</div></a>';
 }
 
 document.getElementById('classGrid').innerHTML = clases.map(card).join('');

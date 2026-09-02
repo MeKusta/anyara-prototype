@@ -150,6 +150,8 @@ var PAIR = { sculpt:'funcional', funcional:'sculpt', pilates:'pilatesmat', pilat
 var plan  = Anyara.welcomePlan();
 var today = Anyara.currentDay();
 var lvl   = Anyara.level();
+/* el plan sube de intensidad conforme avanzan los tres días */
+var LEVEL_BY_DAY = ['Principiante', 'Intermedio', 'Intermedio'];
 
 /* four classes for día N: two from the day's discipline, two from its pair */
 function dayClasses(dayIdx) {
@@ -209,12 +211,13 @@ plan.forEach(function (p, idx) {
                  : Anyara.classHref({ t:c.t, i:c.i, d:c.d, m:c.m, t3:dayNum });
         return '<a href="' + href + '" class="ccard">' +
           '<div class="art gart ' + c.d + '">' +
-            '<span class="len">' + c.m + ' min</span>' +
+            '<span class="len">' + c.m + ':00</span>' +
             (open ? '' : '<span class="locked">🔒 Día ' + dayNum + '</span>') +
           '</div>' +
-          '<div class="tag">' + (DISC_LABELS[c.d] || c.d).toUpperCase() + '</div>' +
           '<div class="title">' + c.t + '</div>' +
-          '<div class="meta">' + c.i + '</div></a>';
+          '<div class="meta">' + c.i + '</div>' +
+          '<div class="lvl">' + (LEVEL_BY_DAY[idx] || 'Principiante') + '</div>' +
+          '<div class="tag">' + (DISC_LABELS[c.d] || c.d).toUpperCase() + '</div></a>';
       }).join('') +
     '</div>';
   daysWrap.appendChild(block);
@@ -229,10 +232,14 @@ Anyara.FREE_CLASSES.forEach(function (f) {
 });
 document.getElementById('alwaysOpen').innerHTML = open3.map(function (c) {
   return '<a href="' + c.href + '" class="ccard">' +
-    '<div class="art gart ' + c.d + '" style="height:170px"><span class="free">' + c.tag + '</span></div>' +
-    '<div class="tag">' + (DISC_LABELS[c.d] || c.d).toUpperCase() + ' · ' + c.m + ' MIN</div>' +
+    '<div class="art gart ' + c.d + '">' +
+      '<span class="free">' + c.tag + '</span>' +
+      '<span class="len">' + c.m + ':00</span>' +
+    '</div>' +
     '<div class="title">' + c.t + '</div>' +
-    '<div class="meta">' + c.i + '</div></a>';
+    '<div class="meta">' + c.i + '</div>' +
+    '<div class="lvl">Principiante</div>' +
+    '<div class="tag">' + (DISC_LABELS[c.d] || c.d).toUpperCase() + '</div></a>';
 }).join('');
 
 /* ---- player del video de Mariana (demo) ---- */
