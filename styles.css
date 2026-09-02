@@ -961,7 +961,10 @@ body.has-account .anon-only{display:none!important}
 .dp-top{display:grid;gap:var(--sp-5)}
 .dp-art{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden}
 .dp-art.dp-tall{aspect-ratio:16/10}
-.dp-top .dp-art{min-height:260px}
+/* La portada de reto y serie usa la misma altura que el carrusel de la home:
+   antes era 16:9 a ancho completo, o sea casi una pantalla entera de foto
+   antes de llegar al título. */
+.dp-top .dp-art{aspect-ratio:auto;height:clamp(460px,66vh,640px);min-height:0}
 .dp-info{min-width:0;max-width:640px}
 /* los metadatos se leen como una frase, no como una etiqueta */
 .dp-meta{font-family:var(--sans);font-size:var(--fs-note);letter-spacing:0;
