@@ -261,7 +261,7 @@ h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em, .serif-i{
 /* un solo trazo: vacío por defecto, relleno al marcarlo */
 .fav svg{width:17px;height:17px;display:block;fill:none;stroke:currentColor;stroke-width:1.8}
 .fav.on svg{fill:currentColor}
-.ccard .art .len{position:absolute;bottom:12px;left:12px;top:auto;background:rgba(255,255,255,.94);
+.len{position:absolute;bottom:12px;left:12px;top:auto;background:rgba(255,255,255,.94);
   color:var(--ink);font-size:var(--fs-tiny);font-weight:600;padding:5px 11px;border-radius:8px;
   font-family:var(--sans);font-variant-numeric:tabular-nums}
 .ccard .art .free{position:absolute;top:12px;left:12px;background:var(--gold);color:#fff;font-size:var(--fs-micro);letter-spacing:.1em;padding:5px 10px;border-radius:100px;font-family:var(--sans);text-transform:uppercase}
@@ -666,17 +666,19 @@ body.has-account .anon-only{display:none!important}
 .trialbox .tb-d{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);line-height:1.55}
 
 /* ---------- Trial progress strip (level 2 homepage) ---------- */
-.trialstrip{display:flex;align-items:center;gap:20px;border:1px solid var(--line);
-  border-radius:var(--radius);padding:18px 22px;background:#fff}
-.trialstrip:hover{border-color:var(--gold)}
-.trialstrip .ts-num{width:64px;height:64px;border-radius:50%;background:var(--ink);color:#fff;flex:0 0 auto;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
-.trialstrip .ts-num b{font-family:var(--serif);font-size:var(--fs-sub)}
-.trialstrip .ts-num span{font-family:var(--sans);font-size:var(--fs-micro);
-  letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin-top:3px}
-.trialstrip .ts-b{flex:1}
-.trialstrip .ts-t{font-family:var(--serif);font-size:var(--fs-card);margin-bottom:3px}
-.trialstrip .ts-d{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2)}
+/* El avance de la prueba es información, no un tablero: eyebrow, título y
+   una acción de texto. Sin caja, sin círculo negro, sin pill al borde. */
+.trialstrip{display:block;padding:0;border:none;background:none;max-width:62ch}
+.trialstrip .ts-num{font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold-deep);margin-bottom:8px}
+.trialstrip .ts-num b{font-weight:inherit}
+.trialstrip .ts-t{font-family:var(--serif);font-size:var(--fs-head);font-weight:400;
+  line-height:1.15;margin-bottom:8px}
+.trialstrip .ts-d{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);
+  line-height:1.6}
+.trialstrip .btn{margin-top:var(--sp-3);background:none;color:var(--ink);padding:0;
+  border-bottom:1px solid var(--line);border-radius:0;font-size:var(--fs-meta);font-weight:500}
+.trialstrip:hover .btn{border-bottom-color:var(--gold)}
 
 /* ---------- Tres días page ---------- */
 .tw-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--sp-5);align-items:stretch}
@@ -697,16 +699,17 @@ body.has-account .anon-only{display:none!important}
 .td-step.done{background:var(--sand);border-color:var(--line);color:var(--ink-2)}
 .td-step.now{background:var(--ink);border-color:var(--ink);color:#fff}
 
-.intro-card{display:flex;gap:24px;align-items:center;border:1px solid var(--line);
-  border-radius:var(--radius);overflow:hidden;cursor:pointer;background:#fff}
-.intro-card:hover{border-color:var(--gold)}
-.intro-card .ic-art{width:330px;height:200px;flex:0 0 auto;position:relative;
+.intro-card{display:flex;gap:28px;align-items:center;border:none;
+  border-radius:0;overflow:visible;cursor:pointer;background:#fff}
+.intro-card:hover .ic-t{color:var(--gold-deep)}
+.intro-card .ic-art{width:360px;aspect-ratio:16/10;height:auto;flex:0 0 auto;position:relative;
+  border-radius:var(--radius);overflow:hidden;
   display:flex;align-items:center;justify-content:center}
 .intro-card .ic-play{width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.92);
   display:flex;align-items:center;justify-content:center;font-size:var(--fs-sub);color:var(--ink)}
-.intro-card .ic-len{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.55);color:#fff;
+.intro-card .ic-len{position:absolute;bottom:12px;left:12px;background:rgba(255,255,255,.94);color:var(--ink);font-weight:600;
   font-family:var(--sans);font-size:var(--fs-label);padding:5px 10px;border-radius:100px}
-.intro-card .ic-b{padding:22px 26px 22px 0;flex:1}
+.intro-card .ic-b{padding:0;flex:0 1 auto;min-width:0;max-width:52ch}
 .intro-card .ic-k{font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.18em;
   text-transform:uppercase;color:var(--gold-deep);margin-bottom:7px}
 .intro-card .ic-t{font-family:var(--serif);font-size:var(--fs-title);margin-bottom:8px}
@@ -733,17 +736,21 @@ body.has-account .anon-only{display:none!important}
 .w3 .w3-meta{font-family:var(--sans);font-size:var(--fs-tiny);letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink-3);margin-top:10px}
 
-.exits{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.exit{border:1px solid var(--line);border-radius:var(--radius);padding:26px}
-.exit.feat{border-color:var(--gold);background:var(--gold-tint)}
+/* Dos opciones que sí se comparan, así que siguen lado a lado — pero la
+   jerarquía la dan el filete, el aire y el peso del título, no dos rectángulos
+   redondeados con borde y relleno dorado. */
+.exits{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-6);align-items:start}
+.exit{border:none;border-top:1px solid var(--line);border-radius:0;padding:var(--sp-4) 0 0}
+/* la opción recomendada pesa por tipografía, no por caja */
+.exit.feat{border-top-color:var(--ink)}
+.exit.feat .ex-t{font-size:var(--fs-head)}
 .exit .ex-k{font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.18em;
   text-transform:uppercase;color:var(--gold-deep);margin-bottom:8px}
-.exit .ex-t{font-family:var(--serif);font-size:var(--fs-sub);margin-bottom:10px}
+.exit .ex-t{font-family:var(--serif);font-size:var(--fs-sub);margin-bottom:10px;line-height:1.2}
 .exit .ex-d{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);
   line-height:1.6;margin-bottom:16px}
-.exit .ex-state{display:inline-block;font-family:var(--sans);font-size:var(--fs-tiny);
-  letter-spacing:.1em;text-transform:uppercase;background:var(--sand);color:var(--ink-2);
-  padding:8px 14px;border-radius:100px}
+.exit .ex-state{display:block;font-family:var(--sans);font-size:var(--fs-meta);
+  color:var(--ink-3);margin-top:var(--sp-3)}
 
 /* ---------- Full-width cover (coach + discipline pages) ---------- */
 .cover{position:relative;height:clamp(300px,42vh,420px);display:flex;align-items:flex-end;
@@ -983,6 +990,7 @@ body.has-account .anon-only{display:none!important}
   padding:var(--sp-4) 0;border-top:1px solid var(--line)}
 .dp-item:first-child{padding-top:0;border-top:none}
 .dp-thumb{display:block;position:relative;aspect-ratio:16/10;border-radius:8px;overflow:hidden}
+.dp-thumb .len{left:auto;right:12px}
 .dp-thumb .dp-play{position:absolute;left:14px;bottom:14px;width:42px;height:42px;border-radius:50%;
   background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;
   font-size:var(--fs-meta);color:var(--ink)}
@@ -1031,16 +1039,18 @@ body.has-account .anon-only{display:none!important}
 .subchip .sc-c{display:block;font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
 
 /* trailer de disciplina — mismo lenguaje que la intro de los tres días */
-.trailer-card{display:flex;gap:24px;align-items:center;border:1px solid var(--line);
-  border-radius:var(--radius);overflow:hidden;cursor:pointer;background:#fff}
-.trailer-card:hover{border-color:var(--gold)}
-.trailer-card .tc-art{width:300px;height:180px;flex:0 0 auto;position:relative;
+.trailer-card{display:flex;gap:28px;align-items:center;border:none;
+  border-radius:0;cursor:pointer;background:none}
+.trailer-card:hover .tc-t{color:var(--gold-deep)}
+.trailer-card .tc-art{width:360px;aspect-ratio:16/10;height:auto;flex:0 0 auto;position:relative;
+  border-radius:var(--radius);overflow:hidden;
   display:flex;align-items:center;justify-content:center}
 .trailer-card .tc-play{width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.92);
   display:flex;align-items:center;justify-content:center;font-size:var(--fs-card);color:var(--ink)}
-.trailer-card .tc-len{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.55);color:#fff;
-  font-family:var(--sans);font-size:var(--fs-label);padding:5px 10px;border-radius:100px}
-.trailer-card .tc-b{padding:20px 26px 20px 0;flex:1}
+.trailer-card .tc-len{position:absolute;bottom:12px;left:12px;background:rgba(255,255,255,.94);
+  color:var(--ink);font-family:var(--sans);font-size:var(--fs-tiny);font-weight:600;
+  padding:5px 11px;border-radius:8px}
+.trailer-card .tc-b{padding:0;flex:0 1 auto;min-width:0;max-width:52ch}
 .trailer-card .tc-k{font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.18em;
   text-transform:uppercase;color:var(--gold-deep);margin-bottom:7px}
 .trailer-card .tc-t{font-family:var(--serif);font-size:var(--fs-sub);margin-bottom:8px}
