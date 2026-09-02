@@ -27,7 +27,7 @@
 
 <div class="wrap section-sm">
   <div class="eyebrow">Catálogo</div>
-  <h1 style="font-size:38px">Encuentra tu balance</h1>
+  <h1 style="font-size:var(--fs-page)">Encuentra tu balance</h1>
 </div>
 
 <div class="wrap">
@@ -73,7 +73,7 @@
     </span>
     <span class="btn btn-ghost">Conocer la disciplina ▸</span>
   </a>
-  <p id="resultCount" style="font-family:'Helvetica Neue',Arial;font-size:13px;color:var(--ink-2);margin-bottom:16px">8 clases</p>
+  <p id="resultCount" style="font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);margin-bottom:16px">8 clases</p>
   <!-- data-date ordena el catálogo (más reciente primero); data-props alimenta el filtro -->
   <div class="grid4" id="results">
     <a href="clase.html?t=20%20min%20%C2%B7%20Sculpt%20%3A%20Glut&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=20" class="ccard" data-d="sculpt" data-date="2026-08-17" data-props="pesas,tapete"><div class="art gart sculpt"><span class="nuevo">Nuevo</span><span class="len">20:00</span></div><div class="title">20 min · Sculpt : Glut</div><div class="meta">Valeria Méndez</div><div class="lvl">Intermedio</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Fuerza Total</span></div><div class="tag disc-link" data-d="sculpt">SCULPT</div></a>
@@ -95,7 +95,7 @@
     <a href="serie.html" class="compcard" data-d="sculpt" data-date="2026-07-15"><div class="art gart sculpt"><span class="count">3 clases</span></div><div class="discs"><span class="disc-link" data-d="sculpt">Sculpt</span>/<span class="disc-link" data-d="funcional">Funcional</span></div><div class="ct">Serie · Fuerza Total</div></a>
     <a href="serie.html" class="compcard" data-d="pilatesmat" data-date="2026-05-02"><div class="art gart pilatesmat"><span class="count">3 clases</span></div><div class="discs"><span class="disc-link" data-d="pilatesmat">Pilates Mat</span>/<span class="disc-link" data-d="somara">Somara</span></div><div class="ct">Serie · Core &amp; Flexibilidad</div></a>
   </div>
-  <p id="noResults" style="display:none;font-family:'Helvetica Neue',Arial;color:var(--ink-2);padding:30px 0">
+  <p id="noResults" style="display:none;font-family:var(--sans);color:var(--ink-2);padding:30px 0">
     Todavía no hay clases en esta disciplina. <b>Próximamente.</b>
   </p>
 </div>
@@ -112,7 +112,7 @@
 <div class="overlay" id="ov">
   <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
   <div class="overlay-top">
-    <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…" autofocus></div>
+    <div class="search-field"><span style="font-size:var(--fs-title);color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…" autofocus></div>
     <div class="recent"><div class="lab">Búsquedas recientes</div><div class="chips"><span class="chip">Sculpt glúteos</span><span class="chip">Pilates 20 min</span><span class="chip">Valeria Méndez</span></div></div>
     <div class="recent"><div class="lab">Popular ahora</div><div class="chips"><span class="chip">Barre</span><span class="chip">Funcional HIIT</span><span class="chip">Restaurativo</span></div></div>
   </div>

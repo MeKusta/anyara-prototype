@@ -31,8 +31,8 @@
     <!-- 1 · reason -->
     <section class="flow-step on" id="s1">
       <div class="eyebrow">Membresía</div>
-      <h1 style="font-size:34px;margin-bottom:10px">Antes de que te vayas…</h1>
-      <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);line-height:1.6">
+      <h1 style="font-size:var(--fs-head);margin-bottom:10px">Antes de que te vayas…</h1>
+      <p style="font-family:var(--sans);font-size:var(--fs-body);color:var(--ink-2);line-height:1.6">
         Nos ayuda mucho saber por qué. Con eso mejoramos lo que ofrecemos — y quizá encontremos algo
         que se ajuste mejor a ti.
       </p>
@@ -50,8 +50,8 @@
     <!-- 2 · save offer -->
     <section class="flow-step" id="s2">
       <div class="eyebrow">Espera</div>
-      <h1 style="font-size:34px;margin-bottom:10px" id="saveTitle">¿Y si solo la pausas?</h1>
-      <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);line-height:1.6" id="saveLead">
+      <h1 style="font-size:var(--fs-head);margin-bottom:10px" id="saveTitle">¿Y si solo la pausas?</h1>
+      <p style="font-family:var(--sans);font-size:var(--fs-body);color:var(--ink-2);line-height:1.6" id="saveLead">
         No tienes que decidir entre quedarte o perderlo todo. Congela tu membresía un mes: no se te cobra
         nada, y tu progreso, tus favoritos y tus playlists te esperan intactas.
       </p>
@@ -76,14 +76,14 @@
     <!-- 3 · final confirm -->
     <section class="flow-step" id="s3">
       <div class="eyebrow">Confirmar</div>
-      <h1 style="font-size:34px;margin-bottom:10px">Cancelar tu membresía</h1>
-      <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);line-height:1.6;margin-bottom:20px">
+      <h1 style="font-size:var(--fs-head);margin-bottom:10px">Cancelar tu membresía</h1>
+      <p style="font-family:var(--sans);font-size:var(--fs-body);color:var(--ink-2);line-height:1.6;margin-bottom:20px">
         Al cancelar pierdes el acceso a las clases de miembros, a los retos y a tus series guiadas.
         Tu biblioteca y tu progreso se guardan por si vuelves.
       </p>
       <div class="panel" style="margin-bottom:22px">
-        <div class="setting-row" style="border-top:none"><div class="l"><b>Acceso hasta</b><span>Sigues siendo miembro hasta el final del periodo pagado</span></div><span id="endDate" style="font-family:'Helvetica Neue',Arial;font-weight:600">—</span></div>
-        <div class="setting-row"><div class="l"><b>Tu biblioteca</b><span>Se conserva por 12 meses</span></div><span style="font-family:'Helvetica Neue',Arial;font-weight:600">Se guarda</span></div>
+        <div class="setting-row" style="border-top:none"><div class="l"><b>Acceso hasta</b><span>Sigues siendo miembro hasta el final del periodo pagado</span></div><span id="endDate" style="font-family:var(--sans);font-weight:600">—</span></div>
+        <div class="setting-row"><div class="l"><b>Tu biblioteca</b><span>Se conserva por 12 meses</span></div><span style="font-family:var(--sans);font-weight:600">Se guarda</span></div>
       </div>
       <button class="btn btn-dark btn-block" onclick="doCancel()">Confirmar cancelación</button>
       <a href="profile.html" class="btn btn-ghost btn-block" style="margin-top:10px">Mejor me quedo</a>
@@ -93,8 +93,8 @@
     <section class="flow-step" id="s4">
       <div style="text-align:center;padding:20px 0">
         <div class="eyebrow">Listo</div>
-        <h1 style="font-size:34px;margin-bottom:12px">Tu membresía fue cancelada.</h1>
-        <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);line-height:1.6;margin-bottom:26px">
+        <h1 style="font-size:var(--fs-head);margin-bottom:12px">Tu membresía fue cancelada.</h1>
+        <p style="font-family:var(--sans);font-size:var(--fs-body);color:var(--ink-2);line-height:1.6;margin-bottom:26px">
           Gracias por haber entrenado con nosotras. Puedes seguir viendo tus clases gratuitas cuando
           quieras — y si vuelves, tu biblioteca sigue aquí.
         </p>
@@ -107,8 +107,8 @@
     <section class="flow-step" id="s5">
       <div style="text-align:center;padding:20px 0">
         <div class="eyebrow">Nos alegra</div>
-        <h1 style="font-size:34px;margin-bottom:12px" id="savedTitle">Tu membresía está en pausa.</h1>
-        <p style="font-family:'Helvetica Neue',Arial;font-size:15px;color:var(--ink-2);line-height:1.6;margin-bottom:26px" id="savedLead">
+        <h1 style="font-size:var(--fs-head);margin-bottom:12px" id="savedTitle">Tu membresía está en pausa.</h1>
+        <p style="font-family:var(--sans);font-size:var(--fs-body);color:var(--ink-2);line-height:1.6;margin-bottom:26px" id="savedLead">
           No te cobraremos nada este mes. Todo lo tuyo te espera y puedes reactivar cuando quieras.
         </p>
         <a href="index.html" class="btn btn-gold">Volver a mi espacio</a>
@@ -130,7 +130,7 @@
 <div class="overlay" id="ov">
   <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
   <div class="overlay-top">
-    <div class="search-field"><span style="font-size:26px;color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+    <div class="search-field"><span style="font-size:var(--fs-title);color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
   </div>
 </div>
 

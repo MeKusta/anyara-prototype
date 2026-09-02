@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<title>Anyara — Sistema de diseño</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* sólo lo que existe para mostrar el sistema, no forma parte de él */
+.sg-how{background:var(--sand);border-radius:var(--radius);padding:26px 30px;margin-bottom:var(--sp-6)}
+.sg-how code{font-family:ui-monospace,Menlo,monospace;font-size:var(--fs-meta);
+  background:#fff;border:1px solid var(--line);border-radius:5px;padding:2px 7px}
+.sg-how ol{margin:12px 0 0 20px;font-family:var(--sans);font-size:var(--fs-note);
+  color:var(--ink-2);line-height:1.9}
+.sg-sec{border-top:1px solid var(--line);padding-top:var(--sp-4);margin-top:var(--sp-6)}
+.sg-swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.sw{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.sw i{display:block;height:62px}
+.sw b{display:block;font-family:ui-monospace,Menlo,monospace;font-size:var(--fs-tiny);
+  font-weight:400;color:var(--ink);padding:9px 11px 2px}
+.sw span{display:block;font-family:ui-monospace,Menlo,monospace;font-size:11px;
+  color:var(--ink-3);padding:0 11px 10px}
+.sg-type{display:grid;gap:4px}
+.sg-row{display:grid;grid-template-columns:130px 62px 1fr;gap:18px;align-items:baseline;
+  padding:11px 0;border-bottom:1px solid var(--line-2)}
+.sg-row code{font-family:ui-monospace,Menlo,monospace;font-size:var(--fs-tiny);color:var(--ink-2)}
+.sg-row .px{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--ink-3)}
+.sg-space{display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap}
+.sg-space div{text-align:center;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--ink-3)}
+.sg-space i{display:block;background:var(--gold);border-radius:3px;margin-bottom:7px}
+.sg-demo{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:var(--sp-4)}
+.sg-note{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-3);margin-bottom:var(--sp-3)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link">Series</a>
+      <a href="retos.html" class="nav-link">Retos</a>
+      <a href="events.html" class="nav-link">Eventos</a>
+      <a href="estilo.html" class="nav-link active" style="color:var(--ink-3)">(Estilo)</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap section-sm">
+  <div class="eyebrow">Sistema de diseño</div>
+  <h1 style="font-size:var(--fs-page)">Los tokens del prototipo</h1>
+</div>
+
+<div class="wrap">
+  <div class="sg-how">
+    <div style="font-family:var(--serif);font-size:var(--fs-sub);margin-bottom:6px">Cómo cambiar el look sin escribir código</div>
+    <p style="font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);line-height:1.6;max-width:640px">
+      Todo lo de esta página sale de un solo bloque <code>:root</code> al inicio de
+      <code>styles.css</code>. No hay otra fuente: cambias un valor ahí y se mueve el sitio entero
+      y esta página al mismo tiempo, porque son lo mismo.
+    </p>
+    <ol>
+      <li>Abre <code>styles.css</code> y busca <code>:root{</code> — está en las primeras líneas.</li>
+      <li>Cambia el valor que quieras, por ejemplo <code>--gold:#c9a86a</code>.</li>
+      <li>Guarda y recarga. Listo.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ===== COLOR ===== -->
+<div class="wrap sg-sec">
+  <div class="row-head"><h2>Color</h2></div>
+  <p class="sg-note">La paleta base. <code style="font-family:ui-monospace,Menlo,monospace">--ink</code> es el texto, <code style="font-family:ui-monospace,Menlo,monospace">--gold</code> la marca, <code style="font-family:ui-monospace,Menlo,monospace">--line</code> los bordes.</p>
+  <div class="sg-swatches" id="colors"></div>
+</div>
+
+<!-- ===== DISCIPLINAS ===== -->
+<div class="wrap sg-sec">
+  <div class="row-head"><h2>Colores de disciplina</h2></div>
+  <p class="sg-note">Cada disciplina define <code style="font-family:ui-monospace,Menlo,monospace">--dc</code>, que alimenta el punto del chip y el degradado que queda bajo la foto.</p>
+  <div class="sg-swatches" id="discs"></div>
+</div>
+
+<!-- ===== TIPOGRAFÍA ===== -->
+<div class="wrap sg-sec">
+  <div class="row-head"><h2>Tipografía</h2></div>
+  <p class="sg-note">La escala está nombrada por rol, no por tamaño: mueve <code style="font-family:ui-monospace,Menlo,monospace">--fs-head</code> y se mueven todos los encabezados de sección a la vez.</p>
+  <div class="sg-type" id="type"></div>
+</div>
+
+<!-- ===== ESPACIADO ===== -->
+<div class="wrap sg-sec">
+  <div class="row-head"><h2>Espaciado</h2></div>
+  <div class="sg-space" id="space"></div>
+</div>
+
+<!-- ===== COMPONENTES ===== -->
+<div class="wrap sg-sec">
+  <div class="row-head"><h2>Botones</h2></div>
+  <div class="sg-demo">
+    <span class="btn btn-gold">Botón dorado</span>
+    <span class="btn btn-dark">Botón oscuro</span>
+    <span class="btn btn-ghost">Botón fantasma</span>
+  </div>
+</div>
+
+<div class="wrap sg-sec">
+  <div class="row-head"><h2>Insignias sobre la imagen</h2></div>
+  <p class="sg-note">Cada una tiene su esquina asignada, para que nunca se encimen.</p>
+  <div class="grid4">
+    <div class="ccard">
+      <div class="art gart sculpt">
+        <span class="nuevo">Nuevo</span>
+        <button class="fav" type="button">♡</button>
+        <span class="len">20:00</span>
+        <span class="locked">🔒 Membresía</span>
+      </div>
+      <div class="title">Las cuatro a la vez</div>
+      <div class="meta">arriba-izq · arriba-der · abajo-izq · abajo-der</div>
+    </div>
+    <div class="ccard">
+      <div class="art gart barre">
+        <span class="free">Gratis</span>
+        <span class="len">45:00</span>
+      </div>
+      <div class="title">Clase abierta</div>
+      <div class="meta">Gratis reemplaza a Nuevo</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap sg-sec">
+  <div class="row-head"><h2>Tarjetas</h2></div>
+  <p class="sg-note">Clase en 16:10; compilación en 4:5. La forma sola ya dice cuál es cuál.</p>
+  <div class="grid4">
+    <a href="#" class="ccard">
+      <div class="art gart pilates"><span class="len">40:00</span></div>
+      <div class="title">Tarjeta de clase</div>
+      <div class="meta">Instructora</div>
+      <div class="lvl">Intermedio</div>
+      <div class="serie">Serie: <span class="serie-link" data-href="serie.html">Fuerza Total</span></div>
+      <div class="tag disc-link" data-d="pilates">PILATES</div>
+    </a>
+    <a href="#" class="compcard">
+      <div class="art gart somara"><span class="count">6 clases</span></div>
+      <div class="discs"><span class="disc-link" data-d="somara">Somara</span>/<span class="disc-link" data-d="barre">Barre</span></div>
+      <div class="ct">Tarjeta de compilación</div>
+    </a>
+  </div>
+</div>
+
+<div class="wrap sg-sec" style="padding-bottom:var(--sp-6)">
+  <div class="row-head"><h2>Chips y pills</h2></div>
+  <div class="pillbar" style="border:none">
+    <span class="pill active">Activo</span>
+    <span class="pill barre"><span class="dot"></span>Barre</span>
+    <span class="pill somara"><span class="dot"></span>Somara</span>
+    <span class="pill sculpt"><span class="dot"></span>Sculpt</span>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="coaches.html">Coaches</a></div>
+    <div><h5>Prototipo</h5><a href="estilo.html">Sistema de diseño</a><a href="onboarding.html">Onboarding</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<script src="anyara.js"></script>
+<script>
+/* Lee los tokens del propio styles.css. Si agregas uno, aparece aquí solo:
+   la página nunca se queda vieja porque no tiene su propia copia. */
+function rootTokens() {
+  var out = [];
+  for (var i = 0; i < document.styleSheets.length; i++) {
+    var sheet = document.styleSheets[i], rules;
+    try { rules = sheet.cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var r = rules[j];
+      if (!r.selectorText || r.selectorText !== ':root') continue;
+      for (var k = 0; k < r.style.length; k++) {
+        var name = r.style[k];
+        if (name.indexOf('--') !== 0) continue;
+        out.push({ name: name, value: r.style.getPropertyValue(name).trim() });
+      }
+    }
+  }
+  return out;
+}
+
+var tokens = rootTokens();
+function pick(test) { return tokens.filter(test); }
+
+/* ---- color ---- */
+var colores = pick(function (t) {
+  return !/^--(fs|sp)-/.test(t.name) && !/^--(radius|maxw|serif|sans)$/.test(t.name);
+});
+document.getElementById('colors').innerHTML = colores.map(function (t) {
+  return '<div class="sw"><i style="background:' + t.value + '"></i>' +
+    '<b>' + t.name + '</b><span>' + t.value + '</span></div>';
+}).join('');
+
+/* ---- disciplinas: --dc vive en cada clase, no en :root ---- */
+var DISCS = ['barre','funcional','pilatesmat','pilates','sculpt','somara','tone'];
+document.getElementById('discs').innerHTML = DISCS.map(function (d) {
+  var probe = document.createElement('div');
+  probe.className = d; probe.style.display = 'none';
+  document.body.appendChild(probe);
+  var c = getComputedStyle(probe).getPropertyValue('--dc').trim();
+  probe.remove();
+  /* data-art marcado de antemano para que paintArt no le ponga foto encima:
+     aquí lo que importa es ver el color, no la imagen */
+  return '<div class="sw"><i class="gart ' + d + '" data-art="1"></i>' +
+    '<b>.' + d + '</b><span>' + c + '</span></div>';
+}).join('');
+
+/* ---- tipografía ---- */
+var ROL = {
+  '--fs-micro':'Insignias diminutas', '--fs-tiny':'Botones, chips',
+  '--fs-label':'Eyebrows, etiquetas', '--fs-meta':'Instructora, fechas',
+  '--fs-note':'Descripciones', '--fs-body':'Párrafos', '--fs-card':'Título de tarjeta',
+  '--fs-sub':'Subtítulos', '--fs-title':'Títulos de bloque', '--fs-head':'Encabezado de sección',
+  '--fs-page':'Título de página', '--fs-hero':'H1 de portada'
+};
+document.getElementById('type').innerHTML = pick(function (t) {
+  return /^--fs-/.test(t.name);
+}).map(function (t) {
+  return '<div class="sg-row"><code>' + t.name + '</code>' +
+    '<span class="px">' + t.value + '</span>' +
+    '<span style="font-size:' + t.value + ';font-family:var(--serif)">' +
+      (ROL[t.name] || 'Muestra') + '</span></div>';
+}).join('');
+
+/* ---- espaciado ---- */
+document.getElementById('space').innerHTML = pick(function (t) {
+  return /^--sp-/.test(t.name);
+}).map(function (t) {
+  return '<div><i style="width:' + t.value + ';height:' + t.value + '"></i>' +
+    t.name.replace('--sp-', '') + '<br>' + t.value + '</div>';
+}).join('');
+</script>
+</body>
+</html>
