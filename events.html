@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=1200">
-<title>Anyara — Events</title>
+<title>Anyara — Eventos</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -27,40 +27,70 @@
 </header>
 
 <div class="wrap section-sm">
-  <div class="eyebrow">Eventos</div>
-  <h1 style="font-size:var(--fs-page)">Events</h1>
-</div>
-
-<!-- Featured carousel -->
-<div class="wrap section-sm">
-  <div class="event-hero g5">
-    <div>
-      <div class="eyebrow">Evento destacado · 24 Ago</div>
-      <h1 style="color:#fff;font-size:var(--fs-page)">Masterclass en vivo: Barre & Breathwork</h1>
-      <p style="color:rgba(255,255,255,.85);font-family:var(--sans);margin-top:8px">Con Valeria Méndez · Estudio Anyara, CDMX</p>
-      <div style="margin-top:18px">
-        <a href="#" class="btn btn-gold">Reservar lugar</a>
-        <a href="#" class="btn btn-ghost" style="border-color:rgba(255,255,255,.5);color:#fff" onclick="addCal(event,this)">📅 Agregar a mi calendario</a>
+  <div class="dp-grid">
+    <div class="dp-info">
+      <div class="vd-cat">EVENTO · 24 AGO</div>
+      <h1 class="vd-title">Masterclass en vivo:<br>Barre & Breathwork</h1>
+      <div class="vd-instr"><a href="coach.html">Valeria Méndez</a></div>
+      <div class="dp-meta">24 agosto · 19:00</div>
+      <div class="vd-body" style="margin-top:var(--sp-2)">Estudio Anyara, CDMX</div>
+      <div class="dp-cta-row">
+        <a href="#" class="btn btn-dark">Reservar lugar →</a>
+        <button class="dp-save" onclick="addCal(event,this)">Agregar a mi calendario</button>
       </div>
-      <div class="carousel-dots"><i class="on"></i><i></i><i></i></div>
     </div>
+    <div class="dp-art gart barre"></div>
   </div>
-</div>
 
-<!-- Tickets below, immediately visible -->
-<div class="wrap section">
-  <div class="row-head"><h2>Tus boletos</h2></div>
-  <div class="ticket">
-    <div class="date"><b>24</b><span>Ago</span></div>
-    <div class="info"><div class="t">Masterclass: Barre &amp; Breathwork</div><div class="m">7:00 PM · Estudio Anyara, CDMX · Fila A</div></div>
-    <a href="#" class="btn btn-ghost" onclick="addCal(event,this)">📅 Calendario</a>
-    <button class="btn btn-ghost" onclick="showTicket('Masterclass: Barre &amp; Breathwork','24 Ago · 7:00 PM · Estudio Anyara, CDMX · Fila A','ANY-4KQ2-8817')">Ver boleto</button>
-  </div>
-  <div class="ticket">
-    <div class="date"><b>07</b><span>Sep</span></div>
-    <div class="info"><div class="t">Retiro de fin de semana: Volver a Ti</div><div class="m">Todo el día · Valle de Bravo · 2 personas</div></div>
-    <a href="#" class="btn btn-ghost" onclick="addCal(event,this)">📅 Calendario</a>
-    <button class="btn btn-ghost" onclick="showTicket('Retiro: Volver a Ti','07 Sep · Todo el día · Valle de Bravo · 2 personas','ANY-9RM5-2043')">Ver boleto</button>
+  <div class="vd-rule"></div>
+
+  <div class="dp-sections">
+    <div>
+      <h2 class="vd-h">Sobre este evento</h2>
+      <p class="vd-body">
+        Una práctica en vivo que abre con trabajo de barra y cierra con una secuencia de respiración guiada.
+        La idea es salir fuerte, más suelta y con una cadencia que puedas llevarte al resto de la semana.
+      </p>
+
+      <div class="vd-rule"></div>
+
+      <h2 class="vd-h">Tus boletos</h2>
+      <div class="dp-ticketlist">
+        <div class="dp-ticketrow">
+          <div class="dp-datebox"><b>24</b><span>Ago</span></div>
+          <div>
+            <div class="dp-t">Masterclass: Barre & Breathwork</div>
+            <div class="dp-d">19:00 · Estudio Anyara, CDMX · Fila A</div>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <button class="dp-save" onclick="addCal(event,this)">Calendario</button>
+            <button class="dp-save" onclick="showTicket('Masterclass: Barre &amp; Breathwork','24 Ago · 19:00 · Estudio Anyara, CDMX · Fila A','ANY-4KQ2-8817')">Ver boleto →</button>
+          </div>
+        </div>
+        <div class="dp-ticketrow">
+          <div class="dp-datebox"><b>07</b><span>Sep</span></div>
+          <div>
+            <div class="dp-t">Retiro de fin de semana: Volver a Ti</div>
+            <div class="dp-d">Todo el día · Valle de Bravo · 2 personas</div>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <button class="dp-save" onclick="addCal(event,this)">Calendario</button>
+            <button class="dp-save" onclick="showTicket('Retiro: Volver a Ti','07 Sep · Todo el día · Valle de Bravo · 2 personas','ANY-9RM5-2043')">Ver boleto →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dp-aside">
+      <div class="vd-field">
+        <div class="k">Lugar</div>
+        <div class="v">Estudio Anyara, CDMX</div>
+      </div>
+      <div class="vd-field">
+        <div class="k">Formato</div>
+        <div class="v">Presencial · cupo limitado</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -81,7 +111,6 @@
   </div>
 </div>
 
-<!-- ===== BOLETO CON QR ===== -->
 <div class="modal-scrim" id="tk">
   <div class="modal qr-modal">
     <button class="x" onclick="document.getElementById('tk').classList.remove('open')">✕</button>
@@ -96,24 +125,18 @@
 
 <script src="anyara.js"></script>
 <script>
-/* prototype: confirm the intent rather than actually issuing an .ics */
 function addCal(e, el){
   e.preventDefault();
   var original = el.textContent;
-  el.textContent = '✓ Agregado';
+  el.textContent = 'Agregado';
   setTimeout(function(){ el.textContent = original; }, 1800);
 }
 
-/* Preview QR: a real-looking code drawn from the ticket reference. Not a
-   working QR — it just has to read as one on screen. */
 function drawQr(seedText){
   var N = 25, cell = 100 / N, rects = '';
-  /* deterministic pseudo-random from the ticket code, so each ticket differs
-     but the same ticket always draws the same pattern */
   var seed = 0;
   for (var i = 0; i < seedText.length; i++) seed = (seed * 31 + seedText.charCodeAt(i)) >>> 0;
   function rnd(){ seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
-
   function inFinder(x, y){
     return (x < 7 && y < 7) || (x >= N - 7 && y < 7) || (x < 7 && y >= N - 7);
   }
@@ -126,7 +149,6 @@ function drawQr(seedText){
       }
     }
   }
-  /* the three finder squares that make it read as a QR */
   function finder(ox, oy){
     var u = cell;
     return '<rect x="' + (ox*u) + '" y="' + (oy*u) + '" width="' + (7*u) + '" height="' + (7*u) + '"/>' +

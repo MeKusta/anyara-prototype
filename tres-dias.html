@@ -26,15 +26,35 @@
   </div>
 </header>
 
-<!-- ===== HERO ===== -->
 <div class="wrap section-sm">
-  <div class="eyebrow">Tu bienvenida</div>
-  <h1 style="font-size:var(--fs-hero)">Tres días de bienvenida</h1>
-  <p style="font-family:var(--sans);font-size:var(--fs-body);color:var(--ink-2);max-width:620px;margin-top:10px;line-height:1.6">
-    Un video de Mariana para empezar, y luego un plan de tres días armado a partir de tus respuestas.
-    Cuatro clases cada día. No pagas nada hasta el día 3.
-  </p>
-  <div class="td-prog" id="tdProg"></div>
+  <div class="tw-hero">
+    <div class="tw-hero-copy">
+      <div class="eyebrow">Tu bienvenida</div>
+      <h1>Tres días de bienvenida</h1>
+      <p>
+        Un video de Mariana para empezar, y luego un plan de tres días armado a partir de tus respuestas.
+        Cuatro clases cada día. No pagas nada hasta el día 3.
+      </p>
+      <div class="td-prog" id="tdProg"></div>
+    </div>
+    <div class="tw-hero-art gart somara" data-img="anyara">
+      <div class="tw-hero-note">
+        <div class="eyebrow">Día a día</div>
+        <p>Tu clase elegida, clases abiertas y un recorrido que se desbloquea contigo.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap section-sm">
+  <a href="tres-dias.html" class="trialstrip">
+    <div class="ts-num"><b id="tsDay">1</b><span>de 3</span></div>
+    <div class="ts-b">
+      <div class="ts-t" id="tsTitle">Vas en el día 1</div>
+      <div class="ts-d" id="tsLead">Tus clases de hoy te esperan. El día 2 se abre mañana.</div>
+    </div>
+    <span class="btn btn-dark">Continuar</span>
+  </a>
 </div>
 
 <!-- ===== INTRO DE MARIANA ===== -->
@@ -57,8 +77,10 @@
   </div>
 </div>
 
-<!-- ===== LOS TRES DÍAS ===== -->
-<div class="wrap section-sm" id="days"></div>
+<div class="wrap section-sm">
+  <div class="row-head"><h2>Tus tres días</h2></div>
+  <div class="welcome3" id="days"></div>
+</div>
 
 <!-- ===== SIEMPRE ABIERTAS ===== -->
 <div class="wrap section-sm">
@@ -185,41 +207,51 @@ for (var n = 1; n <= 3; n++) {
 document.getElementById('exState').textContent = lvl === 2
   ? 'Estás en el día ' + today + ' de 3'
   : 'Empieza cuando actives tus tres días';
+document.getElementById('tsDay').textContent = String(Math.min(today, 3));
+document.getElementById('tsTitle').textContent = lvl === 2
+  ? 'Vas en el día ' + today
+  : 'Tu recorrido de bienvenida';
+document.getElementById('tsLead').textContent = lvl === 2
+  ? (today < 3
+      ? 'Tus clases de hoy te esperan. El día ' + (today + 1) + ' se abre mañana.'
+      : 'Último día. Al terminar, tu membresía se activa y se abre todo el catálogo.')
+  : 'Activa tu prueba para abrir día 1, 2 y 3 en orden.';
 
 /* ---- los tres días ---- */
 var daysWrap = document.getElementById('days');
 plan.forEach(function (p, idx) {
   var dayNum = idx + 1;
   var open   = lvl === 3 || (lvl === 2 && today >= dayNum);
-
-  var block = document.createElement('div');
-  block.className = 'td-day' + (open ? '' : ' shut');
+  var classes = dayClasses(idx);
   var state = !open ? 'Se abre el día ' + dayNum
             : (lvl === 2 && dayNum < today ? 'Completado' : 'Disponible hoy');
+  var href = open
+    ? (classes[0].welcome ? 'bienvenida.html'
+       : Anyara.classHref({ t:classes[0].t, i:classes[0].i, d:classes[0].d, m:classes[0].m, t3:dayNum }))
+    : 'membresia.html';
 
+  var block = document.createElement('a');
+  block.className = 'w3 ' + (open ? 'open' : 'shut');
+  block.href = href;
   block.innerHTML =
-    '<div class="td-head">' +
-      '<div>' +
-        '<div class="td-k">Día ' + dayNum + ' · ' + state + '</div>' +
-        '<h3 class="td-t">' + (DISC_LABELS[p.disc] || p.disc) + ' · ' + p.mins + ' min</h3>' +
-        '<div class="td-why">' + p.why + '</div>' +
+    '<div class="w3-art gart ' + p.disc + '">' +
+      '<div class="w3-day">Día ' + dayNum + '</div>' +
+      '<div class="w3-state copy ' + (open ? (dayNum < today ? 'done' : '') : 'locked') + '">' +
+        (open ? (dayNum < today ? 'Completado' : 'Disponible') : 'Bloqueado') +
       '</div>' +
-      (open ? '' : '<span class="td-lock">🔒</span>') +
     '</div>' +
-    '<div class="grid4">' +
-      dayClasses(idx).map(function (c) {
-        var href = c.welcome ? 'bienvenida.html'
-                 : Anyara.classHref({ t:c.t, i:c.i, d:c.d, m:c.m, t3:dayNum });
-        return '<a href="' + href + '" class="ccard">' +
-          '<div class="art gart ' + c.d + '">' +
-            '<span class="len">' + c.m + ':00</span>' +
-            (open ? '' : '<span class="locked">🔒 Día ' + dayNum + '</span>') +
-          '</div>' +
-          '<div class="title">' + c.t + '</div>' +
-          '<div class="meta">' + c.i + '</div>' +
-          '<div class="lvl">' + (LEVEL_BY_DAY[idx] || 'Principiante') + '</div>' +
-          '<div class="tag disc-link" data-d="' + c.d + '">' + (DISC_LABELS[c.d] || c.d).toUpperCase() + '</div></a>';
-      }).join('') +
+    '<div class="w3-b">' +
+      '<div class="w3-tag">' + state + '</div>' +
+      '<div class="w3-t">' + (DISC_LABELS[p.disc] || p.disc) + ' · ' + p.mins + ' min</div>' +
+      '<div class="w3-why">' + p.why + '</div>' +
+      '<div class="w3-meta">4 clases · ' + (LEVEL_BY_DAY[idx] || 'Principiante') + '</div>' +
+      '<ul class="w3-list">' +
+        classes.map(function (c) {
+          return '<li><b>' + c.t + '</b><span>' + c.m + ' min</span></li>';
+        }).join('') +
+      '</ul>' +
+      '<div class="w3-cta"><span class="btn ' + (open ? 'btn-dark' : 'btn-ghost') + '">' +
+        (open ? 'Abrir día ' + dayNum : 'Se abre después') + '</span></div>' +
     '</div>';
   daysWrap.appendChild(block);
 });

@@ -27,51 +27,94 @@
 </header>
 
 <div class="wrap section-sm">
-  <a href="retos.html" style="font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2)">Todos los retos</a>
-</div>
+  <a href="retos.html" class="vd-back">← Todos los retos</a>
 
-<div class="wrap section-sm">
-  <div class="event-hero g4">
-    <div>
-      <div class="tags"><span class="tag" style="background:rgba(255,255,255,.25);color:#fff">21 días</span><span class="tag" style="background:rgba(255,255,255,.25);color:#fff">Nutrición incluida</span></div>
-      <h1 style="color:#fff;font-size:var(--fs-hero)">Reto Volver a Ti</h1>
-      <p style="color:rgba(255,255,255,.85);font-family:var(--sans);margin-top:8px">6 clases · 265 min total · Barre, Sculpt, Funcional, Pilates</p>
+  <div class="dp-top">
+    <div class="dp-info">
+      <div class="vd-cat">RETO</div>
+      <h1 class="vd-title">Reto Volver a Ti</h1>
+      <p class="vd-body" style="max-width:34ch;margin-top:var(--sp-2)">
+        Un recorrido guiado para retomar ritmo, subir fuerza poco a poco y cerrar la semana con una práctica que se sienta sostenible.
+      </p>
+      <div class="dp-meta">7 días · 5 clases · intermedio</div>
+      <div class="dp-actions">
+        <a href="clase.html?t=Barre%20Esencial&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=45&amp;reto=volver&amp;dia=1" class="btn btn-dark member-only">Comenzar reto</a>
+        <button class="btn btn-dark guest-only" onclick="document.getElementById('pw').classList.add('open')">Comenzar reto</button>
+        <button class="dp-save">Guardar reto</button>
+      </div>
+      <p class="dp-note guest-only">Los retos son parte de la membresía y empiezan con tres días de bienvenida.</p>
     </div>
+    <div class="dp-art gart somara" data-img="anyara"></div>
   </div>
-</div>
 
-<div class="wrap section-sm">
-  <div class="detail-grid">
+  <div class="vd-rule"></div>
+
+  <div class="dp-sections">
     <div>
-      <h2 class="h2-serif" style="margin-bottom:14px">Clases del reto</h2>
-      <div style="font-family:var(--sans)">
-        <!-- intro del reto: dentro del flujo, antes del Día 1 -->
-        <div class="eyebrow">Antes de empezar</div>
-        <button class="flow-intro" onclick="openIntro()">
-          <span class="fi-art gart somara" data-img="anyara"><span class="fi-play">▶</span></span>
-          <span class="fi-b">
-            <span class="fi-t">Bienvenida al reto, con Mariana</span>
-            <span class="fi-m">Intro · 4 min · Qué vas a hacer estos 21 días y cómo prepararte</span>
-          </span>
-          <span class="btn btn-dark">Ver</span>
-        </button>
-        <div class="eyebrow" style="margin-top:10px">Día 1</div>
-        <div class="ticket"><div class="date gart barre"></div><div class="info"><div class="t">Barre Esencial</div><div class="m">Barre · 45 min · Valeria Méndez</div></div><a href="clase.html" class="btn btn-ghost">Ver</a></div>
-        <div class="eyebrow" style="margin-top:10px">Día 2</div>
-        <div class="ticket"><div class="date gart sculpt"></div><div class="info"><div class="t">Sculpt Total</div><div class="m">Sculpt · 60 min · Valeria Méndez</div></div><a href="clase.html" class="btn btn-ghost">Ver</a></div>
-        <div class="eyebrow" style="margin-top:10px">Día 3</div>
-        <div class="ticket"><div class="date gart funcional"></div><div class="info"><div class="t">Funcional HIIT</div><div class="m">Funcional · 30 min · Sofía Ruiz</div></div><a href="clase.html" class="btn btn-ghost">Ver</a></div>
+      <h2 class="vd-h">Sobre este reto</h2>
+      <p class="vd-body">
+        Empiezas con una introducción breve para entender la intención del recorrido. Después el plan avanza día por día:
+        base, fuerza, capacidad cardiovascular, control del centro y un cierre más largo para integrar el trabajo.
+      </p>
+
+      <div class="dp-progress">
+        <div class="lab">Avance del reto</div>
+        <div class="bar"><i style="width:14%"></i></div>
+      </div>
+
+      <div class="vd-rule"></div>
+
+      <h2 class="vd-h">Tu recorrido</h2>
+      <div class="dp-list">
+        <div class="dp-item">
+          <button class="dp-thumb gart somara" data-img="anyara" onclick="openIntro()" style="padding:0;border:none;background:none;width:100%;cursor:pointer">
+            <span class="dp-play">▶</span>
+          </button>
+          <div>
+            <div class="dp-k">Antes de empezar</div>
+            <div class="dp-t">Bienvenida al reto, con Mariana</div>
+            <div class="dp-d">Intro · 4 min · Qué vas a hacer estos días y cómo prepararte</div>
+          </div>
+            <button class="dp-go" onclick="openIntro()" style="background:none;border:none;cursor:pointer">Ver →</button>
+        </div>
+        <div class="dp-item">
+          <a href="clase.html?t=Barre%20Esencial&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=45&amp;reto=volver&amp;dia=1" class="dp-thumb gart barre"><span class="len">45:00</span></a>
+          <div>
+            <div class="dp-k">Día 1</div>
+            <div class="dp-t">Barre Esencial</div>
+            <div class="dp-d">Barre · 45 min · Valeria Méndez</div>
+          </div>
+          <a href="clase.html?t=Barre%20Esencial&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=45&amp;reto=volver&amp;dia=1" class="dp-go">Ver →</a>
+        </div>
+        <div class="dp-item">
+          <a href="clase.html?t=Sculpt%20Total&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=60&amp;reto=volver&amp;dia=2" class="dp-thumb gart sculpt"><span class="len">60:00</span></a>
+          <div>
+            <div class="dp-k">Día 2</div>
+            <div class="dp-t">Sculpt Total</div>
+            <div class="dp-d">Sculpt · 60 min · Valeria Méndez</div>
+          </div>
+          <a href="clase.html?t=Sculpt%20Total&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=60&amp;reto=volver&amp;dia=2" class="dp-go">Ver →</a>
+        </div>
+        <div class="dp-item">
+          <a href="clase.html?t=Funcional%20HIIT&amp;i=Sof%C3%ADa%20Ruiz&amp;d=funcional&amp;m=30&amp;reto=volver&amp;dia=3" class="dp-thumb gart funcional"><span class="len">30:00</span></a>
+          <div>
+            <div class="dp-k">Día 3</div>
+            <div class="dp-t">Funcional HIIT</div>
+            <div class="dp-d">Funcional · 30 min · Sofía Ruiz</div>
+          </div>
+          <a href="clase.html?t=Funcional%20HIIT&amp;i=Sof%C3%ADa%20Ruiz&amp;d=funcional&amp;m=30&amp;reto=volver&amp;dia=3" class="dp-go">Ver →</a>
+        </div>
       </div>
     </div>
-    <div class="detail-side">
-      <a href="clase.html?t=Barre%20Esencial&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=45&amp;reto=volver&amp;dia=1" class="btn btn-gold btn-block member-only">Comenzar reto</a>
-      <button class="btn btn-gold btn-block guest-only" onclick="document.getElementById('pw').classList.add('open')">Comenzar reto</button>
-      <p class="trialnote guest-only" style="margin-bottom:12px">Los retos son parte de la membresía.<br>Empiezan con tres días de bienvenida. Cancela cuando quieras.</p>
-      <div style="margin-top:18px">
-        <div class="spec"><span class="k">Duración</span><span class="v">21 días</span></div>
-        <div class="spec"><span class="k">Clases</span><span class="v">6</span></div>
-        <div class="spec"><span class="k">Tiempo total</span><span class="v">265 min</span></div>
-        <div class="spec"><span class="k">Nutrición</span><span class="v">Incluida</span></div>
+
+    <div class="dp-aside">
+      <div class="vd-field">
+        <div class="k">Estructura</div>
+        <div class="v">Fuerza, cardio y recuperación</div>
+      </div>
+      <div class="vd-field">
+        <div class="k">Incluye</div>
+        <div class="v">Guía de nutrición · Intro del reto</div>
       </div>
     </div>
   </div>
@@ -111,7 +154,6 @@
   </div>
 </div>
 
-<!-- ===== PLAYER DE LA INTRO ===== -->
 <div class="vp-scrim" id="vp">
   <button class="vp-close" onclick="closeIntro()">✕</button>
   <div class="vp">
@@ -131,9 +173,7 @@
 
 <script src="anyara.js"></script>
 <script>
-/* La intro está abierta en todos los niveles: es lo que vende el reto,
-   no contenido de membresía. Mismo player que las demás intros del sitio. */
-var vpPlaying=false, vpSec=0, vpTotal=240, vpTimer=null;
+var vpPlaying = false, vpSec = 0, vpTotal = 240, vpTimer = null;
 function fmt(s){var m=Math.floor(s/60),r=Math.floor(s%60);return m+':'+(r<10?'0':'')+r}
 function paint(){
   document.getElementById('vpProg').style.width=(vpSec/vpTotal*100)+'%';
