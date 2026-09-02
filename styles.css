@@ -852,7 +852,11 @@ body.has-account .anon-only{display:none!important}
   text-transform:uppercase;color:var(--gold-deep)}
 .libcard.blank:hover .lc-cta{color:var(--gold)}
 
+@media (max-width:1100px){
+  .dp-gridlist{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @media (max-width:900px){
+  .dp-sections{grid-template-columns:1fr}
   .tw-hero{grid-template-columns:1fr}
   .mispace{grid-template-columns:1fr 1fr}
   .mispace > * + *{border-left:none;border-top:1px solid var(--line)}
@@ -960,11 +964,17 @@ body.has-account .anon-only{display:none!important}
   font-size:var(--fs-meta);font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink-2)}
 .dp-save:hover{color:var(--ink)}
 .dp-save.on{color:var(--ink)}
-.dp-sections{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:var(--sp-6);margin-top:var(--sp-5)}
+/* Descripción y datos, en la misma proporción que la página de clase. El
+   lado derecho es una nota al margen, no media pantalla vacía. */
+.dp-sections{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);
+  gap:var(--sp-6);margin-top:var(--sp-5);align-items:start}
+.dp-sections > :first-child{max-width:74ch}
+/* el listado ocupa el ancho de la página, como cualquier otra parrilla */
+.dp-full{margin-top:var(--sp-5)}
 .dp-aside{padding-top:6px}
 .dp-aside .vd-field:first-child{margin-top:0}
 .dp-list{margin-top:var(--sp-2)}
-.dp-gridlist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-4);margin-top:var(--sp-3)}
+.dp-gridlist{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--sp-4);margin-top:var(--sp-3)}
 .dp-card{display:block}
 .dp-card .dp-thumb{width:100%;margin-bottom:10px}
 .dp-card .dp-t{margin-top:0}
