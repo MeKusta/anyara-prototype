@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.03.00';
+  var VERSION = '1.03.01';
 
   /* Disciplinas: etiqueta y si ya tiene página propia. Sólo Somara la tiene
      por ahora — las demás siguen cayendo en el catálogo filtrado. */

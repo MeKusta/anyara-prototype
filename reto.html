@@ -44,7 +44,17 @@
     <div>
       <h2 class="h2-serif" style="margin-bottom:14px">Clases del reto</h2>
       <div style="font-family:'Helvetica Neue',Arial">
-        <div class="eyebrow">Día 1</div>
+        <!-- intro del reto: dentro del flujo, antes del Día 1 -->
+        <div class="eyebrow">Antes de empezar</div>
+        <button class="flow-intro" onclick="openIntro()">
+          <span class="fi-art gart somara"><span class="fi-play">▶</span></span>
+          <span class="fi-b">
+            <span class="fi-t">Bienvenida al reto, con Mariana</span>
+            <span class="fi-m">Intro · 4 min · Qué vas a hacer estos 21 días y cómo prepararte</span>
+          </span>
+          <span class="btn btn-dark">Ver ▸</span>
+        </button>
+        <div class="eyebrow" style="margin-top:10px">Día 1</div>
         <div class="ticket"><div class="date gart barre"></div><div class="info"><div class="t">Barre Esencial</div><div class="m">Barre · 45 min · Valeria Méndez</div></div><a href="clase.html" class="btn btn-ghost">Ver ▸</a></div>
         <div class="eyebrow" style="margin-top:10px">Día 2</div>
         <div class="ticket"><div class="date gart sculpt"></div><div class="info"><div class="t">Sculpt Total</div><div class="m">Sculpt · 60 min · Valeria Méndez</div></div><a href="clase.html" class="btn btn-ghost">Ver ▸</a></div>
@@ -100,6 +110,50 @@
   </div>
 </div>
 
+<!-- ===== PLAYER DE LA INTRO ===== -->
+<div class="vp-scrim" id="vp">
+  <button class="vp-close" onclick="closeIntro()">✕</button>
+  <div class="vp">
+    <div class="vp-title"><span>Intro del reto</span>Bienvenida al reto, con Mariana</div>
+    <div class="vp-screen gart somara">
+      <button class="vp-bigplay" id="vpBig" onclick="togglePlay()">▶</button>
+    </div>
+    <div class="vp-bar">
+      <button class="vp-toggle" id="vpToggle" onclick="togglePlay()">▶</button>
+      <span id="vpTime">0:00</span>
+      <div class="vp-timeline" id="vpLine"><i id="vpProg"></i></div>
+      <span>4:00</span>
+      <button class="vp-toggle" title="Pantalla completa">⛶</button>
+    </div>
+  </div>
+</div>
+
 <script src="anyara.js"></script>
+<script>
+/* La intro está abierta en todos los niveles: es lo que vende el reto,
+   no contenido de membresía. Mismo player que las demás intros del sitio. */
+var vpPlaying=false, vpSec=0, vpTotal=240, vpTimer=null;
+function fmt(s){var m=Math.floor(s/60),r=Math.floor(s%60);return m+':'+(r<10?'0':'')+r}
+function paint(){
+  document.getElementById('vpProg').style.width=(vpSec/vpTotal*100)+'%';
+  document.getElementById('vpTime').textContent=fmt(vpSec);
+}
+function openIntro(){ document.getElementById('vp').classList.add('open'); }
+function closeIntro(){
+  document.getElementById('vp').classList.remove('open');
+  if(vpPlaying) togglePlay();
+}
+function togglePlay(){
+  vpPlaying=!vpPlaying;
+  document.getElementById('vpBig').style.display=vpPlaying?'none':'flex';
+  document.getElementById('vpToggle').textContent=vpPlaying?'❚❚':'▶';
+  if(vpPlaying){vpTimer=setInterval(function(){vpSec=Math.min(vpSec+1,vpTotal);paint();},1000);}
+  else{clearInterval(vpTimer);}
+}
+document.getElementById('vpLine').addEventListener('click',function(e){
+  var r=this.getBoundingClientRect();
+  vpSec=Math.round((e.clientX-r.left)/r.width*vpTotal);paint();
+});
+</script>
 </body>
 </html>
