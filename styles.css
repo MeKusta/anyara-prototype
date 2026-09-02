@@ -722,6 +722,79 @@ body.has-account .anon-only{display:none!important}
 .flow-intro .fi-t{display:block;font-family:var(--serif);font-size:var(--fs-card);color:var(--ink);margin-bottom:3px}
 .flow-intro .fi-m{display:block;font-size:var(--fs-meta);color:var(--ink-2);line-height:1.45}
 
+/* ---------- Mi espacio: saludo + estadísticas + objetivo semanal ---------- */
+.mispace{display:grid;grid-template-columns:1.15fr repeat(4,.8fr) 1.35fr;
+  background:var(--sand);border-radius:var(--radius);align-items:center}
+.mispace > *{padding:var(--sp-4) var(--sp-4)}
+/* separadores finos entre columnas, sin encajonar cada dato */
+.mispace > * + *{border-left:1px solid var(--line)}
+.ms-hi h2{font-family:var(--serif);font-size:var(--fs-head);font-weight:400;
+  text-transform:none;letter-spacing:normal;line-height:1.15}
+.ms-hi p{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);
+  line-height:1.5;margin-top:var(--sp-2);max-width:24ch}
+.ms-k{font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:var(--sp-2)}
+.ms-n{font-family:var(--serif);font-size:var(--fs-head);line-height:1}
+.ms-u{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);margin-top:6px}
+/* objetivo semanal */
+.ms-week{display:flex;gap:8px;margin-bottom:var(--sp-3)}
+.ms-week i{width:26px;height:26px;border-radius:50%;border:1px solid var(--line-2);
+  display:flex;align-items:center;justify-content:center;font-style:normal;
+  font-family:var(--sans);font-size:var(--fs-micro);color:var(--ink-3);background:#fff}
+.ms-week i.on{background:var(--gold);border-color:var(--gold);color:#fff}
+.ms-week i.rest{border-color:var(--gold);color:var(--gold-deep);background:transparent}
+.ms-goal{display:flex;align-items:baseline;justify-content:space-between;gap:var(--sp-3);
+  font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2)}
+.ms-goal button{background:none;border:none;cursor:pointer;padding:0;
+  font-family:var(--sans);font-size:var(--fs-meta);color:var(--gold-deep)}
+.ms-goal button:hover{color:var(--gold)}
+
+/* ---------- Continuar: foto y panel, sin borde alrededor ---------- */
+.resume{display:grid;grid-template-columns:1.15fr 1fr;border-radius:var(--radius);
+  overflow:hidden;background:var(--sand)}
+.resume .rs-art{aspect-ratio:16/10}
+.resume .rs-b{padding:var(--sp-5) var(--sp-5);display:flex;flex-direction:column;
+  justify-content:center}
+.resume .rs-k{font-family:var(--sans);font-size:var(--fs-tiny);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-2)}
+.resume .rs-t{font-family:var(--serif);font-size:var(--fs-head);line-height:1.15;
+  margin:var(--sp-2) 0 var(--sp-4)}
+.resume .rs-pct{font-family:var(--sans);font-size:var(--fs-tiny);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-2);margin-bottom:var(--sp-2)}
+.resume .rs-pct b{color:var(--ink)}
+.resume .rs-bar{height:4px;background:var(--sand-2);border-radius:3px;overflow:hidden;
+  margin-bottom:var(--sp-4)}
+.resume .rs-bar > i{display:block;height:100%;background:var(--gold)}
+.resume .btn{align-self:flex-start}
+
+/* ---------- Biblioteca: llena con foto, vacía con invitación ---------- */
+.libcard.full .art{height:170px}
+.libcard.full .libcard-label{display:flex;align-items:center;justify-content:space-between;
+  gap:var(--sp-2);text-transform:none;letter-spacing:normal}
+.libcard .lc-n{font-family:var(--sans);font-size:var(--fs-tiny);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink)}
+.libcard .lc-c{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-3);
+  margin-top:3px;letter-spacing:normal;text-transform:none}
+.libcard .lc-go{color:var(--ink-3);font-size:var(--fs-body)}
+/* estado vacío: dice qué ganas si lo usas, en vez de sólo "(0)" */
+.libcard.blank{background:var(--sand);border-color:transparent;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:var(--sp-5) var(--sp-4);min-height:238px}
+.libcard.blank svg{width:26px;height:26px;fill:none;stroke:var(--gold);stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round;margin-bottom:var(--sp-3)}
+.libcard.blank .lc-n{margin-bottom:var(--sp-2)}
+.libcard.blank p{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);
+  line-height:1.55;max-width:26ch;margin-bottom:var(--sp-3)}
+.libcard.blank .lc-cta{font-family:var(--sans);font-size:var(--fs-tiny);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold-deep)}
+.libcard.blank:hover .lc-cta{color:var(--gold)}
+
+@media (max-width:900px){
+  .mispace{grid-template-columns:1fr 1fr}
+  .mispace > * + *{border-left:none;border-top:1px solid var(--line)}
+  .resume{grid-template-columns:1fr}
+}
+
 /* ---------- Página de clase (plantilla compartida de video) ----------
    La jerarquía la hacen tipografía y espacio: video, título, instructora,
    metadatos, acciones. Sin tarjetas envolviendo secciones, sin tabla de

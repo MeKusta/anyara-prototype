@@ -102,19 +102,39 @@
   </div>
 </div>
 
-<!-- ===== STREAK / WEEKLY PROGRESS (any account) ===== -->
+<!-- ===== MI ESPACIO: saludo, cifras y objetivo semanal ===== -->
 <div class="wrap section-sm account-only">
-  <div class="streakbar">
-    <div class="sk">
-      <span class="ic">✦</span>
-      <div><div class="n" id="skN">0</div><div class="l">Días de racha</div></div>
+  <div class="mispace">
+    <div class="ms-hi">
+      <h2 id="msHola">Hola.</h2>
+      <p>Sigue construyendo tu mejor versión, un día a la vez.</p>
     </div>
-    <div class="sk">
-      <span class="ic">▷</span>
-      <div><div class="n" id="skC">0</div><div class="l">Clases completadas</div></div>
+    <div>
+      <div class="ms-k">Racha actual</div>
+      <div class="ms-n" id="msRacha">0</div>
+      <div class="ms-u">días consecutivos</div>
     </div>
-    <div class="week" id="skWeek">
-      <i>L</i><i>M</i><i>M</i><i>J</i><i>V</i><i>S</i><i>D</i>
+    <div>
+      <div class="ms-k">Clases completadas</div>
+      <div class="ms-n" id="msClases">0</div>
+      <div class="ms-u">en total</div>
+    </div>
+    <div>
+      <div class="ms-k">Días entrenados</div>
+      <div class="ms-n" id="msDias">0</div>
+      <div class="ms-u">esta semana</div>
+    </div>
+    <div>
+      <div class="ms-k">Tiempo total</div>
+      <div class="ms-n" id="msTiempo">0m</div>
+      <div class="ms-u">en Anyara</div>
+    </div>
+    <div>
+      <div class="ms-week" id="msWeek"></div>
+      <div class="ms-goal">
+        <span id="msGoal"></span>
+        <button type="button" id="msEdit">Editar objetivo</button>
+      </div>
     </div>
   </div>
 </div>
@@ -128,14 +148,15 @@
 <!-- ===== CONTINÚA (members) ===== -->
 <div class="wrap section-sm member-only">
   <div class="row-head"><h2>Continúa donde lo dejaste</h2></div>
-  <a href="clase.html" class="continue">
-    <div class="thumb gart barre"></div>
-    <div class="body">
-      <div class="ccard tag" style="font-family:var(--sans)">BARRE · 45 MIN</div>
-      <div style="font-size:var(--fs-card);margin:4px 0">Barre Glúteos & Piernas</div>
-      <div class="prog"><i></i></div>
+  <a href="clase.html?t=Barre%20Gl%C3%BAteos%20%26%20Piernas&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=45&amp;x=Intermedio" class="resume">
+    <div class="rs-art gart barre"></div>
+    <div class="rs-b">
+      <div class="rs-k">Barre · 45 min</div>
+      <div class="rs-t">Barre Glúteos &amp; Piernas</div>
+      <div class="rs-pct"><b>64%</b> completado</div>
+      <div class="rs-bar"><i style="width:64%"></i></div>
+      <span class="btn btn-dark">Reanudar</span>
     </div>
-    <span class="btn btn-dark">Reanudar</span>
   </a>
 </div>
 
@@ -143,21 +164,32 @@
 <div class="wrap section account-only">
   <div class="row-head"><h2>Tu biblioteca</h2><a href="biblioteca.html">Ver todo</a></div>
   <div class="libgrid">
-    <a href="biblioteca.html" class="libcard">
-      <div class="art g1"></div>
-      <div class="libcard-label">Completadas <b>(1)</b></div>
+    <a href="biblioteca.html" class="libcard full">
+      <div class="art gart barre"></div>
+      <div class="libcard-label">
+        <span><span class="lc-n">Completadas</span><span class="lc-c" id="lcDone">1 clase</span></span>
+        <span class="lc-go">›</span>
+      </div>
     </a>
-    <a href="biblioteca.html" class="libcard">
-      <div class="art empty">Marca clases como favoritas para armar tu lista</div>
-      <div class="libcard-label">Favoritos <b>(0)</b></div>
+    <!-- vacías: dicen qué ganas si las usas, en vez de un "(0)" sin salida -->
+    <a href="explorar.html" class="libcard blank">
+      <svg viewBox="0 0 24 24"><path d="M12 20.4s-7.6-4.6-7.6-10.1a4.6 4.6 0 0 1 7.6-2.6 4.6 4.6 0 0 1 7.6 2.6c0 5.5-7.6 10.1-7.6 10.1z"/></svg>
+      <span class="lc-n">Favoritos</span>
+      <p>Guarda tus clases favoritas para repetirlas después.</p>
+      <span class="lc-cta">Explorar clases</span>
     </a>
-    <a href="biblioteca.html" class="libcard">
-      <div class="art empty">Guarda un programa para seguir paso a paso</div>
-      <div class="libcard-label">Programas <b>(0)</b></div>
+    <a href="series.html" class="libcard blank">
+      <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+      <span class="lc-n">Programas</span>
+      <p>Sigue un programa y alcanza tus objetivos.</p>
+      <span class="lc-cta">Explorar programas</span>
     </a>
-    <a href="biblioteca.html" class="libcard">
-      <div class="art g5"></div>
-      <div class="libcard-label">Mis playlists <b>(2)</b></div>
+    <a href="biblioteca.html" class="libcard full">
+      <div class="art gart somara"></div>
+      <div class="libcard-label">
+        <span><span class="lc-n">Mis playlists</span><span class="lc-c">2 playlists</span></span>
+        <span class="lc-go">›</span>
+      </div>
     </a>
   </div>
 </div>
@@ -328,12 +360,32 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 
   if (Anyara.hasAccount()) {
+    /* Todas las cifras salen del mismo contador real, así se mueven juntas
+       al completar una clase en vez de ser números fijos de maqueta. */
     var n = Anyara.streak();
-    document.getElementById('skN').textContent = n;
-    document.getElementById('skC').textContent = n;
-    /* light up one day per completed class, up to the week */
-    document.querySelectorAll('#skWeek i').forEach(function(d, idx){
-      if (idx < Math.min(n, 7)) d.classList.add('on');
+    var mins = n * 28;                       // ~28 min por clase
+    document.getElementById('msHola').textContent = 'Hola, ' + Anyara.name() + '.';
+    document.getElementById('msRacha').textContent = n;
+    document.getElementById('msClases').textContent = n;
+    document.getElementById('msDias').textContent = Math.min(n, 7);
+    document.getElementById('msTiempo').textContent =
+      mins >= 60 ? Math.floor(mins / 60) + 'h ' + (mins % 60) + 'm' : mins + 'm';
+    document.getElementById('lcDone').textContent = n === 1 ? '1 clase' : n + ' clases';
+
+    /* objetivo semanal: los días cumplidos van marcados, el resto en hueco */
+    var hechos = Math.min(n, 7), meta = Anyara.weekGoal();
+    document.getElementById('msWeek').innerHTML =
+      ['L','M','M','J','V','S','D'].map(function (d, i) {
+        var cls = i < hechos ? ' class="on"' : (i < meta ? ' class="rest"' : '');
+        return '<i' + cls + '>' + (i < hechos ? '✓' : d) + '</i>';
+      }).join('');
+    document.getElementById('msGoal').textContent =
+      'Objetivo semanal ' + hechos + '/' + meta + ' días';
+
+    /* editable de verdad: cicla la meta y la guarda */
+    document.getElementById('msEdit').addEventListener('click', function () {
+      Anyara.setWeekGoal(meta >= 7 ? 3 : meta + 1);
+      location.reload();
     });
   }
 

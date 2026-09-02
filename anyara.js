@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.11.01';
+  var VERSION = '1.12.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -63,6 +63,7 @@
     welcome:  'anyara_welcome',
     wplan:    'anyara_welcome_plan',
     day:      'anyara_day',
+    goal:     'anyara_week_goal',
     charged:  'anyara_charged'   // one-shot: show the "day 3 charge" notice once
   };
   /* Instructoras: rol y bio para el bloque de la página de clase. Mismos
@@ -254,6 +255,10 @@
       if (opts.t3 && A.isTrial()) return A.currentDay() >= opts.t3;
       return false;
     },
+
+    /* objetivo semanal de días entrenados, editable desde la home */
+    weekGoal: function () { return parseInt(get(K.goal) || '5', 10); },
+    setWeekGoal: function (n) { set(K.goal, String(Math.max(1, Math.min(7, n)))); },
 
     streak: function () { return parseInt(get(K.streak) || '0', 10); },
     bumpStreak: function () { set(K.streak, String(A.streak() + 1)); },
