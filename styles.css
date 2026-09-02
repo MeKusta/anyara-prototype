@@ -37,6 +37,7 @@
   --fs-head:34px;   /* encabezado de sección grande */
   --fs-page:38px;   /* título de página */
   --fs-hero:44px;   /* h1 de portada */
+  --fs-lede:17px;   /* bajada editorial bajo un título */
 
   /* ---- espaciado ---- */
   --sp-1:6px;
@@ -101,9 +102,10 @@ img{display:block;max-width:100%}
 .logo-mark{height:1.35em;width:auto;display:block}
 .version-badge{font-family:var(--sans);font-style:normal;font-size:var(--fs-micro);
   font-weight:400;letter-spacing:.02em;color:#9a9a9a;margin-top:.15em;flex:0 0 auto}
-.nav-links{display:flex;gap:34px;align-items:center;justify-self:center}
+.nav-links{display:flex;gap:30px;align-items:center;justify-self:center}
 .nav-link{
-  font-size:var(--fs-meta);letter-spacing:.14em;text-transform:uppercase;
+  font-family:var(--sans);font-size:var(--fs-note);font-weight:500;
+  letter-spacing:0;text-transform:none;
   color:var(--ink-2);padding:4px 0;position:relative;white-space:nowrap;
 }
 .nav-link:hover{color:var(--ink)}
@@ -136,11 +138,27 @@ img{display:block;max-width:100%}
   color:var(--gold-deep);margin-bottom:10px;
 }
 h1{font-size:var(--fs-hero);font-weight:400;line-height:1.08;letter-spacing:-.01em}
-h2{font-size:var(--fs-body);font-weight:600;letter-spacing:.16em;text-transform:uppercase;
-   font-family:var(--sans);color:var(--ink)}
+/* Un encabezado de sección es serif regular. La sans en mayúsculas con
+   tracking queda reservada para los eyebrows (.eyebrow), que son otra cosa. */
+h2{font-family:var(--serif);font-size:var(--fs-title);font-weight:400;
+   letter-spacing:-.01em;text-transform:none;color:var(--ink)}
 .h2-serif{font-family:var(--serif);font-size:var(--fs-head);font-weight:400;letter-spacing:-.01em;text-transform:none}
+
+/* ---------- Roles tipográficos ----------
+   La serif itálica es un acento editorial: una palabra o una segunda línea
+   dentro de un display, nunca una interfaz entera. Se usa con <em> dentro de
+   un título, o con .serif-i donde <em> no aplica. */
+h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em, .serif-i{
+  font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
+/* contrapunto: sans semibold junto a la itálica en momentos de portada */
+.sans-b{font-family:var(--sans);font-weight:600;font-style:normal;letter-spacing:-.01em}
+/* bajada de un título: sans, nunca serif */
+.lede{font-family:var(--sans);font-size:var(--fs-lede);line-height:1.6;color:var(--ink-2);max-width:62ch}
+/* metadatos combinables en una línea, en vez de una fila con divisor por dato */
+.metaline{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);line-height:1.6}
+.metaline b{font-weight:500;color:var(--ink)}
 .row-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px}
-.row-head a{font-size:var(--fs-tiny);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);font-family:var(--sans)}
+.row-head a{font-size:var(--fs-meta);font-weight:500;letter-spacing:0;text-transform:none;color:var(--gold-deep);font-family:var(--sans)}
 .row-head a:hover{color:var(--gold)}
 
 /* ---------- Discipline pills ---------- */
@@ -176,9 +194,20 @@ h2{font-size:var(--fs-body);font-weight:600;letter-spacing:.16em;text-transform:
 /* ---------- Buttons ---------- */
 .btn{
   display:inline-flex;align-items:center;gap:8px;
-  padding:13px 26px;border-radius:100px;cursor:pointer;border:none;
-  font-size:var(--fs-meta);letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+  padding:12px 24px;border-radius:100px;cursor:pointer;border:none;
+  font-family:var(--sans);font-size:var(--fs-note);letter-spacing:0;
+  text-transform:none;font-weight:500;
 }
+/* Acción de texto: el reemplazo del pill fantasma. Cuando la acción no es la
+   principal de la pantalla no necesita contenedor, sólo peso y color. */
+.link-a{
+  font-family:var(--sans);font-size:var(--fs-meta);font-weight:500;
+  color:var(--ink);cursor:pointer;background:none;border:none;padding:0;
+  border-bottom:1px solid var(--line);white-space:nowrap;
+}
+.link-a:hover{border-bottom-color:var(--gold)}
+.link-a.quiet{color:var(--ink-2)}
+.link-a.quiet:hover{color:var(--ink)}
 .btn-gold{background:var(--gold);color:#fff}
 .btn-gold:hover{background:var(--gold-deep)}
 .btn-dark{background:var(--ink);color:#fff}
@@ -207,7 +236,7 @@ h2{font-size:var(--fs-body);font-weight:600;letter-spacing:.16em;text-transform:
 .libcard:hover{border-color:var(--gold)}
 .libcard .art{height:150px}
 .libcard .art.empty{background:var(--sand);display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:var(--ink-3);font-family:var(--sans);font-size:var(--fs-meta);line-height:1.4}
-.libcard-label{padding:14px 16px;font-size:var(--fs-meta);letter-spacing:.12em;text-transform:uppercase;color:var(--ink);border-top:1px solid var(--line-2)}
+.libcard-label{padding:14px 16px;font-family:var(--sans);font-size:var(--fs-note);font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink);border-top:1px solid var(--line-2)}
 .libcard-label b{color:var(--ink-3);font-weight:400;margin-left:4px}
 
 /* ---------- Card rows ---------- */
@@ -320,9 +349,12 @@ h2{font-size:var(--fs-body);font-weight:600;letter-spacing:.16em;text-transform:
 .player-art .lock{position:absolute;top:16px;left:16px;background:rgba(255,255,255,.9);color:var(--ink);font-size:var(--fs-tiny);padding:7px 13px;border-radius:100px;font-family:var(--sans);display:flex;gap:6px;align-items:center}
 .detail-side{border:1px solid var(--line);border-radius:var(--radius);padding:24px}
 .detail-side .btn{margin-bottom:12px}
-.spec{display:flex;justify-content:space-between;padding:13px 0;border-top:1px solid var(--line-2);font-family:var(--sans);font-size:var(--fs-note)}
-.spec .k{color:var(--ink-2)}
-.spec .v{font-weight:600}
+/* Sólo para el dato único que no cabe en una .metaline. Eyebrow arriba y
+   valor abajo: sin fila estirada ni divisor por cada dato. */
+.spec{font-family:var(--sans);font-size:var(--fs-note);margin-top:var(--sp-4)}
+.spec .k{display:block;font-size:var(--fs-label);letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold-deep);margin-bottom:4px}
+.spec .v{display:block;color:var(--ink)}
 .tags{display:flex;gap:8px;margin:20px 0}
 .tag{background:var(--sand);border-radius:100px;padding:6px 14px;font-size:var(--fs-tiny);color:var(--ink-2)}
 
@@ -357,12 +389,25 @@ h2{font-size:var(--fs-body);font-weight:600;letter-spacing:.16em;text-transform:
 .carousel-dots{display:flex;gap:8px;margin-top:16px}
 .carousel-dots i{width:8px;height:8px;border-radius:50%;background:var(--line);display:block}
 .carousel-dots i.on{background:var(--gold);width:22px;border-radius:100px}
-.ticket{display:flex;gap:18px;align-items:center;border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px}
-.ticket .date{width:64px;height:64px;border-radius:10px;background:var(--gold-tint);color:var(--gold-deep);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--sans);flex:0 0 auto}
-.ticket .date b{font-size:var(--fs-sub)}.ticket .date span{font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase}
-.ticket .info{flex:1}
-.ticket .info .t{font-size:var(--fs-card);margin-bottom:3px}
+/* Un renglón de contenido no necesita una caja alrededor: lo separan el aire
+   y un filete. La fecha es tipografía sobre el papel, no una placa dorada, y
+   la acción es texto (.link-a), no un pill flotando al borde. */
+.ticket{display:flex;gap:20px;align-items:center;justify-content:flex-start;
+  padding:16px 0;border-bottom:1px solid var(--line-2)}
+.ticket:last-child{border-bottom:none}
+.ticket .date{min-width:52px;flex:0 0 auto;font-family:var(--sans);color:var(--ink)}
+.ticket .date b{display:block;font-family:var(--serif);font-size:var(--fs-title);font-weight:400;line-height:1}
+.ticket .date span{display:block;font-size:var(--fs-label);letter-spacing:.18em;
+  text-transform:uppercase;color:var(--ink-2);margin-top:3px}
+/* variante con foto: miniatura real, no una estampilla */
+.ticket .date.gart{min-width:0;width:132px;aspect-ratio:16/10;border-radius:10px;
+  position:relative;overflow:hidden}
+.ticket .date .len{position:absolute;bottom:8px;left:8px;background:rgba(255,255,255,.94);
+  color:var(--ink);font-size:var(--fs-micro);font-weight:600;padding:3px 8px;border-radius:6px}
+.ticket .info{flex:0 1 auto;min-width:0}
+.ticket .info .t{font-family:var(--serif);font-size:var(--fs-card);margin-bottom:4px}
 .ticket .info .m{font-size:var(--fs-meta);color:var(--ink-2);font-family:var(--sans)}
+.ticket .acts{display:flex;gap:18px;align-items:center;flex:0 0 auto}
 
 /* ---------- Profile / settings ---------- */
 .settings-grid{display:grid;grid-template-columns:240px 1fr;gap:34px;align-items:start}
@@ -745,6 +790,7 @@ body.has-account .anon-only{display:none!important}
 .mispace > *{padding:var(--sp-4) var(--sp-4)}
 /* separadores finos entre columnas, sin encajonar cada dato */
 .mispace > * + *{border-left:1px solid var(--line)}
+.ms-hi h2 em{font-family:var(--serif);font-style:italic}
 .ms-hi h2{font-family:var(--serif);font-size:var(--fs-head);font-weight:400;
   text-transform:none;letter-spacing:normal;line-height:1.15}
 .ms-hi p{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);
@@ -906,11 +952,12 @@ body.has-account .anon-only{display:none!important}
 .dp-art.dp-tall{aspect-ratio:16/10}
 .dp-top .dp-art{min-height:260px}
 .dp-info{min-width:0;max-width:640px}
-.dp-meta{font-family:var(--sans);font-size:var(--fs-meta);letter-spacing:.1em;
-  text-transform:uppercase;color:var(--ink-3);margin-top:var(--sp-3)}
+/* los metadatos se leen como una frase, no como una etiqueta */
+.dp-meta{font-family:var(--sans);font-size:var(--fs-note);letter-spacing:0;
+  text-transform:none;color:var(--ink-2);margin-top:var(--sp-3)}
 .dp-actions{display:flex;gap:var(--sp-5);flex-wrap:wrap;align-items:flex-start;margin-top:var(--sp-5)}
 .dp-save{background:none;border:none;cursor:pointer;padding:0;font-family:var(--sans);
-  font-size:var(--fs-tiny);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+  font-size:var(--fs-meta);font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink-2)}
 .dp-save:hover{color:var(--ink)}
 .dp-save.on{color:var(--ink)}
 .dp-sections{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:var(--sp-6);margin-top:var(--sp-5)}

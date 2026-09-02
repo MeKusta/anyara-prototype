@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', function(){
        al completar una clase en vez de ser números fijos de maqueta. */
     var n = Anyara.streak();
     var mins = n * 28;                       // ~28 min por clase
-    document.getElementById('msHola').textContent = 'Hola, ' + Anyara.name() + '.';
+    document.getElementById('msHola').innerHTML = 'Hola, <em>' + Anyara.name() + '</em>.';
     document.getElementById('msRacha').textContent = n;
     document.getElementById('msClases').textContent = n;
     document.getElementById('msDias').textContent = Math.min(n, 7);

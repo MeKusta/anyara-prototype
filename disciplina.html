@@ -173,7 +173,12 @@ var label = Anyara.discLabel(d);
 
 /* ---- portada y textos ---- */
 document.title = 'Anyara — ' + label;
-document.getElementById('cover').classList.add('gart', d);
+var coverEl = document.getElementById('cover');
+coverEl.classList.add('gart', d);
+/* la portada usa siempre la foto 1 de la disciplina: es su imagen fija, no
+   una del pool rotativo, así la página se ve igual cada vez que se abre */
+coverEl.style.setProperty('--art', 'url("img/' + (d === 'pilatesmat' ? 'pilates' : d) + '-1.jpg")');
+coverEl.setAttribute('data-art', '1');
 document.getElementById('dName').textContent = label;
 document.getElementById('dMeta').textContent = D.meta;
 document.getElementById('dLead').textContent = D.lead;
