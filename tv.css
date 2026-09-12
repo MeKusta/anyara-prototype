@@ -1,0 +1,382 @@
+/* Anyara TV
+   ---------------------------------------------------------------------------
+   Una tele no es un monitor grande: se mira a tres metros, se maneja con una
+   cruceta y suele estar en una sala a media luz. Eso cambia tres cosas de
+   raíz respecto del sitio y del teléfono:
+
+   1. El fondo es oscuro. Un campo blanco de 55 pulgadas en una sala en
+      penumbra deslumbra, y es la razón por la que casi toda app de tele es
+      oscura. La identidad se mantiene: la misma serif, el mismo dorado, los
+      mismos colores de disciplina. Si Anyara prefiere el fondo claro, se
+      cambia --tv-bg y sus dos parientes y todo lo demás sigue en pie.
+   2. Todo es más grande. La escala se ata al ancho de pantalla, no a píxeles
+      fijos, para que se vea igual en 1080p y en 4K.
+   3. Hay zona segura. Las teles recortan los bordes (overscan), así que nada
+      importante entra en el 5% exterior.
+   ========================================================================= */
+
+:root{
+  /* 1rem = 16px a 1920 de ancho. Todo lo demás va en rem, así que la interfaz
+     escala sola con el tamaño de la pantalla en vez de quedarse chica en 4K. */
+  font-size:clamp(9px, 0.833vw, 26px);
+
+  --tv-bg:#0f0d0c;          /* fondo */
+  --tv-bg-2:#1a1715;        /* piezas sobre el fondo */
+  --tv-ink:#f7f4ef;         /* texto principal */
+  --tv-ink-2:#a9a29a;       /* texto secundario */
+  --tv-ink-3:#6f6862;
+  --tv-line:rgba(255,255,255,.12);
+
+  --gold:#c9a86a;
+  --gold-deep:#b08f4f;
+
+  --serif:"Times New Roman",Times,serif;
+  --sans:"Helvetica Neue",Arial,sans-serif;
+
+  /* Zona segura: el 5% que las teles pueden recortar. Nada importante aquí. */
+  --safe-x:5.5rem;
+  --safe-y:3.5rem;
+
+  --card-w:22rem;           /* ancho de tarjeta de clase */
+  --gap:1.5rem;
+  --r:0.75rem;              /* radio */
+
+  /* El foco: cuánto crece la pieza enfocada y qué anillo lleva */
+  --foco-escala:1.07;
+  --foco-anillo:0.25rem;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--tv-bg);color:var(--tv-ink)}
+body{
+  font-family:var(--sans);
+  overflow-x:hidden;
+  /* el cursor no existe en una tele; que no se quede flotando sobre la
+     pantalla cuando esto se prueba en una laptop */
+  cursor:none;
+}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;text-align:left}
+img{max-width:100%}
+
+/* Las fotos de disciplina son las mismas del sitio: anyara.js pone --art */
+.gart{
+  background-image:var(--art,none),
+    linear-gradient(135deg,var(--dc,#8a7d68),color-mix(in srgb,var(--dc,#8a7d68) 45%,#000));
+  background-size:cover;background-position:center;background-repeat:no-repeat;
+}
+.barre{--dc:#c96f6f}
+.funcional{--dc:#6d8cb0}
+.pilatesmat{--dc:#cbab3c}
+.pilates{--dc:#7a9b78}
+.sculpt{--dc:#9c4f4f}
+.somara{--dc:#d1854a}
+.tone{--dc:#a6abb0}
+
+/* ---------------------------------------------------------------- el foco */
+/* Lo enfocado crece y se levanta. En una tele el contorno solo no basta: a
+   tres metros lo que se percibe es el cambio de tamaño y la sombra, igual que
+   en las apps del sistema. Nada de :hover en ningún sitio — el puntero no
+   participa. */
+[data-foco]{
+  transition:transform .18s cubic-bezier(.2,.9,.3,1), box-shadow .18s ease;
+  outline:none;
+}
+[data-foco].foco{
+  transform:scale(var(--foco-escala));
+  z-index:5;position:relative;
+}
+.tv-card.foco .tv-card-art,
+.tv-disc.foco,
+.tv-prog.foco{
+  box-shadow:0 0 0 var(--foco-anillo) var(--tv-ink),
+             0 1.4rem 3rem rgba(0,0,0,.65);
+}
+.tv-card.foco .tv-card-t{color:var(--tv-ink)}
+.tv-btn.foco{
+  box-shadow:0 0 0 var(--foco-anillo) var(--tv-ink),0 1rem 2.4rem rgba(0,0,0,.6);
+}
+@media (prefers-reduced-motion:reduce){
+  [data-foco]{transition:none}
+  [data-foco].foco{transform:none}
+  .tv-card.foco .tv-card-art,.tv-disc.foco,.tv-prog.foco,.tv-btn.foco{
+    box-shadow:0 0 0 var(--foco-anillo) var(--gold);
+  }
+}
+
+/* ------------------------------------------------------------ navegación */
+/* Cinco destinos y nada más. Se llega a ella pulsando arriba desde la primera
+   fila, que es el gesto que ya conoce cualquiera que use una tele. */
+.tv-nav{
+  position:fixed;top:0;left:0;right:0;z-index:20;
+  display:flex;align-items:center;gap:2.5rem;
+  padding:var(--safe-y) var(--safe-x) 1.6rem;
+  background:linear-gradient(180deg,rgba(15,13,12,.96) 0%,rgba(15,13,12,.72) 62%,transparent 100%);
+}
+.tv-logo{
+  font-family:var(--serif);font-size:1.9rem;font-style:italic;
+  color:var(--tv-ink);margin-right:1.5rem;letter-spacing:.02em;
+}
+.tv-logo b{font-style:normal}
+.tv-nav a{
+  font-size:1.15rem;font-weight:500;color:var(--tv-ink-2);
+  padding:.6rem 1.1rem;border-radius:100px;text-decoration:none;
+}
+.tv-nav a.activo{color:var(--tv-ink)}
+.tv-nav a.foco{background:var(--tv-ink);color:var(--tv-bg)}
+.tv-nav-r{margin-left:auto;display:flex;align-items:center;gap:1.2rem}
+.tv-av{
+  width:2.6rem;height:2.6rem;border-radius:50%;background:var(--gold);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.95rem;font-weight:700;
+}
+
+/* --------------------------------------------------------------- pantalla */
+.tv-screen{display:none;padding-bottom:var(--safe-y)}
+.tv-screen.on{display:block}
+
+/* Portada: la foto ocupa la pantalla y el texto vive sobre ella, abajo a la
+   izquierda, dentro de la zona segura. */
+.tv-hero{
+  position:relative;height:64vh;min-height:26rem;
+  display:flex;align-items:flex-end;
+}
+.tv-hero-sm{height:52vh;min-height:22rem}
+.tv-hero::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(15,13,12,.94) 0%,rgba(15,13,12,.6) 42%,rgba(15,13,12,0) 72%),
+    linear-gradient(0deg,var(--tv-bg) 0%,rgba(15,13,12,0) 34%);
+}
+.tv-hero-in{position:relative;z-index:2;padding:0 var(--safe-x) 3rem;max-width:58rem}
+.tv-kicker{
+  font-size:.95rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.9rem;
+}
+.tv-hero-t{font-family:var(--serif);font-size:4.2rem;font-weight:400;line-height:1.04;letter-spacing:-.01em}
+.tv-hero-m{font-size:1.3rem;color:var(--tv-ink-2);margin-top:1rem}
+.tv-hero-d{font-size:1.3rem;color:var(--tv-ink-2);margin-top:1rem;line-height:1.55;max-width:46rem}
+.tv-bar{
+  width:26rem;max-width:100%;height:.3rem;border-radius:.2rem;
+  background:rgba(255,255,255,.22);overflow:hidden;margin-top:1.4rem;
+}
+.tv-bar > i{display:block;height:100%;background:var(--gold)}
+.tv-hero-cta{display:flex;gap:1.1rem;margin-top:2rem;flex-wrap:wrap}
+
+/* Botones. Grandes, con mucha área, porque el foco tiene que caer en algo que
+   se vea. Sin estados de ratón. */
+.tv-btn{
+  display:inline-flex;align-items:center;gap:.8rem;
+  min-height:4rem;padding:0 2.2rem;border-radius:100px;
+  background:rgba(255,255,255,.14);color:var(--tv-ink);
+  font-size:1.2rem;font-weight:600;white-space:nowrap;
+}
+.tv-btn-gold{background:var(--gold);color:#241a0c}
+.tv-btn.activo{background:rgba(255,255,255,.28)}
+.tv-play{font-size:.95rem;line-height:1}
+
+/* ------------------------------------------------------------- estantes */
+/* Filas horizontales que se recorren con izquierda y derecha. El scroll lo
+   maneja el motor de foco: no hay barras, no se arrastra con el dedo. */
+.tv-body{padding-top:2.6rem}
+.tv-body-top{padding-top:calc(var(--safe-y) + 7rem)}
+.tv-body-det{padding-top:1rem}
+.tv-page-t{
+  font-family:var(--serif);font-size:3.4rem;font-weight:400;
+  padding:0 var(--safe-x);letter-spacing:-.01em;
+}
+.tv-page-d{
+  font-size:1.25rem;color:var(--tv-ink-2);padding:0 var(--safe-x);
+  margin-top:.8rem;max-width:56rem;line-height:1.55;
+}
+.tv-row{margin-top:2.8rem}
+.tv-row-t{
+  font-family:var(--serif);font-size:1.9rem;font-weight:400;
+  padding:0 var(--safe-x);margin-bottom:1.2rem;letter-spacing:-.005em;
+}
+.tv-shelf{overflow:hidden}
+.tv-shelf-track{
+  display:flex;gap:var(--gap);overflow-x:auto;overflow-y:visible;
+  padding:1.4rem var(--safe-x) 2rem;
+  scrollbar-width:none;scroll-behavior:smooth;
+}
+.tv-shelf-track::-webkit-scrollbar{display:none}
+
+/* Tarjeta de clase: casi toda foto. A tres metros el texto chico no existe,
+   así que la imagen es la que identifica la clase. */
+.tv-card{flex:0 0 var(--card-w);display:block}
+.tv-card-art{
+  display:block;position:relative;width:100%;aspect-ratio:16/10;
+  border-radius:var(--r);overflow:hidden;
+}
+.tv-card-t{
+  display:block;font-family:var(--serif);font-size:1.35rem;line-height:1.22;
+  color:var(--tv-ink);margin-top:.9rem;
+  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+}
+.tv-card-m{display:block;font-size:1rem;color:var(--tv-ink-2);margin-top:.35rem}
+.tv-card-min{
+  position:absolute;left:.8rem;bottom:.8rem;
+  background:rgba(0,0,0,.62);color:#fff;border-radius:.4rem;
+  padding:.3rem .7rem;font-size:.9rem;font-variant-numeric:tabular-nums;
+}
+.tv-badge{
+  position:absolute;left:.8rem;top:.8rem;background:var(--gold);color:#241a0c;
+  border-radius:100px;padding:.3rem .8rem;font-size:.78rem;
+  letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+}
+.tv-date{
+  position:absolute;left:.8rem;top:.8rem;background:rgba(255,255,255,.94);
+  color:#1a1a1a;border-radius:.5rem;padding:.5rem .8rem;
+  display:flex;flex-direction:column;align-items:center;line-height:1;
+}
+.tv-date b{font-family:var(--serif);font-size:1.3rem;font-weight:400}
+.tv-date span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;margin-top:.2rem}
+
+/* Disciplinas: verticales, como en el sitio, pero a escala de tele */
+.tv-row-disc .tv-shelf-track{padding-top:1.4rem}
+.tv-disc{
+  flex:0 0 14rem;height:20rem;border-radius:var(--r);overflow:hidden;
+  position:relative;display:flex;align-items:flex-end;
+}
+.tv-disc::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,.72) 100%);
+}
+.tv-disc-b{position:relative;z-index:2;padding:1.2rem}
+.tv-disc-n{display:block;font-family:var(--serif);font-size:1.6rem;color:#fff}
+.tv-disc-d{display:block;font-size:.95rem;color:rgba(255,255,255,.8);margin-top:.3rem}
+
+/* Retos y series: apaisados y grandes, son piezas, no tarjetas */
+.tv-prog{
+  flex:0 0 34rem;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;
+  position:relative;display:flex;align-items:flex-end;
+}
+.tv-prog::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.06) 0%,rgba(0,0,0,.78) 100%);
+}
+.tv-prog-b{position:relative;z-index:2;padding:1.8rem}
+.tv-prog-k{
+  display:block;font-size:.92rem;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.86);margin-bottom:.5rem;
+}
+.tv-prog-t{display:block;font-family:var(--serif);font-size:2.4rem;color:#fff;line-height:1.06}
+
+/* --------------------------------------------------------------- detalle */
+.tv-detalle{position:relative}
+.tv-det-art{
+  position:absolute;inset:0 0 auto auto;width:62%;height:74vh;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 34%);
+  mask-image:linear-gradient(90deg,transparent 0%,#000 34%);
+}
+.tv-det-art::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg,var(--tv-bg) 2%,rgba(15,13,12,0) 46%);
+}
+.tv-det-in{
+  position:relative;z-index:2;
+  padding:calc(var(--safe-y) + 7rem) var(--safe-x) 0;max-width:52rem;
+}
+.tv-det-t{font-family:var(--serif);font-size:3.8rem;font-weight:400;line-height:1.05;margin-top:.4rem}
+.tv-det-m{font-size:1.2rem;color:var(--tv-ink-2);margin-top:.9rem}
+.tv-det-d{font-size:1.25rem;color:var(--tv-ink-2);line-height:1.6;margin-top:1.2rem;max-width:44rem}
+.tv-props{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.4rem}
+.tv-prop{
+  display:inline-flex;align-items:center;gap:.6rem;
+  border:1px solid var(--tv-line);border-radius:100px;
+  padding:.55rem 1.1rem;font-size:1rem;color:var(--tv-ink-2);
+}
+.tv-prop svg{
+  width:1.1rem;height:1.1rem;fill:none;stroke:var(--gold);
+  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;
+}
+.tv-det-cta{display:flex;gap:1.1rem;margin-top:2rem;flex-wrap:wrap}
+.tv-det-coach{display:flex;align-items:center;gap:1rem;margin-top:2.4rem}
+.tv-det-av{width:3.6rem;height:3.6rem;border-radius:50%;flex:0 0 auto}
+.tv-det-coach b{display:block;font-size:1.15rem;font-weight:600}
+.tv-det-coach span span{display:block;font-size:1rem;color:var(--tv-ink-2);margin-top:.2rem}
+
+/* ------------------------------------------------- emparejar con teléfono */
+/* Escribir un correo con la cruceta es el peor momento de cualquier app de
+   tele. Aquí no se escribe: se empareja. */
+.tv-pareado{
+  display:flex;align-items:center;gap:1.6rem;margin-top:1.8rem;
+  border:1px solid var(--tv-line);border-radius:var(--r);
+  padding:1.4rem;max-width:42rem;
+}
+.tv-pareado-lg{margin-top:2.4rem;padding:2rem}
+.tv-pareado b{display:block;font-size:1.3rem;margin-bottom:.4rem}
+.tv-pareado span{display:block;font-size:1.1rem;color:var(--tv-ink-2);line-height:1.5}
+.tv-qr{
+  width:8rem;height:8rem;flex:0 0 auto;border-radius:.6rem;background:#fff;
+  /* placeholder: el patrón sugiere un QR sin fingir que lo es */
+  background-image:
+    linear-gradient(90deg,#000 25%,transparent 25% 50%,#000 50% 60%,transparent 60%),
+    linear-gradient(#000 25%,transparent 25% 45%,#000 45% 55%,transparent 55%);
+  background-size:2rem 2rem;background-position:center;
+  box-shadow:inset 0 0 0 .5rem #fff;
+}
+.tv-codigo{
+  font-family:var(--serif);font-size:2.2rem;color:var(--gold);
+  letter-spacing:.1em;margin-top:.8rem;
+}
+.tv-panel{max-width:none}
+
+/* ---------------------------------------------------------------- player */
+.tv-player{position:fixed;inset:0;z-index:30;background:#000}
+.tv-pl-art{position:absolute;inset:0}
+.tv-pl-bar{
+  position:absolute;left:0;right:0;bottom:0;z-index:2;
+  padding:6rem var(--safe-x) var(--safe-y);
+  background:linear-gradient(0deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.6) 46%,transparent 100%);
+  transition:opacity .4s ease, transform .4s ease;
+}
+.tv-pl-bar.oculta{opacity:0;transform:translateY(2rem);pointer-events:none}
+.tv-pl-t{font-family:var(--serif);font-size:2.4rem;line-height:1.1}
+.tv-pl-t span{display:block;font-family:var(--sans);font-size:1.1rem;color:var(--tv-ink-2);margin-top:.5rem}
+.tv-pl-line{
+  height:.35rem;border-radius:.2rem;background:rgba(255,255,255,.24);
+  overflow:hidden;margin-top:1.6rem;
+}
+.tv-pl-line > i{display:block;height:100%;width:0;background:var(--gold)}
+.tv-pl-times{
+  display:flex;justify-content:space-between;font-size:1rem;
+  color:var(--tv-ink-2);margin-top:.7rem;font-variant-numeric:tabular-nums;
+}
+.tv-pl-cta{display:flex;gap:1.1rem;margin-top:1.6rem}
+
+/* -------------------------------------------------------------- ayuda */
+/* Sólo en el prototipo: recuerda qué teclas hacen de cruceta cuando esto se
+   prueba en una laptop en vez de en una tele. */
+.tv-help{
+  position:fixed;right:var(--safe-x);bottom:calc(var(--safe-y) / 2);z-index:40;
+  display:flex;align-items:center;gap:.9rem;
+  background:rgba(26,23,21,.62);border:1px solid rgba(255,255,255,.08);
+  border-radius:100px;padding:.6rem 1.2rem;
+  font-size:.85rem;color:var(--tv-ink-3);
+  backdrop-filter:blur(8px);
+  transition:opacity .3s ease;
+}
+/* se aparta cuando estorba: en el player y al mirar la última fila */
+.tv-help{opacity:.5}
+.tv-help:hover{opacity:1}
+.tv-help b{color:var(--tv-ink);font-weight:600}
+.tv-help kbd{
+  font-family:var(--sans);background:rgba(255,255,255,.12);border-radius:.3rem;
+  padding:.15rem .45rem;font-size:.85rem;color:var(--tv-ink);
+}
+
+/* La barra se esconde al bajar y vuelve al enfocarla (arriba desde la primera
+   fila) o al volver al principio. Fija encima del contenido tapaba la fila. */
+.tv-nav{transition:opacity .3s ease, transform .3s ease}
+.tv-nav.oculta{opacity:0;transform:translateY(-1.5rem);pointer-events:none}
+@media (prefers-reduced-motion:reduce){
+  .tv-nav{transition:none}
+}
+
+/* Dentro de un panel, las piezas que no traen su propio margen tienen que
+   respetar la zona segura igual que los títulos: en una tele, pegado al borde
+   es literalmente fuera de la pantalla. */
+.tv-panel .tv-pareado,
+.tv-panel .tv-det-cta,
+.tv-panel .tv-props{margin-inline:var(--safe-x)}

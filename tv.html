@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" data-no-chrome>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anyara TV</title>
+<!-- La tele no carga styles.css: es otra aplicación del mismo sistema, no una
+     variante responsiva del sitio. Lo que sí comparte son los datos y las
+     fotos, que vienen de anyara.js. -->
+<link rel="stylesheet" href="tv.css">
+</head>
+<body>
+
+<!-- Cinco destinos y nada más. Se llega pulsando arriba desde la primera fila. -->
+<nav class="tv-nav">
+  <span class="tv-logo"><b>A</b>nyara</span>
+  <a href="#" data-foco data-nav="home">Para ti</a>
+  <a href="#" data-foco data-nav="explorar">Explorar</a>
+  <a href="#" data-foco data-nav="retos">Retos</a>
+  <a href="#" data-foco data-nav="eventos">Eventos</a>
+  <a href="#" data-foco data-nav="cuenta">Cuenta</a>
+  <span class="tv-nav-r"><span class="tv-av" id="tvName">—</span></span>
+</nav>
+
+<main id="tvApp"></main>
+
+<!-- Sólo del prototipo: en una tele esto lo hace el control. -->
+<div class="tv-help">
+  <b>Control</b>
+  <span><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> mover ·
+  <kbd>Enter</kbd> seleccionar · <kbd>Esc</kbd> atrás</span>
+</div>
+
+<script src="anyara.js"></script>
+<script src="tv.js"></script>
+</body>
+</html>

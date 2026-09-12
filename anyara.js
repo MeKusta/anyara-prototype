@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.19.00';
+  var VERSION = '1.20.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -860,6 +860,14 @@
        anything short of it, which is what the locks on premium pages want */
     document.body.classList.add(lvl === 3 ? 'is-member' : 'is-guest');
     paintArt();
+
+    /* La tele no usa nada de este armazón: no hay barra de navegación con
+       enlaces, ni pestañas, ni "saltar al contenido", porque ahí no hay ni
+       ratón ni teclado — se navega moviendo el foco con el control. tv.html
+       se marca con data-no-chrome y arma lo suyo en tv.js. Las fotos sí se
+       comparten, que para eso está paintArt arriba. */
+    if (document.documentElement.hasAttribute('data-no-chrome')) return;
+
     paintFavs();
     makeFocusable();
     addSkipLink();
@@ -1113,6 +1121,7 @@
         '<a href="onboarding.html">Onboarding</a>' +
         '<a href="estilo.html">Sistema de diseño</a>' +
         '<a href="materiales.html">Formulario de material</a>' +
+        '<a href="tv.html">Versión para tele</a>' +
       '</div>';
     nav.appendChild(box);
 
