@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.18.00';
+  var VERSION = '1.19.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -869,7 +869,6 @@
     renderVersion();
     renderProtoMenu();
     renderTabBar();
-    renderDayPicker();
     renderChargeNotice();
   });
 
@@ -1083,15 +1082,17 @@
           '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICONOS[t.i] + '</svg>' +
           '<span>' + t.n + '</span></a>';
       }).join('') +
-      /* quinta pestaña: perfil si ya hay cuenta, empezar si todavía no */
+      /* La quinta pestaña es el perfil, y sólo existe si hay cuenta — igual
+         que en escritorio, donde el avatar aparece cuando hay cuenta y en su
+         lugar sale el botón "Empezar" en la barra de arriba. Sin cuenta la
+         barra se queda en cuatro: una pestaña que no es un destino sino una
+         llamada a la acción no pertenece aquí. */
       (A.hasAccount()
         ? '<a class="tab' + (aqui === 'profile.html' ? ' on' : '') + '" href="profile.html">' +
           '<span class="tab-av">' + A.initials() + '</span><span>Perfil</span></a>'
-        : '<a class="tab" href="onboarding.html">' +
-          '<svg viewBox="0 0 24 24" aria-hidden="true">' +
-            '<circle cx="12" cy="8.2" r="3.8"/><path d="M4.8 20.4a7.2 7.2 0 0 1 14.4 0"/>' +
-          '</svg><span>Empezar</span></a>') +
+        : '') +
       '</div>';
+    bar.classList.add(A.hasAccount() ? 'tabs-5' : 'tabs-4');
     document.body.appendChild(bar);
   }
 
@@ -1130,53 +1131,6 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') { m.hidden = true; b.setAttribute('aria-expanded', 'false'); }
     });
-  }
-
-  /* prototype-only "time machine": floating día 1 / 2 / 3 picker, bottom
-     right, on every page. Lets us demo the day-by-day unlock of the welcome
-     without waiting three real days — click a day and the site jumps there. */
-  function renderDayPicker() {
-    if (document.getElementById('dayPicker')) return;
-    var box = document.createElement('div');
-    box.id = 'dayPicker';
-    box.className = 'day-picker';
-    box.title = 'Prototipo: simula el día de la prueba para ver el desbloqueo diario';
-    box.innerHTML = '<span class="dp-lab">Día de prueba</span>';
-    var today = A.currentDay();
-    for (var n = 1; n <= TRIAL_DAYS; n++) {
-      box.appendChild(dayBtn(n, today));
-    }
-    /* se pliega: estaba fijo encima del pie de página en todas las pantallas */
-    var ocultar = document.createElement('button');
-    ocultar.className = 'dp-hide';
-    ocultar.type = 'button';
-    ocultar.title = 'Ocultar el selector de día';
-    ocultar.setAttribute('aria-label', 'Ocultar el selector de día');
-    ocultar.textContent = '›';
-    ocultar.addEventListener('click', function () {
-      box.classList.toggle('mini');
-      ocultar.textContent = box.classList.contains('mini') ? '‹' : '›';
-    });
-    box.appendChild(ocultar);
-    document.body.appendChild(box);
-
-    function dayBtn(n, today) {
-      var btn = document.createElement('button');
-      btn.textContent = n;
-      btn.title = 'Día ' + n + ' de la prueba';
-      if (n === today) btn.classList.add('on');
-      btn.addEventListener('click', function () {
-        A.setDay(n);
-        /* llegar al último día es el día del cobro: la prueba se convierte
-           en membresía y el aviso lo explica al recargar */
-        if (n === TRIAL_DAYS && A.isTrial()) {
-          A.join(A.plan());
-          set(K.charged, '1');
-        }
-        location.reload();
-      });
-      return btn;
-    }
   }
 
   /* small grey version tag next to the wordmark, so redeploys are visible at a glance */

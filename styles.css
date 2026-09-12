@@ -1010,8 +1010,12 @@ body.has-account .anon-only{display:none!important}
 .sec-major .row-head{margin-bottom:var(--sp-4)}
 
 /* Evento destacado: todo su contenido en la misma composición. */
-.evfeat{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+.evfeat{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);
   gap:var(--sp-6);align-items:center}
+/* La foto va primera en el HTML para que al apilarse en el teléfono abra la
+   pantalla; en escritorio vuelve a su lado derecho. */
+.evfeat .ev-art{order:2}
+.evfeat .ev-b{order:1}
 .evfeat .ev-art{border-radius:var(--radius);overflow:hidden;position:relative;
   height:clamp(380px,54vh,520px)}
 .evfeat .ev-b{min-width:0;max-width:56ch}
@@ -1034,7 +1038,7 @@ body.has-account .anon-only{display:none!important}
 .evgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--sp-5)}
 .evcard{display:block}
 .evcard .ev-art{aspect-ratio:16/10;border-radius:var(--radius);overflow:hidden;
-  margin-bottom:14px}
+  margin-bottom:14px;position:relative}
 .evcard .ev-k{margin-bottom:7px}
 .evcard .ev-t{font-family:var(--serif);font-size:var(--fs-sub);line-height:1.2;
   color:var(--ink);margin-bottom:8px}
@@ -1190,16 +1194,9 @@ body.has-account .anon-only{display:none!important}
 .charge-note .cn-x:hover{color:#fff}
 
 /* ---------- Day picker (prototype-only time machine) ---------- */
-.day-picker{position:fixed;right:18px;bottom:18px;z-index:90;display:flex;align-items:center;gap:5px;
-  background:#fff;border:1px solid var(--line);border-radius:100px;padding:6px;
-  box-shadow:0 8px 24px rgba(20,18,16,.16)}
-.day-picker .dp-lab{font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.12em;
   text-transform:uppercase;color:var(--ink-3);padding:0 4px 0 8px}
-.day-picker button{width:28px;height:28px;border-radius:50%;border:none;background:transparent;
   color:var(--ink-2);font-family:var(--sans);font-size:var(--fs-label);font-weight:600;
   cursor:pointer;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
-.day-picker button:hover{background:var(--sand)}
-.day-picker button.on{background:var(--gold);color:#fff}
 
 /* ---------- Video player (demo) ---------- */
 .vp-scrim{position:fixed;inset:0;z-index:140;background:rgba(12,10,9,.96);display:none;align-items:center;justify-content:center}
@@ -1675,14 +1672,6 @@ button.link-a{background:none;border:none;padding:0;cursor:pointer;font:inherit}
 }
 .proto-m a:hover{background:var(--sand);color:var(--ink)}
 
-/* ---- el selector de día se pliega ---- */
-.dp-hide{
-  background:none;border:none;cursor:pointer;color:var(--ink-3);
-  font-size:var(--fs-sub);line-height:1;padding:0 2px;margin-left:2px;
-}
-.dp-hide:hover{color:var(--ink)}
-.day-picker.mini{gap:0}
-.day-picker.mini .dp-lab,.day-picker.mini > button:not(.dp-hide){display:none}
 
 /* La bajada del pilar es lo primero que sobra cuando la columna se angosta:
    antes de desbordar sobre la foto, se recorta a dos líneas. */
@@ -1715,16 +1704,22 @@ button.link-a{background:none;border:none;padding:0;cursor:pointer;font:inherit}
 .tabbar{
   display:none;
   position:fixed;left:0;right:0;bottom:0;z-index:95;
-  background:rgba(255,255,255,.96);
-  backdrop-filter:blur(12px);
-  border-top:1px solid var(--line);
+  /* translúcida y con saturación, como las barras del sistema: el contenido
+     que pasa por debajo se insinúa en vez de desaparecer contra un bloque
+     blanco */
+  background:rgba(255,255,255,.82);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-top:1px solid rgba(0,0,0,.08);
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
-.tabbar-in{display:grid;grid-template-columns:repeat(5,1fr)}
+.tabbar-in{display:grid}
+.tabbar.tabs-4 .tabbar-in{grid-template-columns:repeat(4,1fr)}
+.tabbar.tabs-5 .tabbar-in{grid-template-columns:repeat(5,1fr)}
 .tab{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:4px;padding:9px 4px 8px;min-height:52px;
-  font-family:var(--sans);font-size:10px;letter-spacing:.02em;
+  gap:3px;padding:8px 4px 7px;min-height:56px;
+  font-family:var(--sans);font-size:10px;letter-spacing:.01em;font-weight:500;
   color:var(--ink-3);text-align:center;
 }
 .tab svg{
@@ -1738,6 +1733,13 @@ button.link-a{background:none;border:none;padding:0;cursor:pointer;font:inherit}
   width:23px;height:23px;border-radius:50%;background:var(--gold);color:#fff;
   display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;
 }
+
+/* ---- panel lateral de filtros ----
+   En escritorio y tableta los filtros siguen en su barra: el botón, la
+   cabecera y el pie del panel no existen ahí. */
+.filter-open{display:none}
+.filterbar .fb-head,.filterbar .fb-foot{display:none}
+.filter-scrim{display:none}
 
 @media (max-width:1023px){
   :root{--gutter:26px}
@@ -1778,125 +1780,307 @@ button.link-a{background:none;border:none;padding:0;cursor:pointer;font:inherit}
 
 @media (max-width:767px){
   :root{
-    --gutter:18px;
+    --gutter:20px;
+    /* En escritorio el contenido va al 94vw para no pegarse al borde. En el
+       teléfono el ancho es el gutter y nada más: así las tiras que sangran a
+       pantalla completa (pilares, semana, filas) caen exactas en el borde en
+       vez de quedar unos píxeles fuera. */
+    --maxw:100%;
     /* La escala baja sólo en los tamaños grandes: los chicos ya estaban
        pensados para leerse de cerca y encogerlos los vuelve ilegibles. */
-    --fs-hero:30px;
-    --fs-page:27px;
-    --fs-head:24px;
+    --fs-hero:32px;
+    --fs-page:30px;
+    --fs-head:25px;
     --fs-title:21px;
     --fs-sub:19px;
     --fs-card:17px;
     --fs-lede:16px;
-    --sp-5:24px;
-    --sp-6:32px;
+    /* Ritmo vertical propio del teléfono. En una app el aire entre secciones
+       es lo que separa una cosa de otra: no hay columnas ni bordes que lo
+       hagan, así que el espacio tiene que hacerlo todo. */
+    --sp-5:26px;
+    --sp-6:34px;
+    --sec:38px;      /* entre secciones mayores */
+    --sec-sm:26px;   /* entre bloques de una misma sección */
+    --tabh:56px;     /* alto de la barra de pestañas */
   }
   body{
-    /* hueco para la barra de pestañas, más el área segura del teléfono */
-    padding-bottom:calc(60px + env(safe-area-inset-bottom,0px));
+    padding-bottom:calc(var(--tabh) + env(safe-area-inset-bottom,0px));
+    overflow-x:hidden;          /* red de seguridad: nada arrastra la página de lado */
   }
   .tabbar{display:block}
 
+  /* Una app no tiene pie de página: los enlaces legales y de empresa viven
+     en el perfil, no al final de cada pantalla. */
+  .footer{display:none}
+
   /* ---- barra superior: identidad, buscar y perfil; el resto va abajo ---- */
+  .topbar{background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(20px)}
   .topbar-inner{
     display:flex;align-items:center;justify-content:space-between;
-    gap:12px;padding:11px var(--gutter);
+    gap:12px;padding:10px var(--gutter);
   }
   .nav-links{display:none}
   .nav-right{gap:10px}
-  .icon-btn{width:40px;height:40px}
-  .avatar{width:38px;height:38px}
+  .icon-btn{width:38px;height:38px;border:none;background:var(--sand);font-size:var(--fs-note)}
+  .avatar{width:36px;height:36px;font-size:var(--fs-tiny)}
   .version-badge{display:none}
-  .btn-join{font-size:var(--fs-micro);padding:8px 12px}
+  .logo-mark{height:1.15em}
+  .btn-join{font-size:var(--fs-tiny);padding:9px 15px;min-height:0}
   .nav-skip{font-size:var(--fs-micro)}
 
-  /* ---- alturas de portada: media pantalla, no dos tercios ---- */
-  .hero-carousel{height:clamp(400px,72vh,540px)}
-  .mhero{height:auto;min-height:0;padding-top:200px}
-  /* El degradado de escritorio va de izquierda a derecha, porque ahí el texto
-     ocupa la mitad izquierda. En vertical el texto va abajo, así que el
-     degradado tiene que subir desde el pie o la foto se pierde. */
+  /* ---- ritmo ----
+     .section y .section-sm se declaran después de .wrap y con la misma
+     especificidad, así que su "padding: X 0" borraba el gutter lateral: en
+     escritorio no se notaba porque el contenido va al 94vw y queda centrado,
+     pero en el teléfono, al ancho completo, el texto tocaba el borde de la
+     pantalla. Aquí el gutter se repone. */
+  .section{padding:var(--sec) var(--gutter)}
+  .section-sm{padding:var(--sec-sm) var(--gutter)}
+  .row-head{margin-bottom:14px;align-items:center}
+  .row-head h2,.row-head .h2-serif{font-size:var(--fs-head);letter-spacing:-.015em}
+  .divider{display:none}
+
+  /* ---- menos texto ----
+     El título ya dice de qué va la pantalla; la bajada de página sobra en
+     vertical, y las de sección se cortan a dos líneas en vez de empujar el
+     contenido hacia abajo. */
+  .wrap > .lede,.wrap > p.lede{display:none}
+  .sec-lead{
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+    overflow:hidden;margin-bottom:2px;
+  }
+  /* la serie es un tercer renglón de metadatos: en una tarjeta de 220px
+     de ancho es ruido, y la serie ya se ve al abrir la clase */
+  .ccard .serie{display:none}
+
+  /* ---- portadas ----
+     Nada de carrusel automático: se muestra una sola portada y punto. Pasar
+     diapositivas solo, con puntos y flechas, es un patrón de sitio web; en
+     una app lo que manda es el scroll. */
+  .hero-carousel{height:auto;overflow:visible}
+  .hc-track{display:block;transform:none!important;transition:none}
+  .hc-slide:not(:first-child){display:none}
+  .hc-slide{min-width:0;height:clamp(440px,64vh,560px)}
+  .hc-dots,.hc-arrow{display:none}
+  .mhero{height:auto;min-height:0;padding-top:210px}
   .mhero::after{
-    background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.25) 42%,rgba(0,0,0,.8) 100%);
+    background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.25) 42%,rgba(0,0,0,.82) 100%);
   }
   .hc-slide::after{
-    background:linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.3) 44%,rgba(0,0,0,.82) 100%);
+    background:linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.3) 44%,rgba(0,0,0,.84) 100%);
   }
+  .hc-inner,.mh-in{padding-bottom:30px}
   .mh-b,.hc-content{max-width:none}
-  .hc-inner,.mh-in{padding-bottom:34px}
-  .mh-cta .btn,.hc-content .btn{flex:1 1 auto;text-align:center}
-  .mh-cta{gap:10px}
+  .hc-content p{
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+    overflow:hidden;margin-bottom:20px;
+  }
+
+  /* ---- botones ----
+     Una sola altura para todos, esquina de píldora y ancho completo cuando
+     van apilados. Antes unos se estiraban, otros no, y los de texto
+     subrayado se leían como un enlace perdido. */
+  .btn{
+    min-height:50px;display:inline-flex;align-items:center;justify-content:center;
+    padding:0 24px;border-radius:100px;font-size:var(--fs-note);letter-spacing:0;
+    text-transform:none;font-weight:600;
+  }
+  .btn-block,.mh-cta .btn,.hc-content .btn,.dp-cta-row .btn,.ob-cta-row .btn{width:100%}
+  .mh-cta,.dp-cta-row,.dp-actions{display:grid;gap:10px;width:100%}
+  .mh-cta{grid-template-columns:1fr 1fr}
+  .mh-cta .btn{padding:0 12px;font-size:var(--fs-meta)}
+  /* los botones de texto subrayado se vuelven secundarios de verdad */
+  .dp-save{
+    min-height:50px;width:100%;border:1px solid var(--line);border-radius:100px;
+    background:#fff;font-size:var(--fs-note);font-weight:600;
+    display:inline-flex;align-items:center;justify-content:center;
+  }
+  .dp-save:hover,.dp-save.on{border-color:var(--gold)}
 
   /* ---- rejillas ---- */
-  .section{padding:30px 0}
-  .section-sm{padding:20px 0}
-  .grid4,.libgrid,.comp-grid,.coachgrid,.evgrid,.week-plan,.dp-gridlist,
-  .grid3,.grid2,.welcome3,.subbar{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-  .plans,.plans.plans3{grid-template-columns:1fr}
-  .footer-inner{grid-template-columns:1fr;gap:24px}
+  .grid4,.libgrid,.comp-grid,.coachgrid,.week-plan,.dp-gridlist,
+  .grid3,.grid2,.welcome3,.subbar{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .plans,.plans.plans3,.evgrid{grid-template-columns:1fr;gap:var(--sp-5)}
   .mispace,.mispace-sm{grid-template-columns:1fr;gap:18px}
 
-  /* Las filas de la home se recorren de lado, como en una app, en vez de
-     apilarse en una parrilla de dos que obliga a scrollear sin parar. */
+  /* Las filas se recorren de lado, con el borde del gutter como pista de que
+     hay más: la siguiente tarjeta asoma. */
   #filas .grid4,.crow .grid4{
-    display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
-    padding-bottom:6px;scrollbar-width:none;
+    display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x proximity;
+    padding:0 var(--gutter) 4px;margin:0 calc(var(--gutter) * -1);
+    /* sin esto el ajuste pega la primera tarjeta al borde de la pantalla y
+       se come el gutter que acabamos de poner */
+    scroll-padding-inline:var(--gutter);
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
   }
   #filas .grid4::-webkit-scrollbar,.crow .grid4::-webkit-scrollbar{display:none}
-  #filas .grid4 > *,.crow .grid4 > *{flex:0 0 70%;scroll-snap-align:start}
-  .pillar{flex:0 0 140px}
-  .wk{flex:0 0 140px}
-  .ccar-slide{flex:0 0 88%;min-height:300px}
-  .ccar-t{font-size:var(--fs-title)}
-  .ccar-b{padding:20px}
-  .cardrow{grid-auto-columns:minmax(200px,70%)}
-
-  /* ---- filtros: una tira que se desliza, no una rejilla ---- */
-  .filterbar,.filterbar-5{
-    display:flex;gap:10px;overflow-x:auto;padding:14px;
-    scrollbar-width:none;margin:14px 0;
+  #filas .grid4 > *,.crow .grid4 > *{flex:0 0 62%;scroll-snap-align:start}
+  .pillars,.week{
+    padding:0 var(--gutter) 4px;margin:0 calc(var(--gutter) * -1);
+    scroll-padding-inline:var(--gutter);
   }
-  .filterbar::-webkit-scrollbar{display:none}
-  .filter{flex:0 0 auto;min-width:132px}
-  .activebar{gap:8px}
-  .ab-clear{margin-left:0}
+  .pillar{flex:0 0 132px}
+  .wk{flex:0 0 136px}
+  .cardrow{grid-auto-columns:minmax(200px,62%)}
 
-  /* ---- objetivos táctiles: nada por debajo de 44px ---- */
-  .pill{padding:12px 18px}
-  .btn{padding:13px 22px}
-  .ccar-nav button{width:44px;height:44px}
+  /* ---- retos y series: alto, no ancho ----
+     En el teléfono el carrusel apaisado deja una franja de foto y el texto
+     encima, apretado. Se apilan verticalmente y la tarjeta se vuelve
+     vertical, para que la imagen respire y el texto tenga su espacio. */
+  .ccar-track{
+    display:grid;grid-template-columns:1fr;gap:16px;overflow:visible;
+  }
+  .ccar-slide{
+    flex:none;aspect-ratio:3/4;min-height:0;
+  }
+  .ccar-b{padding:22px 20px 24px}
+  .ccar-t{font-size:var(--fs-head);line-height:1.1}
+  .ccar-d{
+    font-size:var(--fs-meta);margin-top:8px;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  /* El listado de disciplinas del arranque se va: en dos renglones de letra
+     pequeña sobre la foto no se lee, y ya está en la página del reto. */
+  .ccar-k-sub{display:none}
+  /* los dos botones del pie, del mismo alto y del mismo ancho */
+  .ccar-f{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .ccar-f .btn,.ccar-play{
+    min-height:46px;width:100%;padding:0 12px;font-size:var(--fs-meta);
+    display:inline-flex;align-items:center;justify-content:center;
+  }
+  .ccar-nav{display:none}
+  .ccar-play{min-height:44px;padding:0 20px 0 12px}
+
+  /* ---- objetivos táctiles ---- */
+  .pill{padding:0 18px;min-height:42px;align-items:center}
   .social{width:42px;height:42px}
-  .fav{width:40px;height:40px}
-  .td-faq summary{padding:4px 0}
+  .fav{width:38px;height:38px}
+  .td-faq summary{padding:6px 0;min-height:44px;align-items:center}
 
-  /* ---- las tarjetas de video se apilan ----
-     Tanto la del video de Mariana como la del tráiler de la disciplina van en
-     fila con un arte de 360px fijo: en vertical eso no deja nada para el texto
-     y el bloque se sale de la pantalla. */
+  /* ---- las tarjetas de video se apilan ---- */
   .intro-card,.trailer-card{flex-direction:column;gap:16px;align-items:stretch}
   .intro-card .ic-art,.trailer-card .tc-art{width:100%}
   .intro-card .ic-b,.trailer-card .tc-b{max-width:none}
-  .intro-card .btn,.trailer-card .btn{display:block;text-align:center}
 
   /* ---- detalle de clase ---- */
-  .vd-actions{flex-wrap:wrap}
-  .props{gap:8px}
-  .prop{padding:6px 12px 6px 7px;font-size:var(--fs-tiny)}
-
-  /* ---- el selector de día no pelea con las pestañas ---- */
-  .day-picker{
-    right:12px;
-    bottom:calc(70px + env(safe-area-inset-bottom,0px));
-    transform:scale(.92);transform-origin:bottom right;
+  .vd-actions{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+    border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);
+    margin-top:var(--sp-4);
   }
+  .vd-act{min-height:52px;justify-content:center}
+  .props{gap:8px}
+  .prop{padding:7px 13px 7px 8px;font-size:var(--fs-tiny)}
+  .detail-grid,.vd-about,.exits,.td-sales,.mat-grid,.dp-grid,.dp-sections,
+  .tw-hero,.evfeat,.settings-grid,.daily,.resume{grid-template-columns:1fr}
+  .dp-top .dp-art{height:clamp(360px,52vh,460px)}
 
-  /* ---- buscador a pantalla completa, como en una app ---- */
+  /* ---- buscador y modales a pantalla completa ---- */
   .overlay-top{padding:var(--gutter)}
   .search-field input{font-size:var(--fs-sub)}
-  .modal{padding:24px;border-radius:16px}
+  .modal{padding:24px 20px;border-radius:20px}
+  .modal-scrim{align-items:flex-end;padding:0}
+  .modal{border-radius:20px 20px 0 0;border-top-width:0}
 
   /* la tabla de precios de los tres días se apila */
-  .td-plan{flex-direction:column;align-items:flex-start;gap:10px}
+  .td-plan{flex-direction:column;align-items:flex-start;gap:10px;padding:20px}
+
+  /* ---- filtros en panel lateral ----
+     Cinco selectores no caben en línea en un teléfono, y en una tira que se
+     desliza no se ve cuántos hay puestos. El botón lleva la cuenta y el
+     panel entra desde la derecha con todo junto y una salida clara. */
+  .filter-open{
+    display:inline-flex;align-items:center;gap:9px;
+    min-height:44px;padding:0 18px;margin:14px 0 4px;
+    border:1px solid var(--line);border-radius:100px;background:#fff;cursor:pointer;
+    font-family:var(--sans);font-size:var(--fs-note);font-weight:600;color:var(--ink);
+  }
+  .filter-open svg{
+    width:17px;height:17px;fill:none;stroke:currentColor;
+    stroke-width:1.8;stroke-linecap:round;
+  }
+  .filter-open.on{border-color:var(--ink);background:var(--ink);color:#fff}
+  .fo-n[hidden]{display:none}
+  .fo-n{
+    min-width:20px;height:20px;border-radius:100px;background:var(--gold);color:#fff;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:var(--fs-micro);font-weight:700;
+  }
+  .filter-scrim{
+    display:block;position:fixed;inset:0;z-index:110;
+    background:rgba(20,18,16,.4);backdrop-filter:blur(2px);
+  }
+  .filter-scrim[hidden]{display:none}
+
+  /* Cerrado no se dibuja: un panel fijo fuera de la pantalla sigue contando
+     para el ancho del documento y arrastraba la página 20px de lado. Se monta
+     al abrir y se desmonta al terminar la animación de cierre. */
+  .filterbar,.filterbar-5{
+    display:none;
+    position:fixed;top:0;right:0;bottom:0;z-index:120;
+    width:min(340px,86vw);margin:0;border-radius:0;
+    background:#fff;box-shadow:-14px 0 40px rgba(20,18,16,.18);
+    flex-direction:column;gap:0;padding:0;overflow-y:auto;
+    transform:translateX(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);
+  }
+  .filterbar.mounted{display:flex}
+  .filterbar.open{transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .filterbar,.filterbar-5{transition:none}
+  }
+  .filterbar .fb-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 20px;border-bottom:1px solid var(--line-2);flex:0 0 auto;
+    padding-top:calc(16px + env(safe-area-inset-top,0px));
+  }
+  .fb-t{font-family:var(--serif);font-size:var(--fs-sub)}
+  .fb-x{
+    width:36px;height:36px;border-radius:50%;border:none;background:var(--sand);
+    cursor:pointer;color:var(--ink);font-size:var(--fs-note);
+  }
+  /* los selectores se apilan y ocupan todo el ancho del panel */
+  .filterbar .filter{
+    flex:0 0 auto;min-width:0;width:100%;
+    padding:16px 20px;border-bottom:1px solid var(--line-2);
+  }
+  .filter label{margin-bottom:8px;display:block}
+  .filterbar .sel,.filterbar select.sel-live{width:100%;min-height:46px}
+  .filterbar .fb-foot{
+    display:grid;grid-template-columns:1fr 1.4fr;gap:10px;
+    margin-top:auto;padding:14px 20px;
+    padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));
+    border-top:1px solid var(--line-2);background:#fff;
+    position:sticky;bottom:0;flex:0 0 auto;
+  }
+  .fb-foot .btn{min-height:48px;padding:0 14px;font-size:var(--fs-meta)}
+
+  /* ---- eventos ----
+     La pantalla abría con ocho renglones de texto antes de llegar a la foto.
+     Ahora manda la imagen: portada alta con la fecha encima, y debajo sólo lo
+     que hace falta para decidir. */
+  .evfeat{gap:var(--sp-4)}
+  .evfeat .ev-art{order:-1;height:clamp(300px,44vh,420px)}
+  .evfeat .ev-b{order:0;max-width:none}
+  .evfeat h1{font-size:var(--fs-page);margin-top:4px}
+  .ev-lead{
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  .ev-facts{gap:var(--sp-4);margin-top:var(--sp-3)}
+  .evcard .ev-art{aspect-ratio:4/5;margin-bottom:12px}
+  .evcard .ev-t{font-size:var(--fs-head);margin-bottom:5px}
+  .evcard .ev-m{margin-bottom:0}
+  .evgrid{gap:var(--sp-6)}
+
+  /* boletos: una tarjeta con la fecha a un lado y las acciones abajo */
+  .dp-ticketrow{
+    grid-template-columns:64px minmax(0,1fr);gap:14px;align-items:start;
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px;margin-bottom:12px;
+  }
+  .dp-ticketrow:first-child{padding-top:16px;border-top:1px solid var(--line)}
+  .tk-acts{grid-column:1 / -1;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .tk-acts .dp-save{min-height:46px;font-size:var(--fs-meta);padding:0 10px}
 }
 
 /* Teléfono en horizontal: casi todo el alto es barra. La portada se achica y
@@ -1907,3 +2091,24 @@ button.link-a{background:none;border:none;padding:0;cursor:pointer;font:inherit}
   .tabbar{display:none}
   body{padding-bottom:0}
 }
+
+/* ---- fecha y ciudad sobre la foto del evento ----
+   Es el dato con el que se decide si vas: va encima de la imagen, como en un
+   cartel, y no perdido entre los metadatos de abajo. */
+.ev-date{
+  position:absolute;top:14px;left:14px;z-index:2;
+  background:rgba(255,255,255,.94);border-radius:12px;
+  padding:8px 12px;display:flex;flex-direction:column;align-items:center;line-height:1;
+}
+.ev-date b{font-family:var(--serif);font-size:var(--fs-sub);font-weight:400}
+.ev-date span{
+  font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-2);margin-top:3px;
+}
+.ev-city{
+  position:absolute;top:14px;right:14px;z-index:2;
+  background:rgba(0,0,0,.45);color:#fff;border-radius:100px;
+  padding:6px 12px;font-family:var(--sans);font-size:var(--fs-micro);
+  letter-spacing:.12em;text-transform:uppercase;
+}
+.tk-acts{display:flex;gap:22px;flex-wrap:wrap;align-items:center}

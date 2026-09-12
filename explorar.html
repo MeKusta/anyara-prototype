@@ -40,11 +40,26 @@
     <div class="pill somara" data-d="somara"><span class="dot"></span>Somara</div>
     <div class="pill tone" data-d="tone"><span class="dot"></span>Tone</div>
   </div>
+  <!-- En el teléfono los filtros no caben en línea: se van a un panel
+       lateral que entra desde la derecha. El botón muestra cuántos hay
+       puestos, para saberlo sin abrirlo. -->
+  <button type="button" class="filter-open" id="filterOpen">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3.6 6.4h16.8M6.8 12h10.4M10 17.6h4"/>
+    </svg>
+    Filtros<span class="fo-n" id="foN" hidden></span>
+  </button>
+
   <!-- Todos los filtros son reales. "Enfoque" y "Tipo de clase" salieron de
        la llamada con Mariana: el enfoque es fijo para todo el catálogo y el
        tipo de clase cambia según la disciplina elegida, por eso se llena en
        JS y se apaga mientras estés en "Todas". -->
-  <div class="filterbar filterbar-5">
+  <div class="filter-scrim" id="filterScrim" hidden></div>
+  <div class="filterbar filterbar-5" id="filterBar">
+    <div class="fb-head">
+      <span class="fb-t">Filtros</span>
+      <button type="button" class="fb-x" id="filterClose" aria-label="Cerrar filtros">✕</button>
+    </div>
     <div class="filter">
       <label>Intensidad</label>
       <select class="sel sel-live" id="fLvl">
@@ -91,6 +106,10 @@
         <option value="45">45 min</option>
         <option value="60">60 min</option>
       </select>
+    </div>
+    <div class="fb-foot">
+      <button type="button" class="btn btn-ghost" id="fbClear">Limpiar</button>
+      <button type="button" class="btn btn-gold" id="fbDone"><span id="fbCount"></span></button>
     </div>
   </div>
 </div>
@@ -245,6 +264,11 @@ function render() {
     document.getElementById('noResults').style.display = hit.length ? 'none' : 'block';
     paintDiscStrip(hit.length);
   }
+  var fin = document.getElementById('fbCount');
+  if (fin) fin.textContent = hayFiltro()
+    ? 'Ver ' + hit.length + (hit.length === 1 ? ' clase' : ' clases')
+    : 'Ver todo';
+  if (typeof pintarBoton === 'function') pintarBoton();
   Anyara.paintArt();
   Anyara.paintFavs();
   Anyara.makeFocusable();
@@ -352,6 +376,56 @@ function limpiar() {
 }
 document.getElementById('abClear').addEventListener('click', limpiar);
 document.getElementById('noClear').addEventListener('click', limpiar);
+
+/* ---- panel lateral de filtros (teléfono) ----
+   El mismo marcado que la barra de escritorio: en pantalla chica el CSS la
+   saca de la página y la convierte en un panel que entra desde la derecha,
+   así no hay dos juegos de filtros que mantener. */
+var panel  = document.getElementById('filterBar');
+var scrim  = document.getElementById('filterScrim');
+var abrir  = document.getElementById('filterOpen');
+
+function cuentaFiltros() {
+  return ['d','props','foco','tipo','lvl'].filter(function (k) { return !!F[k]; }).length +
+         (F.max ? 1 : 0);
+}
+function pintarBoton() {
+  var n = cuentaFiltros();
+  var b = document.getElementById('foN');
+  b.hidden = !n;
+  b.textContent = n;
+  abrir.classList.toggle('on', !!n);
+}
+/* Se monta, y al siguiente cuadro se abre: hace falta que el panel exista en
+   el layout antes de animarlo, o la transición no arranca. */
+var cierre = null;
+function abrirPanel() {
+  clearTimeout(cierre);
+  panel.classList.add('mounted');
+  scrim.hidden = false;
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () { panel.classList.add('open'); });
+  });
+  var x = document.getElementById('filterClose');
+  if (x) x.focus();
+}
+function cerrarPanel() {
+  panel.classList.remove('open');
+  scrim.hidden = true;
+  document.body.style.overflow = '';
+  abrir.focus();
+  /* se desmonta cuando termina de salir, para que no arrastre la página */
+  cierre = setTimeout(function () { panel.classList.remove('mounted'); }, 320);
+}
+abrir.addEventListener('click', abrirPanel);
+scrim.addEventListener('click', cerrarPanel);
+document.getElementById('filterClose').addEventListener('click', cerrarPanel);
+document.getElementById('fbDone').addEventListener('click', cerrarPanel);
+document.getElementById('fbClear').addEventListener('click', function () { limpiar(); });
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && panel.classList.contains('open')) cerrarPanel();
+});
 
 F.d = new URLSearchParams(location.search).get('d') || '';
 paintTipos();

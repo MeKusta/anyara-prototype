@@ -91,6 +91,12 @@ var dest = EV[0], resto = EV.slice(1);
 
 /* ---- destacado: foto, texto, cuándo, dónde y formato, todo junto ---- */
 document.getElementById('feat').innerHTML =
+  /* La foto va primera en el marcado y el CSS la devuelve a la derecha en
+     escritorio. Antes, al apilarse en el teléfono, la pantalla abría con
+     ocho renglones de texto y la imagen aparecía hasta el final. */
+  '<div class="ev-art gart ' + dest.d + '">' +
+    '<span class="ev-date"><b>' + dest.dia + '</b><span>' + dest.mes + '</span></span>' +
+  '</div>' +
   '<div class="ev-b">' +
     '<div class="ev-k">Evento destacado · ' + dest.dia + ' ' + dest.mes + '</div>' +
     '<h1>' + dest.t + '</h1>' +
@@ -105,17 +111,21 @@ document.getElementById('feat').innerHTML =
       '<a href="' + Anyara.eventHref(dest.id) + '" class="btn btn-dark">Ver evento</a>' +
       '<button class="dp-save" onclick="addCal(event,this)">Añadir al calendario</button>' +
     '</div>' +
-  '</div>' +
-  '<div class="ev-art gart ' + dest.d + '"></div>';
+  '</div>';
 
 /* ---- próximos ---- */
 document.getElementById('grid').innerHTML = resto.map(function (e) {
+  /* La fecha va sobre la foto, como en un cartel: es el dato con el que se
+     decide. Debajo quedan sólo el título y una línea — antes eran tres
+     renglones de metadatos y un enlace, y la tarjeta se leía como una ficha
+     de texto con una foto arriba. */
   return '<a href="' + Anyara.eventHref(e.id) + '" class="evcard">' +
-    '<div class="ev-art gart ' + e.d + '"></div>' +
-    '<div class="ev-k">' + e.dia + ' ' + e.mes + ' · ' + e.ciudad + '</div>' +
+    '<div class="ev-art gart ' + e.d + '">' +
+      '<span class="ev-date"><b>' + e.dia + '</b><span>' + e.mes + '</span></span>' +
+      '<span class="ev-city">' + e.ciudad + '</span>' +
+    '</div>' +
     '<div class="ev-t">' + e.t + '</div>' +
-    '<div class="ev-m">' + e.i + '<br>' + e.hora + ' · ' + e.lugar + '</div>' +
-    '<span class="link-a">Ver evento</span>' +
+    '<div class="ev-m">' + e.i + ' · ' + e.hora + '</div>' +
   '</a>';
 }).join('');
 
@@ -130,7 +140,7 @@ document.getElementById('tickets').innerHTML = mine.length
           '<div class="dp-t">' + e.t + '</div>' +
           '<div class="dp-d">' + e.hora + ' · ' + e.lugar + ' · ' + e.boleto.detalle + '</div>' +
         '</div>' +
-        '<div style="display:flex;gap:22px;flex-wrap:wrap;align-items:center">' +
+        '<div class="tk-acts">' +
           '<button class="dp-save" onclick="showTicket(' + q(e.t) + ',' + q(when) + ',' + q(e.boleto.code) + ')">Ver boleto</button>' +
           '<button class="dp-save" onclick="addCal(event,this)">Añadir al calendario</button>' +
         '</div>' +
