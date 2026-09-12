@@ -1435,3 +1435,258 @@ a.wk:hover{border-color:var(--gold);transform:translateY(-3px)}
   font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.1em;
   text-transform:uppercase;color:var(--gold-deep);margin-top:6px;
 }
+
+/* ============================================================================
+   Foco visible · para control remoto y teclado
+   En Apple TV la única forma de navegar es mover el foco: si no se ve dónde
+   está, la app no se puede usar. Antes había una sola regla :focus en toda la
+   hoja, y lo que hacía era quitar el contorno. Esto lo repone para todo lo
+   que se puede enfocar, con un anillo propio en vez del del sistema.
+
+   :focus-visible y no :focus, para que el anillo salga al navegar con
+   remoto o teclado y no al hacer clic con el ratón.
+   ========================================================================= */
+:root{
+  --focus:var(--gold);
+  --focus-w:3px;
+  --focus-gap:3px;
+}
+/* base: cualquier cosa enfocable que no tenga regla propia */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible{
+  outline:var(--focus-w) solid var(--focus);
+  outline-offset:var(--focus-gap);
+  border-radius:4px;
+}
+/* piezas con esquina redonda: el anillo sigue la forma de la pieza */
+.ccard:focus-visible,
+.compcard:focus-visible,
+.pillar:focus-visible,
+.wk:focus-visible,
+.ccar-slide:focus-visible,
+.libcard:focus-visible,
+.coachcard:focus-visible,
+.resume:focus-visible,
+.w3:focus-visible,
+.intro-card:focus-visible,
+.disc-strip:focus-visible,
+.td-plan:focus-visible{
+  outline:var(--focus-w) solid var(--focus);
+  outline-offset:var(--focus-gap);
+  border-radius:var(--radius);
+}
+.pill:focus-visible,
+.subchip:focus-visible,
+.chip:focus-visible,
+.prop:focus-visible,
+.coach-tag:focus-visible,
+.btn:focus-visible,
+.ccar-play:focus-visible,
+.nav-skip:focus-visible{
+  outline:var(--focus-w) solid var(--focus);
+  outline-offset:var(--focus-gap);
+  border-radius:100px;
+}
+.icon-btn:focus-visible,
+.avatar:focus-visible,
+.social:focus-visible,
+.ccar-nav button:focus-visible,
+.fav:focus-visible{
+  outline:var(--focus-w) solid var(--focus);
+  outline-offset:var(--focus-gap);
+  border-radius:50%;
+}
+/* sobre foto o fondo oscuro el dorado se pierde: se le pone un halo blanco */
+.pillar:focus-visible,
+.ccar-slide:focus-visible,
+.coach-tag:focus-visible,
+.social:focus-visible,
+.ccar-play:focus-visible{
+  box-shadow:0 0 0 calc(var(--focus-w) + var(--focus-gap) + 2px) rgba(0,0,0,.45);
+}
+/* la tarjeta enfocada se levanta igual que al pasar el ratón: en una tele,
+   a tres metros, el contorno solo no alcanza para ubicarla */
+.ccard:focus-visible .art,
+.pillar:focus-visible,
+.wk:focus-visible{transform:translateY(-4px)}
+.ccard .art,.pillar,.wk{transition:transform .25s cubic-bezier(.4,0,.2,1)}
+
+/* el select del catálogo ya tenía su regla; se alinea con el resto */
+.filter select.sel-live:focus-visible{
+  outline:var(--focus-w) solid var(--focus);outline-offset:2px;border-color:var(--gold);
+}
+
+/* saltar al contenido: lo primero que recibe el foco en cada página */
+.skip-link{
+  position:absolute;left:-9999px;top:0;z-index:200;
+  background:var(--ink);color:#fff;font-family:var(--sans);font-size:var(--fs-note);
+  padding:12px 20px;border-radius:0 0 var(--radius) 0;
+}
+.skip-link:focus{left:0}
+
+@media (prefers-reduced-motion:reduce){
+  .ccard .art,.pillar,.wk{transition:none}
+  .ccard:focus-visible .art,.pillar:focus-visible,.wk:focus-visible{transform:none}
+}
+
+/* ============================================================================
+   Segunda pasada de UX · lo que salió de revisar el prototipo en uso
+   ========================================================================= */
+
+/* ---- hero de miembro ----
+   Sustituye al carrusel en el nivel 3. Misma altura, misma composición, pero
+   la acción es reanudar y no comprar. */
+.mhero{
+  position:relative;width:100%;overflow:hidden;
+  height:clamp(380px,52vh,520px);background:var(--sand);
+  display:flex;align-items:flex-end;
+}
+.mhero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.34) 46%,rgba(0,0,0,.06) 100%);
+}
+.mh-in{
+  position:relative;z-index:2;width:100%;max-width:var(--maxw);
+  margin:0 auto;padding:0 var(--gutter) 52px;
+}
+.mh-b{max-width:560px;color:#fff}
+.mh-b .eyebrow{color:#fff;opacity:.9}
+.mh-b h1{color:#fff;font-size:var(--fs-hero);line-height:1.06;margin-bottom:10px}
+.mh-b p{font-family:var(--sans);font-size:var(--fs-note);color:rgba(255,255,255,.86);margin-bottom:20px}
+.mh-bar{height:4px;border-radius:2px;background:rgba(255,255,255,.28);overflow:hidden;max-width:400px}
+.mh-bar > i{display:block;height:100%;background:var(--gold)}
+.mh-pct{
+  font-family:var(--sans);font-size:var(--fs-meta);color:rgba(255,255,255,.86);
+  margin-top:10px;
+}
+.mh-pct b{color:#fff}
+.mh-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.btn-ghost.light{border-color:rgba(255,255,255,.5);color:#fff;background:transparent}
+.btn-ghost.light:hover{border-color:#fff;background:rgba(255,255,255,.12)}
+
+/* ---- Mi espacio, con menos cifras ---- */
+.mispace-sm{grid-template-columns:2fr 1fr 1fr}
+.ms-link{color:var(--gold-deep);border-bottom:1px solid transparent}
+.ms-link:hover{border-bottom-color:var(--gold)}
+
+/* ---- el objetivo semanal, ahora bajo el calendario ---- */
+.week-goal{
+  display:flex;align-items:center;gap:16px;margin-top:18px;
+  font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);
+}
+.week-goal button{
+  background:none;border:none;cursor:pointer;padding:0;
+  font-family:var(--sans);font-size:var(--fs-meta);color:var(--gold-deep);
+  border-bottom:1px solid transparent;
+}
+.week-goal button:hover{border-bottom-color:var(--gold)}
+/* día cumplido: el calendario es también el marcador */
+.wk.done .wk-top{background:var(--gold-tint)}
+.wk.done{opacity:1;border-color:var(--gold)}
+.wk-ok{
+  font-size:var(--fs-tiny);color:var(--gold-deep);font-weight:700;margin-left:auto;
+}
+
+/* ---- el pilar por el que empezar ---- */
+.pillar-tag{
+  position:absolute;z-index:3;top:12px;left:12px;
+  background:var(--gold);color:#fff;font-family:var(--sans);
+  font-size:var(--fs-micro);letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 10px;border-radius:100px;
+}
+.pillar-mine{outline:2px solid var(--gold);outline-offset:-2px}
+
+/* ---- candado sobre el player, con ícono en vez de emoji ---- */
+.lock-i{
+  width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;
+  stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto;
+}
+.vd-lock,.wk-lock{display:inline-flex;align-items:center;gap:7px}
+
+/* ---- catálogo agrupado y filtros activos ---- */
+.crow{padding:0 0 40px}
+.crow:last-child{padding-bottom:0}
+.activebar{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:14px 0 18px;border-top:1px solid var(--line-2);margin-bottom:6px;
+}
+.ab-k{
+  font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);
+}
+.ab-chips{display:flex;gap:8px;flex-wrap:wrap}
+.ab-chip{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+  background:var(--ink);color:#fff;border:none;border-radius:100px;
+  padding:7px 12px 7px 14px;font-family:var(--sans);font-size:var(--fs-meta);
+}
+.ab-chip:hover{background:#000}
+.ab-l{color:rgba(255,255,255,.6);font-size:var(--fs-micro);letter-spacing:.08em;text-transform:uppercase}
+.ab-x{font-size:var(--fs-micro);opacity:.75}
+.ab-clear{
+  margin-left:auto;background:none;border:none;cursor:pointer;padding:0;
+  font-family:var(--sans);font-size:var(--fs-meta);color:var(--gold-deep);
+  border-bottom:1px solid transparent;
+}
+.ab-clear:hover{border-bottom-color:var(--gold)}
+button.link-a{background:none;border:none;padding:0;cursor:pointer;font:inherit}
+
+/* ---- material en la tarjeta ----
+   Enfrente de la duración. Glifos y no etiquetas: a esta escala el nombre no
+   se leería, y lo que importa al hojear es "¿necesito algo o no?". */
+.cprops{
+  position:absolute;bottom:12px;right:12px;display:flex;gap:5px;align-items:center;
+}
+.cprop{
+  width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.94);
+  display:flex;align-items:center;justify-content:center;
+}
+.cprop svg{
+  width:14px;height:14px;fill:none;stroke:var(--ink);
+  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;
+}
+.cprops-none{
+  background:rgba(255,255,255,.94);color:var(--ink);
+  font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.06em;
+  padding:5px 10px;border-radius:100px;text-transform:uppercase;
+}
+
+/* ---- menú de prototipo ---- */
+.proto{position:relative}
+.proto-b{
+  background:none;border:none;cursor:pointer;padding:4px 0;
+  font-family:var(--sans);font-size:var(--fs-note);font-weight:500;color:var(--ink-3);
+}
+.proto-b:hover{color:var(--ink-2)}
+.proto-m{
+  position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%);
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:0 12px 30px rgba(0,0,0,.1);padding:8px;min-width:220px;z-index:60;
+  display:flex;flex-direction:column;
+}
+.proto-m[hidden]{display:none}
+.proto-m a{
+  font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);
+  padding:10px 14px;border-radius:8px;white-space:nowrap;
+}
+.proto-m a:hover{background:var(--sand);color:var(--ink)}
+
+/* ---- el selector de día se pliega ---- */
+.dp-hide{
+  background:none;border:none;cursor:pointer;color:var(--ink-3);
+  font-size:var(--fs-sub);line-height:1;padding:0 2px;margin-left:2px;
+}
+.dp-hide:hover{color:var(--ink)}
+.day-picker.mini{gap:0}
+.day-picker.mini .dp-lab,.day-picker.mini > button:not(.dp-hide){display:none}
+
+/* La bajada del pilar es lo primero que sobra cuando la columna se angosta:
+   antes de desbordar sobre la foto, se recorta a dos líneas. */
+.pillar-d{
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  overflow:hidden;
+}

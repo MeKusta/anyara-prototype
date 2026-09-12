@@ -16,9 +16,6 @@
       <a href="series.html" class="nav-link">Series</a>
       <a href="retos.html" class="nav-link">Retos</a>
       <a href="events.html" class="nav-link">Eventos</a>
-      <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
-      <a href="estilo.html" class="nav-link" style="color:var(--ink-3)">(Estilo)</a>
-      <a href="materiales.html" class="nav-link" style="color:var(--ink-3)">(Material)</a>
     </nav>
     <div class="nav-right">
       <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
@@ -108,19 +105,26 @@
     </span>
     <span class="btn btn-ghost">Conocer la disciplina</span>
   </a>
-  <p id="resultCount" style="font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);margin-bottom:16px">8 clases</p>
-  <!-- La parrilla la arma anyara.js desde el catálogo compartido. Antes
-       estaba escrita a mano aquí, y las páginas de disciplina tenían su
-       propia lista: las dos pantallas mostraban catálogos distintos. Las
-       compilaciones (retos y series) siguen en el HTML porque no son clases. -->
-  <div class="grid4" id="results">
-    <a href="reto.html" class="compcard" data-d="sculpt" data-date="2026-08-20"><div class="art gart somara"><span class="count">6 clases</span></div><div class="discs"><span class="disc-link" data-d="barre">Barre</span>/<span class="disc-link" data-d="sculpt">Sculpt</span>/<span class="disc-link" data-d="funcional">Funcional</span></div><div class="ct">Reto Volver a Ti · 21 días</div></a>
-    <a href="reto.html" class="compcard" data-d="somara" data-date="2026-06-05"><div class="art gart funcional"><span class="count">7 clases</span></div><div class="discs"><span class="disc-link" data-d="somara">Somara</span>/<span class="disc-link" data-d="pilatesmat">Pilates Mat</span></div><div class="ct">Reto de Bienvenida · 7 días</div></a>
-    <a href="serie.html" class="compcard" data-d="sculpt" data-date="2026-07-15"><div class="art gart sculpt"><span class="count">3 clases</span></div><div class="discs"><span class="disc-link" data-d="sculpt">Sculpt</span>/<span class="disc-link" data-d="funcional">Funcional</span></div><div class="ct">Serie · Fuerza Total</div></a>
-    <a href="serie.html" class="compcard" data-d="pilatesmat" data-date="2026-05-02"><div class="art gart pilatesmat"><span class="count">3 clases</span></div><div class="discs"><span class="disc-link" data-d="pilatesmat">Pilates Mat</span>/<span class="disc-link" data-d="somara">Somara</span></div><div class="ct">Serie · Core &amp; Flexibilidad</div></a>
+  <!-- Filtros activos. Con cinco selects y ninguna señal de cuáles están
+       puestos, después de elegir tres ya no sabías qué estabas viendo ni
+       cómo volver. Cada chip se quita solo y hay una salida a limpiar todo. -->
+  <div class="activebar" id="activeBar" style="display:none">
+    <span class="ab-k">Filtrando por</span>
+    <span class="ab-chips" id="abChips"></span>
+    <button type="button" class="ab-clear" id="abClear">Limpiar todo</button>
   </div>
+
+  <p id="resultCount" style="font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);margin-bottom:16px"></p>
+
+  <!-- Sin filtros el catálogo abre agrupado por disciplina, cuatro clases y
+       "ver todo": la misma decisión que se tomó para "Para ti" en la llamada,
+       porque 48 tarjetas en una sola parrilla son la lista infinita que
+       Mariana quería evitar. Al filtrar se aplana en una parrilla normal. -->
+  <div id="grouped"></div>
+  <div class="grid4" id="results" style="display:none"></div>
+
   <p id="noResults" style="display:none;font-family:var(--sans);color:var(--ink-2);padding:30px 0">
-    Todavía no hay clases en esta disciplina. <b>Próximamente.</b>
+    No hay clases con esos filtros. <button type="button" class="link-a" id="noClear">Quita alguno</button> y vuelve a probar.
   </p>
 </div>
 
@@ -144,71 +148,155 @@
 
 <script src="anyara.js"></script>
 <script>
-var results = document.getElementById('results');
+var results  = document.getElementById('results');
+var grouped  = document.getElementById('grouped');
 
-/* Las clases salen del catálogo compartido y se insertan antes que las
-   compilaciones; el orden por fecha de abajo las vuelve a mezclar. "Nuevo"
-   se marca por fecha, no a mano: lo publicado desde agosto. */
-results.insertAdjacentHTML('afterbegin',
-  Anyara.catalog().map(function (c) {
-    return Anyara.classCard(c, { fecha:true, nuevo:'2026-08-01' });
-  }).join(''));
-
-/* clases y compilaciones conviven en la misma parrilla */
-var cards = Array.prototype.slice.call(results.querySelectorAll('.ccard, .compcard'));
-
-/* el catálogo abre ordenado por fecha de publicación, de más reciente a más antigua */
-cards.sort(function (a, b) {
-  return a.getAttribute('data-date') < b.getAttribute('data-date') ? 1 : -1;
-});
-cards.forEach(function (c) {
-  results.appendChild(c);
-});
-
-/* the homepage pills deep-link here with ?d=<disciplina> */
-var fDisc = '', fProps = '', fFoco = '', fTipo = '', fLvl = '', fMax = 0;
-
-/* Los minutos viven en la etiqueta "MM:00" de la tarjeta, que es el único
-   lugar donde ya estaban: leerlos de ahí evita repetir el dato. */
-function minutos(c) {
-  var len = c.querySelector('.len');
-  return len ? parseInt(len.textContent, 10) : 0;
+/* Las compilaciones (retos y series) no son clases y no salen del catálogo:
+   viven aquí y se muestran como una fila propia cuando no hay filtro. */
+var COMPS = [
+  { href:'reto.html',  d:'somara',     art:'somara',     n:'6 clases', discs:['barre','sculpt','funcional'], t:'Reto Volver a Ti · 21 días' },
+  { href:'reto.html',  d:'somara',     art:'funcional',  n:'7 clases', discs:['somara','pilatesmat'],        t:'Reto de Bienvenida · 7 días' },
+  { href:'serie.html', d:'sculpt',     art:'sculpt',     n:'3 clases', discs:['sculpt','funcional'],         t:'Serie · Fuerza Total' },
+  { href:'serie.html', d:'pilatesmat', art:'pilatesmat', n:'3 clases', discs:['pilatesmat','somara'],        t:'Serie · Core &amp; Flexibilidad' }
+];
+function compCard(c) {
+  return '<a href="' + c.href + '" class="compcard">' +
+    '<div class="art gart ' + c.art + '"><span class="count">' + c.n + '</span></div>' +
+    '<div class="discs">' + c.discs.map(function (d) {
+      return '<span class="disc-link" data-d="' + d + '">' + Anyara.discLabel(d) + '</span>';
+    }).join('/') + '</div>' +
+    '<div class="ct">' + c.t + '</div></a>';
 }
 
-function applyFilter(){
-  var shown = 0;
-  cards.forEach(function(c){
-    var okD = !fDisc  || c.getAttribute('data-d') === fDisc;
-    var okP = !fProps || (c.getAttribute('data-props') || '').split(',').indexOf(fProps) > -1;
-    var okF = !fFoco  || c.getAttribute('data-enfoque') === fFoco;
-    var okT = !fTipo  || c.getAttribute('data-sub') === fTipo;
-    var lvl = c.querySelector('.lvl');
-    var okL = !fLvl   || (lvl && lvl.textContent.trim() === fLvl);
-    var okM = !fMax   || (minutos(c) && minutos(c) <= fMax);
-    var hit = okD && okP && okF && okT && okL && okM;
-    c.style.display = hit ? '' : 'none';
-    if (hit) shown++;
+/* ---- estado de los filtros ---- */
+var F = { d:'', props:'', foco:'', tipo:'', lvl:'', max:0 };
+var ETIQUETA = {
+  props:'Material', foco:'Enfoque', tipo:'Tipo', lvl:'Intensidad', max:'Hasta'
+};
+
+function pasa(c) {
+  return (!F.d    || c.d === F.d)
+      && (!F.props|| (c.props || '').split(',').indexOf(F.props) > -1)
+      && (!F.foco || c.foco === F.foco)
+      && (!F.tipo || c.sub === F.tipo)
+      && (!F.lvl  || c.x === F.lvl)
+      && (!F.max  || c.m <= F.max);
+}
+function hayFiltro() {
+  return !!(F.d || F.props || F.foco || F.tipo || F.lvl || F.max);
+}
+
+/* ---- pintado ---- */
+function render() {
+  var todo = Anyara.catalog();
+  var hit  = todo.filter(pasa);
+
+  paintActive();
+  paintTipos.sync();
+  document.querySelectorAll('#pills .pill').forEach(function (p) {
+    p.classList.toggle('active', (p.getAttribute('data-d') || '') === F.d);
   });
-  document.querySelectorAll('#pills .pill').forEach(function(p){
-    p.classList.toggle('active', (p.getAttribute('data-d') || '') === fDisc);
-  });
-  document.getElementById('resultCount').textContent = shown + (shown === 1 ? ' resultado' : ' resultados');
-  document.getElementById('noResults').style.display = shown ? 'none' : 'block';
-  document.getElementById('resultCount').style.display = shown ? 'block' : 'none';
-  paintDiscStrip(shown);
+
+  if (!hayFiltro()) {
+    /* vista agrupada: una fila por disciplina, en el orden del sitio */
+    results.style.display = 'none';
+    grouped.style.display = '';
+    grouped.innerHTML = Anyara.DISC_ORDER.map(function (d) {
+      var suyas = todo.filter(function (c) { return c.d === d; });
+      if (!suyas.length) return '';
+      return '<div class="crow">' +
+        '<div class="row-head"><h2 class="h2-serif">' + Anyara.discLabel(d) + '</h2>' +
+          '<a href="' + (Anyara.discHref(d) || 'explorar.html?d=' + d) + '">' +
+            'Ver las ' + suyas.length + '</a></div>' +
+        '<p class="sec-lead">' + Anyara.discLead(d) + '</p>' +
+        '<div class="grid4">' +
+          suyas.slice(0, 4).map(function (c) {
+            return Anyara.classCard(c, { fecha:true, nuevo:'2026-08-01' });
+          }).join('') +
+        '</div></div>';
+    }).join('') +
+    '<div class="crow">' +
+      '<div class="row-head"><h2 class="h2-serif">Retos y series</h2>' +
+        '<a href="retos.html">Ver todos</a></div>' +
+      '<p class="sec-lead">Programas con principio y final.</p>' +
+      '<div class="grid4">' + COMPS.map(compCard).join('') + '</div></div>';
+
+    document.getElementById('resultCount').textContent =
+      todo.length + ' clases en ' + Anyara.DISC_ORDER.length + ' disciplinas';
+    document.getElementById('noResults').style.display = 'none';
+    paintDiscStrip(0);
+  } else {
+    /* vista filtrada: parrilla plana, sólo lo que coincide */
+    grouped.style.display = 'none';
+    results.style.display = '';
+    results.innerHTML = hit.map(function (c) {
+      return Anyara.classCard(c, { fecha:true, nuevo:'2026-08-01' });
+    }).join('');
+    /* las compilaciones sólo entran si el filtro es de disciplina: no tienen
+       intensidad, ni material, ni duración que comparar */
+    if (F.d && !F.props && !F.foco && !F.tipo && !F.lvl && !F.max) {
+      results.innerHTML += COMPS.filter(function (c) {
+        return c.discs.indexOf(F.d) > -1;
+      }).map(compCard).join('');
+    }
+    document.getElementById('resultCount').textContent =
+      hit.length + (hit.length === 1 ? ' clase' : ' clases');
+    document.getElementById('resultCount').style.display = hit.length ? 'block' : 'none';
+    document.getElementById('noResults').style.display = hit.length ? 'none' : 'block';
+    paintDiscStrip(hit.length);
+  }
+  Anyara.paintArt();
+  Anyara.paintFavs();
+  Anyara.makeFocusable();
+}
+
+/* ---- chips de filtros activos ---- */
+function paintActive() {
+  var bar = document.getElementById('activeBar');
+  var chips = [];
+  if (F.d)     chips.push(['d',     'Disciplina', Anyara.discLabel(F.d)]);
+  if (F.lvl)   chips.push(['lvl',   ETIQUETA.lvl,   F.lvl]);
+  if (F.foco)  chips.push(['foco',  ETIQUETA.foco,  nombreDe('fFoco', F.foco)]);
+  if (F.tipo)  chips.push(['tipo',  ETIQUETA.tipo,  nombreDe('fTipo', F.tipo)]);
+  if (F.props) chips.push(['props', ETIQUETA.props, nombreDe('fProps', F.props)]);
+  if (F.max)   chips.push(['max',   ETIQUETA.max,   F.max + ' min']);
+
+  bar.style.display = chips.length ? 'flex' : 'none';
+  document.getElementById('abChips').innerHTML = chips.map(function (c) {
+    return '<button type="button" class="ab-chip" data-f="' + c[0] + '">' +
+      '<span class="ab-l">' + c[1] + '</span>' + c[2] + '<span class="ab-x">✕</span></button>';
+  }).join('');
+}
+function nombreDe(idSelect, valor) {
+  var sel = document.getElementById(idSelect);
+  var op = sel && sel.querySelector('option[value="' + valor + '"]');
+  return op ? op.textContent : valor;
+}
+
+/* el chip sigue filtrando; la franja es el camino a la página de la disciplina */
+function paintDiscStrip(shown) {
+  var strip = document.getElementById('discStrip');
+  var href  = F.d ? Anyara.discHref(F.d) : null;
+  if (!href) { strip.style.display = 'none'; return; }
+  strip.href = href;
+  strip.className = 'disc-strip ' + F.d;
+  document.getElementById('dsArt').className = 'ds-art gart ' + F.d;
+  document.getElementById('dsT').textContent = Anyara.discLabel(F.d);
+  document.getElementById('dsD').textContent =
+    shown + (shown === 1 ? ' clase' : ' clases') + ' · trailer, subcategorías y coaches';
+  strip.style.display = 'flex';
 }
 
 /* "Tipo de clase" depende de la disciplina: sin disciplina elegida no hay
    tipos que ofrecer, así que el select se apaga en vez de mentir con una
-   lista genérica. Las opciones salen de Anyara.SUBS, la misma taxonomía que
-   usan las páginas de disciplina. */
-function paintTipos(){
+   lista genérica. Las opciones salen de Anyara.SUBS. */
+function paintTipos() {
   var sel = document.getElementById('fTipo');
-  var info = fDisc ? Anyara.subsOf(fDisc) : null;
-  fTipo = '';
+  var info = F.d ? Anyara.subsOf(F.d) : null;
   if (!info || !info.subs.length) {
     sel.disabled = true;
     sel.innerHTML = '<option value="">Elige una disciplina</option>';
+    F.tipo = '';
     return;
   }
   sel.disabled = false;
@@ -216,60 +304,58 @@ function paintTipos(){
     info.subs.map(function (o) {
       return '<option value="' + o.id + '">' + o.n + '</option>';
     }).join('');
+  sel.value = F.tipo;
+  if (sel.value !== F.tipo) F.tipo = '';
 }
+/* repinta los selects para que reflejen el estado, no al revés */
+paintTipos.sync = function () {
+  document.getElementById('fProps').value = F.props;
+  document.getElementById('fFoco').value  = F.foco;
+  document.getElementById('fLvl').value   = F.lvl;
+  document.getElementById('fMax').value   = F.max ? String(F.max) : '';
+};
 
-/* el chip sigue filtrando; la franja es el camino a la página de la disciplina */
-function paintDiscStrip(shown){
-  var strip = document.getElementById('discStrip');
-  var href  = fDisc ? Anyara.discHref(fDisc) : null;
-  if (!href) { strip.style.display = 'none'; return; }
-  var label = Anyara.discLabel(fDisc);
-  strip.href = href;
-  strip.className = 'disc-strip ' + fDisc;
-  document.getElementById('dsArt').className = 'ds-art gart ' + fDisc;
-  document.getElementById('dsT').textContent = label;
-  document.getElementById('dsD').textContent =
-    shown + (shown === 1 ? ' resultado' : ' resultados') + ' · trailer, subcategorías y coaches';
-  strip.style.display = 'flex';
-}
-document.querySelectorAll('#pills .pill').forEach(function(p){
+/* ---- conexiones ---- */
+document.querySelectorAll('#pills .pill').forEach(function (p) {
   p.style.cursor = 'pointer';
-  p.addEventListener('click', function(){
-    fDisc = p.getAttribute('data-d') || '';
-    history.replaceState(null, '', fDisc ? '?d=' + fDisc : location.pathname);
+  p.addEventListener('click', function () {
+    F.d = p.getAttribute('data-d') || '';
+    history.replaceState(null, '', F.d ? '?d=' + F.d : location.pathname);
     paintTipos();
-    applyFilter();
+    render();
   });
 });
-
-/* todos los selects se conectan igual: guardan su valor y repintan */
-[['fProps', function(v){ fProps = v; }],
- ['fFoco',  function(v){ fFoco  = v; }],
- ['fTipo',  function(v){ fTipo  = v; }],
- ['fLvl',   function(v){ fLvl   = v; }],
- ['fMax',   function(v){ fMax   = parseInt(v || '0', 10); }]
-].forEach(function (par) {
-  document.getElementById(par[0]).addEventListener('change', function(){
-    par[1](this.value);
-    applyFilter();
+[['fProps','props'], ['fFoco','foco'], ['fTipo','tipo'], ['fLvl','lvl'], ['fMax','max']]
+  .forEach(function (par) {
+    document.getElementById(par[0]).addEventListener('change', function () {
+      F[par[1]] = par[1] === 'max' ? parseInt(this.value || '0', 10) : this.value;
+      render();
+    });
   });
+
+document.getElementById('abChips').addEventListener('click', function (e) {
+  var b = e.target.closest('.ab-chip');
+  if (!b) return;
+  var k = b.getAttribute('data-f');
+  F[k] = k === 'max' ? 0 : '';
+  if (k === 'd') {
+    history.replaceState(null, '', location.pathname);
+    paintTipos();
+  }
+  render();
 });
-
-fDisc = new URLSearchParams(location.search).get('d') || '';
-paintTipos();
-applyFilter();
-
-/* El candado de las clases lo pone Anyara.classCard. Las compilaciones no
-   pasan por ahí, así que se marcan aquí. */
-if (!Anyara.isMember()) {
-  results.querySelectorAll('.compcard .art').forEach(function (art) {
-    if (art.querySelector('.free') || art.querySelector('.locked')) return;
-    var b = document.createElement('span');
-    b.className = 'locked';
-    b.innerHTML = '🔒 Membresía';
-    art.appendChild(b);
-  });
+function limpiar() {
+  F = { d:'', props:'', foco:'', tipo:'', lvl:'', max:0 };
+  history.replaceState(null, '', location.pathname);
+  paintTipos();
+  render();
 }
+document.getElementById('abClear').addEventListener('click', limpiar);
+document.getElementById('noClear').addEventListener('click', limpiar);
+
+F.d = new URLSearchParams(location.search).get('d') || '';
+paintTipos();
+render();
 </script>
 </body>
 </html>

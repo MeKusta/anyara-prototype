@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.16.01';
+  var VERSION = '1.17.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -48,12 +48,12 @@
      `lead` es la línea que acompaña al pilar en la home. */
   var DISC = {
     barre:      { label:'Barre',       page:true, lead:'Precisión en la barra' },
-    funcional:  { label:'Funcional',   page:true, lead:'Fuerza para la vida diaria' },
-    pilatesmat: { label:'Pilates Mat', page:true, lead:'La base, en colchoneta' },
+    funcional:  { label:'Funcional',   page:true, lead:'Fuerza aplicada' },
+    pilatesmat: { label:'Pilates Mat', page:true, lead:'La base de todo' },
     pilates:    { label:'Pilates',     page:true, lead:'Control y centro' },
-    sculpt:     { label:'Sculpt',      page:true, lead:'Tono con peso ligero' },
+    sculpt:     { label:'Sculpt',      page:true, lead:'Tono con peso' },
     somara:     { label:'Somara',      page:true, lead:'Movimiento somático' },
-    tone:       { label:'Tone',        page:true, lead:'Constancia sin carga' }
+    tone:       { label:'Tone',        page:true, lead:'Constancia' }
   };
 
   /* Orden en que se muestran los pilares. Fijo, no alfabético: abre con las
@@ -502,6 +502,21 @@
         .map(function (s) { return s.trim().toLowerCase(); })
         .filter(function (s) { return !!PROPS[s]; });
     },
+    /* Material en la tarjeta, no sólo en la ficha. "Sin equipo" es el dato
+       que decide si practicas hoy o no, y antes había que abrir la clase
+       para verlo. Van como glifos pequeños, abajo a la derecha del arte,
+       enfrente de la duración; máximo tres, para no volverlo una lista. */
+    propGlyphs: function (p) {
+      var list = A.propList(p);
+      if (!list.length || (list.length === 1 && list[0] === 'ninguno')) {
+        return '<span class="cprops cprops-none">Sin equipo</span>';
+      }
+      return '<span class="cprops">' + list.slice(0, 3).map(function (k) {
+        return '<span class="cprop" title="' + PROPS[k].n + '">' +
+          '<svg viewBox="0 0 24 24" aria-hidden="true">' + PROPS[k].svg + '</svg></span>';
+      }).join('') + '</span>';
+    },
+
     propChips: function (p) {
       var list = A.propList(p);
       if (!list.length) list = ['ninguno'];
@@ -589,7 +604,10 @@
        el diseño de la tarjeta cambia en las tres. */
     classCard: function (c, opts) {
       opts = opts || {};
-      var locked = !A.canWatch({ free: c.free });
+      /* Ya no se marca lo bloqueado sino lo abierto: con 46 de 48 clases en
+         membresía, el candado era lo primero que veía cualquiera que llegaba.
+         Una tarjeta sin insignia se lee como "parte de la membresía" sin
+         gritarlo, y "Gratis" vuelve a ser un premio y no una excepción. */
       var meta = c.i + (opts.fecha && c.date ? ' · ' + A.fechaCorta(c.date) : '');
       return '<a href="' + A.classHref({ t:c.t, i:c.i, d:c.d, m:c.m, x:c.x,
                p:c.props, free:c.free ? 1 : 0 }) + '" class="ccard"' +
@@ -600,7 +618,7 @@
           (c.free ? '<span class="free">Gratis</span>' : '') +
           (opts.nuevo && c.date >= opts.nuevo ? '<span class="nuevo">Nuevo</span>' : '') +
           '<span class="len">' + c.m + ':00</span>' +
-          (locked ? '<span class="locked">🔒 Membresía</span>' : '') +
+          A.propGlyphs(c.props) +
         '</div>' +
         '<div class="title">' + c.t + '</div>' +
         '<div class="meta">' + meta + '</div>' +
@@ -843,13 +861,55 @@
     document.body.classList.add(lvl === 3 ? 'is-member' : 'is-guest');
     paintArt();
     paintFavs();
+    makeFocusable();
+    addSkipLink();
     fitCompGrids();
     renderLogos();
     renderNav();
     renderVersion();
+    renderProtoMenu();
     renderDayPicker();
     renderChargeNotice();
   });
+
+  /* Varias piezas interactivas se escribieron como <div> o <span>: las
+     píldoras del catálogo, los chips de búsqueda y las etiquetas de
+     disciplina y serie. Con ratón funcionan; con teclado o con el control
+     del Apple TV no existen, porque no reciben foco. Esto las vuelve
+     alcanzables sin tener que reescribir el HTML de veinte páginas. */
+  function makeFocusable() {
+    var SELECTORES = '.pill, .chip, .disc-link, .serie-link, .subchip, .dp-save';
+    document.querySelectorAll(SELECTORES).forEach(function (el) {
+      if (el.tabIndex >= 0) return;                 /* ya es enfocable */
+      var nativo = /^(A|BUTTON|INPUT|SELECT|TEXTAREA)$/.test(el.tagName);
+      el.tabIndex = 0;
+      if (!nativo && !el.getAttribute('role')) el.setAttribute('role', 'button');
+      if (nativo) return;
+      /* Enter y Espacio hacen lo mismo que el clic, que es lo que espera
+         cualquiera que navegue sin ratón */
+      el.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        e.preventDefault();
+        el.click();
+      });
+    });
+  }
+  A.makeFocusable = makeFocusable;
+  window.addEventListener('load', makeFocusable);
+
+  /* Primer elemento enfocable de cada página: saltarse la navegación. Se
+     inyecta aquí para no repetirlo en cada archivo. */
+  function addSkipLink() {
+    if (document.querySelector('.skip-link')) return;
+    var main = document.querySelector('.wrap, main, .hero-carousel');
+    if (!main) return;
+    if (!main.id) main.id = 'contenido';
+    var a = document.createElement('a');
+    a.className = 'skip-link';
+    a.href = '#' + main.id;
+    a.textContent = 'Saltar al contenido';
+    document.body.insertBefore(a, document.body.firstChild);
+  }
 
   /* Pone la foto de la disciplina en cada bloque .gart. Corre dos veces: al
      cargar el DOM para lo estático, y en load para las tarjetas que las
@@ -972,6 +1032,43 @@
     el.querySelector('.cn-x').addEventListener('click', function () { el.remove(); });
   }
 
+  /* Las tres puertas de prototipo — onboarding, estilo y el formulario de
+     material — ocupaban tres lugares en una navegación de cinco. Ahora van
+     juntas detrás de una sola, para que al presentar no compitan con las
+     secciones reales. Se inyectan aquí y no en el HTML de veintidós páginas. */
+  function renderProtoMenu() {
+    var nav = document.querySelector('.nav-links');
+    if (!nav || document.getElementById('protoMenu')) return;
+
+    var box = document.createElement('div');
+    box.className = 'proto';
+    box.id = 'protoMenu';
+    box.innerHTML =
+      '<button type="button" class="proto-b" aria-expanded="false">(Prototipo)</button>' +
+      '<div class="proto-m" hidden>' +
+        '<a href="onboarding.html">Onboarding</a>' +
+        '<a href="estilo.html">Sistema de diseño</a>' +
+        '<a href="materiales.html">Formulario de material</a>' +
+      '</div>';
+    nav.appendChild(box);
+
+    var b = box.querySelector('.proto-b');
+    var m = box.querySelector('.proto-m');
+    b.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var abierto = !m.hidden;
+      m.hidden = abierto;
+      b.setAttribute('aria-expanded', String(!abierto));
+    });
+    document.addEventListener('click', function () {
+      m.hidden = true;
+      b.setAttribute('aria-expanded', 'false');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { m.hidden = true; b.setAttribute('aria-expanded', 'false'); }
+    });
+  }
+
   /* prototype-only "time machine": floating día 1 / 2 / 3 picker, bottom
      right, on every page. Lets us demo the day-by-day unlock of the welcome
      without waiting three real days — click a day and the site jumps there. */
@@ -986,6 +1083,18 @@
     for (var n = 1; n <= TRIAL_DAYS; n++) {
       box.appendChild(dayBtn(n, today));
     }
+    /* se pliega: estaba fijo encima del pie de página en todas las pantallas */
+    var ocultar = document.createElement('button');
+    ocultar.className = 'dp-hide';
+    ocultar.type = 'button';
+    ocultar.title = 'Ocultar el selector de día';
+    ocultar.setAttribute('aria-label', 'Ocultar el selector de día');
+    ocultar.textContent = '›';
+    ocultar.addEventListener('click', function () {
+      box.classList.toggle('mini');
+      ocultar.textContent = box.classList.contains('mini') ? '‹' : '›';
+    });
+    box.appendChild(ocultar);
     document.body.appendChild(box);
 
     function dayBtn(n, today) {

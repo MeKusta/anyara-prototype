@@ -16,9 +16,6 @@
       <a href="series.html" class="nav-link">Series</a>
       <a href="retos.html" class="nav-link">Retos</a>
       <a href="events.html" class="nav-link">Eventos</a>
-      <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
-      <a href="estilo.html" class="nav-link" style="color:var(--ink-3)">(Estilo)</a>
-      <a href="materiales.html" class="nav-link" style="color:var(--ink-3)">(Material)</a>
     </nav>
     <div class="nav-right">
       <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
@@ -98,12 +95,10 @@ document.getElementById('socials').innerHTML   = Anyara.coachSocials(COACH);
 /* sus clases salen del catálogo compartido, con las mismas reglas de acceso
    que el resto del sitio */
 document.getElementById('cGrid').innerHTML = Anyara.classesBy(COACH, 4).map(function (c) {
-  var locked = !Anyara.canWatch({ free: c.free });
   return '<a href="' + Anyara.classHref({ t:c.t, i:c.i, d:c.d, m:c.m, x:c.x, free:c.free ? 1 : 0 }) + '" class="ccard">' +
     '<div class="art gart ' + c.d + '">' +
       (c.free ? '<span class="free">Gratis</span>' : '') +
       '<span class="len">' + c.m + ':00</span>' +
-      (locked ? '<span class="locked">🔒 Membresía</span>' : '') +
     '</div>' +
     '<div class="title">' + c.t + '</div>' +
     '<div class="meta">' + c.i + '</div>' +

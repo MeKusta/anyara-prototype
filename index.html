@@ -18,9 +18,6 @@
       <a href="series.html" class="nav-link">Series</a>
       <a href="retos.html" class="nav-link">Retos</a>
       <a href="events.html" class="nav-link">Eventos</a>
-      <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
-      <a href="estilo.html" class="nav-link" style="color:var(--ink-3)">(Estilo)</a>
-      <a href="materiales.html" class="nav-link" style="color:var(--ink-3)">(Material)</a>
     </nav>
     <div class="nav-right">
       <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')" title="Buscar">⌕</button>
@@ -28,6 +25,12 @@
     </div>
   </div>
 </header>
+
+<!-- ===== HERO DE MIEMBRO =====
+     Quien ya paga no necesita que le vendan: llega a seguir practicando.
+     Para el nivel 3 este bloque sustituye al carrusel, que se queda para
+     visita y prueba, donde sí está haciendo trabajo de venta. -->
+<section class="mhero" id="memberHero" style="display:none"></section>
 
 <!-- ===== HERO CAROUSEL (full-bleed, auto-advancing every 5s) ===== -->
 <section class="hero-carousel" id="hero">
@@ -48,7 +51,7 @@
       <div class="hc-inner">
         <div class="hc-content">
           <div class="eyebrow">Reto destacado · 21 días</div>
-          <h1>Reto Volver a Ti</h1>
+          <h2 class="hc-h">Reto Volver a Ti</h2>
           <p>Reconexión y balance integral. 21 días de movimiento consciente, con nutrición incluida.</p>
           <a href="reto.html" class="btn btn-gold">Ver reto</a>
         </div>
@@ -59,7 +62,7 @@
       <div class="hc-inner">
         <div class="hc-content">
           <div class="eyebrow">Evento en vivo · 24 Ago</div>
-          <h1>Masterclass: Barre & Breathwork</h1>
+          <h2 class="hc-h">Masterclass: Barre & Breathwork</h2>
           <p>Una sesión en vivo con Valeria Méndez en el Estudio Anyara, CDMX. Cupos limitados.</p>
           <a href="evento.html?e=masterclass-barre" class="btn btn-gold">Ver evento</a>
         </div>
@@ -98,9 +101,14 @@
   </div>
 </div>
 
-<!-- ===== MI ESPACIO: saludo, cifras y objetivo semanal ===== -->
+<!-- ===== MI ESPACIO =====
+     Antes eran cinco cifras compitiendo — racha, clases, días, tiempo y
+     objetivo — y las cinco salían del mismo contador. Se queda la racha,
+     que es la que sostiene el hábito, y el objetivo de la semana, que ahora
+     vive en el calendario de más abajo. Los totales se fueron al perfil,
+     que es adonde vas cuando quieres ver totales. -->
 <div class="wrap section-sm account-only">
-  <div class="mispace">
+  <div class="mispace mispace-sm">
     <div class="ms-hi">
       <h2 id="msHola">Hola.</h2>
       <p>Sigue construyendo tu mejor versión, un día a la vez.</p>
@@ -111,26 +119,9 @@
       <div class="ms-u">días consecutivos</div>
     </div>
     <div>
-      <div class="ms-k">Clases completadas</div>
-      <div class="ms-n" id="msClases">0</div>
-      <div class="ms-u">en total</div>
-    </div>
-    <div>
-      <div class="ms-k">Días entrenados</div>
-      <div class="ms-n" id="msDias">0</div>
-      <div class="ms-u">esta semana</div>
-    </div>
-    <div>
-      <div class="ms-k">Tiempo total</div>
-      <div class="ms-n" id="msTiempo">0m</div>
-      <div class="ms-u">en Anyara</div>
-    </div>
-    <div>
-      <div class="ms-week" id="msWeek"></div>
-      <div class="ms-goal">
-        <span id="msGoal"></span>
-        <button type="button" id="msEdit">Editar objetivo</button>
-      </div>
+      <div class="ms-k">Esta semana</div>
+      <div class="ms-n" id="msSemana">0/5</div>
+      <a class="ms-u ms-link" href="#semana">Ver tu semana</a>
     </div>
   </div>
 </div>
@@ -140,21 +131,6 @@
      2 · prueba → entrada a "Tres días de bienvenida", con el día en curso
      3 · pagada → nada aquí; la home sigue con biblioteca y catálogo -->
 <div class="wrap section-sm" id="levelBlock"></div>
-
-<!-- ===== CONTINÚA (members) ===== -->
-<div class="wrap section-sm member-only">
-  <div class="row-head"><h2>Continúa donde lo dejaste</h2></div>
-  <a href="clase.html?t=Barre%20Gl%C3%BAteos%20%26%20Piernas&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=45&amp;x=Intermedio" class="resume">
-    <div class="rs-art gart barre"></div>
-    <div class="rs-b">
-      <div class="rs-k">Barre · 45 min</div>
-      <div class="rs-t">Barre Glúteos &amp; Piernas</div>
-      <div class="rs-pct"><b>64%</b> completado</div>
-      <div class="rs-bar"><i style="width:64%"></i></div>
-      <span class="btn btn-dark">Reanudar</span>
-    </div>
-  </a>
-</div>
 
 <!-- ===== YOUR LIBRARY (folded in) ===== -->
 <div class="wrap section account-only">
@@ -193,142 +169,27 @@
 <!-- ===== TU SEMANA EN ANYARA =====
      Acordado en la llamada: va inmediatamente después de "Tu biblioteca".
      El plan y el día de hoy salen de Anyara.week(). -->
-<div class="wrap section account-only">
+<div class="wrap section account-only" id="semana">
   <div class="row-head"><h2>Tu semana en Anyara</h2><a href="explorar.html">Cambiar mi plan</a></div>
   <p class="sec-lead">Cinco días de movimiento y dos de descanso, armados a partir de tus preferencias.</p>
   <div class="week" id="weekRow"></div>
+  <!-- El objetivo semanal vivía arriba, en Mi espacio, con su propia fila de
+       siete puntos: dos semanas distintas en la misma página. Ahora el
+       calendario es también el marcador. -->
+  <div class="week-goal">
+    <span id="wgText"></span>
+    <button type="button" id="wgEdit">Editar objetivo</button>
+  </div>
 </div>
 
 <div class="wrap"><div class="divider"></div></div>
 
-<!-- ===== DISCOVERY ON SCROLL ===== -->
-<div class="wrap section">
-  <div class="eyebrow">Recomendado para ti</div>
-  <div class="row-head"><h2 class="h2-serif">Basado en tus preferencias · 10–20 min</h2><a href="explorar.html">Ver todo</a></div>
-  <div class="cardrow" id="discoverRow">
-    <a href="clase.html?t=20%20min%20%C2%B7%20Sculpt%20%3A%20Gl%C3%BAteos&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=20" class="ccard small"><div class="art gart sculpt"><span class="len">20:00</span></div><div class="title">20 min · Sculpt : Glúteos</div><div class="meta">Valeria Méndez</div><div class="lvl">Intermedio</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Fuerza Total</span></div><div class="tag disc-link" data-d="sculpt">SCULPT</div></a>
-    <a href="clase.html?t=Funcional%20HIIT&amp;i=Sof%C3%ADa%20Ruiz&amp;d=funcional&amp;m=30" class="ccard small"><div class="art gart funcional"><span class="len">30:00</span></div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz</div><div class="lvl">Intermedio</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Fuerza Total</span></div><div class="tag disc-link" data-d="funcional">FUNCIONAL</div></a>
-    <a href="clase.html?t=Barre%20Esencial&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=20" class="ccard small"><div class="art gart barre"><span class="len">20:00</span></div><div class="title">Barre Esencial</div><div class="meta">Valeria Méndez</div><div class="lvl">Principiante</div><div class="tag disc-link" data-d="barre">BARRE</div></a>
-    <a href="clase.html?t=Pilates%20Mat%20Fundamental&amp;i=Sof%C3%ADa%20Ruiz&amp;d=pilatesmat&amp;m=40" class="ccard small"><div class="art gart pilatesmat"><span class="len">40:00</span></div><div class="title">Pilates Mat Fundamental</div><div class="meta">Sofía Ruiz</div><div class="lvl">Principiante</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Core & Flexibilidad</span></div><div class="tag disc-link" data-d="pilatesmat">PILATES MAT</div></a>
-  </div>
-</div>
-
-<!-- ===== EXPLORA ANYARA — lo más nuevo del catálogo ===== -->
-<div class="wrap section-sm">
-  <div class="row-head"><h2 class="h2-serif">Explora Anyara</h2><a href="explorar.html">Ver todo</a></div>
-  <p style="font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);margin:-8px 0 16px">Lo último que subimos esta semana.</p>
-  <div class="grid4" id="newRow">
-    <a href="clase.html?t=Sculpt%20%3A%20Piernas%20de%20Acero&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=30" class="ccard"><div class="art gart sculpt"><span class="nuevo">Nuevo</span><span class="len">30:00</span></div><div class="title">Sculpt : Piernas de Acero</div><div class="meta">Valeria Méndez</div><div class="lvl">Intermedio</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Fuerza Total</span></div><div class="tag disc-link" data-d="sculpt">SCULPT</div></a>
-    <a href="clase.html?t=Somara%20%3A%20Respiraci%C3%B3n%20y%20Calma&amp;i=Renata%20Sol%C3%ADs&amp;d=somara&amp;m=18" class="ccard"><div class="art gart somara"><span class="nuevo">Nuevo</span><span class="len">18:00</span></div><div class="title">Somara : Respiración y Calma</div><div class="meta">Renata Solís</div><div class="lvl">Principiante</div><div class="tag disc-link" data-d="somara">SOMARA</div></a>
-    <a href="clase.html?t=Barre%20%3A%20Postura%20Perfecta&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=35" class="ccard"><div class="art gart barre"><span class="nuevo">Nuevo</span><span class="len">35:00</span></div><div class="title">Barre : Postura Perfecta</div><div class="meta">Valeria Méndez</div><div class="lvl">Intermedio</div><div class="tag disc-link" data-d="barre">BARRE</div></a>
-    <a href="clase.html?t=Pilates%20%3A%20Core%20Avanzado&amp;i=Sof%C3%ADa%20Ruiz&amp;d=pilates&amp;m=40" class="ccard"><div class="art gart pilates"><span class="nuevo">Nuevo</span><span class="len">40:00</span></div><div class="title">Pilates : Core Avanzado</div><div class="meta">Sofía Ruiz</div><div class="lvl">Avanzado</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Core & Flexibilidad</span></div><div class="tag disc-link" data-d="pilates">PILATES</div></a>
-  </div>
-</div>
-
-<!-- ===== RETOS Y SERIES · CARRUSEL GRANDE =====
-     Acordado en la llamada: mismo formato grande que el carrusel de la home,
-     para que un reto se lea como una pieza y no como una tarjeta más. Los
-     retos llevan botón de play para su tráiler. -->
-<div class="wrap section-sm">
-  <div class="row-head"><h2 class="h2-serif">Retos y series</h2><a href="retos.html">Ver todos</a></div>
-  <p class="sec-lead">Programas con principio y final. Un reto te da una ruta de días; una serie, un tema a fondo.</p>
-  <div class="ccar">
-    <div class="ccar-track" id="csTrack">
-
-      <a href="reto.html" class="ccar-slide gart somara">
-        <div class="ccar-b">
-          <div class="ccar-k">Reto · 21 días</div>
-          <div class="ccar-t">Volver a Ti</div>
-          <p class="ccar-d">Reconexión y balance integral. Barre, Sculpt y nutrición, un día a la vez.</p>
-          <div class="ccar-f">
-            <button class="ccar-play" type="button" data-trailer="Reto Volver a Ti" data-kicker="Tráiler del reto"><span>▶</span>Ver tráiler</button>
-          </div>
-        </div>
-      </a>
-
-      <a href="reto.html" class="ccar-slide gart funcional">
-        <div class="ccar-b">
-          <div class="ccar-k">Reto · 7 días</div>
-          <div class="ccar-t">Reto de Bienvenida</div>
-          <p class="ccar-d">Una semana para entrar sin prisa. Somara y Pilates Mat, de lo suave a lo sostenido.</p>
-          <div class="ccar-f">
-            <button class="ccar-play" type="button" data-trailer="Reto de Bienvenida" data-kicker="Tráiler del reto"><span>▶</span>Ver tráiler</button>
-          </div>
-        </div>
-      </a>
-
-      <a href="serie.html" class="ccar-slide gart sculpt">
-        <div class="ccar-b">
-          <div class="ccar-k">Serie · 3 clases</div>
-          <div class="ccar-t">Fuerza Total</div>
-          <p class="ccar-d">Sculpt y Funcional en tres sesiones que suben de carga en orden.</p>
-        </div>
-      </a>
-
-      <a href="serie.html" class="ccar-slide gart pilatesmat">
-        <div class="ccar-b">
-          <div class="ccar-k">Serie · 3 clases</div>
-          <div class="ccar-t">Core &amp; Flexibilidad</div>
-          <p class="ccar-d">Trabajo de centro y movilidad, de los fundamentos al control fino.</p>
-        </div>
-      </a>
-
-    </div>
-    <div class="ccar-nav" style="margin-top:18px">
-      <button type="button" class="ccar-prev" aria-label="Anterior">‹</button>
-      <button type="button" class="ccar-next" aria-label="Siguiente">›</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===== PARA TI · CATEGORÍAS TEMÁTICAS =====
-     Acordado en la llamada: nada de listas infinitas. La home ya no repite
-     una fila por disciplina — para eso están los pilares de arriba — sino
-     que agrupa por el momento en el que estás, que es como se decide qué
-     clase poner. Cuatro categorías, cuatro clases cada una. -->
-<div class="wrap section-sm">
-  <div class="row-head"><h2 class="h2-serif">Entrenamiento corto</h2><a href="explorar.html">Ver todo</a></div>
-  <p class="sec-lead">Menos de 20 minutos, para los días que no dan más.</p>
-  <div class="grid4">
-    <a href="clase.html?t=Despierta%20el%20core&amp;i=Daniela%20Ortiz&amp;d=pilatesmat&amp;m=15" class="ccard"><div class="art gart pilatesmat"><span class="len">15:00</span></div><div class="title">Despierta el core</div><div class="meta">Daniela Ortiz</div><div class="lvl">Principiante</div><div class="tag disc-link" data-d="pilatesmat">PILATES MAT</div></a>
-    <a href="clase.html?t=Somara%20%3A%20Cuello%20y%20hombros&amp;i=Renata%20Sol%C3%ADs&amp;d=somara&amp;m=15" class="ccard"><div class="art gart somara"><span class="len">15:00</span></div><div class="title">Somara : Cuello y hombros</div><div class="meta">Renata Solís</div><div class="lvl">Principiante</div><div class="tag disc-link" data-d="somara">SOMARA</div></a>
-    <a href="clase.html?t=Somara%20%3A%20Respiraci%C3%B3n%20y%20Calma&amp;i=Renata%20Sol%C3%ADs&amp;d=somara&amp;m=18" class="ccard"><div class="art gart somara"><span class="nuevo">Nuevo</span><span class="len">18:00</span></div><div class="title">Somara : Respiración y Calma</div><div class="meta">Renata Solís</div><div class="lvl">Principiante</div><div class="tag disc-link" data-d="somara">SOMARA</div></a>
-    <a href="clase.html?free=1&amp;t=Barre%20Esencial&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=20" class="ccard"><div class="art gart barre"><span class="free">Gratis</span><span class="len">20:00</span></div><div class="title">Barre Esencial</div><div class="meta">Valeria Méndez</div><div class="lvl">Principiante</div><div class="tag disc-link" data-d="barre">BARRE</div></a>
-  </div>
-</div>
-
-<div class="wrap section-sm">
-  <div class="row-head"><h2 class="h2-serif">Días de poca energía</h2><a href="explorar.html">Ver todo</a></div>
-  <p class="sec-lead">Sin impacto y sin prisa. Te mueves, pero no te vacías.</p>
-  <div class="grid4">
-    <a href="clase.html?t=Somara%20Flow&amp;i=Renata%20Sol%C3%ADs&amp;d=somara&amp;m=25" class="ccard"><div class="art gart somara"><span class="nuevo">Nuevo</span><span class="len">25:00</span></div><div class="title">Somara Flow</div><div class="meta">Renata Solís</div><div class="lvl">Principiante</div><div class="tag disc-link" data-d="somara">SOMARA</div></a>
-    <a href="clase.html?t=Somara%20Restaurativo&amp;i=Renata%20Sol%C3%ADs&amp;d=somara&amp;m=40" class="ccard"><div class="art gart somara"><span class="len">40:00</span></div><div class="title">Somara Restaurativo</div><div class="meta">Renata Solís</div><div class="lvl">Intermedio</div><div class="tag disc-link" data-d="somara">SOMARA</div></a>
-    <a href="clase.html?t=Somara%20%3A%20Espalda%20que%20respira&amp;i=Renata%20Sol%C3%ADs&amp;d=somara&amp;m=20" class="ccard"><div class="art gart somara"><span class="len">20:00</span></div><div class="title">Somara : Espalda que respira</div><div class="meta">Renata Solís</div><div class="lvl">Principiante</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Core &amp; Flexibilidad</span></div><div class="tag disc-link" data-d="somara">SOMARA</div></a>
-    <a href="clase.html?t=Tone%20Cuerpo%20Completo&amp;i=Daniela%20Ortiz&amp;d=tone&amp;m=30" class="ccard"><div class="art gart tone"><span class="len">30:00</span></div><div class="title">Tone Cuerpo Completo</div><div class="meta">Daniela Ortiz</div><div class="lvl">Intermedio</div><div class="tag disc-link" data-d="tone">TONE</div></a>
-  </div>
-</div>
-
-<div class="wrap section-sm">
-  <div class="row-head"><h2 class="h2-serif">Cuando buscas fuerza</h2><a href="explorar.html">Ver todo</a></div>
-  <p class="sec-lead">Carga, repeticiones y trabajo de centro. Las que dejan huella al día siguiente.</p>
-  <div class="grid4">
-    <a href="clase.html?t=Sculpt%20Total&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=60" class="ccard"><div class="art gart sculpt"><span class="len">60:00</span></div><div class="title">Sculpt Total</div><div class="meta">Valeria Méndez</div><div class="lvl">Avanzado</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Fuerza Total</span></div><div class="tag disc-link" data-d="sculpt">SCULPT</div></a>
-    <a href="clase.html?t=Funcional%20HIIT&amp;i=Sof%C3%ADa%20Ruiz&amp;d=funcional&amp;m=30" class="ccard"><div class="art gart funcional"><span class="len">30:00</span></div><div class="title">Funcional HIIT</div><div class="meta">Sofía Ruiz</div><div class="lvl">Intermedio</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Fuerza Total</span></div><div class="tag disc-link" data-d="funcional">FUNCIONAL</div></a>
-    <a href="clase.html?t=Core%20Profundo&amp;i=Sof%C3%ADa%20Ruiz&amp;d=pilates&amp;m=40" class="ccard"><div class="art gart pilates"><span class="len">40:00</span></div><div class="title">Core Profundo</div><div class="meta">Sofía Ruiz</div><div class="lvl">Avanzado</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Core &amp; Flexibilidad</span></div><div class="tag disc-link" data-d="pilates">PILATES</div></a>
-    <a href="clase.html?t=Barre%20Gl%C3%BAteos%20%26amp%3B%20Piernas&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=45" class="ccard"><div class="art gart barre"><span class="len">45:00</span></div><div class="title">Barre Glúteos &amp; Piernas</div><div class="meta">Valeria Méndez</div><div class="lvl">Intermedio</div><div class="tag disc-link" data-d="barre">BARRE</div></a>
-  </div>
-</div>
-
-<div class="wrap section-sm">
-  <div class="row-head"><h2 class="h2-serif">Una hora para ti</h2><a href="explorar.html">Ver todo</a></div>
-  <p class="sec-lead">Cuando sí hay tiempo: clases largas, sin correr y con cierre de movilidad.</p>
-  <div class="grid4">
-    <a href="clase.html?t=Sculpt%20Brazos%20%26amp%3B%20Core&amp;i=Valeria%20M%C3%A9ndez&amp;d=sculpt&amp;m=45" class="ccard"><div class="art gart sculpt"><span class="len">45:00</span></div><div class="title">Sculpt Brazos &amp; Core</div><div class="meta">Valeria Méndez</div><div class="lvl">Intermedio</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Fuerza Total</span></div><div class="tag disc-link" data-d="sculpt">SCULPT</div></a>
-    <a href="clase.html?t=Pilates%20%3A%20Core%20Avanzado&amp;i=Sof%C3%ADa%20Ruiz&amp;d=pilates&amp;m=40" class="ccard"><div class="art gart pilates"><span class="nuevo">Nuevo</span><span class="len">40:00</span></div><div class="title">Pilates : Core Avanzado</div><div class="meta">Sofía Ruiz</div><div class="lvl">Avanzado</div><div class="tag disc-link" data-d="pilates">PILATES</div></a>
-    <a href="clase.html?t=Barre%20%3A%20Postura%20Perfecta&amp;i=Valeria%20M%C3%A9ndez&amp;d=barre&amp;m=35" class="ccard"><div class="art gart barre"><span class="nuevo">Nuevo</span><span class="len">35:00</span></div><div class="title">Barre : Postura Perfecta</div><div class="meta">Valeria Méndez</div><div class="lvl">Intermedio</div><div class="tag disc-link" data-d="barre">BARRE</div></a>
-    <a href="clase.html?free=1&amp;t=Pilates%20Mat%20Fundamental&amp;i=Sof%C3%ADa%20Ruiz&amp;d=pilatesmat&amp;m=40" class="ccard"><div class="art gart pilatesmat"><span class="free">Gratis</span><span class="len">40:00</span></div><div class="title">Pilates Mat Fundamental</div><div class="meta">Sofía Ruiz</div><div class="lvl">Principiante</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Core &amp; Flexibilidad</span></div><div class="tag disc-link" data-d="pilatesmat">PILATES MAT</div></a>
-  </div>
-</div>
+<!-- ===== FILAS DE DESCUBRIMIENTO =====
+     Las tarjetas ya no van escritas a mano: se arman desde el catálogo
+     compartido con la misma tarjeta que usa el resto del sitio, así que el
+     material, el candado y el diseño no pueden divergir entre la home y el
+     catálogo. Cada fila es una regla sobre el catálogo, no una lista. -->
+<div id="filas"></div>
 
 <!-- ===== FOOTER ===== -->
 <footer class="footer">
@@ -362,6 +223,10 @@
   </div>
 </div>
 
+
+
+<script src="anyara.js"></script>
+
 <!-- ===== HERO CAROUSEL LOGIC (auto-advance 5s, pause on hover, arrows + dots, reduced-motion aware) ===== -->
 <script>
 (function(){
@@ -377,7 +242,11 @@
     track.style.transform = 'translateX(-' + (idx*100) + '%)';
     dots.forEach(function(d,i){ d.classList.toggle('on', i===idx); });
   }
-  function start(){ if(reduce) return; stop(); timer = setInterval(function(){ go(idx+1); }, 5000); }
+  /* El carrusel se mueve solo sólo para quien todavía no tiene cuenta: la
+     primera diapositiva lleva la clase recomendada, y a quien ya entró a
+     practicar no se le puede quitar de debajo a los cinco segundos. */
+  var autoAvance = !(window.Anyara && Anyara.hasAccount());
+  function start(){ if(reduce || !autoAvance) return; stop(); timer = setInterval(function(){ go(idx+1); }, 5000); }
   function stop(){ if(timer){ clearInterval(timer); timer = null; } }
 
   document.querySelector('.hc-arrow.next').addEventListener('click', function(){ go(idx+1); start(); });
@@ -390,8 +259,6 @@
   start();
 })();
 </script>
-
-<script src="anyara.js"></script>
 <script>
 var DISC_LABELS = { sculpt:'Sculpt', barre:'Barre', pilates:'Pilates', pilatesmat:'Pilates Mat', somara:'Somara', funcional:'Funcional', tone:'Tone' };
 
@@ -405,30 +272,48 @@ document.addEventListener('DOMContentLoaded', function(){
     /* Todas las cifras salen del mismo contador real, así se mueven juntas
        al completar una clase en vez de ser números fijos de maqueta. */
     var n = Anyara.streak();
-    var mins = n * 28;                       // ~28 min por clase
+    var hechos = Math.min(n, 7), meta = Anyara.weekGoal();
     document.getElementById('msHola').innerHTML = 'Hola, <em>' + Anyara.name() + '</em>.';
     document.getElementById('msRacha').textContent = n;
-    document.getElementById('msClases').textContent = n;
-    document.getElementById('msDias').textContent = Math.min(n, 7);
-    document.getElementById('msTiempo').textContent =
-      mins >= 60 ? Math.floor(mins / 60) + 'h ' + (mins % 60) + 'm' : mins + 'm';
+    document.getElementById('msSemana').textContent = hechos + '/' + meta;
     document.getElementById('lcDone').textContent = n === 1 ? '1 clase' : n + ' clases';
 
-    /* objetivo semanal: los días cumplidos van marcados, el resto en hueco */
-    var hechos = Math.min(n, 7), meta = Anyara.weekGoal();
-    document.getElementById('msWeek').innerHTML =
-      ['L','M','M','J','V','S','D'].map(function (d, i) {
-        var cls = i < hechos ? ' class="on"' : (i < meta ? ' class="rest"' : '');
-        return '<i' + cls + '>' + (i < hechos ? '✓' : d) + '</i>';
-      }).join('');
-    document.getElementById('msGoal').textContent =
-      'Objetivo semanal ' + hechos + '/' + meta + ' días';
-
-    /* editable de verdad: cicla la meta y la guarda */
-    document.getElementById('msEdit').addEventListener('click', function () {
+    /* el objetivo se edita donde se ve: junto al calendario */
+    document.getElementById('wgText').textContent =
+      'Objetivo semanal ' + hechos + ' de ' + meta + ' días';
+    document.getElementById('wgEdit').addEventListener('click', function () {
       Anyara.setWeekGoal(meta >= 7 ? 3 : meta + 1);
       location.reload();
     });
+  }
+
+  /* ---- hero de miembro ----
+     Para el nivel 3 el carrusel de venta se cambia por lo que esa persona
+     viene a hacer: seguir la clase que dejó a medias. Antes eso vivía a
+     1.384px de scroll, debajo de un carrusel que además se movía solo. */
+  if (Anyara.isPaid()) {
+    var mh = document.getElementById('memberHero');
+    var carrusel = document.getElementById('hero');
+    var sigue = { t:'Barre Glúteos & Piernas', i:'Valeria Méndez', d:'barre', m:45, x:'Intermedio', pct:64 };
+    mh.className = 'mhero gart ' + sigue.d;
+    mh.innerHTML =
+      '<div class="mh-in">' +
+        '<div class="mh-b">' +
+          '<div class="eyebrow">Continúa donde lo dejaste</div>' +
+          '<h1>' + sigue.t + '</h1>' +
+          '<p>' + Anyara.discLabel(sigue.d) + ' · ' + sigue.m + ' min · con ' + sigue.i + '</p>' +
+          '<div class="mh-bar"><i style="width:' + sigue.pct + '%"></i></div>' +
+          '<div class="mh-pct"><b>' + sigue.pct + '%</b> completado · te faltan ' +
+            Math.round(sigue.m * (100 - sigue.pct) / 100) + ' min</div>' +
+          '<div class="mh-cta">' +
+            '<a href="' + Anyara.classHref(sigue) + '" class="btn btn-gold">Reanudar</a>' +
+            '<a href="#semana" class="btn btn-ghost light">Ver mi semana</a>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    mh.style.display = '';
+    if (carrusel) carrusel.style.display = 'none';
+    Anyara.paintArt();
   }
 
   /* ---- pilares de disciplina ----
@@ -436,8 +321,20 @@ document.addEventListener('DOMContentLoaded', function(){
      anyara.js y aparece aquí, en explorar y en el catálogo sin tocar HTML. */
   var pil = document.getElementById('pillars');
   if (pil) {
-    pil.innerHTML = Anyara.DISC_ORDER.map(function (d) {
-      return '<a class="pillar gart ' + d + '" href="' + (Anyara.discHref(d) || 'explorar.html?d=' + d) + '">' +
+    /* Siete pilares iguales no dicen por dónde empezar. El onboarding ya
+       preguntó qué tipo de movimiento disfruta, así que esa disciplina abre
+       la fila y lleva la marca. Sin cuenta, el orden es el de siempre. */
+    var mia = (Anyara.welcomeClass() || Anyara.welcomePlan()[0] || {}).disc;
+    var orden = Anyara.DISC_ORDER.slice();
+    if (Anyara.hasAccount() && mia && orden.indexOf(mia) > 0) {
+      orden.splice(orden.indexOf(mia), 1);
+      orden.unshift(mia);
+    }
+    pil.innerHTML = orden.map(function (d) {
+      var tuyo = Anyara.hasAccount() && d === mia;
+      return '<a class="pillar gart ' + d + (tuyo ? ' pillar-mine' : '') + '" href="' +
+        (Anyara.discHref(d) || 'explorar.html?d=' + d) + '">' +
+        (tuyo ? '<span class="pillar-tag">Empieza aquí</span>' : '') +
         '<span class="pillar-b">' +
           '<span class="pillar-n">' + Anyara.discLabel(d) + '</span>' +
           '<span class="pillar-d">' + Anyara.discLead(d) + '</span>' +
@@ -451,10 +348,15 @@ document.addEventListener('DOMContentLoaded', function(){
      un día con clase: es parte del plan, no un hueco. */
   var wk = document.getElementById('weekRow');
   if (wk) {
-    wk.innerHTML = Anyara.week().map(function (d) {
+    wk.innerHTML = Anyara.week().map(function (d, i) {
       var head = '<div class="wk-top"><span class="wk-d">' + d.dia + '</span>' +
                  '<span class="wk-n">' + d.num + '</span></div>';
-      var estado = (d.hoy ? ' today' : '') + (d.pasado ? ' past' : '');
+      /* los días ya cumplidos llevan palomita: el calendario es también el
+         marcador del objetivo, que antes era una fila de puntos aparte */
+      var cumplido = d.pasado && i < Math.min(Anyara.streak(), 7);
+      var estado = (d.hoy ? ' today' : '') + (d.pasado ? ' past' : '') +
+                   (cumplido ? ' done' : '');
+      if (cumplido) head = head.replace('</div>', '<span class="wk-ok">✓</span></div>');
       if (d.rest) {
         return '<div class="wk rest' + estado + '">' + head +
           '<div class="wk-rest">' +
@@ -470,10 +372,6 @@ document.addEventListener('DOMContentLoaded', function(){
     }).join('');
     Anyara.paintArt();
   }
-
-  /* el carrusel de retos y series lo arma Anyara: mismo comportamiento
-     que en retos.html y series.html */
-  Anyara.carousel(document.querySelector('.ccar'));
 
   /* ---- bloque por nivel ---- */
   var block = document.getElementById('levelBlock');
@@ -519,6 +417,107 @@ document.addEventListener('DOMContentLoaded', function(){
       '</a>';
   }
 
+
+  /* ---- filas de descubrimiento ----
+     Cada fila es una regla sobre el catálogo, no una lista escrita a mano:
+     si Mariana sube una clase de 15 minutos aparece sola en "Entrenamiento
+     corto". Cuatro tarjetas por fila y "ver todo", que es la decisión que se
+     tomó en la llamada para no volver a tener listas infinitas. */
+  (function () {
+    var cont = document.getElementById('filas');
+    if (!cont) return;
+    var todo = Anyara.catalog();
+    var mia  = (Anyara.welcomeClass() || Anyara.welcomePlan()[0] || {}).disc;
+
+    function tarjetas(lista) {
+      return lista.slice(0, 4).map(function (c) {
+        return Anyara.classCard(c, { fecha:true, nuevo:'2026-08-01' });
+      }).join('');
+    }
+    function fila(titulo, bajada, lista, ver) {
+      if (lista.length < 3) return '';           /* una fila de dos se ve rota */
+      return '<div class="wrap section-sm">' +
+        '<div class="row-head"><h2 class="h2-serif">' + titulo + '</h2>' +
+          '<a href="' + (ver || 'explorar.html') + '">Ver todo</a></div>' +
+        '<p class="sec-lead">' + bajada + '</p>' +
+        '<div class="grid4">' + tarjetas(lista) + '</div></div>';
+    }
+
+    var filas = [];
+
+    /* 1 · lo suyo, según lo que contestó en el onboarding */
+    if (Anyara.hasAccount() && mia) {
+      filas.push(fila('Más de ' + Anyara.discLabel(mia),
+        'Por lo que nos contaste al empezar.',
+        todo.filter(function (c) { return c.d === mia; }),
+        Anyara.discHref(mia) || 'explorar.html?d=' + mia));
+    }
+
+    /* 2 · lo más reciente del catálogo */
+    filas.push(fila('Lo más nuevo',
+      'Lo último que subimos al catálogo.',
+      todo.slice(0, 4)));
+
+    /* 3 · retos y series, en el formato grande acordado */
+    filas.push(
+      '<div class="wrap section-sm">' +
+        '<div class="row-head"><h2 class="h2-serif">Retos y series</h2>' +
+          '<a href="retos.html">Ver todos</a></div>' +
+        '<p class="sec-lead">Programas con principio y final. Un reto te da una ruta de días; una serie, un tema a fondo.</p>' +
+        '<div class="ccar"><div class="ccar-track">' +
+          car('reto.html', 'somara', 'Reto · 21 días', 'Volver a Ti',
+              'Reconexión y balance integral. Barre, Sculpt y nutrición, un día a la vez.', 'Reto Volver a Ti') +
+          car('reto.html', 'funcional', 'Reto · 7 días', 'Reto de Bienvenida',
+              'Una semana para entrar sin prisa. Somara y Pilates Mat, de lo suave a lo sostenido.', 'Reto de Bienvenida') +
+          car('serie.html', 'sculpt', 'Serie · 3 clases', 'Fuerza Total',
+              'Sculpt y Funcional en tres sesiones que suben de carga en orden.') +
+          car('serie.html', 'pilatesmat', 'Serie · 3 clases', 'Core &amp; Flexibilidad',
+              'Trabajo de centro y movilidad, de los fundamentos al control fino.') +
+        '</div>' +
+        '<div class="ccar-nav" style="margin-top:18px">' +
+          '<button type="button" class="ccar-prev" aria-label="Anterior">‹</button>' +
+          '<button type="button" class="ccar-next" aria-label="Siguiente">›</button>' +
+        '</div></div>' +
+      '</div>');
+
+    /* 4 · por el momento en el que estás */
+    filas.push(fila('Entrenamiento corto',
+      'Veinte minutos o menos, para los días que no dan más.',
+      todo.filter(function (c) { return c.m <= 20; })));
+
+    filas.push(fila('Días de poca energía',
+      'Sin impacto y sin prisa. Te mueves, pero no te vacías.',
+      todo.filter(function (c) { return c.foco === 'movilidad'; })));
+
+    filas.push(fila('Cuando buscas fuerza',
+      'Carga, repeticiones y trabajo de centro. Las que dejan huella al día siguiente.',
+      todo.filter(function (c) { return c.foco === 'fuerza' && c.m >= 30; })));
+
+    filas.push(fila('Una hora para ti',
+      'Cuando sí hay tiempo: clases largas, sin correr y con cierre de movilidad.',
+      todo.filter(function (c) { return c.m >= 40; })));
+
+    cont.innerHTML = filas.join('');
+    Anyara.paintArt();
+    Anyara.paintFavs();
+    Anyara.makeFocusable();
+    Anyara.carousel(cont.querySelector('.ccar'));
+
+    function car(href, disc, kicker, titulo, texto, trailer) {
+      return '<a href="' + href + '" class="ccar-slide gart ' + disc + '">' +
+        '<div class="ccar-b">' +
+          '<div class="ccar-k">' + kicker + '</div>' +
+          '<div class="ccar-t">' + titulo + '</div>' +
+          '<p class="ccar-d">' + texto + '</p>' +
+          (trailer
+            ? '<div class="ccar-f"><button class="ccar-play" type="button" ' +
+              'data-trailer="' + trailer + '" data-kicker="Tráiler del reto">' +
+              '<span>▶</span>Ver tráiler</button></div>'
+            : '') +
+        '</div></a>';
+    }
+  })();
+
   function card(href, disc, tag, title, instr, mins, lvl) {
     return '<a href="' + href + '" class="ccard">' +
       '<div class="art gart ' + disc + '">' +
@@ -532,18 +531,6 @@ document.addEventListener('DOMContentLoaded', function(){
       '</a>';
   }
 
-  /* tasteful lock badges — members see none, everyone else sees a small
-     "Membresía" tag on anything that isn't already marked Gratis */
-  if (!Anyara.isMember()) {
-    document.querySelectorAll('.ccard, .compcard').forEach(function (c) {
-      var art = c.querySelector('.art');
-      if (art.querySelector('.free')) return;
-      var b = document.createElement('span');
-      b.className = 'locked';
-      b.innerHTML = '🔒 Membresía';
-      art.appendChild(b);
-    });
-  }
 });
 </script>
 </body>

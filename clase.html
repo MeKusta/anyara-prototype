@@ -16,9 +16,6 @@
       <a href="series.html" class="nav-link">Series</a>
       <a href="retos.html" class="nav-link">Retos</a>
       <a href="events.html" class="nav-link">Eventos</a>
-      <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
-      <a href="estilo.html" class="nav-link" style="color:var(--ink-3)">(Estilo)</a>
-      <a href="materiales.html" class="nav-link" style="color:var(--ink-3)">(Material)</a>
     </nav>
     <div class="nav-right">
       <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
@@ -208,12 +205,10 @@ document.getElementById('vdSuggest').innerHTML =
   Anyara.suggest(cls.d, cls.t, 4).map(function (c) {
     var href = Anyara.classHref({ t:c.t, i:c.i, d:c.d, m:c.m, free:c.free ? 1 : 0 }) +
                '&x=' + encodeURIComponent(c.x);
-    var locked = !Anyara.canWatch({ free: c.free });
     return '<a href="' + href + '" class="ccard">' +
       '<div class="art gart ' + c.d + '">' +
         (c.free ? '<span class="free">Gratis</span>' : '') +
         '<span class="len">' + c.m + ':00</span>' +
-        (locked ? '<span class="locked">🔒 Membresía</span>' : '') +
       '</div>' +
       '<div class="title">' + c.t + '</div>' +
       '<div class="meta">' + c.i + '</div>' +
@@ -255,9 +250,16 @@ function paintAccess(){
   if (canPlay()) return;
   var b = document.getElementById('lockBadge');
   b.style.display = '';
-  b.textContent = (cls.t3 && Anyara.isTrial())
-    ? '🔒 Se abre el día ' + cls.t3
-    : '🔒 Clase de miembros';
+  /* El candado vive aquí, sobre el player, y no en las tarjetas del catálogo:
+     se avisa al intentar reproducir, no al mirar. El ícono va en SVG porque
+     el emoji era lo único no tipográfico del sistema. */
+  b.innerHTML =
+    '<svg class="lock-i" viewBox="0 0 24 24" aria-hidden="true">' +
+      '<rect x="4.4" y="10.4" width="15.2" height="10.2" rx="2.4"/>' +
+      '<path d="M8.2 10.4V7.6a3.8 3.8 0 0 1 7.6 0v2.8"/></svg>' +
+    ((cls.t3 && Anyara.isTrial())
+      ? 'Se abre el día ' + cls.t3
+      : 'Clase de miembros');
 }
 /* the CTA depends on where they are: a trial user waiting on a later day is
    offered the skip, everyone else is offered the three days */
