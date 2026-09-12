@@ -1963,11 +1963,15 @@ button.link-a{background:none;border:none;padding:0;cursor:pointer;font:inherit}
   .intro-card .ic-art,.trailer-card .tc-art{width:100%}
   .intro-card .ic-b,.trailer-card .tc-b{max-width:none}
 
-  /* ---- detalle de clase ---- */
+  /* ---- detalle de clase ----
+     La cabecera es una fila: título a la izquierda y acciones a la derecha.
+     En vertical se apila, y las tres acciones se reparten el ancho como una
+     barra, con separadores arriba y abajo. */
+  .vd-head{flex-direction:column;gap:var(--sp-4)}
   .vd-actions{
     display:grid;grid-template-columns:repeat(3,1fr);gap:0;
     border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);
-    margin-top:var(--sp-4);
+    margin:0;padding:0;width:100%;
   }
   .vd-act{min-height:52px;justify-content:center}
   .props{gap:8px}
