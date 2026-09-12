@@ -1235,15 +1235,17 @@ body.has-account .anon-only{display:none!important}
    Mariana las quiere grandes: la disciplina es la puerta de entrada al
    catálogo, no una etiqueta de filtro. Siete columnas verticales, cada una
    con su foto y su color de firma. */
-.pillars{display:grid;grid-template-columns:repeat(7,1fr);gap:14px}
+.pillars{display:grid;grid-template-columns:repeat(7,1fr);gap:16px}
 .pillar{
   position:relative;display:block;border-radius:var(--radius);overflow:hidden;
-  aspect-ratio:3/4.6;color:#fff;
+  /* Misma proporción que en la tele, que es donde se vio que funcionaba:
+     el 3/4.6 de antes era tan estrecho que la foto no se leía. */
+  aspect-ratio:3/4.2;color:#fff;
   transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s;
 }
 .pillar::after{
   content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(0,0,0,.06) 0%,rgba(0,0,0,.18) 42%,rgba(0,0,0,.72) 100%);
+  background:linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,.16) 40%,rgba(0,0,0,.78) 100%);
 }
 .pillar:hover{transform:translateY(-5px);box-shadow:0 16px 34px rgba(0,0,0,.17)}
 .pillar-b{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:18px 16px 20px}
@@ -1254,12 +1256,12 @@ body.has-account .anon-only{display:none!important}
   background:var(--dc,var(--gold));margin-bottom:12px;
 }
 .pillar-n{
-  display:block;font-family:var(--serif);font-size:var(--fs-sub);
-  line-height:1.15;letter-spacing:-.01em;
+  display:block;font-family:var(--serif);font-size:var(--fs-title);
+  line-height:1.1;letter-spacing:-.015em;
 }
 .pillar-d{
   display:block;font-family:var(--sans);font-size:var(--fs-meta);
-  color:rgba(255,255,255,.82);margin-top:6px;line-height:1.4;
+  color:rgba(255,255,255,.85);margin-top:5px;line-height:1.35;
 }
 .pillar-all{
   display:flex;flex-direction:column;justify-content:flex-end;
@@ -1652,26 +1654,99 @@ button.link-a{background:none;border:none;padding:0;cursor:pointer;font:inherit}
   padding:5px 10px;border-radius:100px;text-transform:uppercase;
 }
 
-/* ---- menú de prototipo ---- */
-.proto{position:relative}
+/* ---- selector de vista (sólo prototipo) ----
+   Va marcado para que nadie lo confunda con una sección de Anyara: borde
+   punteado y una etiqueta que lo dice. */
+.proto{position:relative;margin-left:auto}
 .proto-b{
-  background:none;border:none;cursor:pointer;padding:4px 0;
-  font-family:var(--sans);font-size:var(--fs-note);font-weight:500;color:var(--ink-3);
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+  border:1px dashed var(--ink-3);border-radius:100px;background:transparent;
+  padding:7px 14px;font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);
 }
-.proto-b:hover{color:var(--ink-2)}
+.proto-b:hover{border-color:var(--ink-2);color:var(--ink)}
+.proto-tag{
+  font-size:var(--fs-micro);letter-spacing:.14em;text-transform:uppercase;
+  font-weight:700;color:var(--wine);
+}
+.proto-v{font-weight:500;color:var(--ink)}
+.proto-ch{font-size:var(--fs-micro);color:var(--ink-3)}
 .proto-m{
-  position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%);
+  position:absolute;top:calc(100% + 12px);right:0;
   background:#fff;border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:0 12px 30px rgba(0,0,0,.1);padding:8px;min-width:220px;z-index:60;
-  display:flex;flex-direction:column;
+  box-shadow:0 16px 40px rgba(0,0,0,.13);padding:8px;min-width:310px;z-index:60;
+  display:flex;flex-direction:column;gap:2px;
 }
 .proto-m[hidden]{display:none}
-.proto-m a{
-  font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);
-  padding:10px 14px;border-radius:8px;white-space:nowrap;
+.proto-h{
+  font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);padding:8px 12px 6px;
 }
-.proto-m a:hover{background:var(--sand);color:var(--ink)}
+.proto-o{
+  display:block;text-align:left;background:none;border:none;cursor:pointer;
+  padding:11px 12px;border-radius:9px;font-family:var(--sans);
+}
+.proto-o:hover{background:var(--sand)}
+.proto-o.on{background:var(--gold-tint)}
+.proto-o-n{display:block;font-size:var(--fs-note);font-weight:600;color:var(--ink)}
+.proto-o-d{display:block;font-size:var(--fs-meta);color:var(--ink-2);margin-top:2px;line-height:1.4}
+.proto-o.on .proto-o-n::after{content:" ·  activa";color:var(--gold-deep);font-weight:500}
+.proto-a{
+  font-family:var(--sans);font-size:var(--fs-meta);color:var(--gold-deep);
+  padding:11px 12px;border-top:1px solid var(--line-2);margin-top:6px;
+}
+.proto-a:hover{color:var(--gold)}
 
+/* ---- el marco del teléfono ----
+   La página se carga dentro de un iframe de 390px, así que las media queries
+   de siempre hacen su trabajo: no hay una segunda hoja de estilos. */
+html.en-marco,html.en-marco body{height:100%;overflow:hidden}
+html.en-marco body > *:not(.vista-stage){display:none!important}
+.vista-stage{
+  position:fixed;inset:0;z-index:200;background:#17150f;
+  display:flex;flex-direction:column;align-items:center;gap:22px;padding:26px 0 34px;
+}
+.vista-bar{
+  display:flex;align-items:center;gap:14px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+  border-radius:100px;padding:9px 10px 9px 16px;
+}
+.vista-bar .proto-tag{color:var(--gold)}
+.vista-t{font-family:var(--sans);font-size:var(--fs-meta);color:rgba(255,255,255,.7)}
+.vista-x{
+  border:none;cursor:pointer;background:#fff;color:#1a1a1a;border-radius:100px;
+  padding:8px 16px;font-family:var(--sans);font-size:var(--fs-meta);font-weight:600;
+}
+.vista-phone{
+  position:relative;width:390px;height:min(844px, calc(100vh - 130px));
+  background:#000;border-radius:46px;padding:10px;flex:0 0 auto;
+  display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 0 0 2px #2c2a26, 0 30px 70px rgba(0,0,0,.6);
+}
+/* La barra de estado del teléfono. El recorte vive aquí, no encima de la
+   página: en un teléfono de verdad el contenido empieza debajo. */
+.vista-status{
+  position:relative;flex:0 0 auto;height:42px;background:#fff;
+  border-radius:36px 36px 0 0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 26px;font-family:var(--sans);font-size:13px;font-weight:600;color:#1a1a1a;
+}
+.vista-notch{
+  position:absolute;top:6px;left:50%;transform:translateX(-50%);
+  width:112px;height:28px;border-radius:100px;background:#000;
+}
+.vista-icons{letter-spacing:1px;font-size:10px}
+.vista-phone iframe{
+  width:100%;flex:1 1 auto;border:none;border-radius:0 0 36px 36px;
+  background:#fff;display:block;
+}
+
+/* ---- prototipo en ajustes ---- */
+.set-proto h2{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.proto-mark{
+  font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.14em;
+  text-transform:uppercase;font-weight:700;color:var(--wine);
+}
+.settings-nav .nav-proto{color:var(--ink-3)}
 
 /* La bajada del pilar es lo primero que sobra cuando la columna se angosta:
    antes de desbordar sobre la foto, se recorta a dos líneas. */
@@ -1920,6 +1995,7 @@ button.link-a{background:none;border:none;padding:0;cursor:pointer;font:inherit}
     padding:0 var(--gutter) 4px;margin:0 calc(var(--gutter) * -1);
     scroll-padding-inline:var(--gutter);
   }
+  .pillar-n{font-size:var(--fs-sub)}
   .pillar{flex:0 0 132px}
   .wk{flex:0 0 136px}
   .cardrow{grid-auto-columns:minmax(200px,62%)}

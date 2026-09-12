@@ -291,10 +291,25 @@ img{max-width:100%}
   stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;
 }
 .tv-det-cta{display:flex;gap:1.1rem;margin-top:2rem;flex-wrap:wrap}
-.tv-det-coach{display:flex;align-items:center;gap:1rem;margin-top:2.4rem}
-.tv-det-av{width:3.6rem;height:3.6rem;border-radius:50%;flex:0 0 auto}
+/* La instructora es enfocable: desde la clase se llega a su perfil. Por eso
+   tiene forma de pieza — borde y relleno — y no de pie de foto. */
+.tv-det-coach{
+  display:inline-flex;align-items:center;gap:1rem;margin-top:2.4rem;
+  border:1px solid var(--tv-line);border-radius:100px;
+  padding:.7rem 1.6rem .7rem .7rem;
+}
+.tv-det-coach.foco{
+  background:var(--tv-ink);color:var(--tv-bg);border-color:var(--tv-ink);
+  box-shadow:0 0 0 var(--foco-anillo) var(--tv-ink),0 1rem 2.4rem rgba(0,0,0,.6);
+}
+.tv-det-coach.foco .tv-det-coach-b span{color:rgba(15,13,12,.72)}
+.tv-det-av{width:3.4rem;height:3.4rem;border-radius:50%;flex:0 0 auto}
 .tv-det-coach b{display:block;font-size:1.15rem;font-weight:600}
-.tv-det-coach span span{display:block;font-size:1rem;color:var(--tv-ink-2);margin-top:.2rem}
+.tv-det-coach-b span{display:block;font-size:1rem;color:var(--tv-ink-2);margin-top:.2rem}
+
+/* Disciplinas que imparte, con su color de firma */
+.tv-prop-disc{gap:.7rem}
+.tv-dot{width:.6rem;height:.6rem;border-radius:50%;background:var(--dc,var(--gold));display:block}
 
 /* ------------------------------------------------- emparejar con teléfono */
 /* Escribir un correo con la cruceta es el peor momento de cualquier app de
@@ -380,3 +395,25 @@ img{max-width:100%}
 .tv-panel .tv-pareado,
 .tv-panel .tv-det-cta,
 .tv-panel .tv-props{margin-inline:var(--safe-x)}
+
+/* ---- selector de vista (sólo prototipo) ---- */
+.tv-nav-proto{
+  border:1px dashed var(--tv-ink-3);color:var(--tv-ink-3)!important;
+  font-size:1rem!important;
+}
+.tv-nav-proto.foco{
+  background:var(--tv-ink)!important;color:var(--tv-bg)!important;border-style:solid;
+}
+.tv-kicker-proto{color:var(--tv-ink-3);padding:0 var(--safe-x)}
+.tv-vistas{
+  display:grid;gap:1.1rem;margin:2.4rem var(--safe-x) 0;max-width:52rem;
+}
+.tv-vista{
+  border:1px solid var(--tv-line);border-radius:var(--r);
+  padding:1.6rem 1.8rem;background:var(--tv-bg-2);
+}
+.tv-vista.foco{background:var(--tv-ink);color:var(--tv-bg);border-color:var(--tv-ink)}
+.tv-vista.foco .tv-vista-d{color:rgba(15,13,12,.7)}
+.tv-vista.on{border-color:var(--gold)}
+.tv-vista-n{display:block;font-family:var(--serif);font-size:1.8rem}
+.tv-vista-d{display:block;font-size:1.1rem;color:var(--tv-ink-2);margin-top:.4rem}

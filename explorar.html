@@ -29,6 +29,18 @@
   <h1 style="font-size:var(--fs-page)">Encuentra tu balance</h1>
 </div>
 
+<!-- ===== LAS DISCIPLINAS =====
+     La misma fila que la home y que la tele. Aquí hace falta porque las
+     píldoras de abajo filtran esta lista, y eso no es lo mismo que entrar a
+     la disciplina: la portada, el tráiler, quién la enseña y sus subcategorías
+     viven en su propia página, y hasta ahora desde el catálogo no había forma
+     de llegar. -->
+<div class="wrap section-sm">
+  <div class="row-head"><h2 class="h2-serif">Las disciplinas</h2></div>
+  <p class="sec-lead">Cada una tiene su portada, su tráiler y a quién la enseña.</p>
+  <div class="pillars" id="pillars"></div>
+</div>
+
 <div class="wrap">
   <div class="pillbar" style="border:none;padding-top:8px" id="pills">
     <div class="pill active" data-d="">Todas</div>
@@ -167,6 +179,29 @@
 
 <script src="anyara.js"></script>
 <script>
+/* Los pilares se arman igual que en la home, desde Anyara.DISC_ORDER. */
+(function () {
+  var pil = document.getElementById('pillars');
+  if (!pil) return;
+  var mia = (Anyara.welcomeClass() || Anyara.welcomePlan()[0] || {}).disc;
+  var orden = Anyara.DISC_ORDER.slice();
+  if (Anyara.hasAccount() && mia && orden.indexOf(mia) > 0) {
+    orden.splice(orden.indexOf(mia), 1);
+    orden.unshift(mia);
+  }
+  pil.innerHTML = orden.map(function (d) {
+    var tuyo = Anyara.hasAccount() && d === mia;
+    return '<a class="pillar gart ' + d + (tuyo ? ' pillar-mine' : '') + '" href="' +
+      (Anyara.discHref(d) || 'explorar.html?d=' + d) + '">' +
+      (tuyo ? '<span class="pillar-tag">Empieza aquí</span>' : '') +
+      '<span class="pillar-b">' +
+        '<span class="pillar-n">' + Anyara.discLabel(d) + '</span>' +
+        '<span class="pillar-d">' + Anyara.discLead(d) + '</span>' +
+      '</span></a>';
+  }).join('');
+  Anyara.paintArt();
+})();
+
 var results  = document.getElementById('results');
 var grouped  = document.getElementById('grouped');
 

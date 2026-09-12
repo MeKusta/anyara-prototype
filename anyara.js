@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.20.00';
+  var VERSION = '1.21.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -133,7 +133,8 @@
     wplan:    'anyara_welcome_plan',
     day:      'anyara_day',
     goal:     'anyara_week_goal',
-    charged:  'anyara_charged'   // one-shot: show the "day 3 charge" notice once
+    charged:  'anyara_charged',  // one-shot: show the "day 3 charge" notice once
+    vista:    'anyara_vista'     // prototipo: escritorio · telefono · tele
   };
   /* Instructoras: rol y bio para el bloque de la página de clase. Mismos
      nombres y cifras que coaches.html, para que no se contradigan. */
@@ -875,8 +876,9 @@
     renderLogos();
     renderNav();
     renderVersion();
-    renderProtoMenu();
+    renderVista();
     renderTabBar();
+    if (A.vista() === 'telefono') montarMarco();
     renderChargeNotice();
   });
 
@@ -1104,24 +1106,52 @@
     document.body.appendChild(bar);
   }
 
-  /* Las tres puertas de prototipo — onboarding, estilo y el formulario de
-     material — ocupaban tres lugares en una navegación de cinco. Ahora van
-     juntas detrás de una sola, para que al presentar no compitan con las
-     secciones reales. Se inyectan aquí y no en el HTML de veintidós páginas. */
-  function renderProtoMenu() {
-    var nav = document.querySelector('.nav-links');
-    if (!nav || document.getElementById('protoMenu')) return;
+  /* ---- selector de vista (sólo prototipo) ----
+     Anyara se va a poder ver en tres sitios: la web de escritorio, la app de
+     teléfono y la tele. Son tres maquetaciones distintas, no una que se
+     encoge, así que para revisarlas hay que poder saltar entre ellas sin
+     cambiar de dispositivo. Este control es nuestro, no del producto: va
+     marcado como prototipo para que no se confunda con una sección.
 
+     Las pantallas de trabajo — sistema de diseño, formulario de material —
+     se movieron a Ajustes, que es donde corresponde. */
+  var VISTAS = {
+    escritorio: { n:'Web de escritorio', d:'El sitio como se ve en una computadora' },
+    telefono:   { n:'App de teléfono',   d:'La maquetación del móvil, en un marco de 390×844' },
+    tele:       { n:'Apple TV',          d:'La versión de tele, con la cruceta' }
+  };
+  A.vista = function () { return get(K.vista) || 'escritorio'; };
+  A.setVista = function (v) {
+    if (v === 'tele') { set(K.vista, 'escritorio'); location.href = 'tv.html'; return; }
+    set(K.vista, v);
+    location.reload();
+  };
+
+  function renderVista() {
+    /* dentro del marco del teléfono no se pinta: el control vive fuera */
+    if (window.self !== window.top) return;
+    var nav = document.querySelector('.nav-links');
+    if (!nav || document.getElementById('vistaMenu')) return;
+
+    var actual = A.vista();
     var box = document.createElement('div');
     box.className = 'proto';
-    box.id = 'protoMenu';
+    box.id = 'vistaMenu';
     box.innerHTML =
-      '<button type="button" class="proto-b" aria-expanded="false">(Prototipo)</button>' +
+      '<button type="button" class="proto-b" aria-expanded="false">' +
+        '<span class="proto-tag">Prototipo</span>' +
+        '<span class="proto-v">' + VISTAS[actual].n + '</span>' +
+        '<span class="proto-ch">▾</span>' +
+      '</button>' +
       '<div class="proto-m" hidden>' +
-        '<a href="onboarding.html">Onboarding</a>' +
-        '<a href="estilo.html">Sistema de diseño</a>' +
-        '<a href="materiales.html">Formulario de material</a>' +
-        '<a href="tv.html">Versión para tele</a>' +
+        '<div class="proto-h">Ver Anyara como</div>' +
+        Object.keys(VISTAS).map(function (k) {
+          return '<button type="button" class="proto-o' + (k === actual ? ' on' : '') + '" ' +
+            'data-vista="' + k + '">' +
+            '<span class="proto-o-n">' + VISTAS[k].n + '</span>' +
+            '<span class="proto-o-d">' + VISTAS[k].d + '</span></button>';
+        }).join('') +
+        '<a class="proto-a" href="profile.html#prototipo">Pantallas de trabajo →</a>' +
       '</div>';
     nav.appendChild(box);
 
@@ -1133,6 +1163,11 @@
       m.hidden = abierto;
       b.setAttribute('aria-expanded', String(!abierto));
     });
+    m.addEventListener('click', function (e) {
+      var o = e.target.closest('.proto-o');
+      if (!o) return;
+      A.setVista(o.dataset.vista);
+    });
     document.addEventListener('click', function () {
       m.hidden = true;
       b.setAttribute('aria-expanded', 'false');
@@ -1142,7 +1177,39 @@
     });
   }
 
-  /* small grey version tag next to the wordmark, so redeploys are visible at a glance */
+  /* La vista de teléfono no se puede simular con CSS: las media queries miran
+     el ancho de la ventana, no el de una caja. Lo que sí tiene su propio
+     ancho es un iframe, así que la página se carga dentro de uno de 390px y
+     las mismas media queries de siempre hacen su trabajo. Nada de una
+     segunda hoja de estilos que se pueda desincronizar. */
+  function montarMarco() {
+    if (window.self !== window.top) return;      /* ya estamos dentro */
+    var stage = document.createElement('div');
+    stage.className = 'vista-stage';
+    stage.innerHTML =
+      '<div class="vista-bar">' +
+        '<span class="proto-tag">Prototipo</span>' +
+        '<span class="vista-t">App de teléfono · 390 × 844</span>' +
+        '<button type="button" class="vista-x">Volver a la web de escritorio</button>' +
+      '</div>' +
+      '<div class="vista-phone">' +
+        /* barra de estado: el recorte vive aquí y no encima de la página,
+           igual que en un teléfono de verdad */
+        '<div class="vista-status">' +
+          '<span>9:41</span>' +
+          '<span class="vista-notch"></span>' +
+          '<span class="vista-icons">▮▮▮ ▮</span>' +
+        '</div>' +
+        '<iframe title="Anyara en teléfono" src="' + location.pathname + location.search + '"></iframe>' +
+      '</div>';
+    document.documentElement.classList.add('en-marco');
+    document.body.appendChild(stage);
+    stage.querySelector('.vista-x').addEventListener('click', function () {
+      A.setVista('escritorio');
+    });
+  }
+
+  /* small grey version tag next to the wordmark  /* small grey version tag next to the wordmark, so redeploys are visible at a glance */
   function renderVersion() {
     var logo = document.querySelector('.logo');
     if (!logo || logo.querySelector('.version-badge')) return;

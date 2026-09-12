@@ -183,8 +183,9 @@
 
   function marcarNav(nombre) {
     var mapa = { home:'home', explorar:'explorar', disciplina:'explorar',
-                 clase:'explorar', retos:'retos', reto:'retos',
-                 eventos:'eventos', cuenta:'cuenta' };
+                 clase:'explorar', coach:'explorar', retos:'retos', reto:'retos',
+                 eventos:'eventos', evento:'eventos', cuenta:'cuenta',
+                 vista:'vista' };
     document.querySelectorAll('.tv-nav [data-nav]').forEach(function (a) {
       a.classList.toggle('activo', a.dataset.nav === (mapa[nombre] || nombre));
     });
@@ -360,16 +361,81 @@
           '<button class="tv-btn" data-foco data-accion="disciplina" data-d="' + c.d + '">' +
             'Ver ' + A.discLabel(c.d) + '</button>' +
         '</div>' +
-        '<div class="tv-det-coach">' +
+        /* La instructora es una puerta, no un pie de foto: desde la clase se
+           llega a su perfil con la cruceta, igual que en el sitio. */
+        '<button class="tv-det-coach" data-foco data-id="i:' + esc(c.i) + '" ' +
+          'data-accion="coach" data-coach="' + esc(c.i) + '">' +
           '<span class="tv-det-av gart ' + (prof.art || c.d) + '"></span>' +
-          '<span><b>' + esc(c.i) + '</b><span>' + esc(prof.rol || '') + '</span></span>' +
-        '</div>' +
+          '<span class="tv-det-coach-b"><b>' + esc(c.i) + '</b>' +
+          '<span>' + esc(prof.rol || '') + ' · Ver perfil</span></span>' +
+        '</button>' +
       '</div>' +
       '<div class="tv-body tv-body-det">' +
         estanteClases('También te puede gustar', A.suggest(c.d, c.t, 10)) +
       '</div>' +
     '</div>';
     montar('clase', datos, html, foco);
+  };
+
+  /* El mismo selector de vista que el sitio, en la forma que corresponde a
+     una tele: una pantalla con opciones grandes y enfocables, no un menú
+     desplegable. Es una herramienta del prototipo, no una sección. */
+  PANTALLAS.vista = function (datos, foco) {
+    var OPC = [
+      { v:'escritorio', n:'Web de escritorio', d:'El sitio como se ve en una computadora' },
+      { v:'telefono',   n:'App de teléfono',   d:'La maquetación del móvil, en un marco de 390×844' },
+      { v:'tele',       n:'Apple TV',          d:'Donde estás ahora' }
+    ];
+    var html = '<div class="tv-screen">' +
+      '<div class="tv-body tv-body-top tv-panel">' +
+        '<div class="tv-kicker tv-kicker-proto">Prototipo · no forma parte del producto</div>' +
+        '<h1 class="tv-page-t">Ver Anyara como</h1>' +
+        '<p class="tv-page-d">Son tres maquetaciones distintas, no una que se ' +
+          'encoge. Esto sirve para saltar entre ellas sin cambiar de aparato.</p>' +
+        '<div class="tv-vistas">' +
+          OPC.map(function (o) {
+            var aqui = o.v === 'tele';
+            return '<button class="tv-vista' + (aqui ? ' on' : '') + '" data-foco' +
+              (aqui ? '' : ' data-inicial') + ' data-accion="vista" data-v="' + o.v + '">' +
+              '<span class="tv-vista-n">' + o.n + (aqui ? ' · activa' : '') + '</span>' +
+              '<span class="tv-vista-d">' + o.d + '</span></button>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
+    '</div>';
+    montar('vista', datos, html, foco);
+  };
+
+  PANTALLAS.coach = function (datos, foco) {
+    var nombre = datos.coach;
+    var prof = A.INSTRUCTORS[nombre] || {};
+    var suyas = A.classesBy(nombre, 20);
+    var discs = A.coachDiscs(nombre);
+    var html = '<div class="tv-screen tv-detalle">' +
+      '<div class="tv-det-art gart ' + (prof.art || 'somara') + '"></div>' +
+      '<div class="tv-det-in">' +
+        '<div class="tv-kicker">Instructora</div>' +
+        '<h1 class="tv-det-t">' + esc(nombre) + '</h1>' +
+        '<div class="tv-det-m">' + esc(prof.cifras || '') + '</div>' +
+        '<p class="tv-det-d">' + esc(prof.bio || '') + '</p>' +
+        '<div class="tv-props">' + discs.map(function (d) {
+          return '<span class="tv-prop tv-prop-disc ' + d + '">' +
+            '<i class="tv-dot"></i>' + A.discLabel(d) + '</span>';
+        }).join('') + '</div>' +
+        '<div class="tv-det-cta">' +
+          (suyas.length
+            ? '<button class="tv-btn tv-btn-gold" data-foco data-inicial ' +
+              'data-accion="reproducir" data-slug="' + esc(suyas[0].slug) + '">' +
+              '<span class="tv-play">▶</span>Empezar con ' + esc(suyas[0].t) + '</button>'
+            : '') +
+          '<button class="tv-btn" data-foco data-accion="atras">Volver</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="tv-body tv-body-det">' +
+        estanteClases('Clases de ' + nombre.split(' ')[0], suyas) +
+      '</div>' +
+    '</div>';
+    montar('coach', datos, html, foco);
   };
 
   PANTALLAS.reto = function (datos, foco) {
@@ -581,6 +647,8 @@
       case 'disciplina':  ir('disciplina', { d: el.dataset.d }); break;
       case 'reto':        ir('reto', { reto: el.dataset.reto }); break;
       case 'evento':      ir('evento', { ev: el.dataset.ev }); break;
+      case 'coach':       ir('coach', { coach: el.dataset.coach }); break;
+      case 'vista':       if (el.dataset.v !== 'tele') A.setVista(el.dataset.v); break;
       case 'reproducir':  ir('reproducir', { slug: el.dataset.slug }); break;
       case 'pausa':       if (el.__alternar) el.__alternar(); break;
       case 'favorito':    el.classList.toggle('activo');
