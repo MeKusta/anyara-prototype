@@ -18,6 +18,7 @@
       <a href="events.html" class="nav-link">Eventos</a>
       <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
       <a href="estilo.html" class="nav-link" style="color:var(--ink-3)">(Estilo)</a>
+      <a href="materiales.html" class="nav-link" style="color:var(--ink-3)">(Material)</a>
     </nav>
     <div class="nav-right">
       <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
@@ -30,35 +31,36 @@
   <a href="coaches.html" style="font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2)">Todas las coaches</a>
 </div>
 
-<!-- portada a lo ancho; el degradado sustituye a la foto -->
+<!-- portada a lo ancho; el degradado sustituye a la foto.
+     Todo el contenido del perfil sale de Anyara.INSTRUCTORS, que es la misma
+     fuente que usa la ficha de clase y el directorio: ya no hay un perfil
+     escrito a mano para una sola instructora. -->
 <div class="wrap section-sm">
-  <div class="cover gart sculpt">
+  <div class="cover gart" id="cover">
     <div class="cover-in">
-      <h1 class="coach-name">Valeria Méndez<a href="#" class="ig" title="Seguir en Instagram" aria-label="Instagram de Valeria Méndez"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.6" cy="6.4" r="1.15" fill="currentColor" stroke="none"/></svg></a></h1>
-      <div class="cover-meta">42 clases · 1,840 seguidoras</div>
-      <!-- seguir vive con la identidad, no perdido al lado de la bio -->
+      <h1 class="coach-name" id="cName"></h1>
+      <div class="cover-meta" id="cMeta"></div>
+      <!-- Disciplinas que imparte. Acordado en la llamada: en el perfil tiene
+           que verse qué enseña, y cada etiqueta lleva a esa disciplina. -->
+      <div class="coach-tags" id="coachTags"></div>
+      <!-- seguir vive con la identidad, no perdido al lado de la bio. Las
+           redes son opcionales: cada instructora llena las que tenga y las
+           vacías no se pintan. -->
       <div class="cover-cta">
         <button class="btn btn-gold follow" id="fw" onclick="toggleFollow()">＋ Seguir</button>
+        <div class="socials" id="socials"></div>
       </div>
     </div>
   </div>
 </div>
 
 <div class="wrap section-sm">
-  <p class="coach-bio">
-    Doce años enseñando barre y sculpt. Sus clases son cortas, precisas y sin relleno —
-    la idea es que salgas sintiéndote más fuerte, no más cansada.
-  </p>
+  <p class="coach-bio" id="cBio"></p>
 </div>
 
 <div class="wrap section-sm">
-  <div class="row-head"><h2 class="h2-serif">Clases de Valeria</h2><a href="explorar.html">Ver todas</a></div>
-  <div class="grid4">
-    <a href="clase.html" class="ccard"><div class="art gart sculpt"><span class="nuevo">Nuevo</span><span class="len">20:00</span></div><div class="title">20 min · Sculpt : Glut</div><div class="meta">Valeria Méndez</div><div class="lvl">Intermedio</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Fuerza Total</span></div><div class="tag disc-link" data-d="sculpt">SCULPT</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart barre"><span class="len">45:00</span></div><div class="title">Barre Glúteos & Piernas</div><div class="meta">Valeria Méndez</div><div class="lvl">Intermedio</div><div class="tag disc-link" data-d="barre">BARRE</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart sculpt"><span class="len">60:00</span></div><div class="title">Sculpt Total</div><div class="meta">Valeria Méndez</div><div class="lvl">Avanzado</div><div class="serie">Serie: <span class="serie-link" data-href="serie.html">Fuerza Total</span></div><div class="tag disc-link" data-d="sculpt">SCULPT</div></a>
-    <a href="clase.html" class="ccard"><div class="art gart barre"><span class="free">Gratis</span><span class="len">20:00</span></div><div class="title">Barre Esencial</div><div class="meta">Valeria Méndez</div><div class="lvl">Principiante</div><div class="tag disc-link" data-d="barre">BARRE</div></a>
-  </div>
+  <div class="row-head"><h2 class="h2-serif" id="cHead">Sus clases</h2><a href="explorar.html">Ver todas</a></div>
+  <div class="grid4" id="cGrid"></div>
 </div>
 
 <footer class="footer">
@@ -79,6 +81,38 @@
 
 <script src="anyara.js"></script>
 <script>
+/* ?c= elige la instructora; sin parámetro cae en Valeria, que es la que
+   usábamos como ejemplo antes de que el perfil fuera genérico. */
+var COACH = new URLSearchParams(location.search).get('c') || 'Valeria Méndez';
+var prof  = Anyara.INSTRUCTORS[COACH] || Anyara.INSTRUCTORS['Valeria Méndez'];
+
+document.title = 'Anyara — ' + COACH;
+document.getElementById('cover').classList.add(prof.art);
+document.getElementById('cName').textContent = COACH;
+document.getElementById('cMeta').textContent = prof.cifras || '';
+document.getElementById('cBio').textContent  = prof.bio;
+document.getElementById('cHead').textContent = 'Clases de ' + COACH.split(' ')[0];
+document.getElementById('coachTags').innerHTML = Anyara.coachTags(COACH);
+document.getElementById('socials').innerHTML   = Anyara.coachSocials(COACH);
+
+/* sus clases salen del catálogo compartido, con las mismas reglas de acceso
+   que el resto del sitio */
+document.getElementById('cGrid').innerHTML = Anyara.classesBy(COACH, 4).map(function (c) {
+  var locked = !Anyara.canWatch({ free: c.free });
+  return '<a href="' + Anyara.classHref({ t:c.t, i:c.i, d:c.d, m:c.m, x:c.x, free:c.free ? 1 : 0 }) + '" class="ccard">' +
+    '<div class="art gart ' + c.d + '">' +
+      (c.free ? '<span class="free">Gratis</span>' : '') +
+      '<span class="len">' + c.m + ':00</span>' +
+      (locked ? '<span class="locked">🔒 Membresía</span>' : '') +
+    '</div>' +
+    '<div class="title">' + c.t + '</div>' +
+    '<div class="meta">' + c.i + '</div>' +
+    '<div class="lvl">' + c.x + '</div>' +
+    '<div class="tag disc-link" data-d="' + c.d + '">' + Anyara.discLabel(c.d).toUpperCase() + '</div></a>';
+}).join('');
+Anyara.paintArt();
+Anyara.paintFavs();
+
 function toggleFollow(){
   var b=document.getElementById('fw');
   var on=b.classList.toggle('on');

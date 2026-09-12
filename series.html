@@ -18,6 +18,7 @@
       <a href="events.html" class="nav-link">Eventos</a>
       <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
       <a href="estilo.html" class="nav-link" style="color:var(--ink-3)">(Estilo)</a>
+      <a href="materiales.html" class="nav-link" style="color:var(--ink-3)">(Material)</a>
     </nav>
     <div class="nav-right">
       <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
@@ -32,17 +33,34 @@
 </div>
 
 <div class="wrap section-sm">
-  <div class="comp-grid">
-    <a href="serie.html" class="compcard">
-      <div class="art gart sculpt"><span class="count">3 clases</span></div>
-      <div class="discs"><span class="disc-link" data-d="sculpt">Sculpt</span>/<span class="disc-link" data-d="funcional">Funcional</span></div>
-      <div class="ct">Fuerza Total</div>
-    </a>
-    <a href="serie.html" class="compcard">
-      <div class="art gart pilatesmat"><span class="count">3 clases</span></div>
-      <div class="discs"><span class="disc-link" data-d="pilatesmat">Pilates Mat</span>/<span class="disc-link" data-d="somara">Somara</span></div>
-      <div class="ct">Core &amp; Flexibilidad</div>
-    </a>
+  <!-- Mismo formato grande que los retos, para que series y retos se lean
+       como el mismo tipo de pieza. Las series no llevan tráiler propio. -->
+  <div class="ccar">
+    <div class="ccar-track">
+
+      <a href="serie.html" class="ccar-slide gart sculpt">
+        <div class="ccar-b">
+          <div class="ccar-k">3 clases · Sculpt / Funcional</div>
+          <div class="ccar-t">Fuerza Total</div>
+          <p class="ccar-d">Tres sesiones que suben de carga en orden, de la técnica al trabajo pesado.</p>
+          <div class="ccar-f"><span class="btn btn-gold">Ver la serie</span></div>
+        </div>
+      </a>
+
+      <a href="serie.html" class="ccar-slide gart pilatesmat">
+        <div class="ccar-b">
+          <div class="ccar-k">3 clases · Pilates Mat / Somara</div>
+          <div class="ccar-t">Core &amp; Flexibilidad</div>
+          <p class="ccar-d">Trabajo de centro y movilidad, de los fundamentos al control fino.</p>
+          <div class="ccar-f"><span class="btn btn-gold">Ver la serie</span></div>
+        </div>
+      </a>
+
+    </div>
+    <div class="ccar-nav" style="margin-top:18px">
+      <button type="button" class="ccar-prev" aria-label="Anterior">‹</button>
+      <button type="button" class="ccar-next" aria-label="Siguiente">›</button>
+    </div>
   </div>
 </div>
 
@@ -64,5 +82,10 @@
 </div>
 
 <script src="anyara.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  Anyara.carousel(document.querySelector(".ccar"));
+});
+</script>
 </body>
 </html>

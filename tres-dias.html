@@ -18,6 +18,7 @@
       <a href="events.html" class="nav-link">Eventos</a>
       <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
       <a href="estilo.html" class="nav-link" style="color:var(--ink-3)">(Estilo)</a>
+      <a href="materiales.html" class="nav-link" style="color:var(--ink-3)">(Material)</a>
     </nav>
     <div class="nav-right">
       <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
@@ -57,9 +58,18 @@
   </a>
 </div>
 
-<!-- ===== INTRO DE MARIANA ===== -->
 <div class="wrap section-sm">
-  <div class="row-head"><h2>Empieza aquí</h2></div>
+  <div class="row-head"><h2>Tus tres días</h2></div>
+  <div class="welcome3" id="days"></div>
+</div>
+
+<!-- ===== INTRO DE MARIANA =====
+     Acordado en la llamada: el video de Mariana va DESPUÉS del bloque de los
+     tres días, no antes. Primero ves el plan que te armamos y luego ella te
+     explica cómo leerlo — en ese orden el video empuja a la conversión en vez
+     de retrasar la entrada. -->
+<div class="wrap section-sm">
+  <div class="row-head"><h2>Antes de empezar</h2></div>
   <div class="intro-card" onclick="openIntro()">
     <div class="ic-art gart somara" data-img="anyara">
       <span class="ic-play">▶</span>
@@ -77,16 +87,69 @@
   </div>
 </div>
 
-<div class="wrap section-sm">
-  <div class="row-head"><h2>Tus tres días</h2></div>
-  <div class="welcome3" id="days"></div>
-</div>
-
 <!-- ===== SIEMPRE ABIERTAS ===== -->
 <div class="wrap section-sm">
   <div class="row-head"><h2>Siempre abiertas</h2></div>
   <p class="sec-lead">Tu clase personalizada y las dos clases abiertas de Anyara. No dependen del día.</p>
   <div class="grid3" id="alwaysOpen"></div>
+</div>
+
+<!-- ===== PRECIOS Y PREGUNTAS =====
+     La prueba de tres días arranca sólo después del checkout, así que esta
+     página es la landing donde se decide. El precio y las dudas viven aquí y
+     no a un clic de distancia. Se oculta en cuanto la membresía está activa. -->
+<div class="wrap section" id="tdVenta">
+  <div class="row-head"><h2>Precio y letra chica</h2></div>
+  <p class="sec-lead">Eliges plan hoy, no se cobra nada hasta el día 3, y puedes cancelar antes sin dar explicaciones.</p>
+  <div class="td-sales">
+
+    <div class="td-plans">
+      <div class="td-plan">
+        <div>
+          <div class="p-n">Mensual</div>
+          <div class="p-d">Se renueva cada mes. Cancelas cuando quieras.</div>
+        </div>
+        <div class="p-p">$549<small> / mes</small></div>
+      </div>
+      <div class="td-plan feat">
+        <div>
+          <div class="p-n">Anual</div>
+          <div class="p-d">Dos meses de regalo frente al mensual.</div>
+        </div>
+        <div class="p-p">$5,490<small> / año</small></div>
+      </div>
+      <a href="membresia.html" class="btn btn-gold" style="justify-self:start;margin-top:6px">Elegir mi plan</a>
+      <p class="trialnote" style="text-align:left">El cobro corre el día 3. Te avisamos por correo un día antes.</p>
+    </div>
+
+    <div class="td-faq">
+      <details open>
+        <summary>¿Por qué piden tarjeta si son tres días gratis?</summary>
+        <p>Para que el día 3 tu membresía siga sin que tengas que volver a empezar. No hay ningún
+           cargo antes de ese día, y si cancelas durante la prueba no se cobra nada.</p>
+      </details>
+      <details>
+        <summary>¿Qué pasa si no quiero esperar tres días?</summary>
+        <p>Puedes saltar la prueba y abrir el catálogo completo hoy mismo — las siete disciplinas,
+           los retos y las series. En ese caso el cobro corre el mismo día, no el día 3.</p>
+      </details>
+      <details>
+        <summary>¿Qué incluyen los tres días?</summary>
+        <p>El video de bienvenida de Mariana, un plan de día 1, 2 y 3 armado a partir de lo que
+           contestaste en el onboarding, con cuatro clases por día, más tus clases siempre abiertas.</p>
+      </details>
+      <details>
+        <summary>¿Puedo cambiar de plan después?</summary>
+        <p>Sí. Desde tu perfil puedes pasar de mensual a anual o al revés, y el cambio aplica en
+           tu siguiente periodo de cobro.</p>
+      </details>
+      <details>
+        <summary>¿Puedo pausar en vez de cancelar?</summary>
+        <p>Sí, hasta tres meses. Tu progreso, tus favoritos y tus playlists quedan como los dejaste.</p>
+      </details>
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== LAS DOS SALIDAS ===== -->
@@ -169,6 +232,9 @@ var INSTR = { sculpt:'Valeria Méndez', barre:'Valeria Méndez', pilates:'Sofía
 /* a support discipline per primary one, so day N mixes but stays coherent */
 var PAIR = { sculpt:'funcional', funcional:'sculpt', pilates:'pilatesmat', pilatesmat:'pilates',
              somara:'tone', tone:'somara', barre:'pilatesmat' };
+
+/* la landing de precios sobra en cuanto la membresía está activa */
+if (Anyara.isPaid()) document.getElementById('tdVenta').style.display = 'none';
 
 var plan  = Anyara.welcomePlan();
 var today = Anyara.currentDay();

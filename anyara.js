@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.15.01';
+  var VERSION = '1.16.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -42,14 +42,83 @@
 
   /* Disciplinas: etiqueta y si ya tiene página propia. Sólo Somara la tiene
      por ahora — las demás siguen cayendo en el catálogo filtrado. */
+  /* Disciplinas. Desde la llamada del 2 de septiembre las siete tienen página
+     propia: hacer clic en una disciplina lleva a su portada — tráiler, clases
+     recomendadas y filtros propios — y no al catálogo filtrado.
+     `lead` es la línea que acompaña al pilar en la home. */
   var DISC = {
-    barre:      { label:'Barre',       page:false },
-    funcional:  { label:'Funcional',   page:false },
-    pilatesmat: { label:'Pilates Mat', page:false },
-    pilates:    { label:'Pilates',     page:false },
-    sculpt:     { label:'Sculpt',      page:false },
-    somara:     { label:'Somara',      page:true  },
-    tone:       { label:'Tone',        page:false }
+    barre:      { label:'Barre',       page:true, lead:'Precisión en la barra' },
+    funcional:  { label:'Funcional',   page:true, lead:'Fuerza para la vida diaria' },
+    pilatesmat: { label:'Pilates Mat', page:true, lead:'La base, en colchoneta' },
+    pilates:    { label:'Pilates',     page:true, lead:'Control y centro' },
+    sculpt:     { label:'Sculpt',      page:true, lead:'Tono con peso ligero' },
+    somara:     { label:'Somara',      page:true, lead:'Movimiento somático' },
+    tone:       { label:'Tone',        page:true, lead:'Constancia sin carga' }
+  };
+
+  /* Orden en que se muestran los pilares. Fijo, no alfabético: abre con las
+     dos disciplinas insignia y cierra con las de mantenimiento. */
+  var DISC_ORDER = ['barre','pilates','sculpt','somara','pilatesmat','funcional','tone'];
+
+  /* Subcategorías por disciplina.
+     Mariana lo pidió así en la llamada: la categorización depende de la
+     disciplina — Barre y Pilates se navegan por "Tipo de clase", Somara por
+     zona del cuerpo, y las de acondicionamiento por enfoque. Vive aquí y no
+     en disciplina.html porque el catálogo también lo usa para su filtro de
+     "Tipo de clase": una sola taxonomía para las dos pantallas. */
+  var SUBS = {
+    barre: { head:'Tipo de clase', subs:[
+      { id:'esencial', n:'Esencial' },
+      { id:'fuerza',   n:'Fuerza' },
+      { id:'postura',  n:'Postura y centro' } ] },
+    pilates: { head:'Tipo de clase', subs:[
+      { id:'core',      n:'Centro y control' },
+      { id:'espalda',   n:'Espalda sana' },
+      { id:'movilidad', n:'Movilidad' } ] },
+    pilatesmat: { head:'Tipo de clase', subs:[
+      { id:'fundamentos', n:'Fundamentos' },
+      { id:'core',        n:'Centro' },
+      { id:'cierre',      n:'Cierre suave' } ] },
+    sculpt: { head:'Tipo de clase', subs:[
+      { id:'completo', n:'Cuerpo completo' },
+      { id:'tren-inf', n:'Glúteos y piernas' },
+      { id:'tren-sup', n:'Brazos y centro' } ] },
+    somara: { head:'Por zona del cuerpo', subs:[
+      { id:'espalda',  n:'Espalda y cuello' },
+      { id:'caderas',  n:'Caderas y piernas' },
+      { id:'completo', n:'Cuerpo completo' } ] },
+    funcional: { head:'Enfoque', subs:[
+      { id:'fuerza',      n:'Fuerza' },
+      { id:'resistencia', n:'Resistencia' },
+      { id:'movilidad',   n:'Movilidad' } ] },
+    tone: { head:'Enfoque', subs:[
+      { id:'fuerza',    n:'Fuerza ligera' },
+      { id:'movilidad', n:'Movilidad' },
+      { id:'calma',     n:'Calma' } ] }
+  };
+
+  /* Materiales. La instructora marca casillas en su formulario de carga y la
+     página de clase arma estos íconos sola — nadie vuelve a escribir "necesitas
+     tapete y una banda" a mano. La clave es la que viaja en la URL (?p=). */
+  var PROPS = {
+    ninguno: { n:'Sin equipo',
+      svg:'<circle cx="12" cy="12" r="8.2"/><path d="M6.2 17.8 17.8 6.2"/>' },
+    tapete:  { n:'Tapete',
+      svg:'<rect x="2.6" y="7" width="18.8" height="10" rx="2.4"/><path d="M7.4 7v10"/><path d="M18 9.4a2.6 2.6 0 0 1 0 5.2"/>' },
+    pesas:   { n:'Pesas',
+      svg:'<path d="M3 9.6v4.8M6 7.6v8.8M18 7.6v8.8M21 9.6v4.8"/><path d="M6 12h12"/>' },
+    banda:   { n:'Banda',
+      svg:'<path d="M4.5 6.5c6 0 6 11 15 11"/><path d="M4.5 9.2c4.4 0 4.4 5.6 9.2 5.6"/>' },
+    bloques: { n:'Bloques',
+      svg:'<rect x="2.6" y="13.4" width="8.6" height="6" rx="1.6"/><rect x="12.8" y="4.6" width="8.6" height="6" rx="1.6"/>' },
+    pelota:  { n:'Pelota',
+      svg:'<circle cx="12" cy="12" r="8.4"/><path d="M3.9 9.4h16.2M3.9 14.6h16.2"/><path d="M12 3.6c-3 4.9-3 11.9 0 16.8M12 3.6c3 4.9 3 11.9 0 16.8"/>' },
+    silla:   { n:'Silla',
+      svg:'<path d="M6.4 3.6v9.2M17.6 3.6v9.2"/><path d="M5 12.8h14"/><path d="M7.6 12.8 6.6 20.4M16.4 12.8l1 7.6"/>' },
+    toalla:  { n:'Toalla',
+      svg:'<path d="M6.4 3.8h11.2v16.4H6.4z"/><path d="M9.4 3.8v16.4M6.4 8.2h11.2"/>' },
+    cojin:   { n:'Cojín',
+      svg:'<rect x="3.4" y="6.4" width="17.2" height="11.2" rx="4"/><path d="M7.2 9.4c2.4 2 7.2 2 9.6 0"/>' }
   };
   var K = {
     member:   'anyara_member',   // level 3 · paid
@@ -68,17 +137,48 @@
   };
   /* Instructoras: rol y bio para el bloque de la página de clase. Mismos
      nombres y cifras que coaches.html, para que no se contradigan. */
+  /* `discs` son las disciplinas que imparte — se pintan como etiquetas en su
+     perfil y cada una lleva a su página. `redes` es opcional por instructora:
+     la que no tenga TikTok simplemente no lo llena y el ícono no se dibuja. */
   var INSTRUCTORS = {
     'Valeria Méndez': { rol:'Sculpt · Barre', art:'sculpt',
+      cifras:'42 clases · 1,840 seguidoras',
+      discs:['sculpt','barre'],
+      redes:{ instagram:'#', tiktok:'#', whatsapp:'#' },
       bio:'Doce años enseñando barre y sculpt. Sus clases son cortas, precisas y sin relleno.' },
     'Sofía Ruiz':     { rol:'Funcional · Pilates', art:'funcional',
+      cifras:'38 clases · 1,220 seguidoras',
+      discs:['funcional','pilates','pilatesmat'],
+      redes:{ instagram:'#', tiktok:'#' },
       bio:'Viene del entrenamiento funcional. Le importa que entiendas por qué haces cada movimiento.' },
     'Daniela Ortiz':  { rol:'Pilates Mat · Tone', art:'pilatesmat',
+      cifras:'27 clases · 960 seguidoras',
+      discs:['pilatesmat','tone','barre'],
+      redes:{ instagram:'#', whatsapp:'#' },
       bio:'Especialista en trabajo de centro. Sus clases cortas están pensadas para días sin tiempo.' },
     'Renata Solís':   { rol:'Somara · Meditación', art:'somara',
+      cifras:'19 clases · 780 seguidoras',
+      discs:['somara'],
+      redes:{ instagram:'#', tiktok:'#' },
       bio:'Trabaja movimiento somático y respiración. El ritmo lento es el punto, no una versión fácil.' },
     'Alina Prado':    { rol:'Somara · Movilidad', art:'tone',
+      cifras:'11 clases · 430 seguidoras',
+      discs:['somara','tone'],
+      redes:{ instagram:'#' },
       bio:'Enfocada en movilidad y recuperación, para sostener la práctica sin lesionarse.' }
+  };
+
+  /* Íconos de redes. Sólo las tres que pidió Mariana: Instagram, TikTok y
+     WhatsApp. Agregar otra es una entrada aquí y otra en `redes`. */
+  var REDES = {
+    instagram: { n:'Instagram',
+      svg:'<rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4"/><circle cx="12" cy="12" r="4.4"/>' +
+          '<circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/>' },
+    tiktok:    { n:'TikTok',
+      svg:'<path d="M14.2 3.2v11.3a3.6 3.6 0 1 1-3.6-3.6"/><path d="M14.2 3.2a5.2 5.2 0 0 0 5.2 5.2"/>' },
+    whatsapp:  { n:'WhatsApp',
+      svg:'<path d="M3.4 20.6l1.3-4.3a8.3 8.3 0 1 1 3.2 3.1z"/>' +
+          '<path d="M8.7 8.5c.4 2.7 2.2 4.5 4.9 4.9l1-1.3 1.9.9-.3 1.6c-2.9.6-6.7-3.2-6.1-6.1l1.6-.3z"/>' }
   };
 
   /* Descripción por disciplina. Antes la página mostraba el mismo texto de
@@ -215,6 +315,9 @@
     { disc:'somara',  title:'Somara : Cierre suave',  instr:'Renata Solís',   mins:15, why:'Para cerrar tu primera semana' }
   ];
 
+  /* segundos → m:ss, para las barras de los players de maqueta */
+  function reloj(s) { return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
+
   function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   function del(k) { try { localStorage.removeItem(k); } catch (e) {} }
@@ -290,6 +393,29 @@
 
     RETOS: RETOS,
     INSTRUCTORS: INSTRUCTORS,
+    REDES: REDES,
+    /* etiquetas de disciplina del perfil: cada una lleva a su página */
+    coachTags: function (nombre) {
+      var prof = INSTRUCTORS[nombre];
+      if (!prof || !prof.discs) return '';
+      return prof.discs.map(function (d) {
+        return '<a class="coach-tag ' + d + '" href="' +
+          (A.discHref(d) || 'explorar.html?d=' + d) + '">' +
+          '<span class="dot"></span>' + A.discLabel(d) + '</a>';
+      }).join('');
+    },
+    /* redes de la instructora; devuelve '' si no llenó ninguna */
+    coachSocials: function (nombre) {
+      var prof = INSTRUCTORS[nombre];
+      if (!prof || !prof.redes) return '';
+      return Object.keys(REDES).filter(function (k) { return !!prof.redes[k]; })
+        .map(function (k) {
+          return '<a class="social" href="' + prof.redes[k] + '" target="_blank" rel="noopener"' +
+            ' title="' + REDES[k].n + ' de ' + nombre + '"' +
+            ' aria-label="' + REDES[k].n + ' de ' + nombre + '">' +
+            '<svg viewBox="0 0 24 24" aria-hidden="true">' + REDES[k].svg + '</svg></a>';
+        }).join('');
+    },
     discAbout: function (d) { return DISC_ABOUT[d] || ''; },
 
     /* Eventos: listado, uno por id, y el enlace al detalle. Las tarjetas y la
@@ -301,6 +427,12 @@
     },
     eventHref:  function (id) { return 'evento.html?e=' + id; },
     myTickets:  function () { return EVENTS.filter(function (e) { return !!e.boleto; }); },
+    /* clases de una instructora, del mismo POOL que alimenta el resto del
+       sitio: el perfil no puede listar clases que no existan en el catálogo */
+    classesBy: function (nombre, n) {
+      return POOL.filter(function (c) { return c.i === nombre; }).slice(0, n || 8);
+    },
+
     /* recomendaciones: primero de la misma disciplina, luego el resto */
     suggest: function (disc, excludeTitle, n) {
       var same = POOL.filter(function (c) { return c.d === disc && c.t !== excludeTitle; });
@@ -308,6 +440,91 @@
       return same.concat(rest).slice(0, n || 4);
     },
 
+    /* ---- materiales ----
+       `p` viaja en la URL como "tapete,banda". Devuelve los chips con ícono
+       que la página de clase pinta; lo desconocido se ignora en vez de
+       romper, para que una clase mal etiquetada no rompa la página. */
+    PROPS: PROPS,
+    propList: function (p) {
+      if (!p) return [];
+      return String(p).split(',')
+        .map(function (s) { return s.trim().toLowerCase(); })
+        .filter(function (s) { return !!PROPS[s]; });
+    },
+    propChips: function (p) {
+      var list = A.propList(p);
+      if (!list.length) list = ['ninguno'];
+      return '<ul class="props">' + list.map(function (k) {
+        return '<li class="prop"><span class="prop-i">' +
+          '<svg viewBox="0 0 24 24" aria-hidden="true">' + PROPS[k].svg + '</svg>' +
+          '</span><span class="prop-n">' + PROPS[k].n + '</span></li>';
+      }).join('') + '</ul>';
+    },
+
+    /* ---- enfoque ----
+       Pedido en la llamada: además de la zona del cuerpo, poder filtrar por
+       lo que la clase entrena. Son tres y no más a propósito. */
+    /* Material típico de cada disciplina. Es el respaldo para cuando la clase
+       no trae ?p= propio: mejor mostrar el equipo correcto de la disciplina
+       que no mostrar nada. En producción esto lo manda el formulario de la
+       instructora clase por clase y este mapa deja de usarse. */
+    defaultProps: function (d) {
+      var POR_DISC = {
+        barre:      'silla,tapete',
+        funcional:  'ninguno',
+        pilates:    'tapete,pelota',
+        pilatesmat: 'tapete',
+        sculpt:     'pesas,banda,tapete',
+        somara:     'tapete,bloques,cojin',
+        tone:       'banda,tapete'
+      };
+      return POR_DISC[d] || 'tapete';
+    },
+
+    ENFOQUE: [
+      { id:'fuerza',      n:'Fuerza' },
+      { id:'movilidad',   n:'Movilidad' },
+      { id:'resistencia', n:'Resistencia' }
+    ],
+
+    /* ---- tu semana en Anyara ----
+       El calendario semanal que va en la home justo después de la biblioteca.
+       Siete días, con la clase sugerida de cada uno y dos días de descanso.
+       Es maqueta: el día de hoy sale del reloj del navegador, el plan no. */
+    week: function () {
+      var DIAS = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+      var PLAN = [
+        { disc:'sculpt',     t:'Sculpt : Glúteos',        i:'Valeria Méndez', m:20, x:'Intermedio' },
+        { disc:'somara',     t:'Somara : Flow',           i:'Renata Solís',   m:25, x:'Principiante' },
+        { disc:'barre',      t:'Barre : Postura Perfecta',i:'Valeria Méndez', m:35, x:'Intermedio' },
+        { rest:true },
+        { disc:'pilates',    t:'Core Profundo',           i:'Sofía Ruiz',     m:40, x:'Avanzado' },
+        { disc:'funcional',  t:'Funcional HIIT',          i:'Sofía Ruiz',     m:30, x:'Intermedio' },
+        { rest:true }
+      ];
+      /* la semana abre en lunes, así que el índice 0 es lunes y no domingo */
+      var hoy = (new Date().getDay() + 6) % 7;
+      var base = new Date();
+      base.setDate(base.getDate() - hoy);
+      return PLAN.map(function (d, i) {
+        var fecha = new Date(base);
+        fecha.setDate(base.getDate() + i);
+        return {
+          dia:   DIAS[fecha.getDay()],
+          num:   fecha.getDate(),
+          hoy:   i === hoy,
+          pasado:i < hoy,
+          rest:  !!d.rest,
+          clase: d.rest ? null : d
+        };
+      });
+    },
+
+    DISC_ORDER: DISC_ORDER,
+    SUBS: SUBS,
+    /* encabezado y opciones de subcategoría de una disciplina; {} si no tiene */
+    subsOf: function (d) { return SUBS[d] || { head:'', subs:[] }; },
+    discLead: function (d) { return (DISC[d] && DISC[d].lead) || ''; },
     DISC: DISC,
     discLabel: function (d) { return (DISC[d] && DISC[d].label) || d; },
     /* null si esa disciplina todavía no tiene página propia */
@@ -401,6 +618,124 @@
         el.remove();
         onDone();
       }
+    },
+
+    /* ---- carrusel de retos y series ----
+       Mismo formato grande en la home, en retos y en series, así que la
+       mecánica vive aquí: desplaza de a una diapositiva, apaga la flecha que
+       ya no lleva a nada y conecta el botón de play con el player de tráiler.
+       Se le pasa el contenedor .ccar. */
+    carousel: function (root) {
+      if (!root) return;
+      var track = root.querySelector('.ccar-track');
+      var prev  = root.querySelector('.ccar-prev');
+      var next  = root.querySelector('.ccar-next');
+      if (!track) return;
+
+      function paso() {
+        var s = track.querySelector('.ccar-slide');
+        return s ? s.getBoundingClientRect().width + 22 : track.clientWidth;
+      }
+      function estado() {
+        if (!prev || !next) return;
+        prev.disabled = track.scrollLeft < 4;
+        next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      }
+      if (prev) prev.addEventListener('click', function () { track.scrollBy({ left:-paso(), behavior:'smooth' }); });
+      if (next) next.addEventListener('click', function () { track.scrollBy({ left: paso(), behavior:'smooth' }); });
+      track.addEventListener('scroll', estado);
+      window.addEventListener('resize', estado);
+      estado();
+
+      /* el play del tráiler no abre el reto: reproduce el avance ahí mismo */
+      track.addEventListener('click', function (e) {
+        var b = e.target.closest && e.target.closest('.ccar-play');
+        if (!b) return;
+        e.preventDefault();
+        e.stopPropagation();
+        var slide = b.closest('.ccar-slide');
+        var disc = '';
+        Object.keys(DISC).forEach(function (k) {
+          if (!disc && slide.classList.contains(k)) disc = k;
+        });
+        A.trailer({
+          kicker:  b.getAttribute('data-kicker') || 'Tráiler',
+          titulo:  b.getAttribute('data-trailer'),
+          disc:    disc || 'somara',
+          segundos: 105
+        });
+      });
+    },
+
+    /* ---- player de tráiler compartido ----
+       Mariana pidió botón de play en retos y series. En vez de copiar el
+       markup del player a cada página, se arma aquí a demanda: cualquier
+       página llama Anyara.trailer({...}) y obtiene el mismo reproductor que
+       ya usan disciplina.html y tres-dias.html. Es maqueta: la barra avanza
+       sola y no hay video detrás. */
+    trailer: function (opts) {
+      opts = opts || {};
+      var largo = opts.segundos || 120;
+      var viejo = document.getElementById('anyaraTrailer');
+      if (viejo) viejo.remove();
+
+      var el = document.createElement('div');
+      el.className = 'vp-scrim open';
+      el.id = 'anyaraTrailer';
+      el.innerHTML =
+        '<button class="vp-close" aria-label="Cerrar">✕</button>' +
+        '<div class="vp">' +
+          '<div class="vp-title"><span>' + (opts.kicker || 'Tráiler') + '</span>' +
+            (opts.titulo || 'Anyara') + '</div>' +
+          '<div class="vp-screen gart ' + (opts.disc || 'somara') + '">' +
+            '<button class="vp-bigplay" aria-label="Reproducir">▶</button></div>' +
+          '<div class="vp-bar">' +
+            '<button class="vp-toggle" aria-label="Reproducir">▶</button>' +
+            '<span class="t-now">0:00</span>' +
+            '<div class="vp-timeline"><i></i></div>' +
+            '<span>' + reloj(largo) + '</span>' +
+            '<button class="vp-toggle" title="Pantalla completa">⛶</button>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(el);
+      paintArt();
+
+      var seg = 0, timer = null;
+      var barra = el.querySelector('.vp-timeline > i');
+      var ahora = el.querySelector('.t-now');
+      var big   = el.querySelector('.vp-bigplay');
+      var play  = el.querySelector('.vp-bar .vp-toggle');
+
+      function pintar() {
+        barra.style.width = (seg / largo * 100) + '%';
+        ahora.textContent = reloj(seg);
+      }
+      function alternar() {
+        if (timer) { clearInterval(timer); timer = null; big.textContent = '▶'; play.textContent = '▶'; return; }
+        big.textContent = '❚❚'; play.textContent = '❚❚';
+        timer = setInterval(function () {
+          seg++;
+          if (seg >= largo) { seg = largo; alternar(); }
+          pintar();
+        }, 1000);
+      }
+      function cerrar() {
+        if (timer) clearInterval(timer);
+        el.remove();
+        document.removeEventListener('keydown', esc);
+      }
+      function esc(e) { if (e.key === 'Escape') cerrar(); }
+
+      big.addEventListener('click', alternar);
+      play.addEventListener('click', alternar);
+      el.querySelector('.vp-close').addEventListener('click', cerrar);
+      /* clic en el fondo cierra; clic dentro del player, no */
+      el.addEventListener('click', function (e) { if (e.target === el) cerrar(); });
+      document.addEventListener('keydown', esc);
+
+      pintar();
+      alternar();
+      return { close: cerrar };
     },
 
     reset: function () { Object.keys(K).forEach(function (k) { del(K[k]); }); }
@@ -613,6 +948,19 @@
           cta.textContent = 'Tres días gratis';
         }
         avatar.insertAdjacentElement('beforebegin', cta);
+      }
+      /* Mariana lo pidió junto a la lupa: quien está en la prueba tiene que
+         poder abrir todo el catálogo sin esperar al día 2 y al día 3, y sin
+         ir a buscar la salida al fondo de tres-dias.html. */
+      if (lvl === 2) {
+        var skip = document.createElement('a');
+        skip.className = 'nav-skip';
+        skip.href = 'checkout.html?plan=anual&saltar=1';
+        skip.textContent = 'Saltar prueba';
+        skip.title = 'Abre el catálogo completo hoy, sin esperar los tres días';
+        var lupa = right.querySelector('.icon-btn');
+        if (lupa) lupa.insertAdjacentElement('beforebegin', skip);
+        else right.insertBefore(skip, right.firstChild);
       }
       return;
     }

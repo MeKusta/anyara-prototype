@@ -22,7 +22,7 @@
      Las dos familias y una escala por rol, no por tamaño: si quieres que
      todos los títulos de sección bajen, mueves --fs-head y se mueven todos.
      Ver estilo.html para el sistema completo en una pantalla. */
-  --serif:"Georgia",serif;
+  --serif:"Times New Roman",Times,serif;
   --sans:"Helvetica Neue",Arial,sans-serif;
 
   --fs-micro:10px;  /* texto auxiliar diminuto */
@@ -1217,3 +1217,221 @@ body.has-account .anon-only{display:none!important}
 .vp-timeline > i{display:block;height:100%;width:0;background:var(--gold)}
 .vp-title{color:#fff;font-family:var(--serif);font-size:var(--fs-card);margin-bottom:14px}
 .vp-title span{font-family:var(--sans);font-size:var(--fs-tiny);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:4px}
+
+/* ============================================================================
+   Llamada con Mariana · 2 sept 2026
+   Lo acordado en esa sesión vive aquí abajo, junto, para poder revisarlo de
+   un jalón contra las notas antes de la junta con Manuel.
+   ========================================================================= */
+
+/* ---- saltar prueba, junto a la lupa ----
+   Va como enlace y no como botón: compite con "Día N de 3", que es la acción
+   principal, y ganarle en peso sería empujar a saltarse la prueba. */
+.nav-skip{
+  font-family:var(--sans);font-size:var(--fs-meta);font-weight:500;
+  color:var(--ink-2);white-space:nowrap;letter-spacing:0;
+  border-bottom:1px solid transparent;padding-bottom:1px;
+}
+.nav-skip:hover{color:var(--ink);border-bottom-color:var(--gold)}
+
+/* ---- pilares de disciplina ----
+   Mariana las quiere grandes: la disciplina es la puerta de entrada al
+   catálogo, no una etiqueta de filtro. Siete columnas verticales, cada una
+   con su foto y su color de firma. */
+.pillars{display:grid;grid-template-columns:repeat(7,1fr);gap:14px}
+.pillar{
+  position:relative;display:block;border-radius:var(--radius);overflow:hidden;
+  aspect-ratio:3/4.6;color:#fff;
+  transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s;
+}
+.pillar::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.06) 0%,rgba(0,0,0,.18) 42%,rgba(0,0,0,.72) 100%);
+}
+.pillar:hover{transform:translateY(-5px);box-shadow:0 16px 34px rgba(0,0,0,.17)}
+.pillar-b{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:18px 16px 20px}
+/* la barra de color es lo único que distingue una disciplina de otra cuando
+   las siete fotos se parecen */
+.pillar-b::before{
+  content:"";display:block;width:26px;height:3px;border-radius:2px;
+  background:var(--dc,var(--gold));margin-bottom:12px;
+}
+.pillar-n{
+  display:block;font-family:var(--serif);font-size:var(--fs-sub);
+  line-height:1.15;letter-spacing:-.01em;
+}
+.pillar-d{
+  display:block;font-family:var(--sans);font-size:var(--fs-meta);
+  color:rgba(255,255,255,.82);margin-top:6px;line-height:1.4;
+}
+.pillar-all{
+  display:flex;flex-direction:column;justify-content:flex-end;
+  background:var(--sand);color:var(--ink);padding:18px 16px 20px;
+}
+.pillar-all::after{display:none}
+.pillar-all .pillar-d{color:var(--ink-2)}
+.pillar-all .pillar-b{position:static;padding:0}
+
+/* ---- tu semana en Anyara ----
+   Va inmediatamente después de "Tu biblioteca", como se acordó. Siete
+   columnas: cinco de clase y dos de descanso, con el día de hoy marcado. */
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
+.wk{
+  display:flex;flex-direction:column;border:1px solid var(--line);
+  border-radius:var(--radius);overflow:hidden;background:#fff;
+  transition:border-color .25s,transform .25s;
+}
+a.wk:hover{border-color:var(--gold);transform:translateY(-3px)}
+.wk-top{
+  display:flex;align-items:baseline;justify-content:space-between;
+  padding:11px 13px;border-bottom:1px solid var(--line-2);font-family:var(--sans);
+}
+.wk-d{font-size:var(--fs-label);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.wk-n{font-size:var(--fs-meta);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.wk.today{border-color:var(--ink)}
+.wk.today .wk-top{background:var(--ink)}
+.wk.today .wk-d,.wk.today .wk-n{color:#fff}
+.wk.past{opacity:.55}
+.wk-art{aspect-ratio:16/11;position:relative}
+.wk-len{
+  position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.62);color:#fff;
+  font-family:var(--sans);font-size:var(--fs-micro);padding:3px 7px;border-radius:100px;
+  font-variant-numeric:tabular-nums;
+}
+.wk-b{padding:11px 13px 14px;flex:1;display:flex;flex-direction:column}
+.wk-t{font-family:var(--sans);font-size:var(--fs-meta);font-weight:600;color:var(--ink);line-height:1.3}
+.wk-i{font-family:var(--sans);font-size:var(--fs-micro);color:var(--ink-2);margin-top:4px}
+/* el descanso es parte del plan, así que se dibuja, no se deja en blanco */
+.wk.rest{background:var(--sand);border-style:dashed}
+.wk.rest .wk-top{background:transparent;border-bottom-color:var(--line)}
+.wk-rest{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:7px;padding:22px 12px;text-align:center;
+  font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);
+}
+.wk-rest svg{width:22px;height:22px;fill:none;stroke:var(--ink-3);stroke-width:1.5;stroke-linecap:round}
+
+/* ---- materiales por ícono ----
+   Salen del formulario de carga de la instructora: ella marca casillas y la
+   página arma esto sola. Nadie vuelve a escribir la lista a mano. */
+.props{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin-top:10px}
+.prop{
+  display:flex;align-items:center;gap:8px;border:1px solid var(--line);
+  border-radius:100px;padding:7px 14px 7px 9px;background:#fff;
+  font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink);
+}
+.prop-i{
+  width:26px;height:26px;border-radius:50%;background:var(--gold-tint);
+  display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+}
+.prop-i svg{
+  width:16px;height:16px;fill:none;stroke:var(--gold-deep);
+  stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;
+}
+
+/* ---- perfil de instructora: disciplinas y redes ---- */
+.coach-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.coach-tag{
+  font-family:var(--sans);font-size:var(--fs-tiny);font-weight:500;
+  border:1px solid rgba(255,255,255,.42);color:#fff;border-radius:100px;
+  padding:5px 13px;display:inline-flex;align-items:center;gap:7px;
+  background:rgba(0,0,0,.18);
+}
+.coach-tag .dot{width:7px;height:7px;border-radius:50%;background:var(--dc,#fff)}
+.coach-tag:hover{border-color:#fff;background:rgba(0,0,0,.3)}
+.socials{display:flex;align-items:center;gap:10px;margin-left:14px}
+.social{
+  width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.45);color:#fff;flex:0 0 auto;
+  transition:background .25s,border-color .25s;
+}
+.social:hover{background:rgba(255,255,255,.16);border-color:#fff}
+.social svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round}
+
+/* ---- carrusel de retos y series ----
+   Mismo formato grande que el carrusel de la home, para que un reto se lea
+   como una pieza y no como una tarjeta más de la parrilla. */
+.ccar{position:relative}
+.ccar-track{
+  display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;padding-bottom:6px;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.ccar-track::-webkit-scrollbar{display:none}
+.ccar-slide{
+  flex:0 0 calc(50% - 11px);scroll-snap-align:start;position:relative;
+  border-radius:var(--radius);overflow:hidden;
+  /* 16/9 manda en pantalla ancha; el mínimo evita que el texto se recorte
+     cuando la ventana es angosta y la diapositiva se vuelve muy baja */
+  aspect-ratio:16/9;min-height:330px;
+  display:flex;align-items:flex-end;color:#fff;
+}
+.ccar-slide::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.2) 45%,rgba(0,0,0,.78) 100%);
+}
+.ccar-b{position:relative;z-index:2;padding:26px 28px 28px;width:100%}
+.ccar-k{
+  font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(255,255,255,.86);margin-bottom:8px;
+}
+.ccar-t{font-family:var(--serif);font-size:var(--fs-head);line-height:1.08;letter-spacing:-.01em}
+.ccar-d{
+  font-family:var(--sans);font-size:var(--fs-note);color:rgba(255,255,255,.86);
+  margin-top:9px;max-width:46ch;line-height:1.5;
+}
+.ccar-f{display:flex;align-items:center;gap:14px;margin-top:18px}
+/* el botón de play del tráiler, que Mariana pidió expresamente para retos */
+.ccar-play{
+  display:inline-flex;align-items:center;gap:9px;border:none;cursor:pointer;
+  background:rgba(255,255,255,.94);color:var(--ink);border-radius:100px;
+  padding:10px 20px 10px 14px;font-family:var(--sans);font-size:var(--fs-tiny);
+  font-weight:600;letter-spacing:0;
+}
+.ccar-play:hover{background:#fff}
+.ccar-play span{
+  width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:9px;padding-left:2px;
+}
+.ccar-nav{display:flex;gap:8px}
+.ccar-nav button{
+  width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;
+  cursor:pointer;color:var(--ink-2);font-size:var(--fs-note);line-height:1;
+}
+.ccar-nav button:hover{border-color:var(--gold);color:var(--ink)}
+.ccar-nav button:disabled{opacity:.35;cursor:default;border-color:var(--line)}
+
+/* ---- tres días: precios y preguntas, para quien todavía no paga ----
+   La página funciona como landing de conversión, así que el precio y las
+   dudas tienen que estar en ella y no a un clic de distancia. */
+.td-sales{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
+.td-plans{display:grid;gap:14px}
+.td-plan{
+  border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;background:#fff;
+}
+.td-plan.feat{border-color:var(--ink);background:var(--sand)}
+.td-plan .p-n{font-family:var(--serif);font-size:var(--fs-sub)}
+.td-plan .p-d{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);margin-top:4px}
+.td-plan .p-p{font-family:var(--sans);font-size:var(--fs-title);font-weight:600;white-space:nowrap}
+.td-plan .p-p small{font-size:var(--fs-meta);font-weight:400;color:var(--ink-2)}
+.td-faq{display:grid;gap:0}
+.td-faq details{border-bottom:1px solid var(--line);padding:16px 0}
+.td-faq summary{
+  cursor:pointer;list-style:none;font-family:var(--sans);font-size:var(--fs-body);
+  font-weight:600;color:var(--ink);display:flex;justify-content:space-between;gap:16px;
+}
+.td-faq summary::-webkit-details-marker{display:none}
+.td-faq summary::after{content:"+";color:var(--gold-deep);font-weight:400;font-size:var(--fs-sub);line-height:1}
+.td-faq details[open] summary::after{content:"–"}
+.td-faq p{
+  font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);
+  line-height:1.6;margin-top:10px;max-width:58ch;
+}
+
+/* disciplinas que imparte, en el directorio de coaches */
+.coachcard .cs{
+  font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--gold-deep);margin-top:6px;
+}

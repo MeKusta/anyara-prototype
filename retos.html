@@ -18,6 +18,7 @@
       <a href="events.html" class="nav-link">Eventos</a>
       <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
       <a href="estilo.html" class="nav-link" style="color:var(--ink-3)">(Estilo)</a>
+      <a href="materiales.html" class="nav-link" style="color:var(--ink-3)">(Material)</a>
     </nav>
     <div class="nav-right">
       <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
@@ -32,17 +33,43 @@
 </div>
 
 <div class="wrap section-sm">
-  <div class="comp-grid">
-    <a href="reto.html" class="compcard">
-      <div class="art gart somara"><span class="count">6 clases</span></div>
-      <div class="discs"><span class="disc-link" data-d="barre">Barre</span>/<span class="disc-link" data-d="sculpt">Sculpt</span>/<span class="disc-link" data-d="funcional">Funcional</span>/Nutrición</div>
-      <div class="ct">Reto Volver a Ti · 21 días</div>
-    </a>
-    <a href="reto.html" class="compcard">
-      <div class="art gart funcional"><span class="count">7 clases</span></div>
-      <div class="discs"><span class="disc-link" data-d="somara">Somara</span>/<span class="disc-link" data-d="pilatesmat">Pilates Mat</span>/Educación</div>
-      <div class="ct">Reto de Bienvenida · 7 días</div>
-    </a>
+  <!-- Carrusel grande, igual que en la home: acordado en la llamada para que
+       un reto se lea como una pieza y no como una tarjeta de parrilla. El
+       botón de play abre el tráiler sin salir de la página. -->
+  <div class="ccar">
+    <div class="ccar-track">
+
+      <a href="reto.html" class="ccar-slide gart somara">
+        <div class="ccar-b">
+          <div class="ccar-k">21 días · 6 clases · Barre / Sculpt / Funcional / Nutrición</div>
+          <div class="ccar-t">Reto Volver a Ti</div>
+          <p class="ccar-d">Reconexión y balance integral. Tres semanas de movimiento consciente con
+             acompañamiento de nutrición, un día a la vez.</p>
+          <div class="ccar-f">
+            <button class="ccar-play" type="button" data-trailer="Reto Volver a Ti" data-kicker="Tráiler del reto"><span>▶</span>Ver tráiler</button>
+            <span class="btn btn-gold">Ver el reto</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="reto.html" class="ccar-slide gart funcional">
+        <div class="ccar-b">
+          <div class="ccar-k">7 días · 7 clases · Somara / Pilates Mat / Educación</div>
+          <div class="ccar-t">Reto de Bienvenida</div>
+          <p class="ccar-d">Una semana para entrar sin prisa. De lo suave a lo sostenido, con una
+             lección corta cada día para entender qué estás haciendo.</p>
+          <div class="ccar-f">
+            <button class="ccar-play" type="button" data-trailer="Reto de Bienvenida" data-kicker="Tráiler del reto"><span>▶</span>Ver tráiler</button>
+            <span class="btn btn-gold">Ver el reto</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+    <div class="ccar-nav" style="margin-top:18px">
+      <button type="button" class="ccar-prev" aria-label="Anterior">‹</button>
+      <button type="button" class="ccar-next" aria-label="Siguiente">›</button>
+    </div>
   </div>
 </div>
 
@@ -64,5 +91,10 @@
 </div>
 
 <script src="anyara.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  Anyara.carousel(document.querySelector(".ccar"));
+});
+</script>
 </body>
 </html>

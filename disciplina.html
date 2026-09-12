@@ -18,6 +18,7 @@
       <a href="events.html" class="nav-link">Eventos</a>
       <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
       <a href="estilo.html" class="nav-link" style="color:var(--ink-3)">(Estilo)</a>
+      <a href="materiales.html" class="nav-link" style="color:var(--ink-3)">(Material)</a>
     </nav>
     <div class="nav-right">
       <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
@@ -131,7 +132,107 @@
 <script>
 /* Contenido por disciplina. Sólo Somara está armada; las demás se van
    agregando con la misma forma (el catálogo sigue siendo preview, no dato). */
+/* Contenido por disciplina.
+   Acordado con Mariana el 2 de septiembre: las siete disciplinas tienen
+   portada propia, y la subcategoría depende de la disciplina — Barre y
+   Pilates se navegan por "Tipo de clase", Somara por zona del cuerpo, y las
+   de acondicionamiento por enfoque. El catálogo sigue siendo maqueta: los
+   títulos son de muestra hasta que Mariana mande las clases y miniaturas
+   reales. */
 var DISCIPLINAS = {
+  barre: {
+    lead: 'Movimientos pequeños y precisos con apoyo en la barra. Trabajas piernas, glúteos y ' +
+          'centro sin cargar las articulaciones, y sales con la postura más alta que cuando entraste.',
+    meta: '7 clases · 20–45 min · Bajo impacto',
+    trailerLen: 2,
+    trailerDesc: 'Valeria explica qué hace la barra, por qué el rango es corto y cómo se siente ' +
+                 'el temblor en la pierna cuando el ejercicio está funcionando.',
+    coaches: [
+      { n:'Valeria Méndez', d:'42 clases · 1,840 seguidoras', art:'sculpt' },
+      { n:'Daniela Ortiz',  d:'16 clases · 520 seguidoras',   art:'pilatesmat' }
+    ],
+    empieza: ['barre-esencial', 'barre-centro'],
+    clases: [
+      { slug:'barre-esencial',  t:'Barre Esencial',            m:20, sub:'esencial', date:'2026-04-26', free:true,  lvl:'Principiante' },
+      { slug:'barre-postura',   t:'Barre : Postura Perfecta',  m:35, sub:'postura',  date:'2026-08-22', free:false, lvl:'Intermedio' },
+      { slug:'barre-gluteos',   t:'Barre Glúteos & Piernas',   m:45, sub:'fuerza',   date:'2026-06-18', free:false, lvl:'Intermedio' },
+      { slug:'barre-centro',    t:'Barre : Centro',            m:25, sub:'postura',  date:'2026-07-19', free:false, lvl:'Principiante' },
+      { slug:'barre-piernas',   t:'Barre : Piernas largas',    m:30, sub:'fuerza',   date:'2026-05-28', free:false, lvl:'Intermedio' },
+      { slug:'barre-express',   t:'Barre : Express',           m:20, sub:'esencial', date:'2026-08-02', free:false, lvl:'Principiante' },
+      { slug:'barre-brazos',    t:'Barre : Brazos y espalda',  m:30, sub:'fuerza',   date:'2026-03-30', free:false, lvl:'Intermedio' }
+    ],
+    coachDe: 'Valeria Méndez'
+  },
+
+  pilates: {
+    lead: 'Control, respiración y trabajo profundo de centro. La precisión va antes que la ' +
+          'velocidad: cada repetición cuenta sólo si la haces bien, y eso es lo que se entrena.',
+    meta: '6 clases · 25–45 min · Sin impacto',
+    trailerLen: 2,
+    trailerDesc: 'Sofía explica de dónde viene el método, qué significa "centro" en Pilates y ' +
+                 'por qué una clase lenta puede dejarte más cansada que una rápida.',
+    coaches: [
+      { n:'Sofía Ruiz',    d:'28 clases · 1,120 seguidoras', art:'funcional' },
+      { n:'Daniela Ortiz', d:'16 clases · 520 seguidoras',   art:'pilatesmat' }
+    ],
+    empieza: ['pilates-control', 'pilates-espalda'],
+    clases: [
+      { slug:'pilates-core',      t:'Core Profundo',            m:40, sub:'core',      date:'2026-08-11', free:false, lvl:'Avanzado', serie:'Core & Flexibilidad' },
+      { slug:'pilates-avanzado',  t:'Pilates : Core Avanzado',  m:40, sub:'core',      date:'2026-08-25', free:false, lvl:'Avanzado' },
+      { slug:'pilates-control',   t:'Pilates : Control',        m:30, sub:'core',      date:'2026-07-08', free:false, lvl:'Principiante' },
+      { slug:'pilates-espalda',   t:'Pilates : Espalda sana',   m:35, sub:'espalda',   date:'2026-06-21', free:false, lvl:'Principiante' },
+      { slug:'pilates-movilidad', t:'Pilates : Movilidad',      m:25, sub:'movilidad', date:'2026-05-15', free:false, lvl:'Intermedio' },
+      { slug:'pilates-cierre',    t:'Pilates : Cierre largo',   m:25, sub:'movilidad', date:'2026-04-02', free:false, lvl:'Principiante' }
+    ],
+    coachDe: 'Sofía Ruiz'
+  },
+
+  pilatesmat: {
+    lead: 'Pilates en colchoneta, con tu propio peso y nada más. Es la base sobre la que se ' +
+          'construye todo lo demás: si el centro responde aquí, responde en cualquier clase.',
+    meta: '6 clases · 15–40 min · Sin impacto',
+    trailerLen: 2,
+    trailerDesc: 'Daniela recorre los fundamentos del trabajo en colchoneta y enseña los tres ' +
+                 'errores que casi todas cometemos las primeras semanas.',
+    coaches: [
+      { n:'Sofía Ruiz',    d:'28 clases · 1,120 seguidoras', art:'funcional' },
+      { n:'Daniela Ortiz', d:'16 clases · 520 seguidoras',   art:'pilatesmat' }
+    ],
+    empieza: ['mat-fundamental', 'mat-despierta'],
+    clases: [
+      { slug:'mat-fundamental', t:'Pilates Mat Fundamental',     m:40, sub:'fundamentos', date:'2026-04-09', free:true,  lvl:'Principiante', serie:'Core & Flexibilidad' },
+      { slug:'mat-despierta',   t:'Despierta el core',           m:15, sub:'core',        date:'2026-03-04', free:false, lvl:'Principiante' },
+      { slug:'mat-precision',   t:'Pilates Mat : Precisión',     m:30, sub:'fundamentos', date:'2026-07-02', free:false, lvl:'Intermedio' },
+      { slug:'mat-centro',      t:'Pilates Mat : Centro firme',  m:25, sub:'core',        date:'2026-06-11', free:false, lvl:'Intermedio' },
+      { slug:'mat-cierre',      t:'Pilates Mat : Cierre',        m:20, sub:'cierre',      date:'2026-05-20', free:false, lvl:'Principiante' },
+      { slug:'mat-larga',       t:'Pilates Mat : Sesión larga',  m:40, sub:'fundamentos', date:'2026-08-08', free:false, lvl:'Intermedio' }
+    ],
+    coachDe: 'Daniela Ortiz'
+  },
+
+  sculpt: {
+    lead: 'Tonificación con peso ligero y muchas repeticiones. Buscas fatiga muscular controlada, ' +
+          'no impacto: la carga es baja y el trabajo está en no soltar antes de tiempo.',
+    meta: '6 clases · 20–60 min · Con peso',
+    trailerLen: 2,
+    trailerDesc: 'Valeria explica por qué el peso ligero funciona, cuántas repeticiones tiene ' +
+                 'sentido hacer y cómo saber que ya elegiste una mancuerna demasiado pesada.',
+    coaches: [
+      { n:'Valeria Méndez', d:'42 clases · 1,840 seguidoras', art:'sculpt' },
+      { n:'Sofía Ruiz',     d:'28 clases · 1,120 seguidoras', art:'funcional' }
+    ],
+    empieza: ['sculpt-glut', 'sculpt-piernas'],
+    clases: [
+      { slug:'sculpt-glut',    t:'20 min · Sculpt : Glúteos',  m:20, sub:'tren-inf', date:'2026-08-17', free:false, lvl:'Intermedio', serie:'Fuerza Total' },
+      { slug:'sculpt-total',   t:'Sculpt Total',               m:60, sub:'completo', date:'2026-05-30', free:false, lvl:'Avanzado',   serie:'Fuerza Total' },
+      { slug:'sculpt-brazos',  t:'Sculpt Brazos & Core',       m:45, sub:'tren-sup', date:'2026-05-12', free:false, lvl:'Intermedio', serie:'Fuerza Total' },
+      { slug:'sculpt-piernas', t:'Sculpt : Piernas de Acero',  m:30, sub:'tren-inf', date:'2026-08-28', free:false, lvl:'Intermedio' },
+      { slug:'sculpt-express', t:'Sculpt : Express',           m:20, sub:'completo', date:'2026-07-05', free:false, lvl:'Principiante' },
+      { slug:'sculpt-centro',  t:'Sculpt : Centro y brazos',   m:35, sub:'tren-sup', date:'2026-06-14', free:false, lvl:'Intermedio' }
+    ],
+    coachDe: 'Valeria Méndez'
+  },
+
   somara: {
     lead: 'Movimiento somático: lento, consciente y sin impacto. Trabajas movilidad y ' +
           'respiración para soltar la tensión que se acumula, no para agotarte. ' +
@@ -140,13 +241,6 @@ var DISCIPLINAS = {
     trailerLen: 2,
     trailerDesc: 'Renata explica de dónde viene Somara, cómo se siente una clase y ' +
                  'por qué el ritmo lento es el punto, no una versión fácil.',
-    /* Mariana pidió Somara por zona del cuerpo */
-    subHead: 'Por zona del cuerpo',
-    subs: [
-      { id:'espalda',  n:'Espalda y cuello' },
-      { id:'caderas',  n:'Caderas y piernas' },
-      { id:'completo', n:'Cuerpo completo' }
-    ],
     coaches: [
       { n:'Renata Solís', d:'19 clases · 780 seguidoras', art:'somara' },
       { n:'Alina Prado',  d:'11 clases · 430 seguidoras', art:'tone' }
@@ -162,6 +256,51 @@ var DISCIPLINAS = {
       { slug:'somara-movilidad',   t:'Somara : Movilidad completa',m:30, sub:'completo',  date:'2026-06-09', free:false, lvl:'Intermedio' }
     ],
     coachDe: 'Renata Solís'
+  },
+
+  funcional: {
+    lead: 'Patrones de movimiento de la vida diaria, a intensidad alta. Empujar, jalar, cargar ' +
+          'y levantarte del suelo — lo que entrenas aquí lo usas afuera el mismo día.',
+    meta: '6 clases · 20–45 min · Alta intensidad',
+    trailerLen: 2,
+    trailerDesc: 'Sofía explica qué hace "funcional" a un ejercicio, cómo se estructura un ' +
+                 'bloque de intervalos y cuándo conviene bajarle en vez de aguantar.',
+    coaches: [
+      { n:'Sofía Ruiz',     d:'28 clases · 1,120 seguidoras', art:'funcional' },
+      { n:'Valeria Méndez', d:'42 clases · 1,840 seguidoras', art:'sculpt' }
+    ],
+    empieza: ['func-hiit', 'func-movilidad'],
+    clases: [
+      { slug:'func-hiit',       t:'Funcional HIIT',              m:30, sub:'resistencia', date:'2026-07-02', free:false, lvl:'Intermedio', serie:'Fuerza Total' },
+      { slug:'func-fuerza',     t:'Funcional : Fuerza Total',    m:45, sub:'fuerza',      date:'2026-08-19', free:false, lvl:'Avanzado' },
+      { slug:'func-intervalos', t:'Funcional : Intervalos',      m:25, sub:'resistencia', date:'2026-06-24', free:false, lvl:'Intermedio' },
+      { slug:'func-potencia',   t:'Funcional : Potencia',        m:35, sub:'fuerza',      date:'2026-05-08', free:false, lvl:'Avanzado' },
+      { slug:'func-movilidad',  t:'Funcional : Movilidad',       m:20, sub:'movilidad',   date:'2026-04-18', free:false, lvl:'Principiante' },
+      { slug:'func-express',    t:'Funcional : Express',         m:20, sub:'resistencia', date:'2026-03-12', free:false, lvl:'Principiante' }
+    ],
+    coachDe: 'Sofía Ruiz'
+  },
+
+  tone: {
+    lead: 'Sesiones de tono general, de ritmo sostenido y baja carga. No buscan el día récord: ' +
+          'buscan que mañana también puedas entrenar. Son las clases de la constancia.',
+    meta: '5 clases · 20–40 min · Baja carga',
+    trailerLen: 2,
+    trailerDesc: 'Alina explica para qué sirve una clase de tono, cómo encaja entre las sesiones ' +
+                 'fuertes y por qué la constancia gana a la intensidad en el mes largo.',
+    coaches: [
+      { n:'Daniela Ortiz', d:'16 clases · 520 seguidoras', art:'pilatesmat' },
+      { n:'Alina Prado',   d:'11 clases · 430 seguidoras', art:'tone' }
+    ],
+    empieza: ['tone-completo', 'tone-ligero'],
+    clases: [
+      { slug:'tone-completo',  t:'Tone Cuerpo Completo',   m:30, sub:'fuerza',    date:'2026-03-21', free:false, lvl:'Intermedio' },
+      { slug:'tone-ligero',    t:'Tone : Ligero',          m:20, sub:'fuerza',    date:'2026-06-02', free:false, lvl:'Principiante' },
+      { slug:'tone-movilidad', t:'Tone : Movilidad diaria',m:25, sub:'movilidad', date:'2026-07-16', free:false, lvl:'Principiante' },
+      { slug:'tone-calma',     t:'Tone : Calma',           m:20, sub:'calma',     date:'2026-05-25', free:false, lvl:'Principiante' },
+      { slug:'tone-definicion',t:'Tone : Definición',      m:40, sub:'fuerza',    date:'2026-08-07', free:false, lvl:'Intermedio' }
+    ],
+    coachDe: 'Alina Prado'
   }
 };
 
@@ -186,7 +325,7 @@ document.getElementById('tcArt').classList.add(d);
 document.getElementById('tcTitle').textContent = 'Qué es ' + label;
 document.getElementById('tcDesc').textContent = D.trailerDesc;
 document.getElementById('tcLen').textContent = D.trailerLen + ' min';
-document.getElementById('subHead').textContent = D.subHead;
+document.getElementById('subHead').textContent = Anyara.subsOf(d).head;
 document.getElementById('coachHead').textContent = 'Quién enseña ' + label;
 document.getElementById('allLink').href = 'explorar.html?d=' + d;
 document.getElementById('backLink').href = 'explorar.html?d=' + d;
@@ -223,7 +362,7 @@ document.getElementById('classGrid').innerHTML = clases.map(card).join('');
 /* ---- subcategorías: filtran la parrilla sin salir de la página ---- */
 var activeSub = '';
 var subbar = document.getElementById('subbar');
-var subs = [{ id:'', n:'Todas' }].concat(D.subs);
+var subs = [{ id:'', n:'Todas' }].concat(Anyara.subsOf(d).subs);
 subbar.innerHTML = subs.map(function (s) {
   var n = s.id ? D.clases.filter(function (c) { return c.sub === s.id; }).length : D.clases.length;
   return '<button class="subchip' + (s.id === '' ? ' on' : '') + '" data-sub="' + s.id + '">' +
@@ -265,7 +404,7 @@ document.getElementById('startHere').innerHTML = D.empieza.map(function (slug) {
 
 /* ---- coaches de la disciplina ---- */
 document.getElementById('coachGrid').innerHTML = D.coaches.map(function (c) {
-  return '<a href="coach.html" class="coachcard">' +
+  return '<a href="coach.html?c=' + encodeURIComponent(c.n) + '" class="coachcard">' +
     '<div class="cav gart ' + c.art + '"></div>' +
     '<div class="cn">' + c.n + '</div>' +
     '<div class="cd">' + c.d + '</div></a>';

@@ -18,6 +18,7 @@
       <a href="events.html" class="nav-link">Eventos</a>
       <a href="onboarding.html" class="nav-link" style="color:var(--ink-3)">(Onboarding)</a>
       <a href="estilo.html" class="nav-link" style="color:var(--ink-3)">(Estilo)</a>
+      <a href="materiales.html" class="nav-link" style="color:var(--ink-3)">(Material)</a>
     </nav>
     <div class="nav-right">
       <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
@@ -74,8 +75,11 @@
     <div>
       <h2 class="vd-h">Sobre esta clase</h2>
       <p class="vd-body" id="vdDesc"></p>
+      <!-- Material. Íconos y no texto corrido: acordado en la llamada, para
+           que se lea de un vistazo y salga solo del formulario de la
+           instructora en vez de escribirse clase por clase. -->
       <div class="vd-field" id="vdEquipWrap" style="display:none">
-        <div class="k">Equipo</div>
+        <div class="k">Material</div>
         <div class="v" id="vdEquip"></div>
       </div>
     </div>
@@ -172,20 +176,23 @@ document.getElementById('vdCat').innerHTML =
   '<a href="' + discHref + '">' + discLabel.toUpperCase() + '</a>';
 document.getElementById('vdTitle').textContent = cls.t;
 document.getElementById('vdInstr').textContent = cls.i;
+/* el perfil ya es genérico: hay que decirle de quién */
+var perfil = 'coach.html?c=' + encodeURIComponent(cls.i);
+document.getElementById('vdInstr').href = perfil;
+document.querySelector('.vd-profile').href = perfil;
 /* único lugar donde viven nivel, duración y vistas */
 document.getElementById('vdMeta').textContent =
   [cls.x, cls.m + ' min', cls.v + ' vistas'].join(' · ');
 
-/* ---- 6 · sobre la clase ---- */
+/* ---- 6 · sobre la clase ----
+   El material sale del formulario de carga de la instructora: ella marca
+   casillas y aquí se arma la lista con íconos, sin que nadie escriba el
+   texto. Si la clase no trae ?p= propio se usa el equipo típico de la
+   disciplina, para que la ficha nunca quede sin decir qué necesitas. */
 document.getElementById('vdDesc').textContent = Anyara.discAbout(cls.d);
-if (cls.p) {
-  /* el campo sólo existe si hay algo que poner */
-  var props = cls.p.split(',').map(function (s) {
-    return s.trim().charAt(0).toUpperCase() + s.trim().slice(1);
-  }).join(' · ');
-  document.getElementById('vdEquip').textContent = props;
-  document.getElementById('vdEquipWrap').style.display = '';
-}
+document.getElementById('vdEquip').innerHTML =
+  Anyara.propChips(cls.p || Anyara.defaultProps(cls.d));
+document.getElementById('vdEquipWrap').style.display = '';
 
 /* ---- 7 · instructora ---- */
 var prof = Anyara.INSTRUCTORS[cls.i];
