@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.17.00';
+  var VERSION = '1.18.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -868,6 +868,7 @@
     renderNav();
     renderVersion();
     renderProtoMenu();
+    renderTabBar();
     renderDayPicker();
     renderChargeNotice();
   });
@@ -1030,6 +1031,68 @@
       '</div>';
     document.body.insertBefore(el, document.body.firstChild);
     el.querySelector('.cn-x').addEventListener('click', function () { el.remove(); });
+  }
+
+  /* ---- barra de pestañas del teléfono ----
+     En el teléfono la navegación de arriba no se alcanza con el pulgar, así
+     que baja. Cinco destinos, los mismos del menú de escritorio menos Series,
+     que vive dentro de Retos, más el perfil, que arriba era el avatar.
+     Se inyecta desde aquí para no repetir markup en veinticuatro páginas; el
+     CSS decide si se ve (sólo ≤767px), no el JS, para que al girar el
+     teléfono o cambiar de tamaño no haya que volver a pintar nada. */
+  function renderTabBar() {
+    if (document.getElementById('tabBar')) return;
+    /* Los flujos de pantalla completa no llevan pestañas: onboarding,
+       checkout, la clase de bienvenida y el player son de una sola vía, y
+       ofrecer una salida a "Eventos" a media compra es invitarse a perderla. */
+    var SIN_PESTANAS = ['onboarding.html', 'checkout.html', 'bienvenida.html', 'completada.html'];
+    if (SIN_PESTANAS.indexOf(location.pathname.split('/').pop()) > -1) return;
+
+    var ICONOS = {
+      inicio:  '<path d="M3.6 10.2 12 3.6l8.4 6.6"/><path d="M5.6 9v10.4h12.8V9"/>',
+      buscar:  '<circle cx="11" cy="11" r="6.6"/><path d="M15.8 15.8 20.4 20.4"/>',
+      retos:   '<path d="M12 3.4l2.5 5.6 6.1.6-4.6 4.1 1.3 6-5.3-3.1-5.3 3.1 1.3-6L3.4 9.6l6.1-.6z"/>',
+      eventos: '<rect x="3.4" y="5.2" width="17.2" height="15.4" rx="2.6"/>' +
+               '<path d="M3.4 10h17.2M8.4 3.2v4M15.6 3.2v4"/>'
+    };
+    var TABS = [
+      { href:'index.html',    n:'Para ti',  i:'inicio' },
+      { href:'explorar.html', n:'Explorar', i:'buscar' },
+      { href:'retos.html',    n:'Retos',    i:'retos' },
+      { href:'events.html',   n:'Eventos',  i:'eventos' }
+    ];
+    /* la página actual se marca por nombre de archivo; series.html y
+       serie.html cuentan como Retos, y las de clase como Explorar */
+    var aqui = (location.pathname.split('/').pop() || 'index.html');
+    var EQUIV = {
+      'series.html':'retos.html', 'serie.html':'retos.html', 'reto.html':'retos.html',
+      'clase.html':'explorar.html', 'disciplina.html':'explorar.html',
+      'coach.html':'explorar.html', 'coaches.html':'explorar.html',
+      'evento.html':'events.html', 'biblioteca.html':'index.html'
+    };
+    var activo = EQUIV[aqui] || aqui;
+
+    var bar = document.createElement('nav');
+    bar.className = 'tabbar';
+    bar.id = 'tabBar';
+    bar.setAttribute('aria-label', 'Navegación principal');
+    bar.innerHTML = '<div class="tabbar-in">' +
+      TABS.map(function (t) {
+        return '<a class="tab' + (t.href === activo ? ' on' : '') + '" href="' + t.href + '"' +
+          (t.href === activo ? ' aria-current="page"' : '') + '>' +
+          '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICONOS[t.i] + '</svg>' +
+          '<span>' + t.n + '</span></a>';
+      }).join('') +
+      /* quinta pestaña: perfil si ya hay cuenta, empezar si todavía no */
+      (A.hasAccount()
+        ? '<a class="tab' + (aqui === 'profile.html' ? ' on' : '') + '" href="profile.html">' +
+          '<span class="tab-av">' + A.initials() + '</span><span>Perfil</span></a>'
+        : '<a class="tab" href="onboarding.html">' +
+          '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+            '<circle cx="12" cy="8.2" r="3.8"/><path d="M4.8 20.4a7.2 7.2 0 0 1 14.4 0"/>' +
+          '</svg><span>Empezar</span></a>') +
+      '</div>';
+    document.body.appendChild(bar);
   }
 
   /* Las tres puertas de prototipo — onboarding, estilo y el formulario de

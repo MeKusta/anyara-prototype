@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=1200">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Anyara — Personaliza tu práctica</title>
 <link rel="stylesheet" href="styles.css">
 <style>
@@ -98,6 +98,32 @@ body{overflow-x:hidden}
 .ob-rec .rt{font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep)}
 .ob-rec .rn{font-size:var(--fs-card);margin:4px 0 3px}
 .ob-rec .rm{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2)}
+/* ---- teléfono ----
+   El onboarding es de dos columnas: foto a la izquierda, preguntas a la
+   derecha. En vertical eso deja la foto en una tira de 170px y el formulario
+   apretado, así que la foto pasa a ser una banda corta arriba y las
+   preguntas se quedan con el ancho completo. Los botones de avanzar se
+   pegan abajo, al alcance del pulgar. */
+@media (max-width:767px){
+  .ob-split{grid-template-columns:1fr;min-height:0}
+  .ob-visual{min-height:0;height:132px;order:-1}
+  .ob-visual .quote{left:20px;right:20px;bottom:16px}
+  .ob-visual .quote .q1{font-size:var(--fs-sub)}
+  .ob-main{padding:26px 20px 24px;max-width:none}
+  .ob-top-inner{padding:14px 20px}
+  .ob-acct,.rv-chips,.rv-card,.ob-rec,.ob-welcome p{max-width:none}
+  .ob-opt{width:100%}
+  .ob-opt.sm{width:auto;flex:1 1 auto}
+  .ob-rec{flex-direction:column;align-items:stretch;gap:14px}
+  .ob-rec .rart{width:100%;height:150px}
+  .ob-cta-row{
+    position:sticky;bottom:0;background:var(--bg);
+    padding:14px 0 calc(14px + env(safe-area-inset-bottom,0px));
+    margin-top:auto;border-top:1px solid var(--line-2);
+  }
+  .ob-cta-row .ob-btn{flex:1 1 auto;text-align:center}
+}
+
 @media (prefers-reduced-motion:reduce){
   .rv-chips span,.rv-card{transition:none}
   .rv-bar > i.run{transition:none;width:100%}
