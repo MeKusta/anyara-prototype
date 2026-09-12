@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es-MX" data-no-chrome>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Anyara — Pilates, Barre, Sculpt y ejercicio funcional en casa</title>
+<meta name="description" content="Un plan de movimiento armado para ti: Pilates, Barre, Sculpt, Somara y ejercicio funcional, desde 15 minutos. Tres días de bienvenida y no se cobra nada hasta el día 3.">
+<meta property="og:title" content="Anyara — Descubre tu fuerza interior">
+<meta property="og:description" content="Pilates, Barre, Sculpt y ejercicio funcional en casa, con un plan armado para ti. Tres días de bienvenida.">
+<meta property="og:type" content="website">
+<!-- La landing usa el mismo sistema que la app — tipografía, color, espaciado,
+     tarjetas — y encima su propia capa. No es un sitio aparte con otro look:
+     quien llega aquí y entra a la app tiene que sentir que es lo mismo. -->
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="landing.css">
+</head>
+<body class="lp">
+
+<!-- ===== BARRA ===== -->
+<header class="lp-top" id="lpTop">
+  <div class="lp-top-in">
+    <a href="landing.html" class="logo lp-logo"><b>A</b>nyara</a>
+    <nav class="lp-links">
+      <a href="#como">Cómo funciona</a>
+      <a href="#disciplinas">Disciplinas</a>
+      <a href="#precios">Precios</a>
+      <a href="#preguntas">Preguntas</a>
+    </nav>
+    <div class="lp-top-cta">
+      <a href="index.html" class="lp-signin">Iniciar sesión</a>
+      <a href="onboarding.html" class="btn btn-gold" data-cta="barra">Empezar gratis</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 1 · PORTADA =====
+     Lo de siempre en una portada que convierte: qué es, para quién, qué
+     ganas, qué te cuesta empezar y un solo botón principal. El producto se
+     ve desde el primer pantallazo — no una foto de archivo, la app real. -->
+<section class="lp-hero">
+  <div class="lp-hero-art gart sculpt" data-img="sculpt"></div>
+  <div class="lp-hero-in">
+    <div class="lp-hero-b">
+      <div class="eyebrow">Pilates · Barre · Sculpt · Funcional</div>
+      <h1>Descubre tu <em>fuerza interior</em></h1>
+      <p class="lp-lede">
+        Un plan de movimiento armado para ti, no un catálogo donde perderte.
+        Clases desde 15 minutos, en casa, a tu ritmo.
+      </p>
+      <div class="lp-cta-row">
+        <a href="onboarding.html" class="btn btn-gold btn-lg" data-cta="portada">
+          Empezar mis tres días
+        </a>
+        <a href="#como" class="btn btn-ghost light btn-lg">Ver cómo funciona</a>
+      </div>
+      <p class="lp-risk">
+        Tres días de bienvenida · No se cobra nada hasta el día 3 · Cancelas cuando quieras
+      </p>
+    </div>
+
+    <!-- El teléfono lleva la app de verdad dentro, no una captura: lo que se
+         ve aquí es exactamente lo que hay al otro lado del botón. -->
+    <a class="lp-phone" href="index.html" aria-label="Ver la app de Anyara" data-cta="portada-app">
+      <span class="lp-phone-status"><span class="lp-notch"></span></span>
+      <iframe src="index.html" title="Anyara en el teléfono" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+      <span class="lp-phone-veil"></span>
+    </a>
+  </div>
+</section>
+
+<!-- ===== 2 · CIFRAS ===== -->
+<section class="lp-stats">
+  <div class="wrap">
+    <ul class="lp-stat-row" id="lpStats"></ul>
+  </div>
+</section>
+
+<!-- ===== 3 · EL VIDEO =====
+     La pieza que más mueve la aguja en una landing de suscripción: alguien
+     de carne y hueso explicando qué es y por qué. Aquí es Mariana. -->
+<section class="wrap section" id="como">
+  <div class="lp-head">
+    <div class="eyebrow">Tres minutos</div>
+    <h2>Mariana te cuenta cómo funciona</h2>
+    <p class="sec-lead">
+      Qué es Anyara, cómo se arma tu plan, qué incluye y cuánto cuesta.
+      Sin rodeos y sin letra chica escondida.
+    </p>
+  </div>
+
+  <div class="sb" id="vsl">
+    <div class="sb-flag">
+      <span class="sb-dot"></span>
+      Prototipo · aquí va el video. Todavía no está grabado: lo que se ve abajo
+      es el guion de lo que dirá Mariana.
+    </div>
+    <div class="sb-screen gart somara" data-img="anyara">
+      <div class="sb-veil"></div>
+      <div class="sb-stage">
+        <div class="sb-chapter" id="sbCap"></div>
+        <h3 class="sb-t" id="sbT"></h3>
+        <p class="sb-d" id="sbD"></p>
+        <ul class="sb-points" id="sbP"></ul>
+      </div>
+      <button class="sb-big" id="sbBig" aria-label="Reproducir">▶</button>
+    </div>
+    <div class="sb-bar">
+      <button class="sb-toggle" id="sbToggle" aria-label="Reproducir">▶</button>
+      <span class="sb-time" id="sbNow">0:00</span>
+      <div class="sb-line" id="sbLine"><i id="sbProg"></i><span class="sb-ticks" id="sbTicks"></span></div>
+      <span class="sb-time" id="sbTotal">3:00</span>
+      <button class="sb-toggle" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4 · EL PROBLEMA =====
+     Antes de contar lo que incluye, nombrar por qué las otras veces no
+     funcionó. Sin esto, la lista de funciones no significa nada. -->
+<section class="lp-dark">
+  <div class="wrap section">
+    <div class="lp-head lp-head-c">
+      <div class="eyebrow">Por qué esta vez sí</div>
+      <h2>No es que te falte disciplina</h2>
+      <p class="sec-lead">
+        Es que empezar sola, sin plan y sin tiempo es muy difícil de sostener.
+        Anyara está construida alrededor de eso.
+      </p>
+    </div>
+    <div class="lp-probs">
+      <div class="lp-prob">
+        <div class="lp-prob-k">Antes</div>
+        <p class="lp-prob-q">“Abro la app y paso diez minutos decidiendo qué clase poner.”</p>
+        <div class="lp-prob-a">
+          <b>Tu plan ya está hecho.</b>
+          Contestas cinco preguntas y te armamos la semana: qué clase, qué día
+          y por qué. Solo tienes que darle play.
+        </div>
+      </div>
+      <div class="lp-prob">
+        <div class="lp-prob-k">Antes</div>
+        <p class="lp-prob-q">“Empiezo con todo y a las dos semanas lo dejo.”</p>
+        <div class="lp-prob-a">
+          <b>Constancia antes que intensidad.</b>
+          El plan sube de a poco y cuenta tus días, no tus calorías. Dos días de
+          descanso a la semana están dentro del plan, no son una falla.
+        </div>
+      </div>
+      <div class="lp-prob">
+        <div class="lp-prob-k">Antes</div>
+        <p class="lp-prob-q">“No tengo equipo, ni una hora, ni un cuarto libre.”</p>
+        <div class="lp-prob-a">
+          <b>Desde 15 minutos y sin equipo.</b>
+          Cada clase dice qué necesitas antes de abrirla, y muchas no necesitan
+          nada. Filtras por tiempo y por material.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5 · DISCIPLINAS ===== -->
+<section class="wrap section" id="disciplinas">
+  <div class="lp-head">
+    <div class="eyebrow">Siete formas de moverte</div>
+    <h2>Las disciplinas</h2>
+    <p class="sec-lead">
+      Cada una con su portada, su tráiler y quién la enseña. Puedes quedarte en
+      una o combinarlas — el plan lo hace por ti.
+    </p>
+  </div>
+  <div class="pillars" id="lpPillars"></div>
+</section>
+
+<!-- ===== 6 · POR DENTRO =====
+     Capturas del producto de verdad. Son la app corriendo, no un montaje:
+     lo que se ve aquí es lo que hay al entrar. -->
+<section class="lp-sand">
+  <div class="wrap section" id="app">
+    <div class="lp-head lp-head-c">
+      <div class="eyebrow">El producto</div>
+      <h2>Así se ve por dentro</h2>
+      <p class="sec-lead">
+        Tu espacio, el catálogo completo y cada clase con su material y su
+        instructora. En el teléfono, en la computadora y en la tele.
+      </p>
+    </div>
+
+    <div class="lp-shots">
+      <a class="lp-shot" href="index.html" data-cta="captura-home">
+        <span class="lp-shot-frame">
+          <iframe src="index.html" title="Tu espacio en Anyara" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          <span class="lp-phone-veil"></span>
+        </span>
+        <span class="lp-shot-b">
+          <b>Tu espacio</b>
+          Tu semana, tu racha y lo que dejaste a medias, en la primera pantalla.
+        </span>
+      </a>
+      <a class="lp-shot" href="explorar.html" data-cta="captura-catalogo">
+        <span class="lp-shot-frame">
+          <iframe src="explorar.html" title="El catálogo de Anyara" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          <span class="lp-phone-veil"></span>
+        </span>
+        <span class="lp-shot-b">
+          <b>El catálogo</b>
+          Agrupado por disciplina y filtrable por enfoque, material y duración.
+        </span>
+      </a>
+      <a class="lp-shot" href="clase.html?t=Barre%20:%20Postura%20Perfecta&i=Valeria%20M%C3%A9ndez&d=barre&m=35" data-cta="captura-clase">
+        <span class="lp-shot-frame">
+          <iframe src="clase.html?t=Barre%20:%20Postura%20Perfecta&i=Valeria%20M%C3%A9ndez&d=barre&m=35" title="Una clase de Anyara" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          <span class="lp-phone-veil"></span>
+        </span>
+        <span class="lp-shot-b">
+          <b>Cada clase</b>
+          Qué material necesitas, quién la da y qué trabaja — antes de empezar.
+        </span>
+      </a>
+    </div>
+
+    <div class="lp-devices">
+      <div class="lp-device">
+        <span class="lp-device-i" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="6.5" y="2.4" width="11" height="19.2" rx="2.6"/><path d="M10.6 19.2h2.8"/></svg>
+        </span>
+        <b>Teléfono</b><span>iPhone y Android</span>
+      </div>
+      <div class="lp-device">
+        <span class="lp-device-i" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4.4" width="18" height="12.4" rx="2"/><path d="M2 20.2h20"/></svg>
+        </span>
+        <b>Computadora</b><span>Cualquier navegador</span>
+      </div>
+      <div class="lp-device">
+        <span class="lp-device-i" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="2.6" y="4" width="18.8" height="12.6" rx="2.2"/><path d="M8.4 20.4h7.2"/><path d="M12 16.6v3.8"/></svg>
+        </span>
+        <b>Tele</b><span>Apple TV</span>
+      </div>
+      <div class="lp-device">
+        <span class="lp-device-i" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3.6v11.6"/><path d="M7.6 10.8 12 15.2l4.4-4.4"/><path d="M4.4 19.4h15.2"/></svg>
+        </span>
+        <b>Sin internet</b><span>Descarga y practica</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7 · TESTIMONIOS ===== -->
+<section class="wrap section" id="testimonios">
+  <div class="lp-head">
+    <div class="eyebrow">Lo que dicen</div>
+    <h2>Mujeres que ya no lo dejan en febrero</h2>
+    <span class="lp-mark">Prototipo · testimonios de ejemplo, pendientes de los reales</span>
+  </div>
+  <div class="lp-tests" id="lpTests"></div>
+</section>
+
+<!-- ===== 8 · INSTRUCTORAS ===== -->
+<section class="lp-sand">
+  <div class="wrap section" id="equipo">
+    <div class="lp-head">
+      <div class="eyebrow">Quién te acompaña</div>
+      <h2>Las instructoras</h2>
+      <p class="sec-lead">
+        Un equipo chico y especializado. Cada quien enseña lo suyo, y se nota.
+      </p>
+    </div>
+    <div class="lp-team">
+      <div class="lp-member">
+        <div class="lp-member-art gart sculpt" data-img="sculpt"></div>
+        <div class="lp-member-b">
+          <b>Mariana De la Rocha</b>
+          <span>Fundadora · Sculpt y Barre</span>
+          <p>Doce años enseñando. Sus clases son cortas, precisas y sin relleno.</p>
+        </div>
+      </div>
+      <div class="lp-member">
+        <div class="lp-member-art gart funcional" data-img="funcional"></div>
+        <div class="lp-member-b">
+          <b>Diego Muñoz</b>
+          <span>Ejercicio funcional</span>
+          <p>Le importa que entiendas por qué haces cada movimiento, no solo que lo hagas.</p>
+        </div>
+      </div>
+      <div class="lp-member">
+        <div class="lp-member-art gart pilates" data-img="pilates"></div>
+        <div class="lp-member-b">
+          <b>Débanhi Gómez</b>
+          <span>Pilates Mat</span>
+          <p>Especialista en trabajo de centro. Sus clases cortas son para días sin tiempo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 9 · PRECIOS =====
+     Dos opciones y nada más. El anual marcado, el mensual disponible, y la
+     reducción de riesgo repetida donde se toma la decisión. -->
+<section class="wrap section" id="precios">
+  <div class="lp-head lp-head-c">
+    <div class="eyebrow">Precios</div>
+    <h2>Empieza con tres días</h2>
+    <p class="sec-lead">
+      Eliges plan hoy y no se cobra nada hasta el día 3. Si no es para ti,
+      cancelas antes y no hay ningún cargo.
+    </p>
+  </div>
+
+  <div class="lp-plans">
+    <!-- Los precios salen de Anyara.PRECIOS, el mismo sitio del que los toma
+         la app: la landing no puede anunciar una cifra y el checkout otra. -->
+    <div class="lp-plan">
+      <div class="lp-plan-n">Mensual</div>
+      <div class="lp-plan-p" id="lpMensual"></div>
+      <p class="lp-plan-d">Para probar sin compromiso. Se renueva cada mes y cancelas cuando quieras.</p>
+      <a href="checkout.html?plan=mensual" class="btn btn-ghost btn-block" data-cta="precio-mensual">Empezar mensual</a>
+    </div>
+    <div class="lp-plan lp-plan-feat">
+      <span class="lp-plan-tag">Lo que recomienda Mariana</span>
+      <div class="lp-plan-n">Anual</div>
+      <div class="lp-plan-p" id="lpAnual"></div>
+      <p class="lp-plan-d" id="lpAnualD"></p>
+      <a href="checkout.html?plan=anual" class="btn btn-gold btn-block" data-cta="precio-anual">Empezar anual</a>
+      <div class="lp-plan-save" id="lpAhorro"></div>
+    </div>
+  </div>
+
+  <ul class="lp-incl" id="lpIncl"></ul>
+
+  <p class="lp-risk lp-risk-c">
+    Pago seguro · Te avisamos por correo un día antes del cobro · Puedes pausar hasta tres meses
+  </p>
+</section>
+
+<!-- ===== 10 · PREGUNTAS ===== -->
+<section class="lp-sand">
+  <div class="wrap section" id="preguntas">
+    <div class="lp-head">
+      <div class="eyebrow">Preguntas</div>
+      <h2>Lo que nos preguntan antes de entrar</h2>
+    </div>
+    <div class="td-faq lp-faq" id="lpFaq"></div>
+  </div>
+</section>
+
+<!-- ===== 11 · CIERRE ===== -->
+<section class="lp-close gart somara" data-img="anyara">
+  <div class="lp-close-in">
+    <h2>Tu primera clase te está esperando</h2>
+    <p>
+      Dos minutos de preguntas y tienes tu plan. Tres días para probarlo.
+      Nada que pagar hasta el día 3.
+    </p>
+    <a href="onboarding.html" class="btn btn-gold btn-lg" data-cta="cierre">Empezar mis tres días</a>
+    <p class="lp-risk">Cancela antes del día 3 y no se te cobra.</p>
+  </div>
+</section>
+
+<footer class="lp-foot">
+  <div class="wrap lp-foot-in">
+    <div>
+      <div class="logo lp-logo"><b>A</b>nyara</div>
+      <p>Muévete con intención. Pilates, Barre, Sculpt, Somara y ejercicio funcional.</p>
+      <a href="https://instagram.com/anyaramove" class="lp-social">@anyaramove</a>
+    </div>
+    <div>
+      <h5>Plataforma</h5>
+      <a href="index.html">Entrar a Anyara</a>
+      <a href="explorar.html">Clases</a>
+      <a href="coaches.html">Instructoras</a>
+      <a href="events.html">Eventos</a>
+    </div>
+    <div>
+      <h5>Empezar</h5>
+      <a href="onboarding.html">Crear mi cuenta</a>
+      <a href="membresia.html">Planes y precios</a>
+      <a href="#preguntas">Preguntas frecuentes</a>
+    </div>
+    <div>
+      <h5>Anyara</h5>
+      <a href="#">Quiénes somos</a>
+      <a href="#">Términos</a>
+      <a href="#">Privacidad</a>
+      <a href="#">Contacto</a>
+    </div>
+  </div>
+  <div class="wrap lp-foot-fine">
+    © 2026 Anyara · Hecho en México
+  </div>
+</footer>
+
+<!-- Barra fija de acción. En una landing larga, la decisión se toma en
+     cualquier punto del scroll: el botón tiene que estar ahí cuando pase. -->
+<div class="lp-sticky" id="lpSticky">
+  <div class="lp-sticky-in">
+    <div class="lp-sticky-t">
+      <b>Tres días de bienvenida</b>
+      <span>No se cobra nada hasta el día 3</span>
+    </div>
+    <a href="onboarding.html" class="btn btn-gold" data-cta="fija">Empezar</a>
+  </div>
+</div>
+
+<script src="anyara.js"></script>
+<script src="landing.js"></script>
+</body>
+</html>

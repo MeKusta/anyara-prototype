@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.22.00';
+  var VERSION = '1.23.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -429,6 +429,25 @@
 
     FREE_CLASSES: FREE_CLASSES,
     isFreeSlug: function (slug) { return FREE_SLUGS.indexOf(slug) > -1; },
+
+    /* La landing no es la app: no lleva barra de navegación ni pestañas,
+       pero sí el wordmark y las fotos. Por eso estas dos salen del módulo. */
+    /* ---- precios ----
+       Estaban escritos a mano en membresia.html, en checkout.html y en la
+       landing, y ya se habían desincronizado: la página de los tres días
+       anunciaba una cifra y la de planes otra. Aquí viven una sola vez.
+       `moneda` es el prefijo que se pinta; cámbialo y cambia en todas. */
+    PRECIOS: {
+      moneda:  '$',
+      mensual: { mes:39,  anio:468 },
+      anual:   { mes:29,  anio:349 },
+      ahorro:  119,
+      /* "$349" a partir del número, para no repetir el formato en cada página */
+      fmt: function (n) { return '$' + n.toLocaleString('es-MX'); }
+    },
+
+    LOGO_SVG: LOGO_SVG,
+    renderLogos: function () { renderLogos(); },
 
     RETOS: RETOS,
     INSTRUCTORS: INSTRUCTORS,
@@ -1054,7 +1073,8 @@
     /* Los flujos de pantalla completa no llevan pestañas: onboarding,
        checkout, la clase de bienvenida y el player son de una sola vía, y
        ofrecer una salida a "Eventos" a media compra es invitarse a perderla. */
-    var SIN_PESTANAS = ['onboarding.html', 'checkout.html', 'bienvenida.html', 'completada.html'];
+    var SIN_PESTANAS = ['onboarding.html', 'checkout.html', 'bienvenida.html',
+                        'completada.html', 'landing.html'];
     if (SIN_PESTANAS.indexOf(location.pathname.split('/').pop()) > -1) return;
 
     var ICONOS = {

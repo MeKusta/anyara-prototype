@@ -1,0 +1,397 @@
+/* Anyara · landing
+   ---------------------------------------------------------------------------
+   Capa propia sobre el sistema de la app: mismos tokens de color, tipografía
+   y espaciado (styles.css), mismas piezas donde se pueden reutilizar — los
+   pilares de disciplina, las preguntas, el reproductor de guion. Lo que se
+   añade aquí es lo que una landing necesita y la app no: portada de venta,
+   cifras, bloque de problema, precios comparados, prueba social y una barra
+   de acción que sigue al scroll.
+   ========================================================================= */
+
+.lp{background:var(--bg)}
+
+/* ---------------------------------------------------------------- barra */
+.lp-top{
+  position:sticky;top:0;z-index:80;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid transparent;transition:border-color .3s ease;
+}
+.lp-top.pegada{border-bottom-color:var(--line)}
+.lp-top-in{
+  max-width:var(--maxw);margin:0 auto;padding:14px var(--gutter);
+  display:flex;align-items:center;gap:28px;
+}
+.lp-logo{font-size:var(--fs-title);flex:0 0 auto}
+.lp-links{display:flex;gap:26px;margin-left:8px}
+.lp-links a{
+  font-family:var(--sans);font-size:var(--fs-note);font-weight:500;color:var(--ink-2);
+}
+.lp-links a:hover{color:var(--ink)}
+.lp-top-cta{margin-left:auto;display:flex;align-items:center;gap:18px}
+.lp-signin{font-family:var(--sans);font-size:var(--fs-note);font-weight:500;color:var(--ink-2);white-space:nowrap}
+.lp-signin:hover{color:var(--ink)}
+
+.btn-lg{min-height:54px;padding:0 30px;display:inline-flex;align-items:center;justify-content:center;font-size:var(--fs-body)}
+.btn-block{width:100%;text-align:center;display:flex;align-items:center;justify-content:center}
+
+/* --------------------------------------------------------------- portada */
+.lp-hero{position:relative;overflow:hidden;background:var(--ink)}
+.lp-hero-art{position:absolute;inset:0}
+.lp-hero-art::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(16,14,12,.92) 0%,rgba(16,14,12,.66) 46%,rgba(16,14,12,.18) 100%),
+    linear-gradient(0deg,rgba(16,14,12,.6) 0%,rgba(16,14,12,0) 46%);
+}
+.lp-hero-in{
+  position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;
+  padding:clamp(56px,7vw,96px) var(--gutter) 0;
+  display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);
+  gap:var(--sp-6);align-items:end;
+}
+.lp-hero-b{color:#fff;padding-bottom:clamp(56px,7vw,96px);max-width:36rem}
+.lp-hero-b .eyebrow{color:var(--gold)}
+.lp-hero-b h1{
+  color:#fff;font-size:clamp(40px,5.2vw,68px);line-height:1.02;
+  letter-spacing:-.02em;margin:14px 0 0;
+}
+.lp-lede{
+  font-family:var(--sans);font-size:var(--fs-lede);line-height:1.55;
+  color:rgba(255,255,255,.84);margin-top:18px;max-width:30rem;
+}
+.lp-cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.lp-risk{
+  font-family:var(--sans);font-size:var(--fs-meta);color:rgba(255,255,255,.66);
+  margin-top:16px;line-height:1.6;
+}
+.lp-risk-c{text-align:center;color:var(--ink-2);margin-top:24px}
+
+/* El teléfono lleva la app de verdad dentro. El velo lo vuelve una imagen:
+   se mira, no se manosea — para usarla está el botón. */
+.lp-phone{
+  position:relative;display:block;justify-self:center;align-self:end;
+  width:min(330px,100%);height:clamp(440px,58vh,620px);
+  background:#000;border-radius:42px;padding:9px;
+  box-shadow:0 0 0 2px rgba(255,255,255,.16), 0 34px 80px rgba(0,0,0,.55);
+  overflow:hidden;
+}
+.lp-phone-status{
+  display:block;position:relative;height:34px;background:#fff;border-radius:33px 33px 0 0;
+}
+.lp-notch{
+  position:absolute;top:5px;left:50%;transform:translateX(-50%);
+  width:96px;height:24px;border-radius:100px;background:#000;
+}
+.lp-phone iframe{
+  width:100%;height:calc(100% - 34px);border:none;display:block;background:#fff;
+  border-radius:0 0 33px 33px;
+}
+.lp-phone-veil{position:absolute;inset:0;z-index:2}
+
+/* ---------------------------------------------------------------- cifras */
+.lp-stats{border-bottom:1px solid var(--line-2);background:var(--bg)}
+.lp-stat-row{
+  list-style:none;display:grid;grid-template-columns:repeat(4,1fr);
+  gap:var(--sp-4);padding:var(--sp-5) 0;text-align:center;
+}
+.lp-stat-row b{
+  display:block;font-family:var(--serif);font-size:var(--fs-head);font-weight:400;
+  letter-spacing:-.01em;
+}
+.lp-stat-row span{
+  display:block;font-family:var(--sans);font-size:var(--fs-meta);
+  color:var(--ink-2);margin-top:4px;
+}
+
+/* -------------------------------------------------------------- cabezas */
+.lp-head{max-width:46rem;margin-bottom:var(--sp-5)}
+.lp-head-c{margin-left:auto;margin-right:auto;text-align:center}
+.lp-head h2{font-size:var(--fs-page);line-height:1.1;margin-top:10px;letter-spacing:-.015em}
+.lp-head .sec-lead{margin-top:12px;font-size:var(--fs-lede);line-height:1.55}
+.lp-head-c .sec-lead{margin-left:auto;margin-right:auto}
+/* marca de prototipo, igual que en el resto del proyecto */
+.lp-mark{
+  display:inline-block;margin-top:14px;border:1px dashed var(--ink-3);border-radius:100px;
+  padding:6px 14px;font-family:var(--sans);font-size:var(--fs-micro);
+  letter-spacing:.12em;text-transform:uppercase;color:var(--wine);font-weight:700;
+}
+
+/* ------------------------------------------------------------- problema */
+.lp-dark{background:var(--ink);color:#fff}
+.lp-dark .lp-head h2{color:#fff}
+.lp-dark .lp-head .eyebrow{color:var(--gold)}
+.lp-dark .lp-head .sec-lead{color:rgba(255,255,255,.72)}
+.lp-probs{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5)}
+.lp-prob{
+  border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);
+  padding:var(--sp-5);display:flex;flex-direction:column;
+}
+.lp-prob-k{
+  font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(255,255,255,.45);
+}
+.lp-prob-q{
+  font-family:var(--serif);font-size:var(--fs-sub);line-height:1.3;
+  color:rgba(255,255,255,.92);margin-top:12px;font-style:italic;
+}
+.lp-prob-a{
+  font-family:var(--sans);font-size:var(--fs-note);line-height:1.65;
+  color:rgba(255,255,255,.7);margin-top:auto;padding-top:20px;
+  border-top:1px solid rgba(255,255,255,.14);
+}
+.lp-prob-a b{display:block;color:var(--gold);margin-bottom:6px;font-weight:600}
+
+/* --------------------------------------------------------------- por dentro */
+.lp-sand{background:var(--sand)}
+.lp-shots{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5)}
+.lp-shot{display:block}
+.lp-shot-frame{
+  display:block;position:relative;aspect-ratio:9/17;
+  background:#000;border-radius:32px;padding:7px;overflow:hidden;
+  box-shadow:0 18px 46px rgba(20,18,16,.2);
+  transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s;
+}
+.lp-shot:hover .lp-shot-frame{transform:translateY(-6px);box-shadow:0 26px 60px rgba(20,18,16,.26)}
+.lp-shot-frame iframe{
+  width:100%;height:100%;border:none;border-radius:26px;background:#fff;display:block;
+}
+.lp-shot-b{display:block;margin-top:18px;font-family:var(--sans)}
+.lp-shot-b b{display:block;font-family:var(--serif);font-weight:400;font-size:var(--fs-sub)}
+.lp-shot-b{font-size:var(--fs-note);color:var(--ink-2);line-height:1.6}
+
+.lp-devices{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-4);
+  margin-top:var(--sp-6);padding-top:var(--sp-5);border-top:1px solid var(--line);
+}
+.lp-device{display:flex;align-items:center;gap:12px;font-family:var(--sans)}
+.lp-device-i{
+  width:40px;height:40px;border-radius:50%;background:#fff;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;
+}
+.lp-device-i svg{
+  width:19px;height:19px;fill:none;stroke:var(--gold-deep);
+  stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;
+}
+.lp-device b{display:block;font-size:var(--fs-note);font-weight:600}
+.lp-device span:last-child{display:block;font-size:var(--fs-meta);color:var(--ink-2);margin-top:1px}
+
+/* ----------------------------------------------------------- testimonios */
+.lp-tests{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5)}
+.lp-test{
+  border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-5);
+  display:flex;flex-direction:column;background:#fff;
+}
+.lp-test blockquote{
+  font-family:var(--serif);font-size:var(--fs-sub);line-height:1.45;color:var(--ink);
+}
+.lp-test blockquote::before{content:"“"}
+.lp-test blockquote::after{content:"”"}
+.lp-test figcaption{
+  display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:22px;
+  font-family:var(--sans);
+}
+.lp-test-av{width:44px;height:44px;border-radius:50%;flex:0 0 auto}
+.lp-test figcaption b{display:block;font-size:var(--fs-note);font-weight:600}
+.lp-test figcaption span span{display:block;font-size:var(--fs-meta);color:var(--ink-2);margin-top:2px}
+
+/* ------------------------------------------------------------ instructoras */
+.lp-team{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5)}
+.lp-member{background:#fff;border-radius:var(--radius);overflow:hidden}
+.lp-member-art{aspect-ratio:4/3}
+.lp-member-b{padding:var(--sp-4) var(--sp-4) var(--sp-5)}
+.lp-member-b b{font-family:var(--serif);font-weight:400;font-size:var(--fs-sub);display:block}
+.lp-member-b > span{
+  display:block;font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold-deep);margin-top:5px;
+}
+.lp-member-b p{
+  font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);
+  line-height:1.6;margin-top:12px;
+}
+
+/* ---------------------------------------------------------------- precios */
+.lp-plans{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-5);
+  max-width:50rem;margin:0 auto;align-items:start;
+}
+.lp-plan{
+  border:1px solid var(--line);border-radius:var(--radius);
+  padding:var(--sp-5);background:#fff;position:relative;
+}
+.lp-plan-feat{border-color:var(--ink);border-width:2px;padding-top:calc(var(--sp-5) + 10px)}
+.lp-plan-tag{
+  position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+  background:var(--ink);color:#fff;border-radius:100px;padding:6px 16px;
+  font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.12em;
+  text-transform:uppercase;white-space:nowrap;font-weight:600;
+}
+.lp-plan-n{
+  font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.18em;
+  text-transform:uppercase;color:var(--ink-2);
+}
+.lp-plan-p{font-family:var(--serif);font-size:var(--fs-hero);line-height:1;margin-top:10px}
+.lp-plan-p small{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2)}
+.lp-plan-d{
+  font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);
+  line-height:1.6;margin:14px 0 22px;min-height:3.2em;
+}
+.lp-plan-save{
+  font-family:var(--sans);font-size:var(--fs-meta);color:var(--gold-deep);
+  text-align:center;margin-top:12px;
+}
+.lp-incl{
+  list-style:none;display:grid;grid-template-columns:repeat(3,1fr);
+  gap:12px var(--sp-5);max-width:50rem;margin:var(--sp-6) auto 0;
+}
+.lp-incl li{
+  font-family:var(--sans);font-size:var(--fs-note);color:var(--ink);
+  padding-left:26px;position:relative;line-height:1.5;
+}
+.lp-incl li::before{
+  content:"✓";position:absolute;left:0;top:0;color:var(--gold-deep);font-weight:700;
+}
+
+/* --------------------------------------------------------------- preguntas */
+.lp-faq{max-width:52rem}
+.lp-faq summary{font-size:var(--fs-lede)}
+.lp-faq p{font-size:var(--fs-note);max-width:60ch}
+
+/* ----------------------------------------------------------------- cierre */
+.lp-close{position:relative;text-align:center}
+.lp-close::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(16,14,12,.66) 0%,rgba(16,14,12,.82) 100%);
+}
+.lp-close-in{
+  position:relative;z-index:2;max-width:40rem;margin:0 auto;
+  padding:clamp(64px,9vw,120px) var(--gutter);color:#fff;
+}
+.lp-close h2{color:#fff;font-size:var(--fs-page);line-height:1.1;letter-spacing:-.015em}
+.lp-close p{
+  font-family:var(--sans);font-size:var(--fs-lede);color:rgba(255,255,255,.82);
+  line-height:1.6;margin:16px 0 30px;
+}
+.lp-close .lp-risk{margin-top:18px}
+
+/* ------------------------------------------------------------------ pie */
+.lp-foot{background:var(--ink);color:rgba(255,255,255,.7);padding:var(--sp-6) 0 var(--sp-5)}
+.lp-foot-in{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--sp-5);
+}
+.lp-foot .lp-logo{color:#fff;font-size:var(--fs-sub);display:inline-flex}
+.lp-foot p{
+  font-family:var(--sans);font-size:var(--fs-meta);line-height:1.7;
+  margin-top:12px;max-width:30ch;
+}
+.lp-foot h5{
+  font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:14px;font-weight:600;
+}
+.lp-foot a{
+  display:block;font-family:var(--sans);font-size:var(--fs-meta);
+  color:rgba(255,255,255,.7);padding:5px 0;
+}
+.lp-foot a:hover{color:#fff}
+.lp-social{margin-top:14px;color:var(--gold)!important}
+.lp-foot-fine{
+  font-family:var(--sans);font-size:var(--fs-meta);color:rgba(255,255,255,.4);
+  margin-top:var(--sp-6);padding-top:var(--sp-4);border-top:1px solid rgba(255,255,255,.12);
+}
+
+/* ------------------------------------------------------------ barra fija */
+.lp-sticky{
+  position:fixed;left:0;right:0;bottom:0;z-index:90;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-top:1px solid var(--line);
+  transform:translateY(102%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+.lp-sticky.on{transform:none}
+.lp-sticky-in{
+  max-width:var(--maxw);margin:0 auto;padding:12px var(--gutter);
+  display:flex;align-items:center;gap:20px;
+}
+.lp-sticky-t{font-family:var(--sans);line-height:1.4}
+.lp-sticky-t b{display:block;font-size:var(--fs-note);font-weight:600;color:var(--ink)}
+.lp-sticky-t span{display:block;font-size:var(--fs-meta);color:var(--ink-2)}
+.lp-sticky .btn{margin-left:auto;min-height:46px;display:inline-flex;align-items:center}
+
+@media (prefers-reduced-motion:reduce){
+  .lp-sticky{transition:none}
+  .lp-shot:hover .lp-shot-frame{transform:none}
+}
+
+/* ========================================================================
+   TABLETA
+   ==================================================================== */
+@media (max-width:1023px){
+  .lp-links{display:none}
+  .lp-hero-in{grid-template-columns:1fr;gap:var(--sp-5)}
+  .lp-hero-b{max-width:none;padding-bottom:0}
+  .lp-phone{justify-self:start;margin-bottom:clamp(40px,6vw,64px)}
+  .lp-probs,.lp-tests,.lp-team,.lp-shots{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lp-shots > :last-child{grid-column:1 / -1;max-width:50%}
+  .lp-devices{grid-template-columns:repeat(2,1fr)}
+  .lp-incl{grid-template-columns:repeat(2,1fr)}
+  .lp-foot-in{grid-template-columns:1fr 1fr}
+}
+
+/* ========================================================================
+   TELÉFONO
+   ==================================================================== */
+@media (max-width:767px){
+  /* La landing sí lleva pie de página, al revés que la app: aquí es un sitio
+     web y el pie es donde viven los términos, el contacto y las redes. */
+  .lp .lp-foot{display:block}
+  /* y no lleva barra de pestañas, así que tampoco su hueco */
+  .lp{padding-bottom:0}
+
+  /* En la app la bajada de sección se corta a dos líneas para no empujar el
+     contenido. Aquí no: es copy de venta y tiene que leerse entera. */
+  .lp .sec-lead{-webkit-line-clamp:unset;display:block;overflow:visible}
+
+  .lp-top-in{padding:10px var(--gutter);gap:12px}
+  .lp-logo{font-size:var(--fs-sub)}
+  .lp-signin{display:none}
+  .lp-top-cta .btn{min-height:42px;padding:0 16px;font-size:var(--fs-meta)}
+
+  .lp-hero-in{padding-top:36px}
+  .lp-hero-b h1{font-size:clamp(34px,9vw,44px)}
+  .lp-hero-art::after{
+    background:linear-gradient(0deg,rgba(16,14,12,.94) 22%,rgba(16,14,12,.55) 62%,rgba(16,14,12,.3) 100%);
+  }
+  .lp-cta-row{display:grid;gap:10px}
+  .lp-cta-row .btn{width:100%}
+  .lp-phone{
+    justify-self:center;width:min(280px,82%);height:auto;aspect-ratio:9/17;
+    margin-bottom:44px;
+  }
+
+  .lp-stat-row{grid-template-columns:repeat(2,1fr);gap:var(--sp-4) var(--sp-3);padding:var(--sp-4) 0}
+  .lp-head{margin-bottom:var(--sp-4)}
+  .lp-probs,.lp-tests,.lp-team,.lp-incl,.lp-devices,
+  .lp-plans,.lp-foot-in{grid-template-columns:1fr}
+
+  /* Tres teléfonos apilados eran 2.500px de scroll en la sección más
+     visual de la página. Se recorren de lado, como las filas de la app. */
+  .lp-shots{
+    display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x proximity;
+    padding:0 var(--gutter) 6px;margin:0 calc(var(--gutter) * -1);
+    scroll-padding-inline:var(--gutter);scrollbar-width:none;
+  }
+  .lp-shots::-webkit-scrollbar{display:none}
+  .lp-shot{flex:0 0 72%;scroll-snap-align:start}
+  .lp-shots > :last-child{max-width:none}
+  .lp-plan-d{min-height:0}
+  .lp-plan-feat{margin-top:14px}
+  .lp-foot-in{gap:var(--sp-5)}
+
+  /* la barra fija es lo que convierte en el teléfono: se queda compacta */
+  .lp-sticky-in{padding:10px var(--gutter);gap:12px}
+  .lp-sticky-t span{display:none}
+  .lp-sticky-t b{font-size:var(--fs-meta)}
+}

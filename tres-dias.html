@@ -101,19 +101,21 @@
   <div class="td-sales">
 
     <div class="td-plans">
+      <!-- Los precios salen de Anyara.PRECIOS: antes estaban escritos a mano
+           aquí y en membresia.html, y no coincidían. -->
       <div class="td-plan">
         <div>
           <div class="p-n">Mensual</div>
           <div class="p-d">Se renueva cada mes. Cancelas cuando quieras.</div>
         </div>
-        <div class="p-p">$549<small> / mes</small></div>
+        <div class="p-p" id="pMensual"></div>
       </div>
       <div class="td-plan feat">
         <div>
           <div class="p-n">Anual</div>
-          <div class="p-d">Dos meses de regalo frente al mensual.</div>
+          <div class="p-d" id="pAnualD"></div>
         </div>
-        <div class="p-p">$5,490<small> / año</small></div>
+        <div class="p-p" id="pAnual"></div>
       </div>
       <a href="membresia.html" class="btn btn-gold" style="justify-self:start;margin-top:6px">Elegir mi plan</a>
       <p class="trialnote" style="text-align:left">El cobro corre el día 3. Te avisamos por correo un día antes.</p>
@@ -211,6 +213,17 @@ var INSTR = { sculpt:'Valeria Méndez', barre:'Valeria Méndez', pilates:'Sofía
 /* a support discipline per primary one, so day N mixes but stays coherent */
 var PAIR = { sculpt:'funcional', funcional:'sculpt', pilates:'pilatesmat', pilatesmat:'pilates',
              somara:'tone', tone:'somara', barre:'pilatesmat' };
+
+/* precios, de una sola fuente */
+(function () {
+  var P = Anyara.PRECIOS;
+  var m = document.getElementById('pMensual');
+  if (!m) return;
+  m.innerHTML = P.fmt(P.mensual.mes) + '<small> / mes</small>';
+  document.getElementById('pAnual').innerHTML = P.fmt(P.anual.anio) + '<small> / año</small>';
+  document.getElementById('pAnualD').textContent =
+    'Sale en ' + P.fmt(P.anual.mes) + ' al mes. Ahorras ' + P.fmt(P.ahorro) + ' frente al mensual.';
+})();
 
 /* la landing de precios sobra en cuanto la membresía está activa */
 if (Anyara.isPaid()) document.getElementById('tdVenta').style.display = 'none';
