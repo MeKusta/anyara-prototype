@@ -83,14 +83,15 @@
    quien antes de entrar. */
 document.querySelectorAll('.coachcard').forEach(function (c) {
   var nombre = c.querySelector('.cn').textContent.trim();
-  var prof = Anyara.INSTRUCTORS[nombre];
-  if (!prof || !prof.discs) return;
+  var prof  = Anyara.INSTRUCTORS[nombre];
+  var discs = Anyara.coachDiscs(nombre);
+  if (!prof || !discs.length) return;
   /* el enlace al perfil lleva el nombre, para que coach.html deje de estar
      escrito a mano para una sola instructora cuando se conecte de verdad */
   c.href = 'coach.html?c=' + encodeURIComponent(nombre);
   var d = document.createElement('div');
   d.className = 'cs';
-  d.textContent = prof.discs.map(Anyara.discLabel).join(' · ');
+  d.textContent = discs.map(Anyara.discLabel).join(' · ');
   c.appendChild(d);
 });
 </script>

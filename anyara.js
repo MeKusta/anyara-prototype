@@ -193,23 +193,61 @@
     tone:'Sesiones de tono general, de ritmo sostenido y baja carga. Buenas para mantener constancia.'
   };
 
-  /* Pool del que salen las recomendaciones. No es el catálogo completo: son
-     los títulos que ya existen en el sitio, para no inventar clases nuevas. */
-  var POOL = [
-    { t:'20 min · Sculpt : Glut',      d:'sculpt',     i:'Valeria Méndez', m:20, x:'Intermedio' },
-    { t:'Sculpt Total',                d:'sculpt',     i:'Valeria Méndez', m:60, x:'Avanzado' },
-    { t:'Sculpt Brazos & Core',        d:'sculpt',     i:'Valeria Méndez', m:45, x:'Intermedio' },
-    { t:'Barre Esencial',              d:'barre',      i:'Valeria Méndez', m:20, x:'Principiante', free:1 },
-    { t:'Barre Glúteos & Piernas',     d:'barre',      i:'Valeria Méndez', m:45, x:'Intermedio' },
-    { t:'Barre : Postura Perfecta',    d:'barre',      i:'Valeria Méndez', m:35, x:'Intermedio' },
-    { t:'Funcional HIIT',              d:'funcional',  i:'Sofía Ruiz',     m:30, x:'Intermedio' },
-    { t:'Core Profundo',               d:'pilates',    i:'Sofía Ruiz',     m:40, x:'Avanzado' },
-    { t:'Pilates : Core Avanzado',     d:'pilates',    i:'Sofía Ruiz',     m:40, x:'Avanzado' },
-    { t:'Pilates Mat Fundamental',     d:'pilatesmat', i:'Sofía Ruiz',     m:40, x:'Principiante', free:1 },
-    { t:'Despierta el core',           d:'pilatesmat', i:'Daniela Ortiz',  m:15, x:'Principiante' },
-    { t:'Somara Flow',                 d:'somara',     i:'Renata Solís',   m:25, x:'Principiante' },
-    { t:'Somara Restaurativo',         d:'somara',     i:'Renata Solís',   m:40, x:'Intermedio' },
-    { t:'Tone Cuerpo Completo',        d:'tone',       i:'Daniela Ortiz',  m:30, x:'Intermedio' }
+  /* ---- catálogo ----
+     Una sola lista para todo el sitio. Antes el catálogo de explorar.html
+     estaba escrito a mano en HTML y las páginas de disciplina tenían su
+     propia lista: al abrir las siete disciplinas eso dejaba 39 clases que
+     existían en una pantalla y no en la otra. Ahora las dos leen de aquí.
+
+     sub   · subcategoría dentro de su disciplina (ver SUBS)
+     foco  · fuerza / movilidad / resistencia, el filtro de "Enfoque"
+     props · material, con las mismas claves que PROPS
+     date  · fecha de publicación; ordena el catálogo, más reciente primero */
+  var CATALOG = [
+    { slug:'barre-brazos', t:'Barre : Brazos y espalda', d:'barre', i:'Valeria Méndez', m:30, x:'Intermedio', sub:'fuerza', foco:'fuerza', props:'silla,tapete', date:'2026-03-30' },
+    { slug:'barre-esencial', t:'Barre Esencial', d:'barre', i:'Valeria Méndez', m:20, x:'Principiante', sub:'esencial', foco:'fuerza', props:'silla', date:'2026-04-26', free:true },
+    { slug:'barre-piernas', t:'Barre : Piernas largas', d:'barre', i:'Valeria Méndez', m:30, x:'Intermedio', sub:'fuerza', foco:'fuerza', props:'silla,tapete', date:'2026-05-28' },
+    { slug:'barre-gluteos', t:'Barre Glúteos & Piernas', d:'barre', i:'Valeria Méndez', m:45, x:'Intermedio', sub:'fuerza', foco:'resistencia', props:'silla,tapete', date:'2026-06-18' },
+    { slug:'barre-centro', t:'Barre : Centro', d:'barre', i:'Valeria Méndez', m:25, x:'Principiante', sub:'postura', foco:'movilidad', props:'silla,tapete', date:'2026-07-19' },
+    { slug:'barre-express', t:'Barre : Express', d:'barre', i:'Valeria Méndez', m:20, x:'Principiante', sub:'esencial', foco:'fuerza', props:'silla,tapete', date:'2026-08-02' },
+    { slug:'barre-postura', t:'Barre : Postura Perfecta', d:'barre', i:'Valeria Méndez', m:35, x:'Intermedio', sub:'postura', foco:'movilidad', props:'silla,tapete', date:'2026-08-22' },
+    { slug:'func-express', t:'Funcional : Express', d:'funcional', i:'Sofía Ruiz', m:20, x:'Principiante', sub:'resistencia', foco:'resistencia', props:'ninguno', date:'2026-03-12' },
+    { slug:'func-movilidad', t:'Funcional : Movilidad', d:'funcional', i:'Sofía Ruiz', m:20, x:'Principiante', sub:'movilidad', foco:'movilidad', props:'ninguno', date:'2026-04-18' },
+    { slug:'func-potencia', t:'Funcional : Potencia', d:'funcional', i:'Sofía Ruiz', m:35, x:'Avanzado', sub:'fuerza', foco:'fuerza', props:'pesas', date:'2026-05-08' },
+    { slug:'func-intervalos', t:'Funcional : Intervalos', d:'funcional', i:'Sofía Ruiz', m:25, x:'Intermedio', sub:'resistencia', foco:'resistencia', props:'ninguno', date:'2026-06-24' },
+    { slug:'func-hiit', t:'Funcional HIIT', d:'funcional', i:'Sofía Ruiz', m:30, x:'Intermedio', sub:'resistencia', foco:'resistencia', props:'ninguno', date:'2026-07-02', serie:'Fuerza Total' },
+    { slug:'func-fuerza', t:'Funcional : Fuerza Total', d:'funcional', i:'Sofía Ruiz', m:45, x:'Avanzado', sub:'fuerza', foco:'fuerza', props:'pesas', date:'2026-08-19' },
+    { slug:'pilates-cierre', t:'Pilates : Cierre largo', d:'pilates', i:'Sofía Ruiz', m:25, x:'Principiante', sub:'movilidad', foco:'movilidad', props:'tapete,pelota', date:'2026-04-02' },
+    { slug:'pilates-movilidad', t:'Pilates : Movilidad', d:'pilates', i:'Sofía Ruiz', m:25, x:'Intermedio', sub:'movilidad', foco:'movilidad', props:'tapete', date:'2026-05-15' },
+    { slug:'pilates-espalda', t:'Pilates : Espalda sana', d:'pilates', i:'Sofía Ruiz', m:35, x:'Principiante', sub:'espalda', foco:'movilidad', props:'tapete,pelota', date:'2026-06-21' },
+    { slug:'pilates-control', t:'Pilates : Control', d:'pilates', i:'Sofía Ruiz', m:30, x:'Principiante', sub:'core', foco:'fuerza', props:'tapete,pelota', date:'2026-07-08' },
+    { slug:'pilates-core', t:'Core Profundo', d:'pilates', i:'Sofía Ruiz', m:40, x:'Avanzado', sub:'core', foco:'fuerza', props:'tapete,pelota', date:'2026-08-11', serie:'Core & Flexibilidad' },
+    { slug:'pilates-avanzado', t:'Pilates : Core Avanzado', d:'pilates', i:'Sofía Ruiz', m:40, x:'Avanzado', sub:'core', foco:'fuerza', props:'tapete,pelota', date:'2026-08-25' },
+    { slug:'mat-despierta', t:'Despierta el core', d:'pilatesmat', i:'Daniela Ortiz', m:15, x:'Principiante', sub:'core', foco:'fuerza', props:'tapete', date:'2026-03-04' },
+    { slug:'mat-fundamental', t:'Pilates Mat Fundamental', d:'pilatesmat', i:'Daniela Ortiz', m:40, x:'Principiante', sub:'fundamentos', foco:'fuerza', props:'tapete', date:'2026-04-09', free:true, serie:'Core & Flexibilidad' },
+    { slug:'mat-cierre', t:'Pilates Mat : Cierre', d:'pilatesmat', i:'Daniela Ortiz', m:20, x:'Principiante', sub:'cierre', foco:'movilidad', props:'tapete', date:'2026-05-20' },
+    { slug:'mat-centro', t:'Pilates Mat : Centro firme', d:'pilatesmat', i:'Daniela Ortiz', m:25, x:'Intermedio', sub:'core', foco:'fuerza', props:'tapete', date:'2026-06-11' },
+    { slug:'mat-precision', t:'Pilates Mat : Precisión', d:'pilatesmat', i:'Daniela Ortiz', m:30, x:'Intermedio', sub:'fundamentos', foco:'fuerza', props:'tapete', date:'2026-07-02' },
+    { slug:'mat-larga', t:'Pilates Mat : Sesión larga', d:'pilatesmat', i:'Daniela Ortiz', m:40, x:'Intermedio', sub:'fundamentos', foco:'fuerza', props:'tapete', date:'2026-08-08' },
+    { slug:'sculpt-brazos', t:'Sculpt Brazos & Core', d:'sculpt', i:'Valeria Méndez', m:45, x:'Intermedio', sub:'tren-sup', foco:'fuerza', props:'pesas', date:'2026-05-12', serie:'Fuerza Total' },
+    { slug:'sculpt-total', t:'Sculpt Total', d:'sculpt', i:'Valeria Méndez', m:60, x:'Avanzado', sub:'completo', foco:'resistencia', props:'pesas,banda,tapete', date:'2026-05-30', serie:'Fuerza Total' },
+    { slug:'sculpt-centro', t:'Sculpt : Centro y brazos', d:'sculpt', i:'Valeria Méndez', m:35, x:'Intermedio', sub:'tren-sup', foco:'fuerza', props:'pesas,banda,tapete', date:'2026-06-14' },
+    { slug:'sculpt-express', t:'Sculpt : Express', d:'sculpt', i:'Valeria Méndez', m:20, x:'Principiante', sub:'completo', foco:'fuerza', props:'pesas,banda,tapete', date:'2026-07-05' },
+    { slug:'sculpt-glut', t:'20 min · Sculpt : Glúteos', d:'sculpt', i:'Valeria Méndez', m:20, x:'Intermedio', sub:'tren-inf', foco:'fuerza', props:'pesas,tapete', date:'2026-08-17', serie:'Fuerza Total' },
+    { slug:'sculpt-piernas', t:'Sculpt : Piernas de Acero', d:'sculpt', i:'Valeria Méndez', m:30, x:'Intermedio', sub:'tren-inf', foco:'fuerza', props:'pesas,banda,tapete', date:'2026-08-28' },
+    { slug:'somara-movilidad', t:'Somara : Movilidad completa', d:'somara', i:'Renata Solís', m:30, x:'Intermedio', sub:'completo', foco:'movilidad', props:'tapete,bloques,cojin', date:'2026-06-09' },
+    { slug:'somara-piernas', t:'Somara : Piernas ligeras', d:'somara', i:'Renata Solís', m:20, x:'Principiante', sub:'caderas', foco:'movilidad', props:'tapete,bloques,cojin', date:'2026-06-28' },
+    { slug:'somara-caderas', t:'Somara : Caderas abiertas', d:'somara', i:'Renata Solís', m:25, x:'Intermedio', sub:'caderas', foco:'movilidad', props:'tapete,bloques,cojin', date:'2026-07-11', serie:'Core & Flexibilidad' },
+    { slug:'somara-restaurativo', t:'Somara : Restaurativo', d:'somara', i:'Renata Solís', m:40, x:'Intermedio', sub:'completo', foco:'movilidad', props:'bloques,tapete', date:'2026-07-24' },
+    { slug:'somara-cuello', t:'Somara : Cuello y hombros', d:'somara', i:'Renata Solís', m:15, x:'Principiante', sub:'espalda', foco:'movilidad', props:'tapete,bloques,cojin', date:'2026-07-30' },
+    { slug:'somara-flow', t:'Somara : Flow', d:'somara', i:'Renata Solís', m:25, x:'Principiante', sub:'completo', foco:'movilidad', props:'tapete,bloques', date:'2026-08-05' },
+    { slug:'somara-respiracion', t:'Somara : Respiración y Calma', d:'somara', i:'Renata Solís', m:18, x:'Principiante', sub:'completo', foco:'movilidad', props:'tapete,cojin', date:'2026-08-30' },
+    { slug:'somara-espalda', t:'Somara : Espalda que respira', d:'somara', i:'Renata Solís', m:20, x:'Principiante', sub:'espalda', foco:'movilidad', props:'tapete,bloques,cojin', date:'2026-08-14', serie:'Core & Flexibilidad' },
+    { slug:'tone-completo', t:'Tone Cuerpo Completo', d:'tone', i:'Alina Prado', m:30, x:'Intermedio', sub:'fuerza', foco:'fuerza', props:'banda,tapete', date:'2026-03-21' },
+    { slug:'tone-calma', t:'Tone : Calma', d:'tone', i:'Alina Prado', m:20, x:'Principiante', sub:'calma', foco:'movilidad', props:'tapete', date:'2026-05-25' },
+    { slug:'tone-ligero', t:'Tone : Ligero', d:'tone', i:'Alina Prado', m:20, x:'Principiante', sub:'fuerza', foco:'fuerza', props:'banda,tapete', date:'2026-06-02' },
+    { slug:'tone-movilidad', t:'Tone : Movilidad diaria', d:'tone', i:'Alina Prado', m:25, x:'Principiante', sub:'movilidad', foco:'movilidad', props:'banda,tapete', date:'2026-07-16' },
+    { slug:'tone-definicion', t:'Tone : Definición', d:'tone', i:'Alina Prado', m:40, x:'Intermedio', sub:'fuerza', foco:'resistencia', props:'banda,tapete', date:'2026-08-07' }
   ];
 
   /* Contenido de los retos. Vive aquí para que la página del reto y la de la
@@ -394,11 +432,23 @@
     RETOS: RETOS,
     INSTRUCTORS: INSTRUCTORS,
     REDES: REDES,
+    /* Disciplinas que imparte de verdad: se deducen del catálogo, no de una
+       lista escrita a mano, para que una etiqueta nunca lleve a una
+       disciplina donde esa instructora no tiene ni una clase. `discs` queda
+       como respaldo para quien todavía no tiene clases publicadas. */
+    coachDiscs: function (nombre) {
+      var vistos = {}, fuera = [];
+      CATALOG.forEach(function (c) {
+        if (c.i === nombre && !vistos[c.d]) { vistos[c.d] = 1; fuera.push(c.d); }
+      });
+      if (fuera.length) return fuera;
+      var prof = INSTRUCTORS[nombre];
+      return (prof && prof.discs) || [];
+    },
+
     /* etiquetas de disciplina del perfil: cada una lleva a su página */
     coachTags: function (nombre) {
-      var prof = INSTRUCTORS[nombre];
-      if (!prof || !prof.discs) return '';
-      return prof.discs.map(function (d) {
+      return A.coachDiscs(nombre).map(function (d) {
         return '<a class="coach-tag ' + d + '" href="' +
           (A.discHref(d) || 'explorar.html?d=' + d) + '">' +
           '<span class="dot"></span>' + A.discLabel(d) + '</a>';
@@ -427,16 +477,17 @@
     },
     eventHref:  function (id) { return 'evento.html?e=' + id; },
     myTickets:  function () { return EVENTS.filter(function (e) { return !!e.boleto; }); },
-    /* clases de una instructora, del mismo POOL que alimenta el resto del
-       sitio: el perfil no puede listar clases que no existan en el catálogo */
+    /* clases de una instructora, del mismo catálogo que alimenta el resto
+       del sitio: el perfil no puede listar clases que no existan */
     classesBy: function (nombre, n) {
-      return POOL.filter(function (c) { return c.i === nombre; }).slice(0, n || 8);
+      return A.catalog().filter(function (c) { return c.i === nombre; }).slice(0, n || 8);
     },
 
     /* recomendaciones: primero de la misma disciplina, luego el resto */
     suggest: function (disc, excludeTitle, n) {
-      var same = POOL.filter(function (c) { return c.d === disc && c.t !== excludeTitle; });
-      var rest = POOL.filter(function (c) { return c.d !== disc && c.t !== excludeTitle; });
+      var todo = A.catalog();
+      var same = todo.filter(function (c) { return c.d === disc && c.t !== excludeTitle; });
+      var rest = todo.filter(function (c) { return c.d !== disc && c.t !== excludeTitle; });
       return same.concat(rest).slice(0, n || 4);
     },
 
@@ -518,6 +569,46 @@
           clase: d.rest ? null : d
         };
       });
+    },
+
+    /* catálogo completo, o sólo el de una disciplina; siempre ordenado de
+       más reciente a más antiguo, que es como abre el catálogo */
+    CATALOG: CATALOG,
+    catalog: function (disc) {
+      return CATALOG.filter(function (c) { return !disc || c.d === disc; })
+                    .sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    },
+    /* fecha corta "17 ago", para la línea de la tarjeta */
+    fechaCorta: function (iso) {
+      var MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+      var p = iso.split('-');
+      return parseInt(p[2], 10) + ' ' + MESES[parseInt(p[1], 10) - 1];
+    },
+    /* La tarjeta de clase del sitio, en un solo lugar. La pintan el catálogo,
+       las páginas de disciplina y el perfil de instructora, así que si cambia
+       el diseño de la tarjeta cambia en las tres. */
+    classCard: function (c, opts) {
+      opts = opts || {};
+      var locked = !A.canWatch({ free: c.free });
+      var meta = c.i + (opts.fecha && c.date ? ' · ' + A.fechaCorta(c.date) : '');
+      return '<a href="' + A.classHref({ t:c.t, i:c.i, d:c.d, m:c.m, x:c.x,
+               p:c.props, free:c.free ? 1 : 0 }) + '" class="ccard"' +
+        ' data-d="' + c.d + '" data-sub="' + (c.sub || '') + '"' +
+        ' data-enfoque="' + (c.foco || '') + '" data-props="' + (c.props || '') + '"' +
+        ' data-date="' + (c.date || '') + '">' +
+        '<div class="art gart ' + c.d + '">' +
+          (c.free ? '<span class="free">Gratis</span>' : '') +
+          (opts.nuevo && c.date >= opts.nuevo ? '<span class="nuevo">Nuevo</span>' : '') +
+          '<span class="len">' + c.m + ':00</span>' +
+          (locked ? '<span class="locked">🔒 Membresía</span>' : '') +
+        '</div>' +
+        '<div class="title">' + c.t + '</div>' +
+        '<div class="meta">' + meta + '</div>' +
+        '<div class="lvl">' + c.x + '</div>' +
+        (c.serie ? '<div class="serie">Serie: <span class="serie-link" data-href="serie.html">' +
+                   c.serie + '</span></div>' : '') +
+        '<div class="tag disc-link" data-d="' + c.d + '">' +
+          A.discLabel(c.d).toUpperCase() + '</div></a>';
     },
 
     DISC_ORDER: DISC_ORDER,
