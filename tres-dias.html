@@ -67,21 +67,21 @@
      de retrasar la entrada. -->
 <div class="wrap section-sm">
   <div class="row-head"><h2>Antes de empezar</h2></div>
-  <div class="intro-card" onclick="openIntro()">
+  <a class="intro-card" href="video-mariana.html">
     <div class="ic-art gart somara" data-img="anyara">
       <span class="ic-play">▶</span>
-      <span class="ic-len">6 min</span>
+      <span class="ic-len">4 min</span>
     </div>
     <div class="ic-b">
       <div class="ic-k">Video de bienvenida</div>
-      <div class="ic-t">Bienvenida, de Mariana</div>
+      <div class="ic-t">Bienvenida de Mariana y recorrido por Anyara</div>
       <p class="ic-d">
-        Cómo está pensada Anyara, cómo leer tu plan y qué esperar de estos tres días.
-        Seis minutos antes de tu primera clase.
+        Qué incluyen estos tres días, cómo se empiezan, qué plan te recomienda
+        y un vistazo a todo lo demás.
       </p>
       <span class="btn btn-dark">Ver el video</span>
     </div>
-  </div>
+  </a>
 </div>
 
 <!-- ===== SIEMPRE ABIERTAS ===== -->
@@ -188,24 +188,6 @@
   <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
   <div class="overlay-top">
     <div class="search-field"><span style="font-size:var(--fs-title);color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
-  </div>
-</div>
-
-<!-- ===== PLAYER DEL VIDEO DE MARIANA ===== -->
-<div class="vp-scrim" id="vp">
-  <button class="vp-close" onclick="closeIntro()">✕</button>
-  <div class="vp">
-    <div class="vp-title"><span>Video de bienvenida</span>Bienvenida, de Mariana</div>
-    <div class="vp-screen gart somara" id="vpScreen" data-img="anyara">
-      <button class="vp-bigplay" id="vpBig" onclick="togglePlay()">▶</button>
-    </div>
-    <div class="vp-bar">
-      <button class="vp-toggle" id="vpToggle" onclick="togglePlay()">▶</button>
-      <span id="vpTime">0:00</span>
-      <div class="vp-timeline" id="vpLine"><i id="vpProg"></i></div>
-      <span>6:00</span>
-      <button class="vp-toggle" title="Pantalla completa">⛶</button>
-    </div>
   </div>
 </div>
 
@@ -338,29 +320,6 @@ document.getElementById('alwaysOpen').innerHTML = open3.map(function (c) {
     '<div class="tag disc-link" data-d="' + c.d + '">' + (DISC_LABELS[c.d] || c.d).toUpperCase() + '</div></a>';
 }).join('');
 
-/* ---- player del video de Mariana (demo) ---- */
-var vpPlaying=false, vpSec=0, vpTotal=360, vpTimer=null;
-function fmt(s){var m=Math.floor(s/60),r=Math.floor(s%60);return m+':'+(r<10?'0':'')+r}
-function paint(){
-  document.getElementById('vpProg').style.width=(vpSec/vpTotal*100)+'%';
-  document.getElementById('vpTime').textContent=fmt(vpSec);
-}
-function openIntro(){ document.getElementById('vp').classList.add('open'); }
-function closeIntro(){
-  document.getElementById('vp').classList.remove('open');
-  if(vpPlaying) togglePlay();
-}
-function togglePlay(){
-  vpPlaying=!vpPlaying;
-  document.getElementById('vpBig').style.display=vpPlaying?'none':'flex';
-  document.getElementById('vpToggle').textContent=vpPlaying?'❚❚':'▶';
-  if(vpPlaying){vpTimer=setInterval(function(){vpSec=Math.min(vpSec+1,vpTotal);paint();},1000);}
-  else{clearInterval(vpTimer);}
-}
-document.getElementById('vpLine').addEventListener('click',function(e){
-  var r=this.getBoundingClientRect();
-  vpSec=Math.round((e.clientX-r.left)/r.width*vpTotal);paint();
-});
 </script>
 </body>
 </html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Anyara — Bienvenida de Mariana</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="logo"><b>A</b>nyara</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Para ti</a>
+      <a href="explorar.html" class="nav-link">Explorar</a>
+      <a href="series.html" class="nav-link">Series</a>
+      <a href="retos.html" class="nav-link">Retos</a>
+      <a href="events.html" class="nav-link">Eventos</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="document.getElementById('ov').classList.add('open')">⌕</button>
+      <a href="profile.html" class="avatar">PK</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap section-sm">
+  <a href="completada.html" class="vd-back">Volver</a>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow">Antes de decidir</div>
+  <h1 style="font-size:var(--fs-page);margin-top:4px">Bienvenida de <em>Mariana</em></h1>
+  <p class="lede" style="margin-top:10px">
+    Cuatro minutos: qué incluyen tus tres días, cómo empezarlos, qué plan te recomienda
+    y un recorrido por todo lo que hay dentro de Anyara.
+  </p>
+</div>
+
+<!-- ===== EL REPRODUCTOR =====
+     No hay video: Mariana todavía no lo graba. En vez de un rectángulo negro
+     que no dice nada, el reproductor muestra lo que va a decir en cada tramo.
+     Sirve para dos cosas a la vez — se puede enseñar el flujo completo sin
+     tener la grabación, y Mariana tiene delante el guion de lo que le toca
+     contar y cuánto dura cada parte. -->
+<div class="wrap section-sm">
+  <div class="sb">
+
+    <div class="sb-flag">
+      <span class="sb-dot"></span>
+      Prototipo · aquí va el video de Mariana. Todavía no está grabado:
+      lo que se ve abajo es el guion de lo que dirá.
+    </div>
+
+    <div class="sb-screen gart somara" data-img="anyara">
+      <div class="sb-veil"></div>
+      <div class="sb-stage">
+        <div class="sb-chapter" id="sbCap">Tramo 1 de 6</div>
+        <h2 class="sb-t" id="sbT"></h2>
+        <p class="sb-d" id="sbD"></p>
+        <ul class="sb-points" id="sbP"></ul>
+      </div>
+      <button class="sb-big" id="sbBig" aria-label="Reproducir">▶</button>
+    </div>
+
+    <div class="sb-bar">
+      <button class="sb-toggle" id="sbToggle" aria-label="Reproducir">▶</button>
+      <span class="sb-time" id="sbNow">0:00</span>
+      <div class="sb-line" id="sbLine">
+        <i id="sbProg"></i>
+        <span class="sb-ticks" id="sbTicks"></span>
+      </div>
+      <span class="sb-time" id="sbTotal">4:00</span>
+      <button class="sb-toggle" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== EL GUION ===== -->
+<div class="wrap section">
+  <div class="row-head">
+    <h2 class="h2-serif">El guion, tramo por tramo</h2>
+    <a href="#" id="sbCopy">Copiar para Mariana</a>
+  </div>
+  <p class="sec-lead">
+    Los tiempos son una propuesta, no una camisa de fuerza. Haz clic en cualquier
+    tramo para verlo en el reproductor.
+  </p>
+  <ol class="sb-list" id="sbList"></ol>
+</div>
+
+<!-- ===== LO QUE SIGUE ===== -->
+<div class="wrap section" id="after">
+  <div class="row-head"><h2 class="h2-serif">Y al terminar el video</h2></div>
+  <p class="sec-lead">
+    Aquí es donde se decide. El video termina y estas son las dos salidas, las
+    mismas que explica Mariana.
+  </p>
+  <div class="exits" style="margin-top:var(--sp-4)">
+    <div class="exit feat">
+      <div class="ex-k">Lo que recomienda</div>
+      <div class="ex-t">Empieza tus tres días</div>
+      <p class="ex-d">
+        Eliges plan hoy y no se cobra nada hasta el día 3. Si no es para ti,
+        cancelas antes y no hay cargo.
+      </p>
+      <a href="membresia.html" class="btn btn-gold">Empezar mis tres días</a>
+    </div>
+    <div class="exit">
+      <div class="ex-k">Si prefieres esperar</div>
+      <div class="ex-t">Sigue con tus clases abiertas</div>
+      <p class="ex-d">
+        Tu clase personalizada y las dos clases abiertas de Anyara siguen ahí,
+        sin costo y sin tarjeta.
+      </p>
+      <a href="index.html" class="btn btn-ghost">Seguir con mis clases abiertas</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo"><b>A</b>nyara</div><p class="about">Muévete con intención.</p></div>
+    <div><h5>Plataforma</h5><a href="explorar.html">Explorar clases</a><a href="coaches.html">Coaches</a><a href="membresia.html">Planes y precios</a></div>
+    <div><h5>Empresa</h5><a href="#">Quiénes somos</a><a href="#">Términos</a></div>
+    <div><h5>Redes</h5><a href="#">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<div class="overlay" id="ov">
+  <button class="overlay-close" onclick="document.getElementById('ov').classList.remove('open')">✕</button>
+  <div class="overlay-top">
+    <div class="search-field"><span style="font-size:var(--fs-title);color:var(--ink-3)">⌕</span><input placeholder="Busca clases, coaches, disciplinas…"></div>
+  </div>
+</div>
+
+<script src="anyara.js"></script>
+<script>
+/* El guion. Es la única fuente: el reproductor, la lista de abajo y las marcas
+   de la línea de tiempo salen todos de aquí, así que no se pueden
+   contradecir. `t` es el segundo en el que empieza el tramo. */
+var GUION = [
+  {
+    t: 0,
+    n: 'Hola, soy Mariana',
+    d: 'Se presenta a cámara y dice en una frase por qué existe Anyara.',
+    p: [
+      'Quién es y desde dónde habla — sin currículum, en corto',
+      'Qué quiere decir "muévete con intención"',
+      'A quién está pensada Anyara: constancia antes que intensidad'
+    ]
+  },
+  {
+    t: 25,
+    n: 'Qué incluyen tus tres días',
+    d: 'La parte más concreta del video. Qué recibe exactamente quien empieza hoy.',
+    p: [
+      'Un plan de día 1, 2 y 3 con cuatro clases cada día',
+      'Armado con lo que respondió en el onboarding, no un plan genérico',
+      'Más las dos clases siempre abiertas y su clase personalizada',
+      'Los retos y las series también se abren durante la prueba'
+    ]
+  },
+  {
+    t: 75,
+    n: 'Cómo se empiezan',
+    d: 'La letra chica, dicha por ella y sin rodeos: es lo que más frena a la gente.',
+    p: [
+      'Se elige plan hoy, pero no se cobra nada hasta el día 3',
+      'Se puede cancelar antes y no hay ningún cargo',
+      'Por qué se pide tarjeta: para que el día 3 siga sin volver a empezar',
+      'Quien no quiera esperar puede saltar la prueba y abrir todo hoy'
+    ]
+  },
+  {
+    t: 110,
+    n: 'El plan que recomiendo',
+    d: 'Su recomendación, con el porqué. No una comparación de tablas.',
+    p: [
+      'El anual: dos meses de regalo frente al mensual',
+      'El argumento: la constancia se construye en meses, no en semanas',
+      'El mensual sigue ahí para quien quiera probar sin compromiso'
+    ]
+  },
+  {
+    t: 150,
+    n: 'Un recorrido por Anyara',
+    d: 'Grabación de pantalla mientras ella narra. Rápido: es un vistazo, no un manual.',
+    p: [
+      'Las siete disciplinas y qué es cada una en una línea',
+      'El catálogo y sus filtros: enfoque, tipo de clase, material y duración',
+      'Tu semana en Anyara y la racha',
+      'La biblioteca: favoritos, completadas y playlists',
+      'Retos y series: programas con principio y final',
+      'Las coaches y los eventos presenciales',
+      'Que está en el teléfono y en la tele, y que la clase sigue donde la dejaste'
+    ]
+  },
+  {
+    t: 220,
+    n: 'Nos vemos en clase',
+    d: 'Cierre corto y cálido. Una sola llamada a la acción, no tres.',
+    p: [
+      'Recordar que la primera clase ya la hizo: esto es seguir, no empezar',
+      'Invitación directa a abrir el día 1',
+      'Se corta al botón de "Empezar mis tres días"'
+    ]
+  }
+];
+var TOTAL = 240;                                   /* 4:00 */
+
+function reloj(s) { return Math.floor(s / 60) + ':' + ('0' + Math.floor(s % 60)).slice(-2); }
+
+/* ---- el tramo que toca según el segundo en el que va ---- */
+function tramoDe(seg) {
+  var i = 0;
+  for (var k = 0; k < GUION.length; k++) if (seg >= GUION[k].t) i = k;
+  return i;
+}
+
+var seg = 0, timer = null, actual = -1;
+var elProg = document.getElementById('sbProg');
+var elNow  = document.getElementById('sbNow');
+
+document.getElementById('sbTotal').textContent = reloj(TOTAL);
+
+/* marcas de tramo sobre la línea de tiempo, como los capítulos de un player */
+document.getElementById('sbTicks').innerHTML = GUION.slice(1).map(function (g) {
+  return '<i style="left:' + (g.t / TOTAL * 100) + '%"></i>';
+}).join('');
+
+function pintarTramo(i) {
+  if (i === actual) return;
+  actual = i;
+  var g = GUION[i];
+  var stage = document.querySelector('.sb-stage');
+  stage.classList.remove('entra');
+  void stage.offsetWidth;                          /* reinicia la animación */
+  stage.classList.add('entra');
+  document.getElementById('sbCap').textContent =
+    'Tramo ' + (i + 1) + ' de ' + GUION.length + ' · ' + reloj(g.t) +
+    '–' + reloj(GUION[i + 1] ? GUION[i + 1].t : TOTAL);
+  document.getElementById('sbT').textContent = g.n;
+  document.getElementById('sbD').textContent = g.d;
+  document.getElementById('sbP').innerHTML = g.p.map(function (x) {
+    return '<li>' + x + '</li>';
+  }).join('');
+  document.querySelectorAll('#sbList > li').forEach(function (li, k) {
+    li.classList.toggle('on', k === i);
+  });
+}
+
+function pintar() {
+  elProg.style.width = (seg / TOTAL * 100) + '%';
+  elNow.textContent = reloj(seg);
+  pintarTramo(tramoDe(seg));
+}
+
+function alternar() {
+  var big = document.getElementById('sbBig');
+  var tog = document.getElementById('sbToggle');
+  if (timer) {
+    clearInterval(timer); timer = null;
+    big.textContent = '▶'; tog.textContent = '▶';
+    document.querySelector('.sb').classList.remove('corriendo');
+    return;
+  }
+  big.textContent = '❚❚'; tog.textContent = '❚❚';
+  document.querySelector('.sb').classList.add('corriendo');
+  timer = setInterval(function () {
+    /* ocho segundos por tic: el recorrido completo se ve en medio minuto,
+       que es lo que aguanta cualquiera en una demo */
+    seg += 8;
+    if (seg >= TOTAL) { seg = TOTAL; alternar(); }
+    pintar();
+  }, 900);
+}
+
+document.getElementById('sbBig').addEventListener('click', alternar);
+document.getElementById('sbToggle').addEventListener('click', alternar);
+
+/* saltar a un punto de la línea, como en cualquier reproductor */
+document.getElementById('sbLine').addEventListener('click', function (e) {
+  var r = this.getBoundingClientRect();
+  seg = Math.max(0, Math.min(TOTAL, Math.round((e.clientX - r.left) / r.width * TOTAL)));
+  pintar();
+});
+
+/* ---- la lista de abajo es el mismo guion, navegable ---- */
+document.getElementById('sbList').innerHTML = GUION.map(function (g, i) {
+  return '<li data-i="' + i + '">' +
+    '<span class="sb-when">' + reloj(g.t) + '</span>' +
+    '<span class="sb-body">' +
+      '<span class="sb-n">' + g.n + '</span>' +
+      '<span class="sb-sub">' + g.d + '</span>' +
+      '<ul>' + g.p.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' +
+    '</span></li>';
+}).join('');
+
+document.getElementById('sbList').addEventListener('click', function (e) {
+  var li = e.target.closest('li[data-i]');
+  if (!li) return;
+  seg = GUION[+li.dataset.i].t;
+  pintar();
+  document.querySelector('.sb').scrollIntoView({ behavior:'smooth', block:'start' });
+});
+
+/* el guion en texto plano, para pasárselo a Mariana sin abrir el prototipo */
+document.getElementById('sbCopy').addEventListener('click', function (e) {
+  e.preventDefault();
+  var texto = 'Video de bienvenida de Mariana — Anyara\n\n' +
+    GUION.map(function (g, i) {
+      return (i + 1) + '. ' + reloj(g.t) + ' · ' + g.n + '\n   ' + g.d + '\n' +
+        g.p.map(function (x) { return '   — ' + x; }).join('\n');
+    }).join('\n\n');
+  var self = this;
+  navigator.clipboard.writeText(texto).then(function () {
+    self.textContent = 'Copiado';
+    setTimeout(function () { self.textContent = 'Copiar para Mariana'; }, 2000);
+  }, function () {
+    self.textContent = 'No se pudo copiar';
+  });
+});
+
+pintar();
+</script>
+</body>
+</html>
