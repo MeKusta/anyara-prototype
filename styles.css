@@ -1,4 +1,21 @@
+/* Figtree, la sustituta libre de Avenir para Windows y Android. En Mac,
+   iPhone y iPad nunca se descarga: "Avenir Next" va antes en la pila y el
+   navegador sólo pide el archivo de la familia que acaba usando. */
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..800;1,300..800&display=swap");
+
 /* ---- Anyara redesign prototype · shared styles ---- */
+
+/* Wisteria, la tipografía de titulares del manual de identidad. Autoalojada:
+   34KB en woff2 y sin depender de nadie. font-display:swap para que el texto
+   se lea desde el primer momento aunque la fuente llegue tarde. */
+@font-face{
+  font-family:"Wisteria";
+  src:url("fonts/Wisteria.woff2") format("woff2"),
+      url("fonts/Wisteria.otf") format("opentype");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
 :root{
   --bg:#ffffff;
   --ink:#1a1a1a;
@@ -22,8 +39,21 @@
      Las dos familias y una escala por rol, no por tamaño: si quieres que
      todos los títulos de sección bajen, mueves --fs-head y se mueven todos.
      Ver estilo.html para el sistema completo en una pantalla. */
+  /* Las tres del manual de identidad, cada una con su papel.
+
+     --display · WISTERIA. La voz de la marca. Es una display de un solo peso
+       con remates muy propios: preciosa en titulares y ruido a 17px, así que
+       vive sólo de --fs-head para arriba. Va autoalojada en fonts/.
+     --serif   · Times New Roman. El serif de apoyo, para los tamaños medios
+       donde Wisteria ya no se lee: títulos de tarjeta, nombres, citas. Es lo
+       que Mariana pidió en la llamada del 2 de septiembre.
+     --sans    · AVENIR, la del manual para subtítulo y cuerpo. No se puede
+       autoalojar — es de sistema en Apple y con licencia de Monotype fuera —
+       así que se usa la real donde existe (todo Mac, iPhone y iPad) y Figtree,
+       que es la más cercana y libre, en Windows y Android. */
+  --display:"Wisteria","Times New Roman",Times,serif;
   --serif:"Times New Roman",Times,serif;
-  --sans:"Helvetica Neue",Arial,sans-serif;
+  --sans:"Avenir Next","Avenir",Figtree,"Helvetica Neue",Arial,sans-serif;
 
   --fs-micro:10px;  /* texto auxiliar diminuto */
   --fs-tiny:12px;   /* botones, chips, notas */
@@ -93,7 +123,7 @@ img{display:block;max-width:100%}
 }
 .logo{
   font-size:var(--fs-title);letter-spacing:.5px;font-style:italic;
-  font-family:var(--serif);font-weight:400;justify-self:start;
+  font-family:var(--display);font-weight:400;justify-self:start;
 }
 .logo b{font-style:normal}
 /* el wordmark se inyecta desde anyara.js; se dimensiona en em para respetar
@@ -137,19 +167,26 @@ img{display:block;max-width:100%}
   font-size:var(--fs-label);letter-spacing:.22em;text-transform:uppercase;
   color:var(--gold-deep);margin-bottom:10px;
 }
-h1{font-size:var(--fs-hero);font-weight:400;line-height:1.08;letter-spacing:-.01em}
+h1{font-family:var(--display);font-size:var(--fs-hero);font-weight:400;line-height:1.16;letter-spacing:-.01em}
 /* Un encabezado de sección es serif regular. La sans en mayúsculas con
    tracking queda reservada para los eyebrows (.eyebrow), que son otra cosa. */
-h2{font-family:var(--serif);font-size:var(--fs-title);font-weight:400;
+h2{font-family:var(--display);font-size:var(--fs-title);font-weight:400;
    letter-spacing:-.01em;text-transform:none;color:var(--ink)}
-.h2-serif{font-family:var(--serif);font-size:var(--fs-head);font-weight:400;letter-spacing:-.01em;text-transform:none}
+.h2-serif{font-family:var(--display);font-size:var(--fs-head);font-weight:400;letter-spacing:-.01em;text-transform:none}
 
 /* ---------- Roles tipográficos ----------
-   La serif itálica es un acento editorial: una palabra o una segunda línea
-   dentro de un display, nunca una interfaz entera. Se usa con <em> dentro de
-   un título, o con .serif-i donde <em> no aplica. */
-h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em, .serif-i{
-  font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
+   El acento dentro de un titular. Antes era la serif en itálica; ahora que el
+   titular es Wisteria no puede serlo: Wisteria tiene un solo peso y ninguna
+   itálica, y meter Times cursiva en la misma línea son dos serifs peleándose.
+   El acento pasa a ser el dorado de la marca, que hace el mismo trabajo — leer
+   una palabra distinta del resto — sin cambiar de letra. */
+h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em{
+  font-style:normal;font-weight:400;letter-spacing:0;color:var(--gold-deep)}
+/* sobre foto o fondo oscuro el dorado profundo se apaga: se usa el claro */
+.hc-content h1 em, .mh-b h1 em, .cover h1 em, .lp-hero-b h1 em,
+.lp-close h2 em, .tv-hero-t em{color:var(--gold)}
+/* .serif-i sigue siendo la itálica editorial donde el titular no es Wisteria */
+.serif-i{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 /* contrapunto: sans semibold junto a la itálica en momentos de portada */
 .sans-b{font-family:var(--sans);font-weight:600;font-style:normal;letter-spacing:-.01em}
 /* bajada de un título: sans, nunca serif */
@@ -487,7 +524,7 @@ h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em, .serif-i{
 .hc-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter) 60px}
 .hc-content{max-width:580px;color:#fff}
 .hc-content .eyebrow{color:#fff;opacity:.92}
-.hc-content h1{color:#fff;font-size:var(--fs-hero);line-height:1.06;margin-bottom:14px}
+.hc-content h1{font-family:var(--display);color:#fff;font-size:var(--fs-hero);line-height:1.14;margin-bottom:14px}
 .hc-content p{font-family:var(--sans);font-size:var(--fs-body);color:rgba(255,255,255,.9);margin-bottom:24px;max-width:470px;line-height:1.55}
 .hc-arrow{display:none}
 .hc-dots{position:absolute;bottom:26px;left:0;right:0;z-index:3;display:flex;gap:9px;justify-content:center}
@@ -847,7 +884,7 @@ body.has-account .anon-only{display:none!important}
   line-height:1.5;margin-top:var(--sp-2);max-width:24ch}
 .ms-k{font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.16em;
   text-transform:uppercase;color:var(--ink-3);margin-bottom:var(--sp-2)}
-.ms-n{font-family:var(--serif);font-size:var(--fs-head);line-height:1}
+.ms-n{font-family:var(--display);font-size:var(--fs-head);line-height:1}
 .ms-u{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);margin-top:6px}
 /* objetivo semanal */
 .ms-week{display:flex;gap:8px;margin-bottom:var(--sp-3)}
@@ -1256,8 +1293,8 @@ body.has-account .anon-only{display:none!important}
   background:var(--dc,var(--gold));margin-bottom:12px;
 }
 .pillar-n{
-  display:block;font-family:var(--serif);font-size:var(--fs-title);
-  line-height:1.1;letter-spacing:-.015em;
+  display:block;font-family:var(--display);font-size:var(--fs-title);
+  line-height:1.2;letter-spacing:-.015em;
 }
 .pillar-d{
   display:block;font-family:var(--sans);font-size:var(--fs-meta);
@@ -1375,7 +1412,7 @@ a.wk:hover{border-color:var(--gold);transform:translateY(-3px)}
   font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.16em;
   text-transform:uppercase;color:rgba(255,255,255,.86);margin-bottom:8px;
 }
-.ccar-t{font-family:var(--serif);font-size:var(--fs-head);line-height:1.08;letter-spacing:-.01em}
+.ccar-t{font-family:var(--display);font-size:var(--fs-head);line-height:1.16;letter-spacing:-.01em}
 .ccar-d{
   font-family:var(--sans);font-size:var(--fs-note);color:rgba(255,255,255,.86);
   margin-top:9px;max-width:46ch;line-height:1.5;
@@ -1554,7 +1591,7 @@ summary:focus-visible,
 }
 .mh-b{max-width:560px;color:#fff}
 .mh-b .eyebrow{color:#fff;opacity:.9}
-.mh-b h1{color:#fff;font-size:var(--fs-hero);line-height:1.06;margin-bottom:10px}
+.mh-b h1{font-family:var(--display);color:#fff;font-size:var(--fs-hero);line-height:1.14;margin-bottom:10px}
 .mh-b p{font-family:var(--sans);font-size:var(--fs-note);color:rgba(255,255,255,.86);margin-bottom:20px}
 .mh-bar{height:4px;border-radius:2px;background:rgba(255,255,255,.28);overflow:hidden;max-width:400px}
 .mh-bar > i{display:block;height:100%;background:var(--gold)}
@@ -2231,8 +2268,8 @@ html.en-marco body > *:not(.vista-stage){display:none!important}
   text-transform:uppercase;color:var(--gold);margin-bottom:12px;
 }
 .sb-t{
-  font-family:var(--serif);font-size:clamp(26px,3.4vw,42px);font-weight:400;
-  color:#fff;line-height:1.1;letter-spacing:-.01em;
+  font-family:var(--display);font-size:clamp(26px,3.4vw,42px);font-weight:400;
+  color:#fff;line-height:1.18;letter-spacing:-.01em;
 }
 .sb-d{
   font-family:var(--sans);font-size:var(--fs-note);color:rgba(255,255,255,.72);

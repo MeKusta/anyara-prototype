@@ -54,7 +54,7 @@
 .lp-hero-b{color:#fff;padding-bottom:clamp(56px,7vw,96px);max-width:36rem}
 .lp-hero-b .eyebrow{color:var(--gold)}
 .lp-hero-b h1{
-  color:#fff;font-size:clamp(40px,5.2vw,68px);line-height:1.02;
+  color:#fff;font-size:clamp(40px,5.2vw,68px);line-height:1.12;
   letter-spacing:-.02em;margin:14px 0 0;
 }
 .lp-lede{
@@ -97,7 +97,7 @@
   gap:var(--sp-4);padding:var(--sp-5) 0;text-align:center;
 }
 .lp-stat-row b{
-  display:block;font-family:var(--serif);font-size:var(--fs-head);font-weight:400;
+  display:block;font-family:var(--display);font-size:var(--fs-head);font-weight:400;
   letter-spacing:-.01em;
 }
 .lp-stat-row span{
@@ -108,7 +108,7 @@
 /* -------------------------------------------------------------- cabezas */
 .lp-head{max-width:46rem;margin-bottom:var(--sp-5)}
 .lp-head-c{margin-left:auto;margin-right:auto;text-align:center}
-.lp-head h2{font-size:var(--fs-page);line-height:1.1;margin-top:10px;letter-spacing:-.015em}
+.lp-head h2{font-size:var(--fs-page);line-height:1.18;margin-top:10px;letter-spacing:-.015em}
 .lp-head .sec-lead{margin-top:12px;font-size:var(--fs-lede);line-height:1.55}
 .lp-head-c .sec-lead{margin-left:auto;margin-right:auto}
 /* marca de prototipo, igual que en el resto del proyecto */
@@ -231,7 +231,7 @@
   font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.18em;
   text-transform:uppercase;color:var(--ink-2);
 }
-.lp-plan-p{font-family:var(--serif);font-size:var(--fs-hero);line-height:1;margin-top:10px}
+.lp-plan-p{font-family:var(--display);font-size:var(--fs-hero);line-height:1;margin-top:10px}
 .lp-plan-p small{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2)}
 .lp-plan-d{
   font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);
@@ -268,7 +268,7 @@
   position:relative;z-index:2;max-width:40rem;margin:0 auto;
   padding:clamp(64px,9vw,120px) var(--gutter);color:#fff;
 }
-.lp-close h2{color:#fff;font-size:var(--fs-page);line-height:1.1;letter-spacing:-.015em}
+.lp-close h2{color:#fff;font-size:var(--fs-page);line-height:1.18;letter-spacing:-.015em}
 .lp-close p{
   font-family:var(--sans);font-size:var(--fs-lede);color:rgba(255,255,255,.82);
   line-height:1.6;margin:16px 0 30px;
@@ -360,7 +360,7 @@
   .lp-top-cta .btn{min-height:42px;padding:0 16px;font-size:var(--fs-meta)}
 
   .lp-hero-in{padding-top:36px}
-  .lp-hero-b h1{font-size:clamp(34px,9vw,44px)}
+  .lp-hero-b h1{font-size:clamp(34px,9vw,44px);line-height:1.14}
   .lp-hero-art::after{
     background:linear-gradient(0deg,rgba(16,14,12,.94) 22%,rgba(16,14,12,.55) 62%,rgba(16,14,12,.3) 100%);
   }
