@@ -1224,11 +1224,6 @@ body.has-account .anon-only{display:none!important}
   color:rgba(255,255,255,.75);font-size:var(--fs-body);cursor:pointer}
 .charge-note .cn-x:hover{color:#fff}
 
-/* ---------- Day picker (prototype-only time machine) ---------- */
-  text-transform:uppercase;color:var(--ink-3);padding:0 4px 0 8px}
-  color:var(--ink-2);font-family:var(--sans);font-size:var(--fs-label);font-weight:600;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
-
 /* ---------- Video player (demo) ---------- */
 .vp-scrim{position:fixed;inset:0;z-index:140;background:rgba(12,10,9,.96);display:none;align-items:center;justify-content:center}
 .vp-scrim.open{display:flex}
