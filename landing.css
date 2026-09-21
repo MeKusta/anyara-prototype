@@ -115,7 +115,7 @@
 .lp-mark{
   display:inline-block;margin-top:14px;border:1px dashed var(--ink-3);border-radius:100px;
   padding:6px 14px;font-family:var(--sans);font-size:var(--fs-micro);
-  letter-spacing:.12em;text-transform:uppercase;color:var(--wine);font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--util);font-weight:700;
 }
 
 /* ------------------------------------------------------------- problema */

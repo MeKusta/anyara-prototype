@@ -54,7 +54,10 @@
 @media (max-width:767px){.sg-fams{grid-template-columns:1fr}}
 .sg-uni{margin-bottom:var(--sp-5)}
 .sg-uni-n{font-family:var(--display);font-weight:var(--display-w);font-size:var(--fs-sub);margin-bottom:10px}
-.sg-uni-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sg-uni-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+/* el quinto no viene del deck: borde punteado para que se lea como derivado */
+.sg-uni-sw.sg-uni-der span{border-style:dashed;border-color:var(--ink-3)}
+.sg-uni-sw.sg-uni-der code{font-style:italic}
 .sg-uni-sw span{display:block;height:64px;border-radius:8px;border:1px solid var(--line)}
 .sg-uni-sw b{display:block;font-family:var(--sans);font-size:var(--fs-micro);color:var(--ink-2);margin-top:6px;font-weight:600}
 .sg-uni-sw code{display:block;font-size:var(--fs-micro);color:var(--ink-3)}
@@ -138,8 +141,16 @@
   <p class="sg-note">
     Cada disciplina tiene su propia paleta de cuatro tonos, tal cual vienen impresos en el deck
     de rebranding. No es un color de acento por disciplina: es un mundo, y es la idea que
-    sostiene el rebranding. <code>--u3</code> es el color de firma y también alimenta
-    <code>--dc</code>, que es lo que ya usaban las tarjetas y los degradados.
+    sostiene el rebranding. Cuál de los cuatro es el color de firma cambia según la
+    disciplina —el deck no los ordena de claro a oscuro—, así que <code>--dc</code> se
+    fija a mano por universo y es lo que ya usaban las tarjetas y los degradados.
+  </p>
+  <p class="sg-note">
+    El quinto tono no viene del deck: es <code>--u-ink</code>, el color de firma oscurecido
+    para texto chico. Barre y Pilates Mat son demasiado claros para leerse (2.6:1 y 3.0:1
+    sobre blanco), así que los epígrafes y las etiquetas usan esta versión, que pasa 4.5:1
+    en las seis sin perder el matiz. Para fondos, bordes y áreas grandes se sigue usando
+    <code>--dc</code> tal cual.
   </p>
   <div id="sgUniversos"></div>
 </div>
@@ -474,13 +485,20 @@ document.getElementById('space').innerHTML = pick(function (t) {
     var tonos = ['--u1','--u2','--u3','--u4'].map(function (t) {
       return cs.getPropertyValue(t).trim();
     });
+    /* --u-ink es un color-mix(), así que leer la variable devuelve la fórmula
+       sin resolver. Se pinta en una propiedad de verdad para sacar el rgb. */
+    probe.style.color = 'var(--u-ink)';
+    var ink = getComputedStyle(probe).color;
     probe.remove();
     return '<div class="sg-uni">' +
       '<div class="sg-uni-n">' + Anyara.discLabel(d) + '</div>' +
       '<div class="sg-uni-row">' + tonos.map(function (hex, i) {
         return '<div class="sg-uni-sw"><span style="background:' + hex + '"></span>' +
           '<b>--u' + (i + 1) + '</b><code>' + hex + '</code></div>';
-      }).join('') + '</div></div>';
+      }).join('') +
+      '<div class="sg-uni-sw sg-uni-der"><span style="background:' + ink + '"></span>' +
+        '<b>--u-ink</b><code>derivado</code></div>' +
+      '</div></div>';
   }).join('');
 })();
 </script>

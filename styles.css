@@ -44,7 +44,15 @@
   --gold-tint:var(--brand-tint);
   --sand:#f5f2ec;
   --sand-2:#efeae1;
-  --wine:#7c2d38;   /* insignia "Nuevo" */
+  /* --util es para las marcas de prototipo — el chip "Prototipo" de la barra,
+     la sección de Ajustes, el aviso de testimonios de ejemplo. Tiene que NO
+     ser el color de marca a propósito: si fuera vino se leería como parte del
+     producto, que es justo lo contrario de lo que esas marcas quieren decir. */
+  --util:#5B6470;
+  /* --wine queda como alias de la marca. Era un burdeos aparte de cuando el
+     acento era dorado; al volverse vino la marca, tener dos rojos a cinco
+     grados de distancia sólo parecía un error. */
+  --wine:var(--brand);
   --radius:14px;
   /* Ancho del contenido. El tope en px evita líneas kilométricas en monitores
      grandes; el 94vw garantiza que nunca toque el borde en pantallas chicas. */
@@ -130,6 +138,12 @@
 .sculpt,.barre,.pilatesmat,.somara,.funcional,.tone{
   --u-soft:color-mix(in srgb, var(--dc) 9%, #fff);
   --u-line:color-mix(in srgb, var(--dc) 22%, #fff);
+  /* Para texto chico el color de firma no alcanza: Barre (#DB8E7B) da 2.57:1
+     sobre blanco y Pilates Mat (#7F97B8) 2.99:1. Esta mezcla lo oscurece lo
+     justo para pasar 4.5:1 en las seis disciplinas sin perder el matiz —62%
+     es la proporción más clara que lo consigue. Los hex del deck no se tocan;
+     --dc sigue siendo el color de firma para fondos, bordes y áreas grandes. */
+  --u-ink:color-mix(in srgb, var(--dc) 62%, #241C1E);
 }
 
 /* discipline art: la foto va encima y el degradado queda debajo, así que si
@@ -750,7 +764,7 @@ body.has-account .anon-only{display:none!important}
 
 /* ---------- "Nuevo": pill compacto arriba-izquierda ---------- */
 .ccard .art .nuevo{position:absolute;top:12px;left:12px;z-index:2;
-  background:var(--wine);color:#fff;border-radius:8px;
+  background:var(--brand);color:#fff;border-radius:8px;
   font-family:var(--sans);font-size:var(--fs-tiny);font-weight:600;
   padding:5px 11px}
 /* si la clase es nueva Y gratis, "Gratis" baja para no encimarse */
@@ -1044,8 +1058,10 @@ body.has-account .anon-only{display:none!important}
   justify-content:flex-start;margin-top:var(--sp-5)}
 .vd-info{flex:1;min-width:0;max-width:760px}
 .vd-cat{font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.2em;
-  text-transform:uppercase;color:var(--wine);margin-bottom:var(--sp-2)}
-.vd-cat a{color:var(--wine)}
+  /* el epígrafe toma el color de la disciplina, no el de la marca: en la
+     ficha de una clase de Barre tiene que decir Barre también en color */
+  text-transform:uppercase;color:var(--u-ink,var(--brand));margin-bottom:var(--sp-2)}
+.vd-cat a{color:var(--u-ink,var(--brand))}
 .vd-cat a:hover{text-decoration:underline;text-underline-offset:3px}
 .vd-title{font-family:var(--serif);font-size:var(--fs-page);font-weight:var(--serif-w);
   line-height:1.12;letter-spacing:-.01em}
@@ -1766,7 +1782,7 @@ button.link-a{background:none;border:none;padding:0;cursor:pointer;font:inherit}
 .proto-b:hover{border-color:var(--ink-2);color:var(--ink)}
 .proto-tag{
   font-size:var(--fs-micro);letter-spacing:.14em;text-transform:uppercase;
-  font-weight:700;color:var(--wine);
+  font-weight:700;color:var(--util);
 }
 .proto-v{font-weight:500;color:var(--ink)}
 .proto-ch{font-size:var(--fs-micro);color:var(--ink-3)}
@@ -1844,7 +1860,7 @@ html.en-marco body > *:not(.vista-stage){display:none!important}
 .set-proto h2{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .proto-mark{
   font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.14em;
-  text-transform:uppercase;font-weight:700;color:var(--wine);
+  text-transform:uppercase;font-weight:700;color:var(--util);
 }
 .settings-nav .nav-proto{color:var(--ink-3)}
 
@@ -2462,11 +2478,12 @@ body.sculpt .wrap > .grid4,body.barre .wrap > .grid4{background:none}
 
 /* la etiqueta de disciplina de cada tarjeta se pinta con su universo */
 .ccard .tag,.tag.disc-link{
-  background:var(--u-soft);color:var(--dc);border:1px solid var(--u-line);
+  background:var(--u-soft);color:var(--u-ink);border:1px solid var(--u-line);
 }
 
 /* el título de la portada y los datos, sobre el color de firma */
-.dp-info .vd-cat a,.cover .cover-in .eyebrow{color:var(--dc)}
+.dp-info .vd-cat a{color:var(--u-ink)}
+.cover .cover-in .eyebrow{color:var(--dc)}
 
 /* ---- la tira de progreso de un programa ----
    Un reto o una serie no son una lista de clases: son algo que empiezas y

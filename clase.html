@@ -163,6 +163,11 @@ var cls = {
 var discLabel = Anyara.discLabel(cls.d);
 document.title = 'Anyara — ' + cls.t;
 
+/* La ficha entra al universo de su disciplina, igual que disciplina.html: es
+   lo que pone --dc (y con él --u-ink y los tintes) en alcance para toda la
+   página. Sin esto el epígrafe caía al color de marca en las seis. */
+document.body.classList.add(cls.d);
+
 /* ---- 1 · video ---- */
 document.getElementById('vpScreen').classList.add(cls.d);
 document.getElementById('vpTotal').textContent = cls.m + ':00';
