@@ -52,7 +52,7 @@
   gap:var(--sp-6);align-items:end;
 }
 .lp-hero-b{color:#fff;padding-bottom:clamp(56px,7vw,96px);max-width:36rem}
-.lp-hero-b .eyebrow{color:var(--gold)}
+.lp-hero-b .eyebrow{color:var(--brand-light)}
 .lp-hero-b h1{
   color:#fff;font-size:clamp(40px,5.2vw,68px);line-height:1.12;
   letter-spacing:-.02em;margin:14px 0 0;
@@ -394,4 +394,20 @@
   .lp-sticky-in{padding:10px var(--gutter);gap:12px}
   .lp-sticky-t span{display:none}
   .lp-sticky-t b{font-size:var(--fs-meta)}
+}
+
+/* ---- el subtítulo y la floritura de la portada ----
+   La composición de la lámina 21 del deck: el titular manda, la cursiva lo
+   matiza y el manuscrito firma. */
+.lp-sub{
+  font-family:var(--serif);font-style:italic;font-weight:500;
+  font-size:clamp(20px,2.3vw,30px);color:rgba(255,255,255,.9);
+  margin-top:8px;line-height:1.25;
+}
+.lp-script{
+  display:inline-block;color:var(--brand-light);
+  font-size:.62em;vertical-align:.35em;margin-left:.4em;white-space:nowrap;
+}
+@media (max-width:767px){
+  .lp-script{display:block;margin:6px 0 0;font-size:.8em;vertical-align:0}
 }

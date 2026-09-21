@@ -42,6 +42,10 @@
     </div>
   </div>
 
+  <!-- Progreso del programa y el video de "cómo abordarlo", como pide la
+       lámina 23 del deck: esto es un programa, no una lista de clases. -->
+  <div id="progPrograma"></div>
+
   <div class="vd-rule"></div>
 
   <div class="dp-sections">
@@ -116,5 +120,12 @@
 </div>
 
 <script src="anyara.js"></script>
+<script>
+document.getElementById("progPrograma").innerHTML = Anyara.programaHTML({
+  id:"fuerza", tipo:"serie", total:3, href:"clase.html?t=Sculpt%20Total&i=Valeria%20M%C3%A9ndez&d=sculpt&m=60"
+});
+document.querySelector("[data-intro]").setAttribute("data-titulo","Fuerza Total");
+document.querySelector("[data-intro]").setAttribute("data-disc","sculpt");
+</script>
 </body>
 </html>

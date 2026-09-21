@@ -52,6 +52,13 @@
 .sg-fam-d{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);line-height:1.6}
 .sg-fam-d b{color:var(--ink)}
 @media (max-width:767px){.sg-fams{grid-template-columns:1fr}}
+.sg-uni{margin-bottom:var(--sp-5)}
+.sg-uni-n{font-family:var(--display);font-weight:var(--display-w);font-size:var(--fs-sub);margin-bottom:10px}
+.sg-uni-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sg-uni-sw span{display:block;height:64px;border-radius:8px;border:1px solid var(--line)}
+.sg-uni-sw b{display:block;font-family:var(--sans);font-size:var(--fs-micro);color:var(--ink-2);margin-top:6px;font-weight:600}
+.sg-uni-sw code{display:block;font-size:var(--fs-micro);color:var(--ink-3)}
+@media (max-width:767px){.sg-uni-row{grid-template-columns:repeat(2,1fr)}}
 .sg-probe-search{font-family:var(--serif);font-size:var(--fs-head);line-height:normal;color:var(--ink)}
 </style>
 </head>
@@ -90,7 +97,7 @@
     </p>
     <ol>
       <li>Abre <code>styles.css</code> y busca <code>:root{</code> — está en las primeras líneas.</li>
-      <li>Cambia el valor que quieras, por ejemplo <code>--gold:#c9a86a</code>.</li>
+      <li>Cambia el valor que quieras, por ejemplo <code>--brand:#99152E</code>.</li>
       <li>Guarda y recarga. Listo.</li>
     </ol>
   </div>
@@ -123,6 +130,18 @@
 <div class="wrap sg-sec">
   <div class="row-head"><h2>Espaciado</h2></div>
   <div class="sg-space" id="space"></div>
+</div>
+
+<!-- ===== LOS UNIVERSOS ===== -->
+<div class="wrap sg-sec">
+  <div class="row-head"><h2>Los universos</h2></div>
+  <p class="sg-note">
+    Cada disciplina tiene su propia paleta de cuatro tonos, tal cual vienen impresos en el deck
+    de rebranding. No es un color de acento por disciplina: es un mundo, y es la idea que
+    sostiene el rebranding. <code>--u3</code> es el color de firma y también alimenta
+    <code>--dc</code>, que es lo que ya usaban las tarjetas y los degradados.
+  </p>
+  <div id="sgUniversos"></div>
 </div>
 
 <!-- ===== COMPONENTES ===== -->
@@ -221,12 +240,12 @@
   <p class="sg-note">Clase en 16:10; compilación en 4:5. La forma sola ya dice cuál es cuál.</p>
   <div class="grid4">
     <a href="#" class="ccard">
-      <div class="art gart pilates"><span class="len">40:00</span></div>
+      <div class="art gart pilatesmat"><span class="len">40:00</span></div>
       <div class="title">Tarjeta de clase</div>
       <div class="meta">Instructora</div>
       <div class="lvl">Intermedio</div>
       <div class="serie">Serie: <span class="serie-link" data-href="serie.html">Fuerza Total</span></div>
-      <div class="tag disc-link" data-d="pilates">PILATES</div>
+      <div class="tag disc-link" data-d="pilatesmat">PILATES</div>
     </a>
     <a href="#" class="compcard">
       <div class="art gart somara"><span class="count">6 clases</span></div>
@@ -290,7 +309,7 @@ document.getElementById('colors').innerHTML = colores.map(function (t) {
 }).join('');
 
 /* ---- disciplinas: --dc vive en cada clase, no en :root ---- */
-var DISCS = ['barre','funcional','pilatesmat','pilates','sculpt','somara','tone'];
+var DISCS = ['sculpt','barre','pilatesmat','somara','funcional','tone'];
 document.getElementById('discs').innerHTML = DISCS.map(function (d) {
   var probe = document.createElement('div');
   probe.className = d; probe.style.display = 'none';
@@ -442,6 +461,28 @@ document.getElementById('space').innerHTML = pick(function (t) {
   return '<div><i style="width:' + t.value + ';height:' + t.value + '"></i>' +
     t.name.replace('--sp-', '') + '<br>' + t.value + '</div>';
 }).join('');
+
+/* ---- los seis universos, leídos del CSS ---- */
+(function () {
+  var cont = document.getElementById('sgUniversos');
+  if (!cont) return;
+  cont.innerHTML = Anyara.DISC_ORDER.map(function (d) {
+    var probe = document.createElement('div');
+    probe.className = d; probe.style.display = 'none';
+    document.body.appendChild(probe);
+    var cs = getComputedStyle(probe);
+    var tonos = ['--u1','--u2','--u3','--u4'].map(function (t) {
+      return cs.getPropertyValue(t).trim();
+    });
+    probe.remove();
+    return '<div class="sg-uni">' +
+      '<div class="sg-uni-n">' + Anyara.discLabel(d) + '</div>' +
+      '<div class="sg-uni-row">' + tonos.map(function (hex, i) {
+        return '<div class="sg-uni-sw"><span style="background:' + hex + '"></span>' +
+          '<b>--u' + (i + 1) + '</b><code>' + hex + '</code></div>';
+      }).join('') + '</div></div>';
+  }).join('');
+})();
 </script>
 </body>
 </html>

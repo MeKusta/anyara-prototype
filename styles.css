@@ -6,6 +6,16 @@
 
 /* ---- Anyara redesign prototype · shared styles ---- */
 
+/* Amsterdam Four, la de acentos del deck. Autoalojada: 39KB en woff2. Es de
+   pago (Lettersiro) — el archivo declara fsType 0, pero para producción hace
+   falta confirmar la licencia web con la fundición. */
+@font-face{
+  font-family:"Amsterdam Four";
+  src:url("fonts/AmsterdamFour.woff2") format("woff2"),
+      url("fonts/AmsterdamFour.ttf") format("truetype");
+  font-weight:400;font-style:normal;font-display:swap;
+}
+
 :root{
   --bg:#ffffff;
   --ink:#1a1a1a;
@@ -13,9 +23,25 @@
   --ink-3:#9a9a9a;
   --line:#e7e4dd;
   --line-2:#f0ede6;
-  --gold:#c9a86a;
-  --gold-deep:#b08f4f;
-  --gold-tint:#f7f1e5;
+  /* ---- el color de marca ----
+     El dorado no aparece en ninguna lámina del deck; el vino de las portadas
+     sí. Se cambia el valor y no el nombre del token: --gold lo usan unas
+     doscientas reglas y renombrarlas sería mover mucho por muy poco. El
+     nombre real es --brand; --gold queda como alias para que todo lo que ya
+     existía tome el color nuevo sin tocarse.
+
+     El vino está tomado de la portada del deck. Es el único valor que no
+     venía impreso — las seis paletas de disciplina sí — así que si Mariana
+     tiene un hex exacto de marca, se cambia aquí y cambia en todas. */
+  --brand:#99152E;
+  --brand-deep:#6E0A1C;
+  --brand-tint:#F7EBEE;
+  /* El vino es un color oscuro: sobre foto o fondo negro desaparece. Ésta es
+     su versión clara, para acentos sobre superficies oscuras. */
+  --brand-light:#E0A3AE;
+  --gold:var(--brand);
+  --gold-deep:var(--brand-deep);
+  --gold-tint:var(--brand-tint);
   --sand:#f5f2ec;
   --sand-2:#efeae1;
   --wine:#7c2d38;   /* insignia "Nuevo" */
@@ -44,6 +70,10 @@
   --display:"League Spartan","Helvetica Neue",Arial,sans-serif;
   --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
   --sans:"Avenir Next","Avenir",Figtree,"Helvetica Neue",Arial,sans-serif;
+  /* --script · AMSTERDAM FOUR. Los acentos del deck: la palabra suelta,
+     manuscrita, en vino. No es el <em> de dentro de una frase — eso es la
+     cursiva de Cormorant — sino la floritura que acompaña a un titular. */
+  --script:"Amsterdam Four","Snell Roundhand",cursive;
 
   /* League Spartan es una geométrica pesada: los títulos piden peso alto y
      el tracking cerrado que se ve en la guía. Cormorant corre chica y fina,
@@ -74,20 +104,41 @@
   --sp-5:32px;
   --sp-6:44px;
 }
-/* discipline signature colors — each sets --dc, which drives BOTH the
-   pill dot and the .gart card gradient so they always stay in sync */
-.barre{--dc:#c96f6f}       /* light red */
-.funcional{--dc:#6d8cb0}   /* blue */
-.pilatesmat{--dc:#cbab3c}  /* yellow */
-.pilates{--dc:#7a9b78}     /* green (assigned — no color was specified) */
-.sculpt{--dc:#9c4f4f}      /* dark red */
-.somara{--dc:#d1854a}      /* orange */
-.tone{--dc:#a6abb0}        /* silver */
+/* ---- LOS UNIVERSOS ----
+   Cada disciplina tiene su propia paleta de cuatro tonos, tal cual vienen
+   impresos en el deck de rebranding. No es un color de acento por disciplina:
+   es un mundo entero, y es la idea que sostiene todo el rebranding.
+
+     --u1  el claro, casi neutro — fondos de sección
+     --u2  el medio — degradados, superficies
+     --u3  el fuerte — el color con el que se identifica la disciplina
+     --u4  el oscuro — texto sobre claro, fondos profundos
+
+   --dc se queda como alias de --u3 para que todo lo que ya lo usaba siga
+   funcionando sin tocarse. */
+.sculpt    {--u1:#35060B;--u2:#6E0A1C;--u3:#99152E;--u4:#D51E3F;--dc:#99152E}
+.barre     {--u1:#F3DDD3;--u2:#E7B2A4;--u3:#DB8E7B;--u4:#B96D69;--dc:#DB8E7B}
+.pilatesmat{--u1:#E8E0DB;--u2:#C7CCB2;--u3:#B8C7DB;--u4:#7F97B8;--dc:#7F97B8}
+.somara    {--u1:#E7E1DC;--u2:#F05C3A;--u3:#B64929;--u4:#1E1715;--dc:#B64929}
+.funcional {--u1:#E7E3DE;--u2:#2D67EB;--u3:#1BABFF;--u4:#1D1B20;--dc:#2D67EB}
+.tone      {--u1:#ECE8E2;--u2:#B12F63;--u3:#6C1C42;--u4:#1D1B1E;--dc:#B12F63}
+
+/* Los cuatro tonos vienen tal cual del deck, pero no forman una rampa de
+   claro a oscuro consistente: Sculpt va de oscuro a brillante y las demás al
+   revés. Así que en vez de suponer cuál es "el claro", los tintes de fondo se
+   derivan del color de firma. Los valores impresos no se tocan. */
+.sculpt,.barre,.pilatesmat,.somara,.funcional,.tone{
+  --u-soft:color-mix(in srgb, var(--dc) 9%, #fff);
+  --u-line:color-mix(in srgb, var(--dc) 22%, #fff);
+}
+
 /* discipline art: la foto va encima y el degradado queda debajo, así que si
    una imagen falta o falla el bloque nunca se ve vacío. anyara.js pone --art */
 .gart{
+  /* el degradado de respaldo recorre el universo de la disciplina en vez de
+     aclarar un solo color: se parece mucho más a las láminas del deck */
   background-image:var(--art,none),
-    linear-gradient(135deg,var(--dc,#8a7d68),color-mix(in srgb,var(--dc,#8a7d68) 48%,#fff));
+    linear-gradient(135deg,var(--u2,#8a7d68) 0%,var(--u3,#6f6354) 55%,var(--u4,#4a4139) 100%);
   background-size:cover;background-position:center;background-repeat:no-repeat;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -185,9 +236,25 @@ h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em, .serif-i{
   font-family:var(--serif);font-style:italic;font-weight:600;
   letter-spacing:0;font-size:1.12em;color:var(--gold-deep);
 }
-/* sobre foto o fondo oscuro el dorado profundo se apaga: se usa el claro */
-.hc-content h1 em, .mh-b h1 em, .cover h1 em, .lp-hero-b h1 em,
-.lp-close h2 em, .tv-hero-t em{color:var(--gold)}
+/* ---- el acento manuscrito ----
+   La floritura del deck: una palabra suelta, escrita a mano, en vino. No va
+   dentro de una frase — para eso está la cursiva de Cormorant — sino al lado
+   o debajo de un titular, como firma. Se usa con cuentagotas: en cuanto
+   aparece dos veces en una pantalla deja de ser un acento. */
+.script{
+  font-family:var(--script);font-weight:400;font-style:normal;
+  color:var(--brand);letter-spacing:.01em;line-height:1.1;
+  /* Amsterdam Four tiene la caja muy alta y la x muy baja: a igual px se ve
+     bastante más chica que el resto */
+  font-size:1.45em;
+}
+.script-light{color:var(--brand-tint)}
+
+/* sobre foto o fondo oscuro el vino se apaga: se usa su versión clara */
+.hc-content h1 em,.hc-content .hc-h em, .mh-b h1 em, .cover h1 em,
+.lp-hero-b h1 em, .lp-close h2 em, .tv-hero-t em{color:var(--brand-light)}
+.cover .cover-in .eyebrow,.lp-hero-b .eyebrow,.lp-close .eyebrow,
+.hc-content .eyebrow,.mh-b .eyebrow{color:var(--brand-light);opacity:1}
 
 .sans-b{font-family:var(--sans);font-weight:600;font-style:normal;letter-spacing:-.01em}
 /* bajada de un título: sans, nunca serif */
@@ -525,7 +592,10 @@ h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em, .serif-i{
 .hc-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter) 60px}
 .hc-content{max-width:580px;color:#fff}
 .hc-content .eyebrow{color:#fff;opacity:.92}
-.hc-content h1{font-family:var(--display);color:#fff;font-size:var(--fs-hero);line-height:1.06;margin-bottom:14px;font-weight:var(--display-w);letter-spacing:var(--display-ls)}
+/* .hc-h son las diapositivas 2 y 3: pasaron de h1 a h2 para dejar un solo h1
+   por página y se quedaron heredando el color de tinta de h2, oscuro sobre
+   foto. Van con el mismo tratamiento que la primera. */
+.hc-content h1,.hc-content .hc-h{font-family:var(--display);color:#fff;font-size:var(--fs-hero);line-height:1.06;margin-bottom:14px;font-weight:var(--display-w);letter-spacing:var(--display-ls)}
 .hc-content p{font-family:var(--sans);font-size:var(--fs-body);color:rgba(255,255,255,.9);margin-bottom:24px;max-width:470px;line-height:1.55}
 .hc-arrow{display:none}
 .hc-dots{position:absolute;bottom:26px;left:0;right:0;z-index:3;display:flex;gap:9px;justify-content:center}
@@ -2366,3 +2436,64 @@ html.en-marco body > *:not(.vista-stage){display:none!important}
 .plancompare .pc-t,
 .lp-test blockquote,
 .coach-name{font-size:1.08em}
+
+
+/* ============================================================================
+   LOS UNIVERSOS EN LA PÁGINA DE DISCIPLINA
+   ----------------------------------------------------------------------------
+   El deck no pide un color de acento por disciplina, pide que cada una sea un
+   mundo. Aquí es donde más se nota: al entrar a Barre la página se tiñe de
+   Barre. El tinte es suave a propósito — la foto y el título llevan el peso,
+   el fondo sólo acompaña.
+   ========================================================================= */
+body.sculpt,body.barre,body.pilatesmat,
+body.somara,body.funcional,body.tone{background:var(--u-soft)}
+/* el contenido sigue sobre blanco para que las tarjetas no se ensucien */
+body.sculpt .wrap > .grid4,body.barre .wrap > .grid4{background:none}
+
+/* la franja de subcategorías toma el universo */
+.subbar{
+  background:var(--u-soft);border-radius:var(--radius);
+  padding:var(--sp-4);margin-bottom:var(--sp-5);
+}
+.subchip{border-color:var(--u-line)}
+.subchip.on{border-color:var(--dc);border-width:2px}
+.subchip .sc-n{color:var(--ink)}
+
+/* la etiqueta de disciplina de cada tarjeta se pinta con su universo */
+.ccard .tag,.tag.disc-link{
+  background:var(--u-soft);color:var(--dc);border:1px solid var(--u-line);
+}
+
+/* el título de la portada y los datos, sobre el color de firma */
+.dp-info .vd-cat a,.cover .cover-in .eyebrow{color:var(--dc)}
+
+/* ---- la tira de progreso de un programa ----
+   Un reto o una serie no son una lista de clases: son algo que empiezas y
+   terminas. La tira dice dónde vas, sin caja — con el mismo lenguaje de
+   línea y jerarquía del resto. */
+.prog-strip{
+  border-top:1px solid var(--line);padding:var(--sp-4) 0 0;margin-top:var(--sp-5);
+  max-width:46rem;
+}
+.prog-strip.on{border-top-color:var(--ink)}
+.ps-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--sp-4)}
+.ps-k{
+  font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.18em;
+  text-transform:uppercase;color:var(--brand-deep);font-weight:600;
+}
+.ps-stop{
+  background:none;border:none;cursor:pointer;padding:0;
+  font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-3);
+  border-bottom:1px solid transparent;
+}
+.ps-stop:hover{color:var(--ink);border-bottom-color:var(--line)}
+.ps-n{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);margin-top:10px}
+.ps-n b{font-family:var(--display);font-weight:var(--display-w);font-size:var(--fs-sub);color:var(--ink)}
+.ps-bar{height:4px;border-radius:2px;background:var(--sand-2);overflow:hidden;margin-top:10px}
+.ps-bar > i{display:block;height:100%;background:var(--brand);border-radius:2px}
+.ps-cta{display:flex;gap:var(--sp-4);align-items:center;flex-wrap:wrap;margin-top:var(--sp-4)}
+@media (max-width:767px){
+  .ps-cta{display:grid;gap:10px}
+  .ps-cta .btn,.ps-cta .dp-save{width:100%}
+}

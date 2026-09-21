@@ -49,6 +49,10 @@
     </div>
   </div>
 
+  <!-- Progreso del programa y el video de "cómo abordarlo", como pide la
+       lámina 23 del deck: esto es un programa, no una lista de clases. -->
+  <div id="progPrograma"></div>
+
   <div class="vd-rule"></div>
 
   <div class="dp-sections">
@@ -164,6 +168,13 @@
 </div>
 
 <script src="anyara.js"></script>
+<script>
+document.getElementById("progPrograma").innerHTML = Anyara.programaHTML({
+  id:"volver", tipo:"reto", total:6, href:"clase.html?t=Barre%20Esencial&i=Valeria%20M%C3%A9ndez&d=barre&m=45&reto=volver&dia=1"
+});
+document.querySelector("[data-intro]").setAttribute("data-titulo","Reto Volver a Ti");
+document.querySelector("[data-intro]").setAttribute("data-disc","somara");
+</script>
 <script>
 document.getElementById('retoPlay').addEventListener('click', function () {
   Anyara.trailer({ kicker:'Tráiler del reto', titulo:'Reto Volver a Ti', disc:'somara', segundos:105 });

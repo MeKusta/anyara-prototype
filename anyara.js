@@ -9,7 +9,7 @@
                     the whole catalog — that is what skipping the trial buys.
    - 3 · pagada  → full access, no locks anywhere. */
 (function () {
-  var VERSION = '1.26.01';
+  var VERSION = '1.27.00';
 
   /* Wordmark de Anyara. Va inline y con fill=currentColor para que herede
      el color del contexto — en fondo claro sale en tinta, en el player y en
@@ -49,8 +49,7 @@
   var DISC = {
     barre:      { label:'Barre',       page:true, lead:'Precisión en la barra' },
     funcional:  { label:'Funcional',   page:true, lead:'Fuerza aplicada' },
-    pilatesmat: { label:'Pilates Mat', page:true, lead:'La base de todo' },
-    pilates:    { label:'Pilates',     page:true, lead:'Control y centro' },
+    pilatesmat: { label:'Pilates Mat', page:true, lead:'Control y centro' },
     sculpt:     { label:'Sculpt',      page:true, lead:'Tono con peso' },
     somara:     { label:'Somara',      page:true, lead:'Movimiento somático' },
     tone:       { label:'Tone',        page:true, lead:'Constancia' }
@@ -58,7 +57,8 @@
 
   /* Orden en que se muestran los pilares. Fijo, no alfabético: abre con las
      dos disciplinas insignia y cierra con las de mantenimiento. */
-  var DISC_ORDER = ['barre','pilates','sculpt','somara','pilatesmat','funcional','tone'];
+  /* Los seis universos del deck, en su orden. */
+  var DISC_ORDER = ['sculpt','barre','pilatesmat','somara','funcional','tone'];
 
   /* Subcategorías por disciplina.
      Mariana lo pidió así en la llamada: la categorización depende de la
@@ -71,13 +71,10 @@
       { id:'esencial', n:'Esencial' },
       { id:'fuerza',   n:'Fuerza' },
       { id:'postura',  n:'Postura y centro' } ] },
-    pilates: { head:'Tipo de clase', subs:[
-      { id:'core',      n:'Centro y control' },
-      { id:'espalda',   n:'Espalda sana' },
-      { id:'movilidad', n:'Movilidad' } ] },
     pilatesmat: { head:'Tipo de clase', subs:[
       { id:'fundamentos', n:'Fundamentos' },
-      { id:'core',        n:'Centro' },
+      { id:'core',        n:'Centro y control' },
+      { id:'espalda',     n:'Espalda sana' },
       { id:'cierre',      n:'Cierre suave' } ] },
     sculpt: { head:'Tipo de clase', subs:[
       { id:'completo', n:'Cuerpo completo' },
@@ -147,9 +144,9 @@
       discs:['sculpt','barre'],
       redes:{ instagram:'#', tiktok:'#', whatsapp:'#' },
       bio:'Doce años enseñando barre y sculpt. Sus clases son cortas, precisas y sin relleno.' },
-    'Sofía Ruiz':     { rol:'Funcional · Pilates', art:'funcional',
+    'Sofía Ruiz':     { rol:'Funcional · Pilates Mat', art:'funcional',
       cifras:'38 clases · 1,220 seguidoras',
-      discs:['funcional','pilates','pilatesmat'],
+      discs:['funcional','pilatesmat'],
       redes:{ instagram:'#', tiktok:'#' },
       bio:'Viene del entrenamiento funcional. Le importa que entiendas por qué haces cada movimiento.' },
     'Daniela Ortiz':  { rol:'Pilates Mat · Tone', art:'pilatesmat',
@@ -188,7 +185,6 @@
     sculpt:'Trabajo de tonificación con peso ligero y muchas repeticiones. Buscas fatiga muscular controlada, no impacto.',
     barre:'Movimientos pequeños y precisos con apoyo en la barra. Fortalece piernas, glúteos y centro sin cargar las articulaciones.',
     funcional:'Patrones de movimiento de la vida diaria, a intensidad alta. Mejora fuerza, resistencia y capacidad cardiovascular.',
-    pilates:'Control, respiración y trabajo profundo de centro. Precisión antes que velocidad.',
     pilatesmat:'Pilates en colchoneta, con tu propio peso. La base sobre la que se construye todo lo demás.',
     somara:'Movimiento somático: lento, consciente y sin impacto. Movilidad y respiración para soltar tensión acumulada.',
     tone:'Sesiones de tono general, de ritmo sostenido y baja carga. Buenas para mantener constancia.'
@@ -218,12 +214,12 @@
     { slug:'func-intervalos', t:'Funcional : Intervalos', d:'funcional', i:'Sofía Ruiz', m:25, x:'Intermedio', sub:'resistencia', foco:'resistencia', props:'ninguno', date:'2026-06-24' },
     { slug:'func-hiit', t:'Funcional HIIT', d:'funcional', i:'Sofía Ruiz', m:30, x:'Intermedio', sub:'resistencia', foco:'resistencia', props:'ninguno', date:'2026-07-02', serie:'Fuerza Total' },
     { slug:'func-fuerza', t:'Funcional : Fuerza Total', d:'funcional', i:'Sofía Ruiz', m:45, x:'Avanzado', sub:'fuerza', foco:'fuerza', props:'pesas', date:'2026-08-19' },
-    { slug:'pilates-cierre', t:'Pilates : Cierre largo', d:'pilates', i:'Sofía Ruiz', m:25, x:'Principiante', sub:'movilidad', foco:'movilidad', props:'tapete,pelota', date:'2026-04-02' },
-    { slug:'pilates-movilidad', t:'Pilates : Movilidad', d:'pilates', i:'Sofía Ruiz', m:25, x:'Intermedio', sub:'movilidad', foco:'movilidad', props:'tapete', date:'2026-05-15' },
-    { slug:'pilates-espalda', t:'Pilates : Espalda sana', d:'pilates', i:'Sofía Ruiz', m:35, x:'Principiante', sub:'espalda', foco:'movilidad', props:'tapete,pelota', date:'2026-06-21' },
-    { slug:'pilates-control', t:'Pilates : Control', d:'pilates', i:'Sofía Ruiz', m:30, x:'Principiante', sub:'core', foco:'fuerza', props:'tapete,pelota', date:'2026-07-08' },
-    { slug:'pilates-core', t:'Core Profundo', d:'pilates', i:'Sofía Ruiz', m:40, x:'Avanzado', sub:'core', foco:'fuerza', props:'tapete,pelota', date:'2026-08-11', serie:'Core & Flexibilidad' },
-    { slug:'pilates-avanzado', t:'Pilates : Core Avanzado', d:'pilates', i:'Sofía Ruiz', m:40, x:'Avanzado', sub:'core', foco:'fuerza', props:'tapete,pelota', date:'2026-08-25' },
+    { slug:'pilates-cierre', t:'Pilates : Cierre largo', d:'pilatesmat', i:'Sofía Ruiz', m:25, x:'Principiante', sub:'movilidad', foco:'movilidad', props:'tapete,pelota', date:'2026-04-02' },
+    { slug:'pilates-movilidad', t:'Pilates : Movilidad', d:'pilatesmat', i:'Sofía Ruiz', m:25, x:'Intermedio', sub:'movilidad', foco:'movilidad', props:'tapete', date:'2026-05-15' },
+    { slug:'pilates-espalda', t:'Pilates : Espalda sana', d:'pilatesmat', i:'Sofía Ruiz', m:35, x:'Principiante', sub:'espalda', foco:'movilidad', props:'tapete,pelota', date:'2026-06-21' },
+    { slug:'pilates-control', t:'Pilates : Control', d:'pilatesmat', i:'Sofía Ruiz', m:30, x:'Principiante', sub:'core', foco:'fuerza', props:'tapete,pelota', date:'2026-07-08' },
+    { slug:'pilates-core', t:'Core Profundo', d:'pilatesmat', i:'Sofía Ruiz', m:40, x:'Avanzado', sub:'core', foco:'fuerza', props:'tapete,pelota', date:'2026-08-11', serie:'Core & Flexibilidad' },
+    { slug:'pilates-avanzado', t:'Pilates : Core Avanzado', d:'pilatesmat', i:'Sofía Ruiz', m:40, x:'Avanzado', sub:'core', foco:'fuerza', props:'tapete,pelota', date:'2026-08-25' },
     { slug:'mat-despierta', t:'Despierta el core', d:'pilatesmat', i:'Daniela Ortiz', m:15, x:'Principiante', sub:'core', foco:'fuerza', props:'tapete', date:'2026-03-04' },
     { slug:'mat-fundamental', t:'Pilates Mat Fundamental', d:'pilatesmat', i:'Daniela Ortiz', m:40, x:'Principiante', sub:'fundamentos', foco:'fuerza', props:'tapete', date:'2026-04-09', free:true, serie:'Core & Flexibilidad' },
     { slug:'mat-cierre', t:'Pilates Mat : Cierre', d:'pilatesmat', i:'Daniela Ortiz', m:20, x:'Principiante', sub:'cierre', foco:'movilidad', props:'tapete', date:'2026-05-20' },
@@ -558,8 +554,7 @@
       var POR_DISC = {
         barre:      'silla,tapete',
         funcional:  'ninguno',
-        pilates:    'tapete,pelota',
-        pilatesmat: 'tapete',
+            pilatesmat: 'tapete',
         sculpt:     'pesas,banda,tapete',
         somara:     'tapete,bloques,cojin',
         tone:       'banda,tapete'
@@ -584,7 +579,7 @@
         { disc:'somara',     t:'Somara : Flow',           i:'Renata Solís',   m:25, x:'Principiante' },
         { disc:'barre',      t:'Barre : Postura Perfecta',i:'Valeria Méndez', m:35, x:'Intermedio' },
         { rest:true },
-        { disc:'pilates',    t:'Core Profundo',           i:'Sofía Ruiz',     m:40, x:'Avanzado' },
+        { disc:'pilatesmat', t:'Core Profundo',           i:'Sofía Ruiz',     m:40, x:'Avanzado' },
         { disc:'funcional',  t:'Funcional HIIT',          i:'Sofía Ruiz',     m:30, x:'Intermedio' },
         { rest:true }
       ];
@@ -794,6 +789,46 @@
           segundos: 105
         });
       });
+    },
+
+    /* ---- progreso de un programa ----
+       La lámina 23 del deck pide que un reto o una serie se comporte como un
+       programa y no como una lista: cuánto llevas, cuánto falta y cómo se
+       aborda. Vive aquí porque lo usan reto.html y serie.html igual.
+       El progreso se guarda como cualquier otro estado del prototipo. */
+    programa: function (id) {
+      var n = parseInt(get('anyara_prog_' + id) || '0', 10);
+      return isNaN(n) ? 0 : n;
+    },
+    avanzarPrograma: function (id, total) {
+      var n = Math.min(A.programa(id) + 1, total);
+      set('anyara_prog_' + id, String(n));
+      return n;
+    },
+    dejarPrograma: function (id) { del('anyara_prog_' + id); },
+
+    /* La tira de progreso. `intro` es el video de "cómo abordar esto", que el
+       deck pide para cada programa. */
+    programaHTML: function (o) {
+      var hechas = A.programa(o.id);
+      var pct = o.total ? Math.round(hechas / o.total * 100) : 0;
+      var empezado = hechas > 0;
+      return '<div class="prog-strip' + (empezado ? ' on' : '') + '">' +
+        '<div class="ps-head">' +
+          '<span class="ps-k">' + (empezado ? 'Programa en curso' : 'Aún no lo empiezas') + '</span>' +
+          (empezado
+            ? '<button type="button" class="ps-stop" data-dejar="' + o.id + '">Dejar el programa</button>'
+            : '') +
+        '</div>' +
+        '<div class="ps-n"><b>' + hechas + '</b> de ' + o.total + ' clases completadas</div>' +
+        '<div class="ps-bar"><i style="width:' + pct + '%"></i></div>' +
+        '<div class="ps-cta">' +
+          '<a href="' + o.href + '" class="btn btn-gold">' +
+            (empezado ? 'Seguir donde lo dejaste' : 'Empezar') + '</a>' +
+          '<button type="button" class="dp-save" data-intro="' + o.id + '">' +
+            'Cómo abordar ' + (o.tipo === 'serie' ? 'esta serie' : 'este reto') + '</button>' +
+        '</div>' +
+      '</div>';
     },
 
     /* ---- player de tráiler compartido ----
@@ -1030,6 +1065,27 @@
       var slug = d.getAttribute('data-d');
       /* si esa disciplina aún no tiene página, cae al catálogo filtrado */
       location.href = A.discHref(slug) || ('explorar.html?d=' + slug);
+    }
+  });
+
+  /* Los botones de la tira de progreso. Van delegados porque la tira la
+     pintan las páginas con su propio script, después de este archivo. */
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest) return;
+    var dejar = e.target.closest('[data-dejar]');
+    if (dejar) {
+      A.dejarPrograma(dejar.getAttribute('data-dejar'));
+      location.reload();
+      return;
+    }
+    var intro = e.target.closest('[data-intro]');
+    if (intro) {
+      A.trailer({
+        kicker: 'Cómo abordar el programa',
+        titulo: intro.getAttribute('data-titulo') || 'Antes de empezar',
+        disc:   intro.getAttribute('data-disc') || 'somara',
+        segundos: 90
+      });
     }
   });
 
