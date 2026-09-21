@@ -293,7 +293,12 @@ h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em, .serif-i{
   font-family:var(--sans);
 }
 .pill:hover{border-color:var(--dc,var(--gold));color:var(--ink)}
-.pill.active{background:var(--dc,var(--ink));color:#fff;border-color:var(--dc,var(--ink))}
+/* Rellena con texto blanco encima, así que va el tono de tinta y no el color
+   de firma: Barre relleno de --dc con blanco daba 2.6:1. --u-ink sólo existe
+   dentro de una disciplina, así que fuera de ella cae a la marca —antes caía
+   a negro, que es el acento que Anyara no quiere. */
+.pill.active{background:var(--u-ink,var(--brand));color:#fff;
+  border-color:var(--u-ink,var(--brand))}
 /* color dot — matches the discipline's card gradient */
 .pill .dot{width:9px;height:9px;border-radius:50%;margin-right:9px;flex:0 0 auto;background:var(--dc,var(--ink-3))}
 .pill.active .dot{background:rgba(255,255,255,.92)}
@@ -327,10 +332,12 @@ h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em, .serif-i{
 .link-a:hover{border-bottom-color:var(--gold)}
 .link-a.quiet{color:var(--ink-2)}
 .link-a.quiet:hover{color:var(--ink)}
-.btn-gold{background:var(--gold);color:#fff}
-.btn-gold:hover{background:var(--gold-deep)}
-.btn-dark{background:var(--ink);color:#fff}
-.btn-dark:hover{background:#000}
+.btn-gold,.btn-dark{background:var(--gold);color:#fff}
+.btn-gold:hover,.btn-dark:hover{background:var(--gold-deep)}
+/* .btn-dark era un segundo botón principal, en negro. No marcaba un nivel
+   distinto: las dos clases se usaban para la misma acción en la misma
+   pantalla. Ahora es un alias del botón de marca y no debería usarse en
+   pantallas nuevas; la jerarquía es relleno de marca / .btn-ghost / .link-a. */
 .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
 .btn-ghost:hover{border-color:var(--gold)}
 .btn-block{width:100%;justify-content:center}
@@ -498,7 +505,7 @@ h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em, .serif-i{
    uno marca dónde empieza; el recomendado lo lleva en tinta. */
 .plan{border:none;border-top:1px solid var(--line);border-radius:0;
   padding:var(--sp-4) 0 0;position:relative}
-.plan.feat{border-top:1px solid var(--ink);box-shadow:none}
+.plan.feat{border-top:1px solid var(--brand);box-shadow:none}
 /* el distintivo es una etiqueta de texto, no una cápsula flotando fuera */
 .plan .badge{position:static;display:block;background:none;color:var(--gold-deep);
   font-size:var(--fs-label);letter-spacing:.22em;text-transform:uppercase;
@@ -664,7 +671,7 @@ body.is-guest  .member-only{display:none !important}
 .coach-hero{display:flex;gap:32px;align-items:center}
 .coach-hero .cav{width:150px;height:150px;border-radius:50%;flex:0 0 auto}
 .coach-hero .btn{margin-top:14px}
-.follow.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.follow.on{background:var(--brand);color:#fff;border-color:var(--brand)}
 
 /* post-class completion */
 .done-wrap{max-width:620px;margin:0 auto;text-align:center;padding:40px 0}
@@ -686,7 +693,7 @@ body.is-guest  .member-only{display:none !important}
 .mood-btn{border:1px solid var(--line);background:#fff;border-radius:100px;padding:11px 18px;cursor:pointer;
   font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2)}
 .mood-btn:hover{border-color:var(--ink);color:var(--ink)}
-.mood-btn.sel{background:var(--ink);border-color:var(--ink);color:#fff}
+.mood-btn.sel{background:var(--brand);border-color:var(--brand);color:#fff}
 
 /* "tu semana está lista" weekly plan reveal */
 .week-plan{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
@@ -865,7 +872,7 @@ body.has-account .anon-only{display:none!important}
 .td-step{font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.14em;
   text-transform:uppercase;padding:8px 16px;border-radius:100px;border:1px solid var(--line);color:var(--ink-3)}
 .td-step.done{background:var(--sand);border-color:var(--line);color:var(--ink-2)}
-.td-step.now{background:var(--ink);border-color:var(--ink);color:#fff}
+.td-step.now{background:var(--brand);border-color:var(--brand);color:#fff}
 
 .intro-card{display:flex;gap:28px;align-items:center;border:none;
   border-radius:0;overflow:visible;cursor:pointer;background:#fff}
@@ -910,7 +917,7 @@ body.has-account .anon-only{display:none!important}
 .exits{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-6);align-items:start}
 .exit{border:none;border-top:1px solid var(--line);border-radius:0;padding:var(--sp-4) 0 0}
 /* la opción recomendada pesa por tipografía, no por caja */
-.exit.feat{border-top-color:var(--ink)}
+.exit.feat{border-top-color:var(--brand)}
 .exit.feat .ex-t{font-size:var(--fs-head)}
 .exit .ex-k{font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.18em;
   text-transform:uppercase;color:var(--gold-deep);margin-bottom:8px}
@@ -1051,7 +1058,7 @@ body.has-account .anon-only{display:none!important}
 .vd-bar button{background:none;border:none;cursor:pointer;color:var(--ink);padding:0}
 .vd-bar .vd-toggle{font-size:var(--fs-card);width:26px;text-align:left}
 .vd-line{flex:1;height:3px;background:var(--line);border-radius:2px;overflow:hidden;cursor:pointer}
-.vd-line > i{display:block;height:100%;width:0;background:var(--ink)}
+.vd-line > i{display:block;height:100%;width:0;background:var(--brand)}
 
 /* encabezado: información a la izquierda, acciones discretas a la derecha */
 .vd-head{display:flex;gap:var(--sp-6);align-items:flex-start;
@@ -1398,8 +1405,12 @@ a.wk:hover{border-color:var(--gold);transform:translateY(-3px)}
 }
 .wk-d{font-size:var(--fs-label);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
 .wk-n{font-size:var(--fs-meta);color:var(--ink-2);font-variant-numeric:tabular-nums}
-.wk.today{border-color:var(--ink)}
-.wk.today .wk-top{background:var(--ink)}
+/* El día de hoy es el ancla de la fila, así que va relleno; pero relleno de
+   marca, no de negro. El negro aquí competía con el vino del resto del
+   producto y no se parecía a Anyara. Un día cumplido usa el tinte suave
+   (.wk.done, más abajo), así que hoy y cumplido siguen distinguiéndose. */
+.wk.today{border-color:var(--brand)}
+.wk.today .wk-top{background:var(--brand)}
 .wk.today .wk-d,.wk.today .wk-n{color:#fff}
 .wk.past{opacity:.55}
 .wk-art{aspect-ratio:16/11;position:relative}
@@ -1501,7 +1512,7 @@ a.wk:hover{border-color:var(--gold);transform:translateY(-3px)}
 }
 .ccar-play:hover{background:#fff}
 .ccar-play span{
-  width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;
+  width:22px;height:22px;border-radius:50%;background:var(--brand);color:#fff;
   display:flex;align-items:center;justify-content:center;font-size:9px;padding-left:2px;
 }
 .ccar-nav{display:flex;gap:8px}
@@ -2196,7 +2207,7 @@ html.en-marco body > *:not(.vista-stage){display:none!important}
     width:17px;height:17px;fill:none;stroke:currentColor;
     stroke-width:1.8;stroke-linecap:round;
   }
-  .filter-open.on{border-color:var(--ink);background:var(--ink);color:#fff}
+  .filter-open.on{border-color:var(--brand);background:var(--brand);color:#fff}
   .fo-n[hidden]{display:none}
   .fo-n{
     min-width:20px;height:20px;border-radius:100px;background:var(--gold);color:#fff;

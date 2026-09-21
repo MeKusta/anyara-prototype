@@ -220,10 +220,12 @@
   border:1px solid var(--line);border-radius:var(--radius);
   padding:var(--sp-5);background:#fff;position:relative;
 }
-.lp-plan-feat{border-color:var(--ink);border-width:2px;padding-top:calc(var(--sp-5) + 10px)}
+/* el plan recomendado se marca con la marca, no con negro: es el elemento
+   que más pesa en la conversión y era el más ajeno a Anyara */
+.lp-plan-feat{border-color:var(--brand);border-width:2px;padding-top:calc(var(--sp-5) + 10px)}
 .lp-plan-tag{
   position:absolute;top:-13px;left:50%;transform:translateX(-50%);
-  background:var(--ink);color:#fff;border-radius:100px;padding:6px 16px;
+  background:var(--brand);color:#fff;border-radius:100px;padding:6px 16px;
   font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.12em;
   text-transform:uppercase;white-space:nowrap;font-weight:600;
 }
