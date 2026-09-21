@@ -256,8 +256,8 @@ h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em{
 /* ---------- Continue strip ---------- */
 .continue{
   display:flex;gap:18px;align-items:center;
-  background:var(--gold-tint);border:1px solid var(--line);
-  border-radius:var(--radius);padding:16px;
+  background:none;border:none;border-top:1px solid var(--line);
+  border-radius:0;padding:var(--sp-4) 0 0;
 }
 .continue .thumb{width:150px;height:90px;border-radius:10px;flex:0 0 auto}
 .continue .body{flex:1}
@@ -543,12 +543,7 @@ body.is-member .guest-only{display:none !important}
 body.is-guest  .member-only{display:none !important}
 .btn-join{padding:11px 22px;font-size:var(--fs-tiny);white-space:nowrap}
 
-/* free-class allowance strip (guests) */
-.freebar{display:flex;align-items:center;gap:14px;background:var(--gold-tint);border:1px solid var(--line);
-  border-radius:var(--radius);padding:14px 18px;font-family:var(--sans);font-size:var(--fs-note);margin-bottom:18px}
-.freebar b{color:var(--ink)}
-.freebar .fb-x{margin-left:auto}
-.freebar.spent{background:var(--sand);}
+
 
 /* streak / progress widget (members) */
 .streakbar{display:flex;align-items:center;gap:28px;border:1px solid var(--line);border-radius:var(--radius);
@@ -599,7 +594,8 @@ body.is-guest  .member-only{display:none !important}
   text-transform:uppercase;color:var(--ink-2);margin-top:4px}
 
 /* post-class mood check */
-.mood-card{border:1px solid var(--line);border-radius:var(--radius);padding:22px;background:var(--sand)}
+.mood-card{border:none;border-top:1px solid var(--line);border-radius:0;
+  padding:var(--sp-4) 0 0;background:none}
 .mood-card h3{font-family:var(--serif);font-size:var(--fs-sub);font-weight:400;margin-bottom:14px}
 .mood-row{display:flex;gap:10px;flex-wrap:wrap}
 .mood-btn{border:1px solid var(--line);background:#fff;border-radius:100px;padding:11px 18px;cursor:pointer;
@@ -622,7 +618,8 @@ body.is-guest  .member-only{display:none !important}
 .flow-wrap{max-width:620px;margin:0 auto;padding:20px 0 60px}
 .flow-step{display:none}
 .flow-step.on{display:block}
-.save-offer{border:1px solid var(--gold);border-radius:var(--radius);background:var(--gold-tint);padding:28px;margin:22px 0}
+.save-offer{border:none;border-top:1px solid var(--ink);border-radius:0;
+  background:none;padding:var(--sp-4) 0 0;margin:var(--sp-5) 0}
 .save-offer h3{font-family:var(--serif);font-size:var(--fs-sub);font-weight:400;margin-bottom:8px}
 .save-offer p{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);line-height:1.55;margin-bottom:18px}
 .reason-list{display:grid;gap:10px;margin:22px 0}
@@ -632,7 +629,8 @@ body.is-guest  .member-only{display:none !important}
 .reason.sel{border-color:var(--ink);background:var(--sand);font-weight:600}
 
 /* referral */
-.refcard{border:1px solid var(--line);border-radius:var(--radius);padding:28px;background:var(--sand)}
+.refcard{border:none;border-top:1px solid var(--line);border-radius:0;
+  padding:var(--sp-4) 0 0;background:none}
 .refcode{display:flex;gap:12px;align-items:center;margin-top:16px}
 .refcode input{flex:1;border:1px dashed var(--gold-deep);background:#fff;border-radius:8px;padding:14px 16px;
   font-family:var(--sans);font-size:var(--fs-body);letter-spacing:.18em;color:var(--ink);text-align:center}
@@ -738,12 +736,17 @@ body.has-account .anon-only{display:none!important}
 /* ---------- Section lead line ---------- */
 .sec-lead{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);margin:-8px 0 16px}
 
-/* ---------- Trial offer box (level 1) ---------- */
-.trialbox{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:22px;
-  border:1px solid var(--gold);background:var(--gold-tint);border-radius:var(--radius);padding:24px 26px}
+/* ---------- La oferta de la prueba (nivel 1) ----------
+   Era una caja de fondo dorado con filete y el botón dentro. Ese formato no
+   existe en ninguna otra parte del sitio: aquí el peso lo dan la jerarquía y
+   el aire, con una línea que separa — el mismo patrón que .exit. */
+.trialbox{display:flex;align-items:flex-end;gap:var(--sp-5);flex-wrap:wrap;
+  margin-top:var(--sp-5);padding-top:var(--sp-4);
+  border:none;border-top:1px solid var(--ink);border-radius:0;background:none}
 .trialbox > div{flex:1;min-width:280px}
-.trialbox .tb-t{font-family:var(--serif);font-size:var(--fs-sub);margin-bottom:6px}
-.trialbox .tb-d{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);line-height:1.55}
+.trialbox .tb-t{font-family:var(--serif);font-size:var(--fs-head);line-height:1.2;margin-bottom:8px}
+.trialbox .tb-d{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);
+  line-height:1.6;max-width:56ch}
 
 /* ---------- Trial progress strip (level 2 homepage) ---------- */
 /* El avance de la prueba es información, no un tablero: eyebrow, título y
@@ -762,7 +765,7 @@ body.has-account .anon-only{display:none!important}
 
 /* ---------- Tres días page ---------- */
 .tw-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--sp-5);align-items:stretch}
-.tw-hero-copy{background:var(--sand);border-radius:var(--radius);padding:var(--sp-5);display:flex;
+.tw-hero-copy{background:none;border-radius:0;padding:0;display:flex;
   flex-direction:column;justify-content:flex-end}
 .tw-hero-copy h1{font-size:var(--fs-hero);line-height:1.08;letter-spacing:-.01em;max-width:10ch}
 .tw-hero-copy p{font-family:var(--sans);font-size:var(--fs-body);color:var(--ink-2);max-width:42ch;
@@ -855,21 +858,8 @@ body.has-account .anon-only{display:none!important}
 /* en la portada el estado "siguiendo" no puede ser tinta sobre foto oscura */
 .cover .follow.on{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.55);color:#fff}
 
-/* ---------- Intro item inside a day-by-day flow (retos) ----------
-   Va dentro del flujo, antes del Día 1 — no es un tile más de la parrilla.
-   Comparte el ritmo de .ticket pero se lee como intro, no como clase. */
-.flow-intro{display:flex;gap:18px;align-items:center;border:1px solid var(--gold);
-  background:var(--gold-tint);border-radius:var(--radius);padding:16px;margin-bottom:14px;
-  cursor:pointer;width:100%;text-align:left;font-family:var(--sans)}
-.flow-intro:hover{border-color:var(--gold-deep)}
-.flow-intro .fi-art{width:96px;height:64px;border-radius:10px;flex:0 0 auto;position:relative;
-  display:flex;align-items:center;justify-content:center}
-.flow-intro .fi-play{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);
-  display:flex;align-items:center;justify-content:center;font-size:var(--fs-meta);color:var(--ink)}
-.flow-intro .fi-b{flex:1}
-/* spans dentro de un <button>: hay que forzarlos a bloque */
-.flow-intro .fi-t{display:block;font-family:var(--serif);font-size:var(--fs-card);color:var(--ink);margin-bottom:3px}
-.flow-intro .fi-m{display:block;font-size:var(--fs-meta);color:var(--ink-2);line-height:1.45}
+
+
 
 /* ---------- Mi espacio: saludo + estadísticas + objetivo semanal ---------- */
 .mispace{display:grid;grid-template-columns:1.15fr repeat(4,.8fr) 1.35fr;
@@ -921,10 +911,13 @@ body.has-account .anon-only{display:none!important}
 .libcard.full .art{height:170px}
 .libcard.full .libcard-label{display:flex;align-items:center;justify-content:space-between;
   gap:var(--sp-2);text-transform:none;letter-spacing:normal}
-.libcard .lc-n{font-family:var(--sans);font-size:var(--fs-tiny);letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ink)}
-.libcard .lc-c{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-3);
-  margin-top:3px;letter-spacing:normal;text-transform:none}
+/* Los dos eran <span> en línea, así que el margen superior del segundo no
+   hacía nada y "COMPLETADAS" y "1 clase" salían pegados en el mismo renglón.
+   En bloque se apilan, que es como se leen. */
+.libcard .lc-n{display:block;font-family:var(--sans);font-size:var(--fs-tiny);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink);line-height:1.3}
+.libcard .lc-c{display:block;font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-3);
+  margin-top:5px;letter-spacing:normal;text-transform:none;line-height:1.3}
 .libcard .lc-go{color:var(--ink-3);font-size:var(--fs-body)}
 /* estado vacío: dice qué ganas si lo usas, en vez de sólo "(0)" */
 .libcard.blank{background:var(--sand);border-color:transparent;
@@ -1443,11 +1436,16 @@ a.wk:hover{border-color:var(--gold);transform:translateY(-3px)}
    dudas tienen que estar en ella y no a un clic de distancia. */
 .td-sales{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
 .td-plans{display:grid;gap:14px}
+/* Los planes eran dos cajas con filete y fondo, justo encima de "Cómo sigue",
+   que en esta misma página ya resuelve lo mismo con una línea y jerarquía.
+   Tener los dos lenguajes a dos secciones de distancia se notaba. */
 .td-plan{
-  border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;
-  display:flex;align-items:center;justify-content:space-between;gap:20px;background:#fff;
+  border:none;border-top:1px solid var(--line);border-radius:0;
+  padding:var(--sp-4) 0;background:none;
+  display:flex;align-items:baseline;justify-content:space-between;gap:20px;
 }
-.td-plan.feat{border-color:var(--ink);background:var(--sand)}
+.td-plan.feat{border-top-color:var(--ink)}
+.td-plan.feat .p-n{font-size:var(--fs-head)}
 .td-plan .p-n{font-family:var(--serif);font-size:var(--fs-sub)}
 .td-plan .p-d{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);margin-top:4px}
 .td-plan .p-p{font-family:var(--sans);font-size:var(--fs-title);font-weight:600;white-space:nowrap}
