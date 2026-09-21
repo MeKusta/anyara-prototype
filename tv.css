@@ -1,7 +1,8 @@
-/* Figtree, la sustituta libre de Avenir para Windows y Android. En Mac,
-   iPhone y iPad nunca se descarga: "Avenir Next" va antes en la pila y el
-   navegador sólo pide el archivo de la familia que acaba usando. */
-@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..800;1,300..800&display=swap");
+/* Las tres familias de la guía de marca que mandó Mariana.
+   League Spartan y Cormorant Garamond son libres (OFL) y vienen de Google;
+   no hay nada que licenciar ni que autoalojar. Figtree sólo entra como
+   sustituta de Avenir en Windows y Android — en Apple no se descarga. */
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Figtree:ital,wght@0,300..800;1,300..800&display=swap");
 
 /* Anyara TV
    ---------------------------------------------------------------------------
@@ -37,9 +38,12 @@
 
   /* Mismos papeles que en el sitio. La tele carga su propia @font-face
      porque no incluye styles.css. */
-  --display:"Wisteria","Times New Roman",Times,serif;
-  --serif:"Times New Roman",Times,serif;
+  --display:"League Spartan","Helvetica Neue",Arial,sans-serif;
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
   --sans:"Avenir Next","Avenir",Figtree,"Helvetica Neue",Arial,sans-serif;
+  --display-w:700;
+  --display-ls:-.02em;
+  --serif-w:600;
 
   /* Zona segura: el 5% que las teles pueden recortar. Nada importante aquí. */
   --safe-x:5.5rem;
@@ -52,13 +56,6 @@
   /* El foco: cuánto crece la pieza enfocada y qué anillo lleva */
   --foco-escala:1.07;
   --foco-anillo:0.25rem;
-}
-
-@font-face{
-  font-family:"Wisteria";
-  src:url("fonts/Wisteria.woff2") format("woff2"),
-      url("fonts/Wisteria.otf") format("opentype");
-  font-weight:400;font-style:normal;font-display:swap;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -128,8 +125,10 @@ img{max-width:100%}
   background:linear-gradient(180deg,rgba(15,13,12,.96) 0%,rgba(15,13,12,.72) 62%,transparent 100%);
 }
 .tv-logo{
-  font-family:var(--display);font-size:1.9rem;font-style:italic;
-  color:var(--tv-ink);margin-right:1.5rem;letter-spacing:.02em;
+  /* Sólo es el respaldo del wordmark: la cursiva se le parece, la geométrica
+     pesada en falsa cursiva no. */
+  font-family:var(--serif);font-size:2.1rem;font-style:italic;font-weight:600;
+  color:var(--tv-ink);margin-right:1.5rem;letter-spacing:.01em;
 }
 .tv-logo b{font-style:normal}
 .tv-nav a{
@@ -167,7 +166,7 @@ img{max-width:100%}
   font-size:.95rem;letter-spacing:.22em;text-transform:uppercase;
   color:var(--gold);margin-bottom:.9rem;
 }
-.tv-hero-t{font-family:var(--display);font-size:4.2rem;font-weight:400;line-height:1.12;letter-spacing:-.01em}
+.tv-hero-t{font-family:var(--display);font-size:4.2rem;font-weight:var(--display-w);line-height:1.06;letter-spacing:var(--display-ls)}
 .tv-hero-m{font-size:1.3rem;color:var(--tv-ink-2);margin-top:1rem}
 .tv-hero-d{font-size:1.3rem;color:var(--tv-ink-2);margin-top:1rem;line-height:1.55;max-width:46rem}
 .tv-bar{
@@ -196,8 +195,8 @@ img{max-width:100%}
 .tv-body-top{padding-top:calc(var(--safe-y) + 7rem)}
 .tv-body-det{padding-top:1rem}
 .tv-page-t{
-  font-family:var(--display);font-size:3.4rem;font-weight:400;
-  padding:0 var(--safe-x);letter-spacing:-.01em;
+  font-family:var(--display);font-size:3.4rem;font-weight:var(--display-w);
+  padding:0 var(--safe-x);letter-spacing:var(--display-ls);
 }
 .tv-page-d{
   font-size:1.25rem;color:var(--tv-ink-2);padding:0 var(--safe-x);
@@ -205,8 +204,8 @@ img{max-width:100%}
 }
 .tv-row{margin-top:2.8rem}
 .tv-row-t{
-  font-family:var(--display);font-size:1.9rem;font-weight:400;
-  padding:0 var(--safe-x);margin-bottom:1.2rem;letter-spacing:-.005em;
+  font-family:var(--display);font-size:1.9rem;font-weight:var(--display-w);
+  padding:0 var(--safe-x);margin-bottom:1.2rem;letter-spacing:var(--display-ls);
 }
 .tv-shelf{overflow:hidden}
 .tv-shelf-track{
@@ -244,7 +243,7 @@ img{max-width:100%}
   color:#1a1a1a;border-radius:.5rem;padding:.5rem .8rem;
   display:flex;flex-direction:column;align-items:center;line-height:1;
 }
-.tv-date b{font-family:var(--serif);font-size:1.3rem;font-weight:400}
+.tv-date b{font-family:var(--serif);font-size:1.3rem;font-weight:var(--serif-w)}
 .tv-date span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;margin-top:.2rem}
 
 /* Disciplinas: verticales, como en el sitio, pero a escala de tele */
@@ -258,7 +257,7 @@ img{max-width:100%}
   background:linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,.72) 100%);
 }
 .tv-disc-b{position:relative;z-index:2;padding:1.2rem}
-.tv-disc-n{display:block;font-family:var(--display);font-size:1.6rem;color:#fff}
+.tv-disc-n{display:block;font-family:var(--display);font-size:1.6rem;color:#fff;font-weight:var(--display-w);letter-spacing:var(--display-ls)}
 .tv-disc-d{display:block;font-size:.95rem;color:rgba(255,255,255,.8);margin-top:.3rem}
 
 /* Retos y series: apaisados y grandes, son piezas, no tarjetas */
@@ -275,7 +274,7 @@ img{max-width:100%}
   display:block;font-size:.92rem;letter-spacing:.18em;text-transform:uppercase;
   color:rgba(255,255,255,.86);margin-bottom:.5rem;
 }
-.tv-prog-t{display:block;font-family:var(--display);font-size:2.4rem;color:#fff;line-height:1.14}
+.tv-prog-t{display:block;font-family:var(--display);font-size:2.4rem;color:#fff;line-height:1.06;font-weight:var(--display-w);letter-spacing:var(--display-ls)}
 
 /* --------------------------------------------------------------- detalle */
 .tv-detalle{position:relative}
@@ -292,7 +291,7 @@ img{max-width:100%}
   position:relative;z-index:2;
   padding:calc(var(--safe-y) + 7rem) var(--safe-x) 0;max-width:52rem;
 }
-.tv-det-t{font-family:var(--display);font-size:3.8rem;font-weight:400;line-height:1.12;margin-top:.4rem}
+.tv-det-t{font-family:var(--display);font-size:3.8rem;font-weight:var(--display-w);line-height:1.06;margin-top:.4rem;letter-spacing:var(--display-ls)}
 .tv-det-m{font-size:1.2rem;color:var(--tv-ink-2);margin-top:.9rem}
 .tv-det-d{font-size:1.25rem;color:var(--tv-ink-2);line-height:1.6;margin-top:1.2rem;max-width:44rem}
 .tv-props{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.4rem}
@@ -362,7 +361,7 @@ img{max-width:100%}
   transition:opacity .4s ease, transform .4s ease;
 }
 .tv-pl-bar.oculta{opacity:0;transform:translateY(2rem);pointer-events:none}
-.tv-pl-t{font-family:var(--display);font-size:2.4rem;line-height:1.18}
+.tv-pl-t{font-family:var(--display);font-size:2.4rem;line-height:1.06;font-weight:var(--display-w);letter-spacing:var(--display-ls)}
 .tv-pl-t span{display:block;font-family:var(--sans);font-size:1.1rem;color:var(--tv-ink-2);margin-top:.5rem}
 .tv-pl-line{
   height:.35rem;border-radius:.2rem;background:rgba(255,255,255,.24);
@@ -430,5 +429,5 @@ img{max-width:100%}
 .tv-vista.foco{background:var(--tv-ink);color:var(--tv-bg);border-color:var(--tv-ink)}
 .tv-vista.foco .tv-vista-d{color:rgba(15,13,12,.7)}
 .tv-vista.on{border-color:var(--gold)}
-.tv-vista-n{display:block;font-family:var(--display);font-size:1.8rem}
+.tv-vista-n{display:block;font-family:var(--display);font-size:1.8rem;font-weight:var(--display-w);letter-spacing:var(--display-ls)}
 .tv-vista-d{display:block;font-size:1.1rem;color:var(--tv-ink-2);margin-top:.4rem}

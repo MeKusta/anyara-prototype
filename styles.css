@@ -1,21 +1,11 @@
-/* Figtree, la sustituta libre de Avenir para Windows y Android. En Mac,
-   iPhone y iPad nunca se descarga: "Avenir Next" va antes en la pila y el
-   navegador sólo pide el archivo de la familia que acaba usando. */
-@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..800;1,300..800&display=swap");
+/* Las tres familias de la guía de marca que mandó Mariana.
+   League Spartan y Cormorant Garamond son libres (OFL) y vienen de Google;
+   no hay nada que licenciar ni que autoalojar. Figtree sólo entra como
+   sustituta de Avenir en Windows y Android — en Apple no se descarga. */
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Figtree:ital,wght@0,300..800;1,300..800&display=swap");
 
 /* ---- Anyara redesign prototype · shared styles ---- */
 
-/* Wisteria, la tipografía de titulares del manual de identidad. Autoalojada:
-   34KB en woff2 y sin depender de nadie. font-display:swap para que el texto
-   se lea desde el primer momento aunque la fuente llegue tarde. */
-@font-face{
-  font-family:"Wisteria";
-  src:url("fonts/Wisteria.woff2") format("woff2"),
-      url("fonts/Wisteria.otf") format("opentype");
-  font-weight:400;
-  font-style:normal;
-  font-display:swap;
-}
 :root{
   --bg:#ffffff;
   --ink:#1a1a1a;
@@ -39,21 +29,28 @@
      Las dos familias y una escala por rol, no por tamaño: si quieres que
      todos los títulos de sección bajen, mueves --fs-head y se mueven todos.
      Ver estilo.html para el sistema completo en una pantalla. */
-  /* Las tres del manual de identidad, cada una con su papel.
+  /* Las tres familias de la guía de marca.
 
-     --display · WISTERIA. La voz de la marca. Es una display de un solo peso
-       con remates muy propios: preciosa en titulares y ruido a 17px, así que
-       vive sólo de --fs-head para arriba. Va autoalojada en fonts/.
-     --serif   · Times New Roman. El serif de apoyo, para los tamaños medios
-       donde Wisteria ya no se lee: títulos de tarjeta, nombres, citas. Es lo
-       que Mariana pidió en la llamada del 2 de septiembre.
-     --sans    · AVENIR, la del manual para subtítulo y cuerpo. No se puede
-       autoalojar — es de sistema en Apple y con licencia de Monotype fuera —
-       así que se usa la real donde existe (todo Mac, iPhone y iPad) y Figtree,
-       que es la más cercana y libre, en Windows y Android. */
-  --display:"Wisteria","Times New Roman",Times,serif;
-  --serif:"Times New Roman",Times,serif;
+     --display · LEAGUE SPARTAN. Los títulos. Geométrica pesada: pide peso
+       700 y tracking cerrado, no el interlineado suelto que necesitaba la
+       display anterior.
+     --serif   · CORMORANT GARAMOND. Los subtítulos, y sobre todo la cursiva
+       que Mariana usa para destacar palabras dentro de un titular. Corre
+       chica y fina: sube de peso y de tamaño donde lleva texto de verdad.
+     --sans    · AVENIR. El cuerpo y la interfaz. Es la única que no se puede
+       autoalojar — de sistema en Apple, con licencia de Monotype fuera — así
+       que se usa la real donde existe y Figtree, la más cercana y libre, en
+       Windows y Android. */
+  --display:"League Spartan","Helvetica Neue",Arial,sans-serif;
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
   --sans:"Avenir Next","Avenir",Figtree,"Helvetica Neue",Arial,sans-serif;
+
+  /* League Spartan es una geométrica pesada: los títulos piden peso alto y
+     el tracking cerrado que se ve en la guía. Cormorant corre chica y fina,
+     así que sube de peso y de tamaño donde va en texto. */
+  --display-w:700;
+  --display-ls:-.02em;
+  --serif-w:600;
 
   --fs-micro:10px;  /* texto auxiliar diminuto */
   --fs-tiny:12px;   /* botones, chips, notas */
@@ -96,7 +93,9 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-  font-family:var(--serif);
+  /* Cormorant a tamaño de texto necesita el peso medio: en regular las
+     astas se adelgazan tanto que a 15px casi desaparecen. */
+  font-family:var(--serif);font-weight:var(--serif-w);
   background:var(--bg);
   color:var(--ink);
   line-height:1.5;
@@ -122,8 +121,8 @@ img{display:block;max-width:100%}
   padding:16px var(--gutter);
 }
 .logo{
-  font-size:var(--fs-title);letter-spacing:.5px;font-style:italic;
-  font-family:var(--display);font-weight:400;justify-self:start;
+  font-size:var(--fs-title);letter-spacing:var(--display-ls);font-style:italic;
+  font-family:var(--display);font-weight:var(--display-w);justify-self:start;
 }
 .logo b{font-style:normal}
 /* el wordmark se inyecta desde anyara.js; se dimensiona en em para respetar
@@ -167,27 +166,29 @@ img{display:block;max-width:100%}
   font-size:var(--fs-label);letter-spacing:.22em;text-transform:uppercase;
   color:var(--gold-deep);margin-bottom:10px;
 }
-h1{font-family:var(--display);font-size:var(--fs-hero);font-weight:400;line-height:1.16;letter-spacing:-.01em}
+h1{font-family:var(--display);font-size:var(--fs-hero);font-weight:var(--display-w);line-height:1.06;letter-spacing:var(--display-ls)}
 /* Un encabezado de sección es serif regular. La sans en mayúsculas con
    tracking queda reservada para los eyebrows (.eyebrow), que son otra cosa. */
-h2{font-family:var(--display);font-size:var(--fs-title);font-weight:400;
-   letter-spacing:-.01em;text-transform:none;color:var(--ink)}
-.h2-serif{font-family:var(--display);font-size:var(--fs-head);font-weight:400;letter-spacing:-.01em;text-transform:none}
+h2{font-family:var(--display);font-size:var(--fs-title);font-weight:var(--display-w);
+   letter-spacing:var(--display-ls);text-transform:none;color:var(--ink)}
+.h2-serif{font-family:var(--display);font-size:var(--fs-head);font-weight:var(--display-w);letter-spacing:var(--display-ls);text-transform:none}
 
 /* ---------- Roles tipográficos ----------
-   El acento dentro de un titular. Antes era la serif en itálica; ahora que el
-   titular es Wisteria no puede serlo: Wisteria tiene un solo peso y ninguna
-   itálica, y meter Times cursiva en la misma línea son dos serifs peleándose.
-   El acento pasa a ser el dorado de la marca, que hace el mismo trabajo — leer
-   una palabra distinta del resto — sin cambiar de letra. */
-h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em{
-  font-style:normal;font-weight:400;letter-spacing:0;color:var(--gold-deep)}
+   El juego que pidió Mariana: dentro de un titular de League Spartan, la
+   palabra clave cambia a la cursiva de Cormorant y al dorado. El contraste
+   es doble — de familia y de color — y es lo que le da carácter al titular
+   sin necesitar una segunda línea ni un tamaño distinto.
+
+   Cormorant corre más chica que la geométrica, así que la cursiva sube un
+   punto para que las dos se lean al mismo tamaño óptico. */
+h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em, .serif-i{
+  font-family:var(--serif);font-style:italic;font-weight:600;
+  letter-spacing:0;font-size:1.12em;color:var(--gold-deep);
+}
 /* sobre foto o fondo oscuro el dorado profundo se apaga: se usa el claro */
 .hc-content h1 em, .mh-b h1 em, .cover h1 em, .lp-hero-b h1 em,
 .lp-close h2 em, .tv-hero-t em{color:var(--gold)}
-/* .serif-i sigue siendo la itálica editorial donde el titular no es Wisteria */
-.serif-i{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
-/* contrapunto: sans semibold junto a la itálica en momentos de portada */
+
 .sans-b{font-family:var(--sans);font-weight:600;font-style:normal;letter-spacing:-.01em}
 /* bajada de un título: sans, nunca serif */
 .lede{font-family:var(--sans);font-size:var(--fs-lede);line-height:1.6;color:var(--ink-2);max-width:62ch}
@@ -445,7 +446,7 @@ h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em{
   padding:16px 0;border-bottom:1px solid var(--line-2)}
 .ticket:last-child{border-bottom:none}
 .ticket .date{min-width:52px;flex:0 0 auto;font-family:var(--sans);color:var(--ink)}
-.ticket .date b{display:block;font-family:var(--serif);font-size:var(--fs-title);font-weight:400;line-height:1}
+.ticket .date b{display:block;font-family:var(--serif);font-size:var(--fs-title);font-weight:var(--serif-w);line-height:1}
 .ticket .date span{display:block;font-size:var(--fs-label);letter-spacing:.18em;
   text-transform:uppercase;color:var(--ink-2);margin-top:3px}
 /* variante con foto: miniatura real, no una estampilla */
@@ -477,7 +478,7 @@ h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em{
 
 /* Una sección de ajustes: título serif y su bajada. Sin caja. */
 .set-sec + .set-sec{margin-top:var(--sp-6);padding-top:var(--sp-6);border-top:1px solid var(--line)}
-.set-sec > h2{font-family:var(--serif);font-size:var(--fs-head);font-weight:400;
+.set-sec > h2{font-family:var(--serif);font-size:var(--fs-head);font-weight:var(--serif-w);
   letter-spacing:-.01em;text-transform:none;margin-bottom:6px}
 .set-sec > p.d{color:var(--ink-2);font-family:var(--sans);font-size:var(--fs-note);
   line-height:1.6;max-width:58ch}
@@ -524,7 +525,7 @@ h1 em, h2 em, .h2-serif em, .cover h1 em, .dp-info h1 em{
 .hc-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter) 60px}
 .hc-content{max-width:580px;color:#fff}
 .hc-content .eyebrow{color:#fff;opacity:.92}
-.hc-content h1{font-family:var(--display);color:#fff;font-size:var(--fs-hero);line-height:1.14;margin-bottom:14px}
+.hc-content h1{font-family:var(--display);color:#fff;font-size:var(--fs-hero);line-height:1.06;margin-bottom:14px;font-weight:var(--display-w);letter-spacing:var(--display-ls)}
 .hc-content p{font-family:var(--sans);font-size:var(--fs-body);color:rgba(255,255,255,.9);margin-bottom:24px;max-width:470px;line-height:1.55}
 .hc-arrow{display:none}
 .hc-dots{position:absolute;bottom:26px;left:0;right:0;z-index:3;display:flex;gap:9px;justify-content:center}
@@ -565,7 +566,7 @@ body.is-guest  .member-only{display:none !important}
   border-radius:var(--radius);overflow:hidden}
 .daily .dart{position:relative;min-height:250px}
 .daily .dbody{padding:34px;display:flex;flex-direction:column;justify-content:center}
-.daily .dbody h3{font-family:var(--serif);font-size:var(--fs-title);font-weight:400;margin:6px 0 10px}
+.daily .dbody h3{font-family:var(--serif);font-size:var(--fs-title);font-weight:var(--serif-w);margin:6px 0 10px}
 .daily .dbody p{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);
   line-height:1.55;margin-bottom:20px;max-width:380px}
 .daily .dbody .btn{align-self:flex-start}
@@ -596,7 +597,7 @@ body.is-guest  .member-only{display:none !important}
 /* post-class mood check */
 .mood-card{border:none;border-top:1px solid var(--line);border-radius:0;
   padding:var(--sp-4) 0 0;background:none}
-.mood-card h3{font-family:var(--serif);font-size:var(--fs-sub);font-weight:400;margin-bottom:14px}
+.mood-card h3{font-family:var(--serif);font-size:var(--fs-sub);font-weight:var(--serif-w);margin-bottom:14px}
 .mood-row{display:flex;gap:10px;flex-wrap:wrap}
 .mood-btn{border:1px solid var(--line);background:#fff;border-radius:100px;padding:11px 18px;cursor:pointer;
   font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2)}
@@ -620,7 +621,7 @@ body.is-guest  .member-only{display:none !important}
 .flow-step.on{display:block}
 .save-offer{border:none;border-top:1px solid var(--ink);border-radius:0;
   background:none;padding:var(--sp-4) 0 0;margin:var(--sp-5) 0}
-.save-offer h3{font-family:var(--serif);font-size:var(--fs-sub);font-weight:400;margin-bottom:8px}
+.save-offer h3{font-family:var(--serif);font-size:var(--fs-sub);font-weight:var(--serif-w);margin-bottom:8px}
 .save-offer p{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);line-height:1.55;margin-bottom:18px}
 .reason-list{display:grid;gap:10px;margin:22px 0}
 .reason{border:1px solid var(--line);border-radius:10px;padding:15px 18px;cursor:pointer;background:#fff;
@@ -755,7 +756,7 @@ body.has-account .anon-only{display:none!important}
 .trialstrip .ts-num{font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.22em;
   text-transform:uppercase;color:var(--gold-deep);margin-bottom:8px}
 .trialstrip .ts-num b{font-weight:inherit}
-.trialstrip .ts-t{font-family:var(--serif);font-size:var(--fs-head);font-weight:400;
+.trialstrip .ts-t{font-family:var(--serif);font-size:var(--fs-head);font-weight:var(--serif-w);
   line-height:1.15;margin-bottom:8px}
 .trialstrip .ts-d{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);
   line-height:1.6}
@@ -804,7 +805,7 @@ body.has-account .anon-only{display:none!important}
 .td-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:18px}
 .td-k{font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.18em;
   text-transform:uppercase;color:var(--gold-deep);margin-bottom:6px}
-.td-t{font-family:var(--serif);font-size:var(--fs-title);font-weight:400;margin-bottom:5px}
+.td-t{font-family:var(--serif);font-size:var(--fs-title);font-weight:var(--serif-w);margin-bottom:5px}
 .td-why{display:flex;gap:8px;font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2)}
 .td-why::before{content:"✦";color:var(--gold)}
 .td-lock{font-size:var(--fs-card);opacity:.55}
@@ -868,13 +869,13 @@ body.has-account .anon-only{display:none!important}
 /* separadores finos entre columnas, sin encajonar cada dato */
 .mispace > * + *{border-left:1px solid var(--line)}
 .ms-hi h2 em{font-family:var(--serif);font-style:italic}
-.ms-hi h2{font-family:var(--serif);font-size:var(--fs-head);font-weight:400;
+.ms-hi h2{font-family:var(--serif);font-size:var(--fs-head);font-weight:var(--serif-w);
   text-transform:none;letter-spacing:normal;line-height:1.15}
 .ms-hi p{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);
   line-height:1.5;margin-top:var(--sp-2);max-width:24ch}
 .ms-k{font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.16em;
   text-transform:uppercase;color:var(--ink-3);margin-bottom:var(--sp-2)}
-.ms-n{font-family:var(--display);font-size:var(--fs-head);line-height:1}
+.ms-n{font-family:var(--display);font-size:var(--fs-head);line-height:1;font-weight:var(--display-w);letter-spacing:var(--display-ls)}
 .ms-u{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-2);margin-top:6px}
 /* objetivo semanal */
 .ms-week{display:flex;gap:8px;margin-bottom:var(--sp-3)}
@@ -976,7 +977,7 @@ body.has-account .anon-only{display:none!important}
   text-transform:uppercase;color:var(--wine);margin-bottom:var(--sp-2)}
 .vd-cat a{color:var(--wine)}
 .vd-cat a:hover{text-decoration:underline;text-underline-offset:3px}
-.vd-title{font-family:var(--serif);font-size:var(--fs-page);font-weight:400;
+.vd-title{font-family:var(--serif);font-size:var(--fs-page);font-weight:var(--serif-w);
   line-height:1.12;letter-spacing:-.01em}
 .vd-instr{font-family:var(--sans);font-size:var(--fs-body);color:var(--ink-2);margin-top:var(--sp-2)}
 .vd-instr a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
@@ -1002,7 +1003,7 @@ body.has-account .anon-only{display:none!important}
 .vd-about{display:grid;grid-template-columns:1.55fr 1fr;gap:var(--sp-6)}
 .vd-about > div:last-child{border-left:1px solid var(--line);padding-left:var(--sp-6)}
 /* el h2 global va en versalitas sans; aquí el encabezado es editorial */
-.vd-h{font-family:var(--serif);font-size:var(--fs-sub);font-weight:400;
+.vd-h{font-family:var(--serif);font-size:var(--fs-sub);font-weight:var(--serif-w);
   text-transform:none;letter-spacing:normal;margin-bottom:var(--sp-3)}
 .vd-body{font-family:var(--sans);font-size:var(--fs-body);color:var(--ink-2);
   line-height:1.7;max-width:56ch}
@@ -1145,7 +1146,7 @@ body.has-account .anon-only{display:none!important}
   padding:var(--sp-4) 0;border-top:1px solid var(--line)}
 .dp-ticketrow:first-child{padding-top:0;border-top:none}
 .dp-datebox{display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
-.dp-datebox b{font-family:var(--serif);font-size:var(--fs-sub);font-weight:400;line-height:1}
+.dp-datebox b{font-family:var(--serif);font-size:var(--fs-sub);font-weight:var(--serif-w);line-height:1}
 .dp-datebox span{font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:4px}
 .dp-place{font-family:var(--sans);font-size:var(--fs-note);color:var(--ink-2);line-height:1.55}
 .dp-cta-row{display:flex;gap:var(--sp-4);flex-wrap:wrap;align-items:center;margin-top:var(--sp-5)}
@@ -1287,8 +1288,7 @@ body.has-account .anon-only{display:none!important}
 }
 .pillar-n{
   display:block;font-family:var(--display);font-size:var(--fs-title);
-  line-height:1.2;letter-spacing:-.015em;
-}
+  line-height:1.06;letter-spacing:var(--display-ls);font-weight:var(--display-w)}
 .pillar-d{
   display:block;font-family:var(--sans);font-size:var(--fs-meta);
   color:rgba(255,255,255,.85);margin-top:5px;line-height:1.35;
@@ -1405,7 +1405,7 @@ a.wk:hover{border-color:var(--gold);transform:translateY(-3px)}
   font-family:var(--sans);font-size:var(--fs-label);letter-spacing:.16em;
   text-transform:uppercase;color:rgba(255,255,255,.86);margin-bottom:8px;
 }
-.ccar-t{font-family:var(--display);font-size:var(--fs-head);line-height:1.16;letter-spacing:-.01em}
+.ccar-t{font-family:var(--display);font-size:var(--fs-head);line-height:1.06;letter-spacing:var(--display-ls);font-weight:var(--display-w)}
 .ccar-d{
   font-family:var(--sans);font-size:var(--fs-note);color:rgba(255,255,255,.86);
   margin-top:9px;max-width:46ch;line-height:1.5;
@@ -1589,7 +1589,7 @@ summary:focus-visible,
 }
 .mh-b{max-width:560px;color:#fff}
 .mh-b .eyebrow{color:#fff;opacity:.9}
-.mh-b h1{font-family:var(--display);color:#fff;font-size:var(--fs-hero);line-height:1.14;margin-bottom:10px}
+.mh-b h1{font-family:var(--display);color:#fff;font-size:var(--fs-hero);line-height:1.06;margin-bottom:10px;font-weight:var(--display-w);letter-spacing:var(--display-ls)}
 .mh-b p{font-family:var(--sans);font-size:var(--fs-note);color:rgba(255,255,255,.86);margin-bottom:20px}
 .mh-bar{height:4px;border-radius:2px;background:rgba(255,255,255,.28);overflow:hidden;max-width:400px}
 .mh-bar > i{display:block;height:100%;background:var(--gold)}
@@ -2215,7 +2215,7 @@ html.en-marco body > *:not(.vista-stage){display:none!important}
   background:rgba(255,255,255,.94);border-radius:12px;
   padding:8px 12px;display:flex;flex-direction:column;align-items:center;line-height:1;
 }
-.ev-date b{font-family:var(--serif);font-size:var(--fs-sub);font-weight:400}
+.ev-date b{font-family:var(--serif);font-size:var(--fs-sub);font-weight:var(--serif-w)}
 .ev-date span{
   font-family:var(--sans);font-size:var(--fs-micro);letter-spacing:.14em;
   text-transform:uppercase;color:var(--ink-2);margin-top:3px;
@@ -2266,8 +2266,8 @@ html.en-marco body > *:not(.vista-stage){display:none!important}
   text-transform:uppercase;color:var(--gold);margin-bottom:12px;
 }
 .sb-t{
-  font-family:var(--display);font-size:clamp(26px,3.4vw,42px);font-weight:400;
-  color:#fff;line-height:1.18;letter-spacing:-.01em;
+  font-family:var(--display);font-size:clamp(26px,3.4vw,42px);font-weight:var(--display-w);
+  color:#fff;line-height:1.06;letter-spacing:var(--display-ls);
 }
 .sb-d{
   font-family:var(--sans);font-size:var(--fs-note);color:rgba(255,255,255,.72);
@@ -2355,3 +2355,19 @@ html.en-marco body > *:not(.vista-stage){display:none!important}
   .sb-bar{padding:12px 16px;gap:11px}
   .sb-list > li{grid-template-columns:1fr;gap:6px;padding:16px 12px}
 }
+
+/* ---- corrección óptica de Cormorant ----
+   Cormorant tiene la altura de x más baja que la geométrica y que Avenir: a
+   los mismos píxeles se lee más chica. En los títulos grandes no se nota
+   porque hay tamaño de sobra, pero en los tamaños medios — títulos de
+   tarjeta, nombres, tickets — hay que compensarlo o quedan hundidos al lado
+   de su propio metadato en Avenir. */
+.ccard .title,
+.compcard .ct,
+.dp-t,
+.evcard .ev-t,
+.vd-teacher .n,
+.ticket .info .t,
+.plancompare .pc-t,
+.lp-test blockquote,
+.coach-name{font-size:1.08em}
